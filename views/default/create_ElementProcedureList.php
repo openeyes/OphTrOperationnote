@@ -18,7 +18,7 @@
  */
 ?>
 
-<h4>Procedure list</h4>
+<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
 <div id="anaestheticType" class="eventDetail">
 	<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_type')); ?>:</div>
@@ -32,6 +32,6 @@
 	</div>
 </div>
 
-<?php echo BaseEventTypeCHtml::renderDropDownList($element, 'ElementProcedureList[surgeon_id]', $element->surgeon_id, BaseEventTypeCHtml::listData(Contact::model()->findAll(), 'id', 'FullName')); ?>
-<?php echo BaseEventTypeCHtml::renderDropDownList($element, 'ElementProcedureList[assistant_id]', $element->assistant_id, BaseEventTypeCHtml::listData(Contact::model()->findAll(), 'id', 'FullName')); ?>
+<?php echo $form->dropDownList($element, 'surgeon_id', CHtml::listData(Contact::model()->findAll(), 'id', 'FullName')); ?>
+<?php echo $form->dropDownList($element, 'assistant_id', CHtml::listData(Contact::model()->findAll(), 'id', 'FullName')); ?>
 
