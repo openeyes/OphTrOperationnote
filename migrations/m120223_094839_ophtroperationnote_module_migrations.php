@@ -46,18 +46,14 @@ class m120223_094839_ophtroperationnote_module_migrations extends CDbMigration
 
 	public function down()
 	{
-		echo "m120223_094829_ophtroperationnote_eventtype_relationships does not support migration down.\n";
-		return false;
-	}
+		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name', array(':name'=>'Procedure list'))->queryRow();
 
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
+		$this->delete('element_type','id='.$element_type['id']);
 
-	public function safeDown()
-	{
+		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
+
+		$this->delete('event_type','id='.$event_type['id']);
+
+		$this->dropTable('et_ophtroperationnote_procedurelist');
 	}
-	*/
 }
