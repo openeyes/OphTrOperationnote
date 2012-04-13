@@ -21,7 +21,7 @@
 <div class="<?php echo $element->elementType->class_name?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
-	<?php echo $form->radioButtons($element, 'eye_id', 'eye', $element->getSelectedEye()->id)?>
+	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->getSelectedEye() ? $element->getSelectedEye()->id : null))?>
 	<?php
 	$form->widget('application.widgets.ProcedureSelection',array(
 		'element' => $element,
