@@ -46,7 +46,7 @@ class OperationDrug extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophtroperationnote_drugs_drug';
+		return 'et_ophtroperationnote_postop_drugs_drug';
 	}
 
 	/**

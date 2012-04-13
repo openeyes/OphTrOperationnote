@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class ElementDrugs extends BaseEventTypeElement
+class ElementPostOpDrugs extends BaseEventTypeElement
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -46,7 +46,7 @@ class ElementDrugs extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophtroperationnote_drugs';
+		return 'et_ophtroperationnote_postop_drugs';
 	}
 
 	/**
@@ -72,7 +72,7 @@ class ElementDrugs extends BaseEventTypeElement
 		// class name for the relations automatically generated below.
 		return array(
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'drugs' => array(self::HAS_MANY, 'OperationDrug', 'et_ophtroperationnote_drugs_id'),
+			'drugs' => array(self::HAS_MANY, 'OperationDrug', 'et_ophtroperationnote_postop_drugs_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 		);
@@ -125,11 +125,11 @@ class ElementDrugs extends BaseEventTypeElement
 
 		if (!empty($_POST['Drug'])) {
 
-			OperationDrug::model()->deleteAll('et_ophtroperationnote_drugs_id = :drugsId', array(':drugsId' => $this->id));
+			OperationDrug::model()->deleteAll('et_ophtroperationnote_postop_drugs_id = :drugsId', array(':drugsId' => $this->id));
 
 			foreach ($_POST['Drug'] as $id) {
 				$drug = new OperationDrug;
-				$drug->et_ophtroperationnote_drugs_id = $this->id;
+				$drug->et_ophtroperationnote_postop_drugs_id = $this->id;
 				$drug->drug_id = $id;
 
 				if (!$drug->save()) {
@@ -152,22 +152,30 @@ class ElementDrugs extends BaseEventTypeElement
 		return $this->getDrugsBySiteAndSubspecialty();
 	}
 
-	public function getDrugsBySiteAndSubspecialty($table='site_subspecialty_drug') {
+	public function getDrugsBySiteAndSubspecialty($table='site_subspecialty_drug', $default=false) {
 		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
 		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
 		$site_id = Yii::app()->request->cookies['site_id']->value;
+
+		$params = array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id);
+
+		if ($default) {
+			$where = ' and '.$table.'.default = :default ';
+			$params[':default'] = 1;
+		}
 
 		return CHtml::listData(Yii::app()->db->createCommand()
 			->select('drug.id, drug.name')
 			->from('drug')
 			->join($table,$table.'.drug_id = drug.id')
-			->where($table.'.subspecialty_id = :subSpecialtyId and '.$table.'.site_id = :siteId',array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id))
+			->where($table.'.subspecialty_id = :subSpecialtyId and '.$table.'.site_id = :siteId'.@$where, $params)
+			->order($table.'.display_order asc')
 			->queryAll(), 'id', 'name');
 	}
 
 	public function getDrug_defaults() {
 		$ids = array();
-		foreach ($this->getDrugsBySiteAndSubspecialty('site_subspecialty_drug_default') as $id => $drug) {
+		foreach ($this->getDrugsBySiteAndSubspecialty('site_subspecialty_drug',true) as $id => $drug) {
 			$ids[] = $id;
 		}
 		return $ids;
