@@ -39,7 +39,6 @@
 				<?php echo $form->textField($element, 'length', array('size' => '10'))?>
 				<?php echo $form->textField($element, 'meridian', array('size' => '10'))?>
 				<?php echo $form->dropDownList($element, 'incision_type_id', CHtml::listData(IncisionType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
-				<?php echo $form->checkBox($element, 'vision_blue')?>
 				<?php echo $form->textArea($element, 'report', array('rows'=>6,'cols'=>35))?>
 			</div>
 		</div>
