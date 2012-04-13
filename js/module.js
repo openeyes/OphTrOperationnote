@@ -119,16 +119,24 @@ $(document).ready(function() {
 		}
 
 		if (window.ed_drawing_edit_Cataract !== undefined) {
+			var doodle = null;
+
+			for (var i in ed_drawing_edit_Cataract.doodleArray) {
+				if (ed_drawing_edit_Cataract.doodleArray[i].className == 'PhakoIncision') {
+					doodle = ed_drawing_edit_Cataract.doodleArray[i];
+				}
+			}
+
 			if ($(this).val() == 2) {
-				if (parseInt(ed_drawing_edit_Cataract.doodleArray[3].rotation * (180/Math.PI)) == 90) {
-					et_operationnote_hookDoodle = ed_drawing_edit_Cataract.doodleArray[3];
+				if (parseInt(doodle.rotation * (180/Math.PI)) == 90) {
+					et_operationnote_hookDoodle = doodle;
 					et_operationnote_hookTarget = -90;
 					et_operationnote_hookDirection = 1;
 					opnote_move_eyedraw_element_to_position();
 				}
 			} else if ($(this).val() == 1) {
-				if (parseInt(ed_drawing_edit_Cataract.doodleArray[3].rotation * (180/Math.PI)) == -90) {
-					et_operationnote_hookDoodle = ed_drawing_edit_Cataract.doodleArray[3];
+				if (parseInt(doodle.rotation * (180/Math.PI)) == -90) {
+					et_operationnote_hookDoodle = doodle;
 					et_operationnote_hookTarget = 90;
 					et_operationnote_hookDirection = 0;
 					opnote_move_eyedraw_element_to_position();
