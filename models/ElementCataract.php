@@ -84,6 +84,7 @@ class ElementCataract extends BaseEventTypeElement
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 			'complications' => array(self::HAS_MANY, 'CataractComplication', 'cataract_id'),
+			'operative_devices' => array(self::HAS_MANY, 'CataractOperativeDevice', 'cataract_id'),
 			//'surgeon_position' => array(self::BELONGS_TO, 'SurgeonPosition', 'surgeon_position_id'),
 		);
 	}
@@ -156,6 +157,22 @@ class ElementCataract extends BaseEventTypeElement
 			}
 		}
 
+		if (!empty($_POST['CataractOperativeDevices'])) {
+			CataractOperativeDevice::model()->deleteAll('cataract_id = :cataractId', array(':cataractId' => $this->id));
+
+			foreach ($_POST['CataractOperativeDevices'] as $id) {
+				$operative_device = new CataractOperativeDevice;
+				$operative_device->cataract_id = $this->id;
+				$operative_device->operative_device_id = $id;
+
+				if (!$operative_device->save()) {
+					throw new Exception('Unable to save cataract operative device: '.print_r($operative_device->getErrors(),true));
+				}
+
+				$order++;
+			}
+		}
+
 		return parent::afterSave();
 	}
 
@@ -185,5 +202,38 @@ class ElementCataract extends BaseEventTypeElement
 
 	public function getEye() {
 		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
+	}
+
+	public function getOperative_device_list() {
+		return $this->getDevicesBySiteAndSubspecialty();
+	}
+
+	public function getOperative_device_defaults() {
+		$ids = array();
+		foreach ($this->getDevicesBySiteAndSubspecialty(true) as $id => $item) {
+			$ids[] = $id;
+		}
+		return $ids;
+	}
+
+	public function getDevicesBySiteAndSubspecialty($default=false) {
+		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
+		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
+		$site_id = Yii::app()->request->cookies['site_id']->value;
+
+		$params = array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id);
+
+		if ($default) {
+			$where = ' and site_subspecialty_operative_device.default = :default ';
+			$params[':default'] = 1;
+		}
+
+		return CHtml::listData(Yii::app()->db->createCommand()
+			->select('operative_device.id, operative_device.name')
+			->from('operative_device')
+			->join('site_subspecialty_operative_device','site_subspecialty_operative_device.operative_device_id = operative_device.id')
+			->where('site_subspecialty_operative_device.subspecialty_id = :subSpecialtyId and site_subspecialty_operative_device.site_id = :siteId'.@$where, $params)
+			->order('operative_device.name asc')
+			->queryAll(), 'id', 'name');
 	}
 }

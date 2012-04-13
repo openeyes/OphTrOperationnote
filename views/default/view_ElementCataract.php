@@ -64,13 +64,29 @@
 	<?php }?>
 </div>
 
-<h4>Cataract complications</h4>
-<div class="eventHighlight">
-	<?php if (!$element->complications) {?>
-		<h4>None</h4>
-	<?php } else {?>
-		<?php foreach ($element->complications as $complication) {?>
-			<h4><?php echo $complication->name?></h4>
-		<?php }?>
-	<?php }?>
+<div class="cols2">
+	<div class="right">
+		<h4>Cataract devices</h4>
+		<div class="eventHighlight">
+			<?php if (!$element->operative_devices) {?>
+				<h4>None</h4>
+			<?php } else {?>
+				<?php foreach ($element->operative_devices as $device) {?>
+					<h4><?php echo $device->name?></h4>
+				<?php }?>
+			<?php }?>
+		</div>
+	</div>
+	<div class="left">
+		<h4>Cataract complications</h4>
+		<div class="eventHighlight">
+			<?php if (!$element->complications) {?>
+				<h4>None</h4>
+			<?php } else {?>
+				<?php foreach ($element->complications as $complication) {?>
+					<h4><?php echo $complication->name?></h4>
+				<?php }?>
+			<?php }?>
+		</div>
+	</div>
 </div>

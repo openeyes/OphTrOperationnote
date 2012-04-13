@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class ElementPostOpDrugs extends BaseEventTypeElement
+class CataractOperativeDevice extends BaseEventTypeElement
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -46,7 +46,7 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophtroperationnote_postop_drugs';
+		return 'et_ophtroperationnote_cataract_operative_device';
 	}
 
 	/**
@@ -57,9 +57,6 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id', 'safe'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
 		);
 	}
 	
@@ -71,11 +68,13 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'drugs' => array(self::HAS_MANY, 'OperationDrug', 'et_ophtroperationnote_postop_drugs_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
-			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+			'cataract' => array(self::HAS_ONE, 'ElementCataract', 'cataract_id'),
+			'operative_device' => array(self::HAS_ONE, 'OperativeDevice', 'operative_device_id'),
 		);
+	}
+
+	public function getName() {
+		return OperativeDevice::model()->findByPk($this->operative_device_id)->name;
 	}
 
 	/**
@@ -84,7 +83,6 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
 		);
 	}
 
@@ -100,84 +98,10 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
 	}
-
-	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
-	}
-
-	protected function beforeSave()
-	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-		$order = 1;
-
-		if (!empty($_POST['Drug'])) {
-
-			OperationDrug::model()->deleteAll('et_ophtroperationnote_postop_drugs_id = :drugsId', array(':drugsId' => $this->id));
-
-			foreach ($_POST['Drug'] as $id) {
-				$drug = new OperationDrug;
-				$drug->et_ophtroperationnote_postop_drugs_id = $this->id;
-				$drug->drug_id = $id;
-
-				if (!$drug->save()) {
-					throw new Exception('Unable to save drug: '.print_r($drug->getErrors(),true));
-				}
-
-				$order++;
-			}
-		}
-
-		return parent::afterSave();
-	}
-
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
-	}
-
-	public function getDrug_list() {
-		return $this->getDrugsBySiteAndSubspecialty();
-	}
-
-	public function getDrugsBySiteAndSubspecialty($default=false) {
-		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
-		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
-		$site_id = Yii::app()->request->cookies['site_id']->value;
-
-		$params = array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id);
-
-		if ($default) {
-			$where = ' and site_subspecialty_drug.default = :default ';
-			$params[':default'] = 1;
-		}
-
-		return CHtml::listData(Yii::app()->db->createCommand()
-			->select('drug.id, drug.name')
-			->from('drug')
-			->join('site_subspecialty_drug','site_subspecialty_drug.drug_id = drug.id')
-			->where('site_subspecialty_drug.subspecialty_id = :subSpecialtyId and site_subspecialty_drug.site_id = :siteId'.@$where, $params)
-			->order('drug.name asc')
-			->queryAll(), 'id', 'name');
-	}
-
-	public function getDrug_defaults() {
-		$ids = array();
-		foreach ($this->getDrugsBySiteAndSubspecialty(true) as $id => $drug) {
-			$ids[] = $id;
-		}
-		return $ids;
-	}
 }
+?>
