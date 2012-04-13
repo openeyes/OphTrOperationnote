@@ -27,7 +27,7 @@ class m120413_091720_ophtroperationnote_consolidated extends CDbMigration
 		// create an event_type for 'operationnote' if one doesn't already exist
 		if (!$this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow()) {
 			$group = $this->dbConnection->createCommand()->select('id')->from('event_group')->where('name=:name',array(':name'=>'Treatment events'))->queryRow();
-			$this->insert('event_type', array('name' => 'Operation note','event_group_id' => $group['id']));
+			$this->insert('event_type', array('name' => 'Operation note','event_group_id' => $group['id'], 'class_name' => 'OphTrOperationnote'));
 		}
 
 		// select the event_type id for 'operationnote'
@@ -6974,7 +6974,7 @@ Aspiration of soft lens matter'");
 	}
 
 	public function down() {
-	
+
 		$this->dropTable('et_ophtroperationnote_comments');
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -9313,8 +9313,30 @@ Aspiration of soft lens matter'");
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 
+		// Get all the events for opnote and delete them, making a note of any related episodes
+		$episodes = array();
+		foreach ($this->dbConnection->createCommand()->select('episode_id')->from('event')->where('event_type_id=:event_type_id', array(':event_type_id'=>$event_type['id']))->queryAll() as $event) {
+			if (!in_array($event['episode_id'], $episodes)) {
+				$episodes[] = $event['episode_id'];
+			}
+		}
+
 		$this->delete('event', 'event_type_id='.$event_type['id']);
 		$this->delete('event_type','id='.$event_type['id']);
+
+		// If any of the related episodes now have no events, remove them
+		if (!empty($episodes)) {
+			foreach ($this->dbConnection->createCommand()->select('id')->from('episode')->where('id in ('.implode(',',$episodes).')')->queryAll() as $episode) {
+				$n = 0;
+				foreach ($this->dbConnection->createCommand()->select('id')->from('event')->where('episode_id=:episode_id',array(':episode_id'=>$episode['id']))->queryAll() as $event) {
+					$n++;
+				}
+
+				if ($n == 0) {
+					$this->delete('episode','id='.$episode['id']);
+				}
+			}
+		}
 
 		$this->dropTable('et_ophtroperationnote_procedurelist');
 	}
