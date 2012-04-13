@@ -30,6 +30,8 @@
 				'size'=>300,
 				'model'=>$element,
 				'attribute'=>'eyedraw',
+				'offset_x' => 10,
+				'offset_y' => 10,
 			));
 			?>
 			<div class="halfHeight">
@@ -53,6 +55,8 @@
 					'size'=>200,
 					'model'=>$element,
 					'attribute'=>'eyedraw2',
+					'offset_x' => 10,
+					'offset_y' => 10,
 				));
 				?>
 			</div>

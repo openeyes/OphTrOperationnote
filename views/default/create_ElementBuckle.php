@@ -34,6 +34,8 @@
 			array('addDoodle', array('BuckleOperation')),
 			array('deselectDoodles', array()),
 		),
+		'offset_x' => 10,
+		'offset_y' => 10,
 	));
 	?>
 	<?php echo $form->dropDownList($element, 'drainage_type_id', CHtml::listData(DrainageType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
