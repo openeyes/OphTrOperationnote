@@ -42,6 +42,8 @@ class m120403_094001_opnote_surgeon_element extends CDbMigration
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSurgeon'))->queryRow();
 		$this->delete('element_type','id='.$element_type['id']);
 
+		$this->delete('et_ophtroperationnote_procedurelist');
+
 		$this->addColumn('et_ophtroperationnote_procedurelist','assistant_id','int(10) unsigned DEFAULT NULL');
 		$this->addColumn('et_ophtroperationnote_procedurelist','supervising_surgeon_id','int(10) unsigned DEFAULT NULL');
 		$this->addColumn('et_ophtroperationnote_procedurelist','surgeon_id','int(10) unsigned NOT NULL');

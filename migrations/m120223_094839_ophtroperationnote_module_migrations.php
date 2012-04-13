@@ -52,6 +52,7 @@ class m120223_094839_ophtroperationnote_module_migrations extends CDbMigration
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 
+		$this->delete('event', 'event_type_id='.$event_type['id']);
 		$this->delete('event_type','id='.$event_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_procedurelist');

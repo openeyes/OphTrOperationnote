@@ -178,6 +178,10 @@ class m120402_153947_anaesthetic_element extends CDbMigration
 		$this->renameTable('et_ophtroperationnote_anaesthetic_anaesthetic_agent','et_ophtroperationnote_procedurelist_anaesthetic_agent');
 		$this->renameTable('et_ophtroperationnote_anaesthetic_anaesthetic_complication','et_ophtroperationnote_procedurelist_anaesthetic_complication');
 
+		$this->addColumn('et_ophtroperationnote_procedurelist','anaesthetic_type_id',"int(10) unsigned NOT NULL DEFAULT '1'");
+		$this->createIndex('et_ophtroperationnote_procedurelist_anaesthetic_type_id_fk','et_ophtroperationnote_procedurelist','anaesthetic_type_id');
+		$this->addForeignKey('et_ophtroperationnote_procedurelist_anaesthetic_type_id_fk','et_ophtroperationnote_procedurelist','anaesthetic_type_id','anaesthetic_type','id');
+
 		$this->delete('element_type', 'id='.$element_type['id']);
 	}
 }

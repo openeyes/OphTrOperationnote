@@ -61,6 +61,8 @@ class m120411_173646_anaesthetic_complication_table_changes extends CDbMigration
 		$this->dropIndex('et_ophtroperationnote_anaesthetic_ac_anaesthetic_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_complication');
 		$this->dropColumn('et_ophtroperationnote_anaesthetic_anaesthetic_complication','et_ophtroperationnote_anaesthetic_id');
 
+		$this->delete('et_ophtroperationnote_anaesthetic_anaesthetic_complication');
+
 		$this->addColumn('et_ophtroperationnote_anaesthetic_anaesthetic_complication','procedurelist_id','int(10) unsigned NOT NULL');
 		$this->createIndex('et_ophtroperationnote_pac_procedurelist_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_complication','procedurelist_id');
 		$this->addForeignKey('et_ophtroperationnote_pac_procedurelist_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_complication','procedurelist_id','et_ophtroperationnote_procedurelist','id');
