@@ -120,6 +120,7 @@ $(document).ready(function() {
 
 		if (window.ed_drawing_edit_Cataract !== undefined) {
 			var doodle = null;
+			var doodle2 = null;
 
 			for (var i in ed_drawing_edit_Cataract.doodleArray) {
 				if (ed_drawing_edit_Cataract.doodleArray[i].className == 'PhakoIncision') {
@@ -127,19 +128,40 @@ $(document).ready(function() {
 				}
 			}
 
-			if ($(this).val() == 2) {
+			for (var i in ed_drawing_edit_Position.doodleArray) {
+				if (ed_drawing_edit_Position.doodleArray[i].className == 'Surgeon') {
+					doodle2 = ed_drawing_edit_Position.doodleArray[i];
+				}
+			}
+
+			if ($(this).val() == 2) { //right
 				if (parseInt(doodle.rotation * (180/Math.PI)) == 90) {
 					et_operationnote_hookDoodle = doodle;
 					et_operationnote_hookTarget = -90;
 					et_operationnote_hookDirection = 1;
 					opnote_move_eyedraw_element_to_position();
 				}
-			} else if ($(this).val() == 1) {
+
+				if (parseInt(doodle2.rotation * (180/Math.PI)) == 270) {
+					et_operationnote_hookDoodle2 = doodle2;
+					et_operationnote_hookTarget2 = 90;
+					et_operationnote_hookDirection2 = 1;
+					opnote_move_eyedraw_element_to_position2();
+				}
+
+			} else if ($(this).val() == 1) { //left
 				if (parseInt(doodle.rotation * (180/Math.PI)) == -90) {
 					et_operationnote_hookDoodle = doodle;
 					et_operationnote_hookTarget = 90;
 					et_operationnote_hookDirection = 0;
 					opnote_move_eyedraw_element_to_position();
+				}
+
+				if (parseInt(doodle2.rotation * (180/Math.PI)) == 90) {
+					et_operationnote_hookDoodle2 = doodle2;
+					et_operationnote_hookTarget2 = 270;
+					et_operationnote_hookDirection2 = 0;
+					opnote_move_eyedraw_element_to_position2();
 				}
 			}
 		}
@@ -187,6 +209,10 @@ var et_operationnote_hookDoodle = null;
 var et_operationnote_hookTarget = 0;
 var et_operationnote_hookDirection = 0;
 
+var et_operationnote_hookDoodle2 = null;
+var et_operationnote_hookTarget2 = 0;
+var et_operationnote_hookDirection2 = 0;
+
 function opnote_move_eyedraw_element_to_position() {
 	var target = et_operationnote_hookTarget;
 	var doodle = et_operationnote_hookDoodle;
@@ -216,6 +242,52 @@ function opnote_move_eyedraw_element_to_position() {
 				doodle.rotation = pos * (Math.PI/180);
 				ed_drawing_edit_Cataract.repaint();
 				setTimeout('opnote_move_eyedraw_element_to_position();', 20);
+			}
+		}
+	}
+}
+
+function opnote_move_eyedraw_element_to_position2() {
+	var target = et_operationnote_hookTarget2;
+	var doodle = et_operationnote_hookDoodle2;
+	var pos = parseInt(doodle.rotation * (180/Math.PI));
+
+	if (et_operationnote_hookDirection2 == 0) {
+		if (pos < target) {
+			pos += 10;
+			if (pos > target) {
+				doodle.rotation = target * (Math.PI/180);
+				doodle.originY = 0 - (300 * Math.sin(((target-90) * (Math.PI/180))));
+				doodle.originX = 300 * Math.cos(((target-90) * (Math.PI/180)));
+
+				ed_drawing_edit_Position.repaint();
+				ed_drawing_edit_Position.modified = false;
+			} else {
+				doodle.rotation = pos * (Math.PI/180);
+				doodle.originY = 0 - (300 * Math.sin(((pos-90) * (Math.PI/180))));
+				doodle.originX = 300 * Math.cos(((pos-90) * (Math.PI/180)));
+
+				ed_drawing_edit_Position.repaint();
+				setTimeout('opnote_move_eyedraw_element_to_position2();', 20);
+			}
+		}
+	} else {
+		if (pos > target) {
+			pos -= 10;
+			if (pos < target) {
+				doodle.rotation = target * (Math.PI/180);
+				doodle.originY = 0 - (300 * Math.sin(((target-90) * (Math.PI/180))));
+				doodle.originX = 300 * Math.cos(((target-90) * (Math.PI/180)));
+
+				ed_drawing_edit_Position.repaint();
+				ed_drawing_edit_Position.modified = false;
+			} else {
+				doodle.rotation = pos * (Math.PI/180);
+				doodle.originY = 0 - (300 * Math.sin(((pos-90) * (Math.PI/180))));
+				doodle.originX = 300 * Math.cos(((pos-90) * (Math.PI/180)));
+
+				ed_drawing_edit_Position.repaint();
+				setTimeout('opnote_move_eyedraw_element_to_position2();', 20);
 			}
 		}
 	}
