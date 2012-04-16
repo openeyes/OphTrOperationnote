@@ -62,7 +62,7 @@ class ElementCataract extends BaseEventTypeElement
 			array('event_id, incision_site_id, length, meridian, incision_type_id, iol_position_id, iol_power, iol_type_id, eyedraw, report, complication_notes, eyedraw2', 'safe'),
 			array('incision_site_id, length, meridian, incision_type_id, iol_position_id, iol_power, iol_type_id, eyedraw, report, eyedraw2', 'required'),
 			array('length', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9](\.[0-9])?$/', 'message' => 'Length must be 0 - 9.9 in increments of 0.1'),
-			array('meridian', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9]{1,3}(\.[0-9])?$/', 'min' => 000.5, 'max' => 180, 'message' => 'Meridian must be 000.5 - 180.0 degrees'),
+			array('meridian', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9]{1,3}(\.[0-9])?$/', 'min' => 000, 'max' => 180, 'message' => 'Meridian must be 000.5 - 180.0 degrees'),
 			array('iol_power', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9]{1,3}(\.[0-9])?$/', 'message' => 'IOL power must be a number with an optional single decimal place'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
