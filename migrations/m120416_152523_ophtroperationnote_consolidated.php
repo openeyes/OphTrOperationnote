@@ -1,5 +1,5 @@
 <?php
-class m120413_091720_ophtroperationnote_consolidated extends CDbMigration
+class m120416_152523_ophtroperationnote_consolidated extends CDbMigration
 {
 	public function up() {
 				// create et_ophtroperationnote_procedurelist
@@ -6971,9 +6971,154 @@ Aspiration of soft lens matter'");
 		);
 
 		$this->insert('element_type', array('name' => 'Comments', 'class_name' => 'ElementComments', 'event_type_id' => $event_type['id'], 'display_order' => 6, 'default' => 1));
+			$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
+		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:event_type_id',array(':name'=>'Drugs',':event_type_id'=>$event_type['id']))->queryRow();
+
+		$this->update('element_type',array('name'=>'Post-op drugs','class_name'=>'ElementPostOpDrugs'),'id='.$element_type['id']);
+
+		$this->dropForeignKey('et_ophtroperationnote_drugs_type_created_user_id_fk','et_ophtroperationnote_drugs');
+		$this->dropForeignKey('et_ophtroperationnote_drugs_type_last_modified_user_id_fk','et_ophtroperationnote_drugs');
+		$this->dropIndex('et_ophtroperationnote_drugs_type_created_user_id_fk','et_ophtroperationnote_drugs');
+		$this->dropIndex('et_ophtroperationnote_drugs_type_last_modified_user_id_fk','et_ophtroperationnote_drugs');
+		$this->createIndex('et_ophtroperationnote_postop_drugs_last_modified_user_id_fk','et_ophtroperationnote_drugs','last_modified_user_id');
+		$this->createIndex('et_ophtroperationnote_postop_drugs_created_user_id_fk','et_ophtroperationnote_drugs','created_user_id');
+		$this->addForeignKey('et_ophtroperationnote_postop_drugs_last_modified_user_id_fk','et_ophtroperationnote_drugs','last_modified_user_id','user','id');
+		$this->addForeignKey('et_ophtroperationnote_postop_drugs_created_user_id_fk','et_ophtroperationnote_drugs','created_user_id','user','id');
+		$this->renameTable('et_ophtroperationnote_drugs','et_ophtroperationnote_postop_drugs');
+
+		$this->dropForeignKey('et_ophtroperationnote_dd_drugs_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropForeignKey('et_ophtroperationnote_dd_drug_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropForeignKey('et_ophtroperationnote_dd_created_user_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropForeignKey('et_ophtroperationnote_dd_last_modified_user_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropIndex('et_ophtroperationnote_dd_drugs_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropIndex('et_ophtroperationnote_dd_drug_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropIndex('et_ophtroperationnote_dd_last_modified_user_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropIndex('et_ophtroperationnote_dd_created_user_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->renameColumn('et_ophtroperationnote_drugs_drug','et_ophtroperationnote_drugs_id','et_ophtroperationnote_postop_drugs_id');
+		$this->createIndex('et_ophtroperationnote_pdd_created_user_id_fk','et_ophtroperationnote_drugs_drug','created_user_id');
+		$this->createIndex('et_ophtroperationnote_pdd_last_modified_user_id_fk','et_ophtroperationnote_drugs_drug','last_modified_user_id');
+		$this->createIndex('et_ophtroperationnote_pdd_drug_id_fk','et_ophtroperationnote_drugs_drug','drug_id');
+		$this->createIndex('et_ophtroperationnote_pdd_drugs_id_fk','et_ophtroperationnote_drugs_drug','et_ophtroperationnote_postop_drugs_id');
+		$this->addForeignKey('et_ophtroperationnote_pdd_last_modified_user_id_fk','et_ophtroperationnote_drugs_drug','last_modified_user_id','user','id');
+		$this->addForeignKey('et_ophtroperationnote_pdd_created_user_id_fk','et_ophtroperationnote_drugs_drug','created_user_id','user','id');
+		$this->addForeignKey('et_ophtroperationnote_pdd_drug_id_fk','et_ophtroperationnote_drugs_drug','drug_id','drug','id');
+		$this->addForeignKey('et_ophtroperationnote_pdd_drugs_id_fk','et_ophtroperationnote_drugs_drug','et_ophtroperationnote_postop_drugs_id','et_ophtroperationnote_postop_drugs','id');
+		$this->renameTable('et_ophtroperationnote_drugs_drug','et_ophtroperationnote_postop_drugs_drug');
+			$this->createTable('et_ophtroperationnote_cataract_operative_device',array(
+				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
+				'cataract_id' => 'int(10) unsigned NOT NULL',
+				'operative_device_id' => 'int(10) unsigned NOT NULL',
+				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT \'1\'',
+				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1900-01-01 00:00:00\'',
+				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT \'1\'',
+				'created_date' => 'datetime NOT NULL DEFAULT \'1900-01-01 00:00:00\'',
+				'PRIMARY KEY (`id`)',
+				'KEY `et_ophtroperationnote_ccd_cataract_id_fk` (`cataract_id`)',
+				'KEY `et_ophtroperationnote_ccd_operative_device_id_fk` (`operative_device_id`)',
+				'KEY `et_ophtroperationnote_ccd_last_modified_user_id_fk` (`last_modified_user_id`)',
+				'KEY `et_ophtroperationnote_ccd_created_user_id_fk` (`created_user_id`)',
+				'CONSTRAINT `et_ophtroperationnote_ccd_cataract_id_fk` FOREIGN KEY (`cataract_id`) REFERENCES `et_ophtroperationnote_cataract` (`id`)',
+				'CONSTRAINT `et_ophtroperationnote_ccd_operative_device_id_fk` FOREIGN KEY (`operative_device_id`) REFERENCES `operative_device` (`id`)',
+				'CONSTRAINT `et_ophtroperationnote_ccd_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `et_ophtroperationnote_ccd_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
+			),
+			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
+		);
+			$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>2),'id=1');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>3),'id=2');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>4),'id=3');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>5),'id=4');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>6),'id=5');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>7),'id=6');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>8),'id=7');
+
+		$this->insert('et_ophtroperationnote_cataract_iol_position',array('id'=>8,'name'=>'None','display_order'=>1));
+			$this->addColumn('et_ophtroperationnote_cataract','iol_power','varchar(5) COLLATE utf8_bin NOT NULL');
+			$this->dropColumn('et_ophtroperationnote_cataract','vision_blue');
+			$this->createTable('et_ophtroperationnote_cataract_iol_type',array(
+				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
+				'name' => 'varchar(64) COLLATE utf8_bin NOT NULL',
+				'display_order' => 'tinyint(3) unsigned NOT NULL DEFAULT 1',
+				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT \'1\'',
+				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1900-01-01 00:00:00\'',
+				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT \'1\'',
+				'created_date' => 'datetime NOT NULL DEFAULT \'1900-01-01 00:00:00\'',
+				'PRIMARY KEY (`id`)',
+				'KEY `et_ophtroperationnote_cot_last_modified_user_id_fk` (`last_modified_user_id`)',
+				'KEY `et_ophtroperationnote_cot_created_user_id_fk` (`created_user_id`)',
+				'CONSTRAINT `et_ophtroperationnote_cot_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `et_ophtroperationnote_cot_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
+			),
+			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
+		);
+
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('name'=>'Type 1','display_order'=>1));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('name'=>'Type 2','display_order'=>2));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('name'=>'Type 3','display_order'=>3));
+
+		$this->addColumn('et_ophtroperationnote_cataract','iol_type_id','int(10) unsigned NOT NULL');
+		$this->createIndex('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract','iol_type_id');
+		$this->addForeignKey('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract','iol_type_id','et_ophtroperationnote_cataract_iol_type','id');
 	}
 
 	public function down() {
+	
+		$this->dropForeignKey('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract');
+		$this->dropIndex('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract');
+		$this->dropColumn('et_ophtroperationnote_cataract','iol_type_id');
+
+		$this->dropTable('et_ophtroperationnote_cataract_iol_type');
+	
+		$this->addColumn('et_ophtroperationnote_cataract','vision_blue',"tinyint(1) unsigned NOT NULL DEFAULT '1'");
+	
+		$this->dropColumn('et_ophtroperationnote_cataract','iol_power');
+	
+		$this->delete('et_ophtroperationnote_cataract_iol_position','id=8');
+
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>1),'id=1');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>2),'id=2');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>3),'id=3');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>4),'id=4');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>5),'id=5');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>6),'id=6');
+		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>7),'id=7');
+	
+		$this->dropTable('et_ophtroperationnote_cataract_operative_device');
+	
+		$this->renameTable('et_ophtroperationnote_postop_drugs_drug','et_ophtroperationnote_drugs_drug');
+		$this->dropForeignKey('et_ophtroperationnote_pdd_drugs_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropForeignKey('et_ophtroperationnote_pdd_drug_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropForeignKey('et_ophtroperationnote_pdd_created_user_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropForeignKey('et_ophtroperationnote_pdd_last_modified_user_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropIndex('et_ophtroperationnote_pdd_created_user_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropIndex('et_ophtroperationnote_pdd_last_modified_user_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropIndex('et_ophtroperationnote_pdd_drug_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->dropIndex('et_ophtroperationnote_pdd_drugs_id_fk','et_ophtroperationnote_drugs_drug');
+		$this->renameColumn('et_ophtroperationnote_drugs_drug','et_ophtroperationnote_postop_drugs_id','et_ophtroperationnote_drugs_id');
+		$this->createIndex('et_ophtroperationnote_dd_drugs_id_fk','et_ophtroperationnote_drugs_drug','et_ophtroperationnote_drugs_id');
+		$this->createIndex('et_ophtroperationnote_dd_drug_id_fk','et_ophtroperationnote_drugs_drug','drug_id');
+		$this->createIndex('et_ophtroperationnote_dd_last_modified_user_id_fk','et_ophtroperationnote_drugs_drug','last_modified_user_id');
+		$this->createIndex('et_ophtroperationnote_dd_created_user_id_fk','et_ophtroperationnote_drugs_drug','created_user_id');
+		$this->addForeignKey('et_ophtroperationnote_dd_drugs_id_fk','et_ophtroperationnote_drugs_drug','et_ophtroperationnote_drugs_id','et_ophtroperationnote_postop_drugs','id');
+		$this->addForeignKey('et_ophtroperationnote_dd_drug_id_fk','et_ophtroperationnote_drugs_drug','drug_id','drug','id');
+		$this->addForeignKey('et_ophtroperationnote_dd_created_user_id_fk','et_ophtroperationnote_drugs_drug','created_user_id','user','id');
+		$this->addForeignKey('et_ophtroperationnote_dd_last_modified_user_id_fk','et_ophtroperationnote_drugs_drug','last_modified_user_id','user','id');
+
+		$this->dropForeignKey('et_ophtroperationnote_postop_drugs_created_user_id_fk','et_ophtroperationnote_postop_drugs');
+		$this->dropForeignKey('et_ophtroperationnote_postop_drugs_last_modified_user_id_fk','et_ophtroperationnote_postop_drugs');
+		$this->dropIndex('et_ophtroperationnote_postop_drugs_created_user_id_fk','et_ophtroperationnote_postop_drugs');
+		$this->dropIndex('et_ophtroperationnote_postop_drugs_last_modified_user_id_fk','et_ophtroperationnote_postop_drugs');
+		$this->createIndex('et_ophtroperationnote_drugs_type_last_modified_user_id_fk','et_ophtroperationnote_postop_drugs','last_modified_user_id');
+		$this->createIndex('et_ophtroperationnote_drugs_type_created_user_id_fk','et_ophtroperationnote_postop_drugs','created_user_id');
+		$this->addForeignKey('et_ophtroperationnote_drugs_type_last_modified_user_id_fk','et_ophtroperationnote_postop_drugs','last_modified_user_id','user','id');
+		$this->addForeignKey('et_ophtroperationnote_drugs_type_created_user_id_fk','et_ophtroperationnote_postop_drugs','created_user_id','user','id');
+		$this->renameTable('et_ophtroperationnote_postop_drugs','et_ophtroperationnote_drugs');
+
+		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
+		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:event_type_id',array(':name'=>'Post-op drugs',':event_type_id'=>$event_type['id']))->queryRow();
+
+		$this->update('element_type',array('name'=>'Drugs','class_name'=>'ElementDrugs'),'id='.$element_type['id']);
+	
 
 		$this->dropTable('et_ophtroperationnote_comments');
 
