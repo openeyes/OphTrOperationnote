@@ -41,6 +41,15 @@
 				<?php echo $form->dropDownList($element, 'incision_type_id', CHtml::listData(IncisionType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
 				<?php echo $form->textArea($element, 'report', array('rows'=>6,'cols'=>35))?>
 			</div>
+			<?php
+			$this->widget('application.modules.eyeDraw.OEEyeDrawWidgetSurgeonPosition', array(
+				'side'=>$element->getSelectedEye()->getShortName(),
+				'mode'=>'edit',
+				'size'=>200,
+				'model'=>$element,
+				'attribute'=>'eyedraw2',
+			));
+			?>
 		</div>
 		<div class="right" style="width:35%;">
 			<div class="halfHeight">
@@ -50,15 +59,6 @@
 				<?php echo $form->multiSelectList($element, 'CataractOperativeDevices', 'operative_devices', 'operative_device_id', $element->operative_device_list, $element->operative_device_defaults, array('empty' => '- Devices -', 'label' => 'Devices'))?>
 				<?php echo $form->multiSelectList($element, 'CataractComplications', 'complications', 'complication_id', CHtml::listData(CataractComplications::model()->findAll(), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'))?>
 				<?php echo $form->textArea($element, 'complication_notes', array('rows'=>5,'cols'=>35))?>
-				<?php
-				$this->widget('application.modules.eyeDraw.OEEyeDrawWidgetSurgeonPosition', array(
-					'side'=>$element->getSelectedEye()->getShortName(),
-					'mode'=>'edit',
-					'size'=>200,
-					'model'=>$element,
-					'attribute'=>'eyedraw2',
-				));
-				?>
 			</div>
 		</div>
 	</div>
