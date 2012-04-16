@@ -44,7 +44,7 @@
 
 	<div class="col1" style="margin-top: 1em;">
 		<?php
-		$this->widget('application.modules.eyeDraw.OEEyeDrawWidget', array(
+		$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 			'identifier'=> 'Buckle',
 			'side'=>'R',
 			'mode'=>'view',
