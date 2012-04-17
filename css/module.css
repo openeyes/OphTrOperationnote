@@ -21,3 +21,5 @@ div.ElementComments > h4 { background-color: #fff; margin-bottom: 5px !important
 
 #div_ElementComments_comments { display: inline-block; }
 #div_ElementComments_postop_instructions { display: inline-block; }
+
+#ElementComments_postop_instructions { display: block; margin-top: 12px; }
