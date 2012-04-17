@@ -200,6 +200,32 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	$('#ElementCataract_meridian').unbind('change').change(function() {
+		var doodle = null;
+
+		for (var i in ed_drawing_edit_Cataract.doodleArray) {
+			if (ed_drawing_edit_Cataract.doodleArray[i].className == 'PhakoIncision') {
+				doodle = ed_drawing_edit_Cataract.doodleArray[i];
+			}
+		}
+
+		doodle.setParameter('incisionMeridian',$(this).val());
+		ed_drawing_edit_Cataract.repaint();
+	});
+
+	$('#ElementCataract_length').unbind('change').change(function() {
+		var doodle = null;
+
+		for (var i in ed_drawing_edit_Cataract.doodleArray) {
+			if (ed_drawing_edit_Cataract.doodleArray[i].className == 'PhakoIncision') {
+				doodle = ed_drawing_edit_Cataract.doodleArray[i];
+			}
+		} 
+
+		doodle.setParameter('incisionLength',$(this).val());
+		ed_drawing_edit_Cataract.repaint();
+	});
 });
 
 var anaesthetic_type_bind = false;
