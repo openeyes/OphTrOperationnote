@@ -7091,8 +7091,10 @@ Aspiration of soft lens matter'");
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
 
-		$this->insert('et_ophtroperationnote_site_subspecialty_postop_instructions',array('id'=>1,'site_id'=>1,'subspecialty_id'=>4,'content'=>'Use drops three times a day','display_order'=>1));
-		$this->insert('et_ophtroperationnote_site_subspecialty_postop_instructions',array('id'=>2,'site_id'=>1,'subspecialty_id'=>4,'content'=>'Use drops four times a day','display_order'=>2));
+		if ($subspecialty = $this->dbConnection->createCommand()->select('id')->from('subspecialty')->where('id=:id', array(':id'=>4))->queryRow()) {
+			$this->insert('et_ophtroperationnote_site_subspecialty_postop_instructions',array('id'=>1,'site_id'=>1,'subspecialty_id'=>$subspecialty['id'],'content'=>'Use drops three times a day','display_order'=>1));
+			$this->insert('et_ophtroperationnote_site_subspecialty_postop_instructions',array('id'=>2,'site_id'=>1,'subspecialty_id'=>$subspecialty['id'],'content'=>'Use drops four times a day','display_order'=>2));
+		}
 	}
 
 	public function down() {
