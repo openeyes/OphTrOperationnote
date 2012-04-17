@@ -45,7 +45,7 @@
 			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
 				'side'=>$element->getSelectedEye()->getShortName(),
 				'mode'=>'edit',
-				'size'=>200,
+				'size'=>140,
 				'model'=>$element,
 				'attribute'=>'eyedraw2',
 				'offset_x' => 10,
