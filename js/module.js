@@ -226,6 +226,12 @@ $(document).ready(function() {
 		doodle.setParameter('incisionLength',$(this).val());
 		ed_drawing_edit_Cataract.repaint();
 	});
+
+	$('#ElementCataract_iol_type_id').unbind('change').change(function() {
+		if ($(this).children('option:selected').text() == 'MTA3UO' || $(this).children('option:selected').text() == 'MTA4UO') {
+			$('#ElementCataract_iol_position_id').val(4);
+		}
+	});
 });
 
 var anaesthetic_type_bind = false;
