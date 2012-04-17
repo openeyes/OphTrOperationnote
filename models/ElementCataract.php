@@ -104,7 +104,7 @@ class ElementCataract extends BaseEventTypeElement
 			'iol_type_id' => 'IOL Type',
 			'length' => 'Length',
 			'meridian' => 'Meridian',
-			'report' => 'Report',
+			'report' => 'Details',
 			'complication_notes' => 'Complication notes',
 		);
 	}
