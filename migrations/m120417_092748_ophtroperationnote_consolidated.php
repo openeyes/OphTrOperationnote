@@ -1,5 +1,5 @@
 <?php
-class m120416_152523_ophtroperationnote_consolidated extends CDbMigration
+class m120417_092748_ophtroperationnote_consolidated extends CDbMigration
 {
 	public function up() {
 				// create et_ophtroperationnote_procedurelist
@@ -7059,9 +7059,25 @@ Aspiration of soft lens matter'");
 		$this->addColumn('et_ophtroperationnote_cataract','iol_type_id','int(10) unsigned NOT NULL');
 		$this->createIndex('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract','iol_type_id');
 		$this->addForeignKey('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract','iol_type_id','et_ophtroperationnote_cataract_iol_type','id');
+			$this->delete('et_ophtroperationnote_cataract_iol_type');
+
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>1,'name'=>'SA60AT','display_order'=>1));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>2,'name'=>'SN60WF','display_order'=>2));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>3,'name'=>'MA60MA','display_order'=>3));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>4,'name'=>'MA60AC','display_order'=>4));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>5,'name'=>'CZ70BD','display_order'=>5));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>6,'name'=>'MTA3UO','display_order'=>6));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>7,'name'=>'MTA4UO','display_order'=>7));
 	}
 
 	public function down() {
+	
+		$this->delete('et_ophtroperationnote_cataract_iol_type');
+
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>1,'name'=>'Type 1','display_order'=>1));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>2,'name'=>'Type 2','display_order'=>2));
+		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>3,'name'=>'Type 3','display_order'=>3));
+	
 	
 		$this->dropForeignKey('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract');
 		$this->dropIndex('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract');
