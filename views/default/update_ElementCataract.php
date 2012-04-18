@@ -24,7 +24,7 @@
 	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
 		<div class="left" style="width:65%;">
 			<?php
-			$this->widget('application.extensions.eyedraw.OEEyeDrawWidgetCataract', array(
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetCataract', array(
 				'side'=>$element->eye->getShortName(),
 				'mode'=>'edit',
 				'size'=>300,
@@ -42,7 +42,7 @@
 				<?php echo $form->textArea($element, 'report', array('rows'=>6,'cols'=>35))?>
 			</div>
 			<?php
-			$this->widget('application.extensions.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
 				'side'=>$element->eye->getShortName(),
 				'mode'=>'edit',
 				'size'=>140,
