@@ -22,7 +22,7 @@
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
 	<?php
-	$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+	$this->widget('application.extensions.eyedraw.OEEyeDrawWidget', array(
 		'identifier'=> 'Buckle',
 		'side'=>'R',
 		'mode'=>'edit',
