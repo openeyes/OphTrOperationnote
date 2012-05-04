@@ -163,10 +163,14 @@ $(document).ready(function() {
 					opnote_move_eyedraw_element_to_position();
 				}
 
-				if (parseInt(doodle2.rotation * (180/Math.PI)) == 270) {
+				if (parseInt(doodle2.rotation * (180/Math.PI)) == 90) {
 					et_operationnote_hookDoodle2 = doodle2;
-					et_operationnote_hookTarget2 = 90;
-					et_operationnote_hookDirection2 = 1;
+					et_operationnote_hookTarget2 = 270;
+					if (Math.floor(Math.random()*100) == 42) {
+						et_operationnote_hookDirection2 = 2;
+					} else {
+						et_operationnote_hookDirection2 = 0;
+					}
 					opnote_move_eyedraw_element_to_position2();
 				}
 
@@ -178,10 +182,10 @@ $(document).ready(function() {
 					opnote_move_eyedraw_element_to_position();
 				}
 
-				if (parseInt(doodle2.rotation * (180/Math.PI)) == 90) {
+				if (parseInt(doodle2.rotation * (180/Math.PI)) == 270) {
 					et_operationnote_hookDoodle2 = doodle2;
-					et_operationnote_hookTarget2 = 270;
-					et_operationnote_hookDirection2 = 0;
+					et_operationnote_hookTarget2 = 90;
+					et_operationnote_hookDirection2 = 1;
 					opnote_move_eyedraw_element_to_position2();
 				}
 			}
@@ -307,7 +311,9 @@ function opnote_move_eyedraw_element_to_position2() {
 
 	if (et_operationnote_hookDirection2 == 0) {
 		if (pos < target) {
+
 			pos += 10;
+
 			if (pos > target) {
 				doodle.rotation = target * (Math.PI/180);
 				doodle.originY = 0 - (300 * Math.sin(((target-90) * (Math.PI/180))));
@@ -324,9 +330,11 @@ function opnote_move_eyedraw_element_to_position2() {
 				setTimeout('opnote_move_eyedraw_element_to_position2();', 20);
 			}
 		}
-	} else {
+	} else if (et_operationnote_hookDirection2 == 1) {
 		if (pos > target) {
+
 			pos -= 10;
+
 			if (pos < target) {
 				doodle.rotation = target * (Math.PI/180);
 				doodle.originY = 0 - (300 * Math.sin(((target-90) * (Math.PI/180))));
@@ -343,5 +351,40 @@ function opnote_move_eyedraw_element_to_position2() {
 				setTimeout('opnote_move_eyedraw_element_to_position2();', 20);
 			}
 		}
+	} else if (et_operationnote_hookDirection2 == 2) {
+		// from 90 to 270, counter-clockwise
+		if (pos != target) {
+			pos -= 10;
+			if (pos <0) {
+				pos = 350;
+			}
+			if (parseInt(pos) == parseInt(target)) {
+				doodle.rotation = target * (Math.PI/180);
+				doodle.originY = (300 * Math.sin(((target-90) * (Math.PI/180))));
+				doodle.originX = 300 * Math.cos(((target-90) * (Math.PI/180)));
+
+				ed_drawing_edit_Position.repaint();
+				ed_drawing_edit_Position.modified = false;
+			} else {
+				y_offset = get_y_offset(pos);
+				doodle.rotation = pos * (Math.PI/180);
+				doodle.originY = y_offset + (300 * Math.sin(((pos+90) * (Math.PI/180))));
+				doodle.originX = 300 * Math.cos(((pos-90) * (Math.PI/180)));
+
+				ed_drawing_edit_Position.repaint();
+				setTimeout('opnote_move_eyedraw_element_to_position2();', 20);
+			}
+		}
 	}
+}
+
+function get_y_offset(pos) {
+	if (pos == 180) return 0;
+	if (pos > 180) {
+		var diff = pos-180;
+	} else {
+		var diff = 180-pos;
+	}
+
+	return diff - (diff/2);
 }
