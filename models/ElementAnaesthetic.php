@@ -173,39 +173,61 @@ class ElementAnaesthetic extends BaseEventTypeElement
 	protected function afterSave() {
 		if (!empty($_POST['AnaestheticAgent'])) {
 
-			OperationAnaestheticAgent::model()->deleteAll('et_ophtroperationnote_anaesthetic_id = :anaestheticId', array(':anaestheticId' => $this->id));
+			$existing_agent_ids = array();
 
-			$order = 1;
+			foreach (OperationAnaestheticAgent::model()->findAll('et_ophtroperationnote_anaesthetic_id = :anaestheticId', array(':anaestheticId' => $this->id)) as $oaa) {
+				$existing_agent_ids[] = $oaa->anaesthetic_agent_id;
+			}
 
 			foreach ($_POST['AnaestheticAgent'] as $id) {
-				$anaesthetic_agent = new OperationAnaestheticAgent;
-				$anaesthetic_agent->et_ophtroperationnote_anaesthetic_id = $this->id;
-				$anaesthetic_agent->anaesthetic_agent_id = $id;
+				if (!in_array($id,$existing_agent_ids)) {
+					$anaesthetic_agent = new OperationAnaestheticAgent;
+					$anaesthetic_agent->et_ophtroperationnote_anaesthetic_id = $this->id;
+					$anaesthetic_agent->anaesthetic_agent_id = $id;
 
-				if (!$anaesthetic_agent->save()) {
-					throw new Exception('Unable to save anaesthetic_agent: '.print_r($anaesthetic_agent->getErrors(),true));
+					if (!$anaesthetic_agent->save()) {
+						throw new Exception('Unable to save anaesthetic_agent: '.print_r($anaesthetic_agent->getErrors(),true));
+					}
 				}
+			}
 
-				$order++;
+			foreach ($existing_agent_ids as $id) {
+				if (!in_array($id,$_POST['AnaestheticAgent'])) {
+					$oaa = OperationAnaestheticAgent::model()->find('et_ophtroperationnote_anaesthetic_id = :anaestheticId and anaesthetic_agent_id = :anaestheticAgentId',array(':anaestheticId' => $this->id, ':anaestheticAgentId' => $id));
+					if (!$oaa->delete()) {
+						throw new Exception('Unable to delete anaesthetic agent: '.print_r($oaa->getErrors(),true));
+					}
+				}
 			}
 		}
 
 		if (!empty($_POST['AnaestheticComplications'])) {
 
-			AnaestheticComplication::model()->deleteAll('et_ophtroperationnote_anaesthetic_id = :anaestheticId', array(':anaestheticId' => $this->id));
+			$existing_complication_ids = array();
 
-			$order = 1;
+			foreach (AnaestheticComplication::model()->findAll('et_ophtroperationnote_anaesthetic_id = :anaestheticId', array(':anaestheticId' => $this->id)) as $ac) {
+				$existing_complication_ids[] = $ac->anaesthetic_complication_id;
+			}
 
 			foreach ($_POST['AnaestheticComplications'] as $id) {
-				$anaesthetic_complication = new AnaestheticComplication;
-				$anaesthetic_complication->et_ophtroperationnote_anaesthetic_id = $this->id;
-				$anaesthetic_complication->anaesthetic_complication_id = $id;
+				if (!in_array($id,$existing_complication_ids)) {
+					$anaesthetic_complication = new AnaestheticComplication;
+					$anaesthetic_complication->et_ophtroperationnote_anaesthetic_id = $this->id;
+					$anaesthetic_complication->anaesthetic_complication_id = $id;
 
-				if (!$anaesthetic_complication->save()) {
-					throw new Exception('Unable to save anaesthetic_complication: '.print_r($anaesthetic_complication->getErrors(),true));
+					if (!$anaesthetic_complication->save()) {
+						throw new Exception('Unable to save anaesthetic_complication: '.print_r($anaesthetic_complication->getErrors(),true));
+					}
 				}
+			}
 
-				$order++;
+			foreach ($existing_complication_ids as $id) {
+				if (!in_array($id,$_POST['AnaestheticComplications'])) {
+					$ac = AnaestheticComplication::model()->find('et_ophtroperationnote_anaesthetic_id = :anaestheticId and anaesthetic_complication_id = :anaestheticComplicationId',array(':anaestheticId' => $this->id, ':anaestheticComplicationId' => $id));
+					if (!$ac->delete()) {
+						throw new Exception('Unable to delete anaesthetic complication: '.print_r($ac->getErrors(),true));
+					}
+				}
 			}
 		}
 

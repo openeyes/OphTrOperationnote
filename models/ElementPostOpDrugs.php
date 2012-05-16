@@ -121,22 +121,33 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 
 	protected function afterSave()
 	{
-		$order = 1;
-
 		if (!empty($_POST['Drug'])) {
 
-			OperationDrug::model()->deleteAll('et_ophtroperationnote_postop_drugs_id = :drugsId', array(':drugsId' => $this->id));
+			$existing_drug_ids = array();
+
+			foreach (OperationDrug::model()->findAll('et_ophtroperationnote_postop_drugs_id = :drugsId', array(':drugsId' => $this->id)) as $od) {
+				$existing_drug_ids[] = $od->drug_id;
+			}
 
 			foreach ($_POST['Drug'] as $id) {
-				$drug = new OperationDrug;
-				$drug->et_ophtroperationnote_postop_drugs_id = $this->id;
-				$drug->drug_id = $id;
+				if (!in_array($id,$existing_drug_ids)) {
+					$drug = new OperationDrug;
+					$drug->et_ophtroperationnote_postop_drugs_id = $this->id;
+					$drug->drug_id = $id;
 
-				if (!$drug->save()) {
-					throw new Exception('Unable to save drug: '.print_r($drug->getErrors(),true));
+					if (!$drug->save()) {
+						throw new Exception('Unable to save drug: '.print_r($drug->getErrors(),true));
+					}
 				}
+			}
 
-				$order++;
+			foreach ($existing_drug_ids as $id) {
+				if (!in_array($id,$_POST['Drug'])) {
+					$od = OperationDrug::model()->find('et_ophtroperationnote_postop_drugs_id = :drugsId and drug_id = :drugId',array(':drugsId' => $this->id, ':drugId' => $id));
+					if (!$od->delete()) {
+						throw new Exception('Unable to delete drug: '.print_r($od->getErrors(),true));
+					}
+				}
 			}
 		}
 

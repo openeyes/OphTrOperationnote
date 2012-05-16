@@ -142,37 +142,63 @@ class ElementCataract extends BaseEventTypeElement
 
 	protected function afterSave()
 	{
-		$order = 1;
-
 		if (!empty($_POST['CataractComplications'])) {
-			CataractComplication::model()->deleteAll('cataract_id = :cataractId', array(':cataractId' => $this->id));
+
+			$existing_complication_ids = array();
+
+			foreach (CataractComplication::model()->findAll('cataract_id = :cataractId', array(':cataractId' => $this->id)) as $cc) {
+				$existing_complication_ids[] = $cc->complication_id;
+			}
 
 			foreach ($_POST['CataractComplications'] as $id) {
-				$complication = new CataractComplication;
-				$complication->cataract_id = $this->id;
-				$complication->complication_id = $id;
+				if (!in_array($id,$existing_complication_ids)) {
+					$complication = new CataractComplication;
+					$complication->cataract_id = $this->id;
+					$complication->complication_id = $id;
 
-				if (!$complication->save()) {
-					throw new Exception('Unable to save cataract complication: '.print_r($complication->getErrors(),true));
+					if (!$complication->save()) {
+						throw new Exception('Unable to save cataract complication: '.print_r($complication->getErrors(),true));
+					}
 				}
+			}
 
-				$order++;
+			foreach ($existing_complication_ids as $id) {
+				if (!in_array($id,$_POST['CataractComplications'])) {
+					$cc = CataractComplication::model()->find('cataract_id = :cataractId and complication_id = :complicationId',array(':cataractId' => $this->id, ':complicationId' => $id));
+					if (!$cc->delete()) {
+						throw new Exception('Unable to delete cataract complication: '.print_r($cc->getErrors(),true));
+					}
+				}
 			}
 		}
 
 		if (!empty($_POST['CataractOperativeDevices'])) {
-			CataractOperativeDevice::model()->deleteAll('cataract_id = :cataractId', array(':cataractId' => $this->id));
+			
+			$existing_device_ids = array();
+
+			foreach (CataractOperativeDevice::model()->findAll('cataract_id = :cataractId', array(':cataractId' => $this->id)) as $cod) {
+				$existing_device_ids[] = $cod->id;
+			}
 
 			foreach ($_POST['CataractOperativeDevices'] as $id) {
-				$operative_device = new CataractOperativeDevice;
-				$operative_device->cataract_id = $this->id;
-				$operative_device->operative_device_id = $id;
+				if (!in_array($id,$existing_device_ids)) {
+					$operative_device = new CataractOperativeDevice;
+					$operative_device->cataract_id = $this->id;
+					$operative_device->operative_device_id = $id;
 
-				if (!$operative_device->save()) {
-					throw new Exception('Unable to save cataract operative device: '.print_r($operative_device->getErrors(),true));
+					if (!$operative_device->save()) {
+						throw new Exception('Unable to save cataract operative device: '.print_r($operative_device->getErrors(),true));
+					}
 				}
+			}
 
-				$order++;
+			foreach ($existing_device_ids as $id) {
+				if (!in_array($id,$_POST['CataractOperativeDevices'])) {
+					$cod = CataractOperativeDevice::model()->find('cataract_id = :cataractId and operative_device_id = :operativeDeviceId', array(':cataractId' => $this->id, ':operativeDeviceId' => $id));
+					if (!$cod->delete()) {
+						throw new Exception('Unable to delete operative device: '.print_r($cod->getErrors(),true));
+					}
+				}
 			}
 		}
 

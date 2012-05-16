@@ -119,23 +119,33 @@ class ElementProcedureList extends BaseEventTypeElement
 	}
 
 	protected function afterSave() {
-		$order = 1;
-
 		if (!empty($_POST['Procedures'])) {
-			// first wipe out any existing procedures so we start from scratch
-			ProcedureListProcedureAssignment::model()->deleteAll('procedurelist_id = :id', array(':id' => $this->id));
+
+			$existing_procedure_ids = array();
+
+			foreach (ProcedureListProcedureAssignment::model()->findAll('procedurelist_id = :id', array(':id' => $this->id)) as $pa) {
+				$existing_procedure_ids[] = $pa->proc_id;
+			}
 
 			foreach ($_POST['Procedures'] as $id) {
-				$procedure = new ProcedureListProcedureAssignment;
-				$procedure->procedurelist_id = $this->id;
-				$procedure->proc_id = $id;
-				$procedure->display_order = $order;
+				if (!in_array($id,$existing_procedure_ids)) {
+					$procedure = new ProcedureListProcedureAssignment;
+					$procedure->procedurelist_id = $this->id;
+					$procedure->proc_id = $id;
 
-				if (!$procedure->save()) {
-					throw new Exception('Unable to save procedure');
+					if (!$procedure->save()) {
+						throw new Exception('Unable to save procedure');
+					}
 				}
+			}
 
-				$order++;
+			foreach ($existing_procedure_ids as $id) {
+				if (!in_array($id,$_POST['Procedures'])) {
+					$pa = new ProcedureListProcedureAssignment::model()->find('procedurelist_id = :id and proc_id = :procId',array(':id' => $this->id, ':procId' => $id));
+					if (!$pa->delete()) {
+						throw new Exception('Unable to delete procedure assignment: '.print_r($pa->getErrors(),true));
+					}
+				}
 			}
 		}
 
