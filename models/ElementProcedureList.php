@@ -141,7 +141,7 @@ class ElementProcedureList extends BaseEventTypeElement
 
 			foreach ($existing_procedure_ids as $id) {
 				if (!in_array($id,$_POST['Procedures'])) {
-					$pa = new ProcedureListProcedureAssignment::model()->find('procedurelist_id = :id and proc_id = :procId',array(':id' => $this->id, ':procId' => $id));
+					$pa = ProcedureListProcedureAssignment::model()->find('procedurelist_id = :id and proc_id = :procId',array(':id' => $this->id, ':procId' => $id));
 					if (!$pa->delete()) {
 						throw new Exception('Unable to delete procedure assignment: '.print_r($pa->getErrors(),true));
 					}
