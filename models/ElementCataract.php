@@ -177,7 +177,7 @@ class ElementCataract extends BaseEventTypeElement
 			$existing_device_ids = array();
 
 			foreach (CataractOperativeDevice::model()->findAll('cataract_id = :cataractId', array(':cataractId' => $this->id)) as $cod) {
-				$existing_device_ids[] = $cod->id;
+				$existing_device_ids[] = $cod->operative_device_id;
 			}
 
 			foreach ($_POST['CataractOperativeDevices'] as $id) {
