@@ -99,6 +99,25 @@ function move_eyedraw_elements_with_surgeon(doodle, oldPos, newPos) {
 
 	// Only move the incision and sideports if the they are currently aligned with the surgeon
 
+	if (parseInt(incisionDoodle.rotation * 180 / Math.PI) <0) {
+		incisionDoodle.rotation = (360 - (0-parseInt(incisionDoodle.rotation * 180 / Math.PI))) * (Math.PI/180);
+	}
+
+	if (swapSidePorts || parseInt(incisionDoodle.rotation * 180 / Math.PI) == 270) {
+		var x = et_operationnote_sidePort1;
+		et_operationnote_sidePort1 = et_operationnote_sidePort2;
+		et_operationnote_sidePort2 = x;
+		swapSidePorts = true;
+	}
+
+	if (parseInt(et_operationnote_sidePort1.rotation * 180 / Math.PI) == 360) {
+		et_operationnote_sidePort1.rotation = 0 * (Math.PI/180);
+	}
+
+	if (parseInt(et_operationnote_sidePort2.rotation * 180 / Math.PI) == 360) {
+		et_operationnote_sidePort2.rotation = 0 * (Math.PI/180);
+	}
+
 	// Check incision
 	if (parseInt(incisionDoodle.rotation * 180 / Math.PI) != oldPos) {
 		return;
@@ -108,10 +127,18 @@ function move_eyedraw_elements_with_surgeon(doodle, oldPos, newPos) {
 	var sidePort1Pos = oldPos - 90;
 	if (sidePort1Pos <0) {
 		sidePort1Pos = 360 - (0-sidePort1Pos);
+	} else if (sidePort1Pos >360) {
+		sidePort1Pos -= 360;
+	} else if (sidePort1Pos == 360) {
+		sidePort1Pos = 0;
 	}
 	var sidePort2Pos = oldPos + 90;
 	if (sidePort2Pos >360) {
 		sidePort2Pos -= 360;
+	} else if (sidePort2Pos == 360) {
+		sidePort2Pos = 0;
+	} else if (sidePort2Pos <0) {
+		sidePort2Pos = 360 - (0-sidePort2Pos);
 	}
 
 	if (parseInt(et_operationnote_sidePort1.rotation * 180 / Math.PI) != sidePort1Pos) {
@@ -238,6 +265,10 @@ $(document).ready(function() {
 			et_operationnote_sidePort1 = null;
 			et_operationnote_sidePort2 = null;
 
+			if (parseInt(doodle.rotation * (180/Math.PI)) == -90) {
+				doodle.rotation = 270 * (Math.PI/180);
+			}
+
 			if ($(this).val() == 2) { //right
 				if (parseInt(doodle.rotation * (180/Math.PI)) == 90) {
 					et_operationnote_hookDoodle = doodle;
@@ -356,6 +387,8 @@ var et_operationnote_sidePort2 = null;
 var et_operationnote_hookDoodle2 = null;
 var et_operationnote_hookTarget2 = 0;
 var et_operationnote_hookDirection2 = 0;
+
+var swapSidePorts = false;
 
 function within(one,two,range) {
 	if (one >two) {
