@@ -224,7 +224,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#ElementCataract_incision_site_id').unbind('change').change(function(e) {
+	$('#ElementCataract_incision_site_id').die('change').live('change',function(e) {
 		e.preventDefault();
 
 		ed_drawing_edit_Cataract.setParameterForDoodleOfClass('PhakoIncision', 'incisionSite', $(this).children('option:selected').text());
@@ -232,7 +232,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#ElementCataract_incision_type_id').unbind('change').change(function(e) {
+	$('#ElementCataract_incision_type_id').die('change').live('change',function(e) {
 		e.preventDefault();
 
 		ed_drawing_edit_Cataract.setParameterForDoodleOfClass('PhakoIncision', 'incisionType', $(this).children('option:selected').text());
@@ -240,7 +240,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('input[name="ElementProcedureList\[eye_id\]"]').unbind('change').change(function() {
+	$('input[name="ElementProcedureList\[eye_id\]"]').die('change').live('change',function() {
 
 		if ($('#typeProcedure').is(':hidden')) {
 			$('#typeProcedure').slideToggle('fast');
@@ -306,7 +306,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]').unbind('click').click(function() {
+	$('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]').die('click').live('click',function() {
 		if ($(this).val() == 5) {
 			if (!$('#ElementAnaesthetic_anaesthetist_id').is(':hidden') && !anaesthetic_type_sliding) {
 				anaesthetic_type_sliding = true;
@@ -340,7 +340,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#ElementCataract_meridian').unbind('change').change(function() {
+	$('#ElementCataract_meridian').die('change').live('change',function() {
 		var doodle = null;
 
 		for (var i in ed_drawing_edit_Cataract.doodleArray) {
@@ -353,7 +353,7 @@ $(document).ready(function() {
 		ed_drawing_edit_Cataract.repaint();
 	});
 
-	$('#ElementCataract_length').unbind('change').change(function() {
+	$('#ElementCataract_length').die('change').live('change',function() {
 		var doodle = null;
 
 		for (var i in ed_drawing_edit_Cataract.doodleArray) {
@@ -366,7 +366,7 @@ $(document).ready(function() {
 		ed_drawing_edit_Cataract.repaint();
 	});
 
-	$('#ElementCataract_iol_type_id').unbind('change').change(function() {
+	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
 		if ($(this).children('option:selected').text() == 'MTA3UO' || $(this).children('option:selected').text() == 'MTA4UO') {
 			$('#ElementCataract_iol_position_id').val(4);
 		}
@@ -398,6 +398,13 @@ function within(one,two,range) {
 	}
 }
 
+function adjust_meridian(incision) {
+	var angle = (((Math.PI * 2 - incision.rotation + Math.PI/2) * 180/Math.PI) + 360) % 360;
+	if (angle == 360) angle = 0;
+
+	$('#ElementCataract_meridian').val(angle);
+}
+
 function opnote_move_eyedraw_element_to_position() {
 	var target = et_operationnote_hookTarget;
 	var doodle = et_operationnote_hookDoodle;
@@ -412,6 +419,8 @@ function opnote_move_eyedraw_element_to_position() {
 		}
 		if (within(pos,target,10)) {
 			doodle.rotation = target * (Math.PI/180);
+			adjust_meridian(doodle);
+
 			if (et_operationnote_sidePort1 != null) {
 				var sidePort1Pos = target - 90;
 				if (sidePort1Pos <0) {
@@ -434,6 +443,8 @@ function opnote_move_eyedraw_element_to_position() {
 			ed_drawing_edit_Cataract.modified = false;
 		} else {
 			doodle.rotation = pos * (Math.PI/180);
+			adjust_meridian(doodle);
+
 			if (et_operationnote_sidePort1 != null) {
 				var sidePort1Pos = pos - 90;
 				if (sidePort1Pos <0) {
@@ -462,6 +473,8 @@ function opnote_move_eyedraw_element_to_position() {
 		}
 		if (within(pos,target,10)) {
 			doodle.rotation = target * (Math.PI/180);
+			adjust_meridian(doodle);
+
 			if (et_operationnote_sidePort1 != null) {
 				var sidePort1Pos = target - 90;
 				if (sidePort1Pos <0) {
@@ -484,6 +497,8 @@ function opnote_move_eyedraw_element_to_position() {
 			ed_drawing_edit_Cataract.modified = false;
 		} else {
 			doodle.rotation = pos * (Math.PI/180);
+			adjust_meridian(doodle);
+
 			if (et_operationnote_sidePort1 != null) {
 				var sidePort1Pos = pos - 90;
 				if (sidePort1Pos <0) {
