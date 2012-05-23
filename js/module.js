@@ -62,6 +62,19 @@ function eDparameterListener(_drawing) {
 			setCataractSelectInput('incision_type',_drawing.selectedDoodle.getParameter('incisionType'));
 			setCataractInput('length',_drawing.selectedDoodle.getParameter('incisionLength'));
 			setCataractInput('meridian',_drawing.selectedDoodle.getParameter('incisionMeridian'));
+
+			if (incisionSite == null) {
+				incisionSite = _drawing.selectedDoodle.rotation;
+			}
+
+			if (_drawing.selectedDoodle.rotation != incisionSite) {
+				incisionSite = _drawing.selectedDoodle.rotation;
+				followSurgeon = false;
+			}
+		}
+
+		if (_drawing.selectedDoodle.className == 'SidePort') {
+			followSurgeon = false;
 		}
 
 		if (_drawing.selectedDoodle.className == 'Surgeon') {
@@ -72,14 +85,16 @@ function eDparameterListener(_drawing) {
 			var newSurgeonPosition = _drawing.selectedDoodle.rotation * 180 / Math.PI;
 
 			if (newSurgeonPosition != surgeonPosition) {
-				move_eyedraw_elements_with_surgeon(_drawing.selectedDoodle,surgeonPosition,newSurgeonPosition);
+				move_eyedraw_elements_with_surgeon(surgeonPosition,newSurgeonPosition);
 				surgeonPosition = newSurgeonPosition;
 			}
 		}
 	}
 }
 
-function move_eyedraw_elements_with_surgeon(doodle, oldPos, newPos) {
+function select_incision_site_and_sideports(oldPos, newPos) {
+	followSurgeon = checkWhetherSurgeonShouldFollow();
+
 	var sidePort1 = null;
 	var sidePort2 = null;
 
@@ -119,12 +134,70 @@ function move_eyedraw_elements_with_surgeon(doodle, oldPos, newPos) {
 	}
 
 	// Check incision
-	if (parseInt(incisionDoodle.rotation * 180 / Math.PI) != oldPos) {
-		return;
+	if (!followSurgeon) {
+		return false;
+	}
+
+	et_operationnote_hookDoodle = incisionDoodle;
+
+	return true;
+}
+
+function checkWhetherSurgeonShouldFollow() {
+	var sidePort1 = null;
+	var sidePort2 = null;
+
+	for (var i in ed_drawing_edit_Position.doodleArray) {
+		if (ed_drawing_edit_Position.doodleArray[i].className == 'Surgeon') {
+			var s = ed_drawing_edit_Position.doodleArray[i];
+
+			if (followSurgeon && s.isSelected) {
+				return true;
+			}
+		}
+	}
+
+	for (var i in ed_drawing_edit_Cataract.doodleArray) {
+		if (ed_drawing_edit_Cataract.doodleArray[i].className == 'PhakoIncision') {
+			var incisionDoodle = ed_drawing_edit_Cataract.doodleArray[i];
+		}
+
+		if (ed_drawing_edit_Cataract.doodleArray[i].className == 'SidePort') {
+			if (sidePort1 == null) {
+				et_operationnote_sidePort1 = sidePort1 = ed_drawing_edit_Cataract.doodleArray[i];
+			} else {
+				et_operationnote_sidePort2 = sidePort2 = ed_drawing_edit_Cataract.doodleArray[i];
+			}
+		}
+	}
+
+	// Only move the incision and sideports if the they are currently aligned with the surgeon
+
+	if (parseInt(incisionDoodle.rotation * 180 / Math.PI) <0) {
+		incisionDoodle.rotation = (360 - (0-parseInt(incisionDoodle.rotation * 180 / Math.PI))) * (Math.PI/180);
+	}
+
+	if (swapSidePorts || parseInt(incisionDoodle.rotation * 180 / Math.PI) == 270) {
+		var x = et_operationnote_sidePort1;
+		et_operationnote_sidePort1 = et_operationnote_sidePort2;
+		et_operationnote_sidePort2 = x;
+		swapSidePorts = true;
+	}
+
+	if (parseInt(et_operationnote_sidePort1.rotation * 180 / Math.PI) == 360) {
+		et_operationnote_sidePort1.rotation = 0 * (Math.PI/180);
+	}
+
+	if (parseInt(et_operationnote_sidePort2.rotation * 180 / Math.PI) == 360) {
+		et_operationnote_sidePort2.rotation = 0 * (Math.PI/180);
+	}
+
+	if (parseInt(incisionDoodle.rotation * 180 / Math.PI) != surgeonPosition) {
+		return false;
 	}
 
 	// Check sideports
-	var sidePort1Pos = oldPos - 90;
+	var sidePort1Pos = surgeonPosition - 90;
 	if (sidePort1Pos <0) {
 		sidePort1Pos = 360 - (0-sidePort1Pos);
 	} else if (sidePort1Pos >360) {
@@ -132,7 +205,7 @@ function move_eyedraw_elements_with_surgeon(doodle, oldPos, newPos) {
 	} else if (sidePort1Pos == 360) {
 		sidePort1Pos = 0;
 	}
-	var sidePort2Pos = oldPos + 90;
+	var sidePort2Pos = surgeonPosition + 90;
 	if (sidePort2Pos >360) {
 		sidePort2Pos -= 360;
 	} else if (sidePort2Pos == 360) {
@@ -142,31 +215,36 @@ function move_eyedraw_elements_with_surgeon(doodle, oldPos, newPos) {
 	}
 
 	if (parseInt(et_operationnote_sidePort1.rotation * 180 / Math.PI) != sidePort1Pos) {
-		et_operationnote_sidePort1 = null;
+		return false;
 	}
 	if (parseInt(et_operationnote_sidePort2.rotation * 180 / Math.PI) != sidePort2Pos) {
-		et_operationnote_sidePort2 = null;
+		return false;
 	}
 
-	et_operationnote_hookDoodle = incisionDoodle;
-	if (oldPos == 0) {
-		if (newPos == 45) {
-			et_operationnote_hookDirection = 0;
-		} else {
-			et_operationnote_hookDirection = 1;
-		}
-	} else if (newPos == 0) {
-		if (oldPos == 45) {
-			et_operationnote_hookDirection = 1;
-		} else {
-			et_operationnote_hookDirection = 0;
-		}
-	} else {
-		et_operationnote_hookDirection = (newPos < oldPos) ? 1 : 0;
-	}
-	et_operationnote_hookTarget = newPos;
+	return true;
+}
 
-	opnote_move_eyedraw_element_to_position();
+function move_eyedraw_elements_with_surgeon(oldPos, newPos) {
+	if (select_incision_site_and_sideports(oldPos, newPos)) {
+		if (oldPos == 0) {
+			if (newPos == 45) {
+				et_operationnote_hookDirection = 0;
+			} else {
+				et_operationnote_hookDirection = 1;
+			}
+		} else if (newPos == 0) {
+			if (oldPos == 45) {
+				et_operationnote_hookDirection = 1;
+			} else {
+				et_operationnote_hookDirection = 0;
+			}
+		} else {
+			et_operationnote_hookDirection = (newPos < oldPos) ? 1 : 0;
+		}
+		et_operationnote_hookTarget = newPos;
+
+		opnote_move_eyedraw_element_to_position();
+	}
 }
 
 function round_number(num, dec) {
@@ -262,15 +340,14 @@ $(document).ready(function() {
 				}
 			}
 
-			et_operationnote_sidePort1 = null;
-			et_operationnote_sidePort2 = null;
-
 			if (parseInt(doodle.rotation * (180/Math.PI)) == -90) {
 				doodle.rotation = 270 * (Math.PI/180);
 			}
 
 			if ($(this).val() == 2) { //right
 				if (parseInt(doodle.rotation * (180/Math.PI)) == 90) {
+					select_incision_site_and_sideports(90,270);
+
 					et_operationnote_hookDoodle = doodle;
 					et_operationnote_hookTarget = 270;
 					et_operationnote_hookDirection = 1;
@@ -290,6 +367,8 @@ $(document).ready(function() {
 
 			} else if ($(this).val() == 1) { //left
 				if (parseInt(doodle.rotation * (180/Math.PI)) == 270) {
+					select_incision_site_and_sideports(270,90);
+
 					et_operationnote_hookDoodle = doodle;
 					et_operationnote_hookTarget = 90;
 					et_operationnote_hookDirection = 0;
@@ -349,8 +428,11 @@ $(document).ready(function() {
 			}
 		}
 
-		doodle.setParameter('incisionMeridian',$(this).val());
-		ed_drawing_edit_Cataract.repaint();
+		if (doodle.getParameter('incisionMeridian') != $(this).val()) {
+			doodle.setParameter('incisionMeridian',$(this).val());
+			ed_drawing_edit_Cataract.repaint();
+			followSurgeon = false;
+		}
 	});
 
 	$('#ElementCataract_length').die('change').live('change',function() {
@@ -389,6 +471,8 @@ var et_operationnote_hookTarget2 = 0;
 var et_operationnote_hookDirection2 = 0;
 
 var swapSidePorts = false;
+var incisionSite = null;
+var followSurgeon = true;
 
 function within(one,two,range) {
 	if (one >two) {
