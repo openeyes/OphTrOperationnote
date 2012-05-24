@@ -60,7 +60,7 @@ class ElementPtosisCorrectionApoRepairPosteriorApproach extends BaseEventTypeEle
 			array('event_id, comments', 'safe'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -115,6 +115,10 @@ class ElementPtosisCorrectionApoRepairPosteriorApproach extends BaseEventTypeEle
 	}
 
 	public function getView_view() {
+		return 'ElementSTUB';
+	}
+
+	public function getPrint_view() {
 		return 'ElementSTUB';
 	}
 }
