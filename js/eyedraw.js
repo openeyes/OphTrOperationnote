@@ -19,12 +19,16 @@ ED_Magic.prototype = {
 		this.sidePortRotations = [];
 		this.surgeonLoop = 0;
 		this.surgeonLoopTarget = 0;
+		this.incisionMoving = 0;
+		this.surgeonMoving = 0;
 
 		/* configurable */
 		this.surgeonYOffset = 300;
 		this.surgeonMagicNumber = 42;
 		this.surgeonAlternateProbability = 100; // rand(0,n) needs to hit this.surgeonMagicNumber to trigger
 		this.surgeonExtraLoopProbability = 1000;
+		this.surgeonMoveTableProbability = 2000;
+		this.surgeonMoveTable = 0;
 		this.movePoints = 10;
 		this.timerSpeed = 20;
 	},
@@ -223,6 +227,10 @@ ED_Magic.prototype = {
 						this.surgeonLoopTarget = 1;
 					}
 
+					if (Math.floor(Math.random()*this.surgeonMoveTableProbability) == this.surgeonMagicNumber) {
+						this.surgeonMoveTable = 1;
+					}
+
 					this.moveSurgeon();
 				}
 
@@ -244,6 +252,10 @@ ED_Magic.prototype = {
 						this.surgeonLoopTarget = 1;
 					}
 
+					if (Math.floor(Math.random()*this.surgeonMoveTableProbability) == this.surgeonMagicNumber) {
+						this.surgeonMoveTable = 1;
+					}
+
 					this.moveSurgeon();
 				}
 			}
@@ -261,7 +273,11 @@ ED_Magic.prototype = {
 		$('#ElementCataract_meridian').val(angle);
 	},
 
-	moveIncisionAndSidePorts : function() {
+	moveIncisionAndSidePorts : function(initial) {
+		if (!initial && this.incisionMoving) return;
+
+		this.incisionMoving = 1;
+
 		if (this.incisionDirection == 0) {
 			var pos = this.addDegrees(this.toDegrees(this.phakoDoodle.rotation), this.movePoints);
 		} else {
@@ -283,8 +299,9 @@ ED_Magic.prototype = {
 		if (newPos == this.incisionTarget) {
 			ed_drawing_edit_Cataract.modified = false;
 			this.followSurgeon = true;
+			this.incisionMoving = 0;
 		} else {
-			setTimeout('magic.moveIncisionAndSidePorts();', this.timerSpeed);
+			setTimeout('magic.moveIncisionAndSidePorts(1);', this.timerSpeed);
 		}
 	},
 
@@ -292,7 +309,11 @@ ED_Magic.prototype = {
 		return (one > two) ? ( (one-two) <= range ) : ( (two-one) <= range );
 	},
 
-	moveSurgeon : function() {
+	moveSurgeon : function(initial) {
+		if (!initial && this.surgeonMoving) return;
+
+		this.surgeonMoving = 1;
+
 		var pos = this.toDegrees(this.surgeonDoodle.rotation);
 
 		if (this.surgeonDirection == 0 || this.surgeonDirection == 1) {
@@ -313,6 +334,11 @@ ED_Magic.prototype = {
 			this.surgeonDoodle.originY = 0 - (this.surgeonYOffset * Math.sin(this.toRadians(newPos-90)));
 			this.surgeonDoodle.originX = this.surgeonYOffset * Math.cos(this.toRadians(newPos-90));
 
+			if (this.surgeonMoveTable) {
+				var operatingTable = this.getDoodle('OperatingTable');
+				operatingTable.rotation = this.toRadians(((newPos)*2) + 180);
+			}
+
 			this.repaintSurgeon();
 
 			if (newPos == this.surgeonTarget) {
@@ -327,14 +353,16 @@ ED_Magic.prototype = {
 
 					this.surgeonDoodle.rotation = this.toRadians(pos);
 
-					setTimeout('magic.moveSurgeon();', this.timerSpeed);
+					setTimeout('magic.moveSurgeon(1);', this.timerSpeed);
 				} else {
 					ed_drawing_edit_Position.modified = false;
 					this.surgeonLoopTarget = this.surgeonLoop = 0;
 					this.followSurgeon = true;
+					this.surgeonMoveTable = 0;
+					this.surgeonMoving = 0;
 				}
 			} else {
-				setTimeout('magic.moveSurgeon();', this.timerSpeed);
+				setTimeout('magic.moveSurgeon(1);', this.timerSpeed);
 			}
 
 		} else if (this.surgeonDirection == 2) {
@@ -359,13 +387,14 @@ ED_Magic.prototype = {
 				if (this.surgeonLoop < this.surgeonLoopTarget) {
 					this.surgeonLoop += 1;
 					this.surgeonDoodle.rotation = this.toRadians(this.subDegrees(pos, this.movePoints));
-					setTimeout('magic.moveSurgeon();', this.timerSpeed);
+					setTimeout('magic.moveSurgeon(1);', this.timerSpeed);
 				} else {
 					ed_drawing_edit_Position.modified = false;
 					this.surgeonLoopTarget = this.surgeonLoop = 0;
+					this.surgeonMoving = 0;
 				}
 			} else {
-				setTimeout('magic.moveSurgeon();', this.timerSpeed);
+				setTimeout('magic.moveSurgeon(1);', this.timerSpeed);
 			}
 		}
 	},
