@@ -282,6 +282,7 @@ ED_Magic.prototype = {
 
 		if (newPos == this.incisionTarget) {
 			ed_drawing_edit_Cataract.modified = false;
+			this.followSurgeon = true;
 		} else {
 			setTimeout('magic.moveIncisionAndSidePorts();', this.timerSpeed);
 		}
@@ -330,6 +331,7 @@ ED_Magic.prototype = {
 				} else {
 					ed_drawing_edit_Position.modified = false;
 					this.surgeonLoopTarget = this.surgeonLoop = 0;
+					this.followSurgeon = true;
 				}
 			} else {
 				setTimeout('magic.moveSurgeon();', this.timerSpeed);
