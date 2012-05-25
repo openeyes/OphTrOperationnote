@@ -111,7 +111,7 @@ $(document).ready(function() {
 	$('#ElementCataract_incision_site_id').die('change').live('change',function(e) {
 		e.preventDefault();
 
-		ed_drawing_edit_Cataract.setParameterForDoodleOfClass('PhakoIncision', 'incisionSite', $(this).children('option:selected').text());
+		magic.setDoodleParameter('PhakoIncision', 'incisionSite', $(this).children('option:selected').text());
 
 		return false;
 	});
@@ -119,7 +119,7 @@ $(document).ready(function() {
 	$('#ElementCataract_incision_type_id').die('change').live('change',function(e) {
 		e.preventDefault();
 
-		ed_drawing_edit_Cataract.setParameterForDoodleOfClass('PhakoIncision', 'incisionType', $(this).children('option:selected').text());
+		magic.setDoodleParameter('PhakoIncision', 'incisionType', $(this).children('option:selected').text());
 
 		return false;
 	});
@@ -133,54 +133,24 @@ $(document).ready(function() {
 		magic.eye_changed($(this).val());
 	});
 
-	$('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]').die('click').live('click',function() {
-		if ($(this).val() == 5) {
-			if (!$('#ElementAnaesthetic_anaesthetist_id').is(':hidden') && !anaesthetic_type_sliding) {
-				anaesthetic_type_sliding = true;
-				$('#ElementAnaesthetic_anaesthetist_id').slideToggle('fast');
-				$('#ElementAnaesthetic_anaesthetic_delivery_id').slideToggle('fast');
-				$('#div_ElementAnaesthetic_Agents').slideToggle('fast');
-				$('#div_ElementAnaesthetic_Complications').slideToggle('fast');
-				$('#div_ElementAnaesthetic_anaesthetic_comment').slideToggle('fast',function() {
-					anaesthetic_type_sliding = false;
-				});
-			}
-		} else {
-			if ($('#ElementAnaesthetic_anaesthetist_id').is(':hidden') && !anaesthetic_type_sliding) {
-				anaesthetic_type_sliding = true;
-				$('#ElementAnaesthetic_anaesthetist_id').slideToggle('fast');
-				$('#ElementAnaesthetic_anaesthetic_delivery_id').slideToggle('fast');
-				$('#div_ElementAnaesthetic_Agents').slideToggle('fast');
-				$('#div_ElementAnaesthetic_Complications').slideToggle('fast');
-				$('#div_ElementAnaesthetic_anaesthetic_comment').slideToggle('fast',function() {
-					anaesthetic_type_sliding = false;
-				});
-			}
-		}
-
-		if ($(this).val() == 1) {
-			$('input[name="ElementAnaesthetic\[anaesthetic_delivery_id\]"]').map(function() {
-				if ($(this).val() == 5) {
-					$(this).click();
-				}
-			});
-		}
+	$('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]').die('click').live('click',function(e) {
+		anaestheticSlide.handleEvent($(this));
 	});
 
 	$('#ElementCataract_meridian').die('change').live('change',function() {
-		if (doodle = ed_drawing_edit_Cataract.firstDoodleOfClass('PhakoIncision')) {
+		if (doodle = magic.getDoodle('PhakoIncision')) {
 			if (doodle.getParameter('incisionMeridian') != $(this).val()) {
 				doodle.setParameter('incisionMeridian',$(this).val());
-				ed_drawing_edit_Cataract.repaint();
-				followSurgeon = false;
+				magic.repaintCataract();
+				magic.followSurgeon = false;
 			}
 		}
 	});
 
 	$('#ElementCataract_length').die('change').live('change',function() {
-		if (doodle = ed_drawing_edit_Cataract.firstDoodleOfClass('PhakoIncision')) {
+		if (doodle = magic.getDoodle('PhakoIncision')) {
 			doodle.setParameter('incisionLength',$(this).val());
-			ed_drawing_edit_Cataract.repaint();
+			magic.repaintCataract();
 		}
 	});
 
@@ -190,3 +160,38 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function AnaestheticSlide() {if (this.init) this.init.apply(this, arguments); }
+
+AnaestheticSlide.prototype = {
+	init : function(params) {
+		this.anaestheticTypeSliding = false;
+	},
+	handleEvent : function(e) {
+		var slide = false;
+
+		if (!this.anaestheticTypeSliding) {
+			if ((e.val() == 5 && !$('#ElementAnaesthetic_anaesthetist_id').is(':hidden')) ||
+				(e.val() != 5 && $('#ElementAnaesthetic_anaesthetist_id').is(':hidden'))) {
+				this.slide();
+			}
+		}
+
+		// If topical anaesthetic type is selected, select topical delivery
+		if (e.val() == 1) {
+			$('#ElementAnaesthetic_anaesthetic_delivery_id_5').click();
+		}
+	},
+	slide : function() {
+		this.anaestheticTypeSliding = true;
+		$('#ElementAnaesthetic_anaesthetist_id').slideToggle('fast');
+		$('#ElementAnaesthetic_anaesthetic_delivery_id').slideToggle('fast');
+		$('#div_ElementAnaesthetic_Agents').slideToggle('fast');
+		$('#div_ElementAnaesthetic_Complications').slideToggle('fast');
+		$('#div_ElementAnaesthetic_anaesthetic_comment').slideToggle('fast',function() {
+			anaestheticSlide.anaestheticTypeSliding = false;
+		});
+	}
+}
+
+var anaestheticSlide = new AnaestheticSlide;

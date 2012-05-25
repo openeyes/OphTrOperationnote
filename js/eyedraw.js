@@ -6,8 +6,6 @@ ED_Magic.prototype = {
 		this.eye_left = 1;
 		this.eye_right = 2;
 		this.surgeonPosition = null;
-		this.anaesthetic_type_bind = false;
-		this.anaesthetic_type_sliding = false;
 		this.phakoDoodle = null;
 		this.incisionTarget = 0;
 		this.incisionDirection = 0;
@@ -280,7 +278,7 @@ ED_Magic.prototype = {
 		this.moveDoodle(this.sidePort1, this.subDegrees(newPos, 90));
 		this.moveDoodle(this.sidePort2, this.addDegrees(newPos, 90));
 
-		ed_drawing_edit_Cataract.repaint();
+		this.repaintCataract();
 
 		if (newPos == this.incisionTarget) {
 			ed_drawing_edit_Cataract.modified = false;
@@ -314,7 +312,7 @@ ED_Magic.prototype = {
 			this.surgeonDoodle.originY = 0 - (this.surgeonYOffset * Math.sin(this.toRadians(newPos-90)));
 			this.surgeonDoodle.originX = this.surgeonYOffset * Math.cos(this.toRadians(newPos-90));
 
-			ed_drawing_edit_Position.repaint();
+			this.repaintSurgeon();
 
 			if (newPos == this.surgeonTarget) {
 				if (this.surgeonLoop < this.surgeonLoopTarget) {
@@ -353,7 +351,7 @@ ED_Magic.prototype = {
 			this.surgeonDoodle.originY = y_offset + (this.surgeonYOffset * Math.sin(this.toRadians(newPos+90)));
 			this.surgeonDoodle.originX = this.surgeonYOffset * Math.cos(this.toRadians(newPos-90));
 
-			ed_drawing_edit_Position.repaint();
+			this.repaintSurgeon();
 
 			if (newPos == this.surgeonTarget) {
 				if (this.surgeonLoop < this.surgeonLoopTarget) {
@@ -369,6 +367,18 @@ ED_Magic.prototype = {
 			}
 		}
 	},
+
+	setDoodleParameter : function(className, param, value) {
+		ed_drawing_edit_Cataract.setParameterForDoodleOfClass(className, param, value);
+	},
+
+	repaintCataract : function() {
+		ed_drawing_edit_Cataract.repaint();
+	},
+
+	repaintSurgeon : function() {
+		ed_drawing_edit_Position.repaint();
+	}
 }
 
 var magic = new ED_Magic;
