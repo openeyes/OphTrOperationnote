@@ -18,30 +18,12 @@
  */
 ?>
 
-<div class="cols2">
-	<div class="left">
-		<h4><?php echo $element->elementType->name ?></h4>
+<h3 class="subsection">Other information</h3>
+
+<div class="colsX clearfix">
+	<div class="colStack">
+		<h4><?php echo $element->elementType->name?></h4>
 		<div class="eventHighlight">
 			<h4><?php echo $element->surgeon->fullName?></h4>
 		</div>
 	</div>
-</div>
-
-<?php /*
-<div class="view">
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('surgeon_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->surgeon->fullName; ?></div>
-	</div>
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('assistant_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->assistant ? $element->assistant->fullName : 'None'; ?></div>
-	</div>
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('supervising_surgeon_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->supervising_surgeon ? $element->supervising_surgeon->fullName : 'None'; ?></div>
-	</div>
-</div>
-*/?>

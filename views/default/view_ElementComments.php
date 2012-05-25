@@ -18,17 +18,16 @@
  */
 ?>
 
-<div class="cols2">
-	<div class="right">
+	<div class="colStack">
 		<h4><?php echo CHtml::encode($element->getAttributeLabel('postop_instructions'))?></h4>
-		<div class="eventHighlight">
-			<h4><?php echo $element->postop_instructions?></h4>
+		<div class="eventHighlight<?php if (!$element->postop_instructions) {?> none<?php }?>">
+			<h4><?php echo $element->postop_instructions ? $element->postop_instructions : 'None'?></h4>
 		</div>
 	</div>
-	<div class="left">
+	<div class="colStack">
 		<h4><?php echo CHtml::encode($element->getAttributeLabel('comments'))?></h4>
-		<div class="eventHighlight">
-			<h4><?php echo $element->comments?></h4>
+		<div class="eventHighlight<?php if (!$element->comments) {?> none<?php }?>">
+			<h4><?php echo $element->comments ? $element->comments : 'None'?></h4>
 		</div>
 	</div>
 </div>

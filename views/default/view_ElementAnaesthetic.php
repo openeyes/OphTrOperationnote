@@ -18,49 +18,55 @@
  */
 ?>
 
-<div class="cols2">
-	<div class="left">
-		<h4><?php echo $element->elementType->name ?></h4>
+<h3 class="subsection"><?php echo $element->elementType->name?></h3>
+
+<div class="colsX clearfix">
+	<div class="colStack">
+		<h4><?php echo CHtml::encode($element->getAttributeLabel('anaesthetist_type_id'))?></h4>
 		<div class="eventHighlight">
 			<h4><?php echo $element->anaesthetic_type->name?></h4>
 		</div>
 	</div>
 	<?php if ($element->anaesthetic_type->name != 'GA') {?>
-		<div class="right">
+		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('anaesthetist_id'))?></h4>
 			<div class="eventHighlight">
 				<h4><?php echo $element->anaesthetist->name?></h4>
 			</div>
 		</div>
-		<div class="left">
+		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('agents'))?></h4>
-			<div class="eventHighlight">
-				<?php foreach ($element->anaesthetic_agents as $agent) {?>
-					<h4><?php echo $agent->name?></h4>
+			<div class="eventHighlight<?php if (!$element->anaesthetic_agents) {?> none<?php }?>">
+				<?php if (!$element->anaesthetic_agents) {?>
+					<h4>None</h4>
+				<?php }else{?>
+					<h4>
+						<?php foreach ($element->anaesthetic_agents as $agent) {?>
+							<?php echo $agent->name?><br/>
+						<?php }?>
+					</h4>
 				<?php }?>
 			</div>
 		</div>
-		<div class="right">
+		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('complications'))?></h4>
-			<div class="eventHighlight">
-				<?php foreach ($element->anaesthetic_complications as $complication) {?>
-					<h4><?php echo $complication->name?></h4>
+			<div class="eventHighlight<?php if (!$element->anaesthetic_complications) {?> none<?php }?>">
+				<?php if (!$element->anaesthetic_complications) {?>
+					<h4>None</h4>
+				<?php }else{?>
+					<h4>
+						<?php foreach ($element->anaesthetic_complications as $complication) {?>
+							<?php echo $complication->name?><br/>
+						<?php }?>
+					</h4>
 				<?php }?>
 			</div>
 		</div>
-		<div class="left">
+		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_delivery_id'))?></h4>
 			<div class="eventHighlight">
 				<h4><?php echo $element->anaesthetic_delivery->name?></h4>
 			</div>
 		</div>
-		<?php if ($element->anaesthetic_comment) {?>
-			<div class="right">
-				<h4><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_comment'))?></h4>
-				<div class="eventHighlight">
-					<h4><?php echo $element->anaesthetic_comment?></h4>
-				</div>
-			</div>
-		<?php }?>
 	<?php }?>
 </div>

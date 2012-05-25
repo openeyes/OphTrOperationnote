@@ -42,50 +42,67 @@
 		?>
 	</div>
 	<div class="left">
-		<div class="eventHighlight">
-			<h4><?php echo CHtml::encode($element->getAttributeLabel('incision_site_id'))?>: <?php echo $element->incision_site->name?></h4>
-		</div>
-		<div class="eventHighlight">
-			<h4><?php echo CHtml::encode($element->getAttributeLabel('length'))?>: <?php echo $element->length?></h4>
-		</div>
-		<div class="eventHighlight">
-			<h4><?php echo CHtml::encode($element->getAttributeLabel('meridian'))?>: <?php echo $element->meridian?></h4>
-		</div>
-		<div class="eventHighlight">
-			<h4><?php echo CHtml::encode($element->getAttributeLabel('incision_type_id'))?>: <?php echo $element->incision_type->name?></h4>
-		</div>
+		<table class="subtleWhite normalText">
+			<tbody>
+				<tr>
+					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('incision_site_id'))?>:</td>
+					<td><span class="big"><?php echo $element->incision_site->name?></span></td>
+				</tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('length'))?>:</td>
+					<td><span class="big"><?php echo $element->length?></span></td>
+				</tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('meridian'))?>:</td>
+					<td><span class="big"><?php echo $element->meridian?></span></td>
+				</tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('incision_type_id'))?>:</td>
+					<td><span class="big"><?php echo $element->incision_type->name?></span></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 
-<h4>Cataract report</h4>
-<div class="eventHighlight">
-	<?php foreach (explode(chr(10),$element->report) as $line) {?>
-		<h4><?php echo $line?></h4>
-	<?php }?>
-</div>
+<div class="colsX clearfix">
+	<div class="colThird">
+		<h4>Cataract report</h4>
+		<div class="eventHighlight medium">
+			<h4>
+				<?php foreach (explode(chr(10),$element->report) as $line) {?>
+					<?php echo $line?><br/>
+				<?php }?>
+			</h4>
+		</div>
+	</div>
 
-<div class="cols2">
-	<div class="right">
+	<div class="colThird">
 		<h4>Cataract devices</h4>
-		<div class="eventHighlight">
+		<div class="eventHighlight medium">
 			<?php if (!$element->operative_devices) {?>
 				<h4>None</h4>
 			<?php } else {?>
-				<?php foreach ($element->operative_devices as $device) {?>
-					<h4><?php echo $device->name?></h4>
-				<?php }?>
+				<h4>
+					<?php foreach ($element->operative_devices as $device) {?>
+						<?php echo $device->name?><br/>
+					<?php }?>
+				</h4>
 			<?php }?>
 		</div>
 	</div>
-	<div class="left">
+	
+	<div class="colThird">
 		<h4>Cataract complications</h4>
-		<div class="eventHighlight">
+		<div class="eventHighlight none">
 			<?php if (!$element->complications) {?>
 				<h4>None</h4>
-			<?php } else {?>
-				<?php foreach ($element->complications as $complication) {?>
-					<h4><?php echo $complication->name?></h4>
-				<?php }?>
+			<?php }else{?>
+				<h4>
+					<?php foreach ($element->complications as $complication) {?>
+						<?php echo $complication->name?><br/>
+					<?php }?>
+				</h4>
 			<?php }?>
 		</div>
 	</div>
