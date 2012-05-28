@@ -18,6 +18,7 @@
  */
 ?>
 
+<div class="colsX clearfix">
 	<div class="colStack">
 		<h4><?php echo CHtml::encode($element->getAttributeLabel('postop_instructions'))?></h4>
 		<div class="eventHighlight<?php if (!$element->postop_instructions) {?> none<?php }?>">
