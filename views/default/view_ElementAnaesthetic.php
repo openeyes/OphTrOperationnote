@@ -68,5 +68,13 @@
 				<h4><?php echo $element->anaesthetic_delivery->name?></h4>
 			</div>
 		</div>
+		<?php if (Yii::app()->params['fife']) {?>
+			<div class="colStack">
+				<h4><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_witness_id'))?></h4>
+				<div class="eventHighlight<?php if (!$element->witness) {?> none<?php }?>">
+					<h4><?php echo ($element->witness ? $element->witness->fullName : 'None')?></h4>
+				</div>
+			</div>
+		<?php }?>
 	<?php }?>
 </div>

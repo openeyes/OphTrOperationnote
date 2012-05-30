@@ -85,6 +85,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 			'anaesthetic_delivery' => array(self::BELONGS_TO, 'AnaestheticDelivery', 'anaesthetic_delivery_id'),
 			'anaesthetic_agents' => array(self::HAS_MANY, 'OperationAnaestheticAgent', 'et_ophtroperationnote_anaesthetic_id'),
 			'anaesthetic_complications' => array(self::HAS_MANY, 'AnaestheticComplication', 'et_ophtroperationnote_anaesthetic_id'),
+			'witness' => array(self::BELONGS_TO, 'User', 'anaesthetic_witness_id'),
 		);
 	}
 
