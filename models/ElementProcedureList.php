@@ -150,6 +150,7 @@ class ElementProcedureList extends BaseEventTypeElement
 		}
 
 		$this->event->episode->episode_status_id = 4;
+
 		if (!$this->event->episode->save()) {
 			throw new Exception('Unable to change episode status for episode '.$this->event->episode->id);
 		}
