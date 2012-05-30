@@ -23,6 +23,9 @@
 
 	<?php echo $form->radioButtons($element, 'anaesthetic_type_id', 'anaesthetic_type');?>
 	<?php echo $form->radioButtons($element, 'anaesthetist_id', 'anaesthetist', false, false, $element->hidden)?>
+	<?php if (Yii::app()->params['fife']) {?>
+		<?php echo $form->dropDownList($element, 'anaesthetic_witness_id', CHtml::listData($element->surgeons, 'id', 'FullName'), array('empty'=>'- Please select -'), $element->witness_hidden)?>
+	<?php }?>
 	<?php echo $form->radioButtons($element, 'anaesthetic_delivery_id', 'anaesthetic_delivery',false,4, $element->hidden)?>
 	<?php echo $form->multiSelectList($element, 'AnaestheticAgent', 'anaesthetic_agents', 'anaesthetic_agent_id', $element->anaesthetic_agent_list, $element->anaesthetic_agent_defaults, array('empty' => '- Anaesthetic agents -', 'label' => 'Agents'), $element->hidden)?>
 	<?php echo $form->multiSelectList($element, 'AnaestheticComplications', 'anaesthetic_complications', 'anaesthetic_complication_id', CHtml::listData(AnaestheticComplications::model()->findAll(), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'), $element->hidden)?>

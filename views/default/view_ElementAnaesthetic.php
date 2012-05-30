@@ -22,7 +22,7 @@
 
 <div class="colsX clearfix">
 	<div class="colStack">
-		<h4><?php echo CHtml::encode($element->getAttributeLabel('anaesthetist_type_id'))?></h4>
+		<h4><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_type_id'))?></h4>
 		<div class="eventHighlight">
 			<h4><?php echo $element->anaesthetic_type->name?></h4>
 		</div>

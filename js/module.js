@@ -137,6 +137,10 @@ $(document).ready(function() {
 		anaestheticSlide.handleEvent($(this));
 	});
 
+	$('input[name="ElementAnaesthetic\[anaesthetist_id\]"]').die('click').live('click',function(e) {
+		anaestheticGivenBySlide.handleEvent($(this));
+	});
+
 	$('#ElementCataract_meridian').die('change').live('change',function() {
 		if (doodle = magic.getDoodle('PhakoIncision')) {
 			if (doodle.getParameter('incisionMeridian') != $(this).val()) {
@@ -171,9 +175,10 @@ AnaestheticSlide.prototype = {
 		var slide = false;
 
 		if (!this.anaestheticTypeSliding) {
-			if ((e.val() == 5 && !$('#ElementAnaesthetic_anaesthetist_id').is(':hidden')) ||
-				(e.val() != 5 && $('#ElementAnaesthetic_anaesthetist_id').is(':hidden'))) {
-				this.slide();
+			if (e.val() == 5 && !$('#ElementAnaesthetic_anaesthetist_id').is(':hidden')) {
+				this.slide(true);
+			} else if (e.val() != 5 && $('#ElementAnaesthetic_anaesthetist_id').is(':hidden')) {
+				this.slide(false);
 			}
 		}
 
@@ -182,9 +187,19 @@ AnaestheticSlide.prototype = {
 			$('#ElementAnaesthetic_anaesthetic_delivery_id_5').click();
 		}
 	},
-	slide : function() {
+	slide : function(hide) {
 		this.anaestheticTypeSliding = true;
 		$('#ElementAnaesthetic_anaesthetist_id').slideToggle('fast');
+		if (hide) {
+			if (!$('#div_ElementAnaesthetic_anaesthetic_witness_id').is(':hidden')) {
+				$('#div_ElementAnaesthetic_anaesthetic_witness_id').slideToggle('fast');
+			}
+		} else {
+			if ($('#ElementAnaesthetic_anaesthetist_id_3').is(':checked') && $('#div_ElementAnaesthetic_anaesthetic_witness_id').is(':hidden')) {
+				$('#div_ElementAnaesthetic_anaesthetic_witness_id').slideToggle('fast');
+			}
+		}
+
 		$('#ElementAnaesthetic_anaesthetic_delivery_id').slideToggle('fast');
 		$('#div_ElementAnaesthetic_Agents').slideToggle('fast');
 		$('#div_ElementAnaesthetic_Complications').slideToggle('fast');
@@ -194,4 +209,33 @@ AnaestheticSlide.prototype = {
 	}
 }
 
+function AnaestheticGivenBySlide() {if (this.init) this.init.apply(this, arguments); }
+
+AnaestheticGivenBySlide.prototype = {
+	init : function(params) {
+		this.anaestheticTypeWitnessSliding = false;
+	},
+	handleEvent : function(e) {
+		var slide = false;
+
+		// if Fife mode is enabled
+		if ($('#div_ElementAnaesthetic_anaesthetic_witness_id')) {
+			// If nurse is selected, show the witness field
+			if (!this.anaestheticTypeWitnessSliding) {
+				if ((e.val() == 3 && $('#div_ElementAnaesthetic_anaesthetic_witness_id').is(':hidden')) ||
+					(e.val() != 3 && !$('#div_ElementAnaesthetic_anaesthetic_witness_id').is(':hidden'))) {
+					this.slide();
+				}
+			}
+		}
+	},
+	slide : function() {
+		this.anaestheticTypeWitnessSliding = true;
+		$('#div_ElementAnaesthetic_anaesthetic_witness_id').slideToggle('fast',function() {
+			anaestheticGivenBySlide.anaestheticTypeWitnessSliding = false;
+		});
+	}
+}
+
 var anaestheticSlide = new AnaestheticSlide;
+var anaestheticGivenBySlide = new AnaestheticGivenBySlide;
