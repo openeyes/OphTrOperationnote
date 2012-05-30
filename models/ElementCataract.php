@@ -59,7 +59,7 @@ class ElementCataract extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, incision_site_id, length, meridian, incision_type_id, iol_position_id, iol_power, iol_type_id, eyedraw, report, complication_notes, eyedraw2', 'safe'),
+			array('event_id, incision_site_id, length, meridian, incision_type_id, iol_position_id, iol_power, iol_type_id, eyedraw, report, complication_notes, eyedraw2, skin_preparation_id, intraocular_solution_id', 'safe'),
 			array('incision_site_id, length, meridian, incision_type_id, iol_position_id, iol_power, iol_type_id, eyedraw, report, eyedraw2', 'required'),
 			array('length', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9](\.[0-9])?$/', 'message' => 'Length must be 0 - 9.9 in increments of 0.1'),
 			array('meridian', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9]{1,3}(\.[0-9])?$/', 'min' => 000, 'max' => 180, 'message' => 'Meridian must be 000.5 - 180.0 degrees'),
@@ -106,6 +106,8 @@ class ElementCataract extends BaseEventTypeElement
 			'meridian' => 'Meridian',
 			'report' => 'Details',
 			'complication_notes' => 'Complication notes',
+			'skin_preparation_id' => 'Skin preparation',
+			'intraocular_solution_id' => 'Intraocular solution',
 		);
 	}
 
@@ -205,11 +207,6 @@ class ElementCataract extends BaseEventTypeElement
 		return parent::afterSave();
 	}
 
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
-	}
-
 	public function getSelectedEye() {
 		if (Yii::app()->getController()->getAction()->id == 'create') {
 			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
@@ -264,5 +261,18 @@ class ElementCataract extends BaseEventTypeElement
 			->where('site_subspecialty_operative_device.subspecialty_id = :subSpecialtyId and site_subspecialty_operative_device.site_id = :siteId'.@$where, $params)
 			->order('operative_device.name asc')
 			->queryAll(), 'id', 'name');
+	}
+
+	public function beforeValidate() {
+		if (Yii::app()->params['fife']) {
+			if (!@$_POST['ElementCataract']['skin_preparation_id']) {
+				$this->addError('skin_preparation_id','Please select a skin preparation');
+			}
+			if (!@$_POST['ElementCataract']['intraocular_solution_id']) {
+				$this->addError('intraocular_solution_id','Please select an intraocular solution');
+			}
+		}
+
+		return parent::beforeValidate();
 	}
 }
