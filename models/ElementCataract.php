@@ -87,6 +87,8 @@ class ElementCataract extends BaseEventTypeElement
 			'complications' => array(self::HAS_MANY, 'CataractComplication', 'cataract_id'),
 			'operative_devices' => array(self::HAS_MANY, 'CataractOperativeDevice', 'cataract_id'),
 			'iol_type' => array(self::BELONGS_TO, 'IOLType', 'iol_type_id'),
+			'skin_preparation' => array(self::BELONGS_TO, 'CataractSkinPreparation', 'skin_preparation_id'),
+			'intraocular_solution' => array(self::BELONGS_TO, 'CataractIntraocularSolution', 'intraocular_solution_id'),
 		);
 	}
 
