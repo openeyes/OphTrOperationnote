@@ -16,10 +16,14 @@
 
 #div_ElementSurgeon { padding-bottom: 28px !important; }
 
-div.ElementComments { background-color: #DAE6F1; }
+div.ElementComments { background-color: #DAE6F1; height: 200px; }
 div.ElementComments > h4 { background-color: #fff; margin-bottom: 5px !important; padding-bottom: 5px !important; }
 
 #div_ElementComments_comments { display: inline-block; }
-#div_ElementComments_postop_instructions { display: inline-block; }
+#div_ElementComments_postop_instructions_TextSelection { display: inline-block; float: right; margin-right: 150px; }
+#div_ElementComments_postop_instructions { display: inline-block; float: right; margin-right: 35px; }
 
 #ElementComments_postop_instructions { display: block; margin-top: 12px; }
+
+#div_ElementPersonnel { padding-bottom: 25px !important; }
+#div_ElementPersonnel_operating_department_practitioner_id { padding-bottom: 28px !important; }

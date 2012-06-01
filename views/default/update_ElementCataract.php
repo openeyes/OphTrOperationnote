@@ -55,6 +55,9 @@
 		</div>
 		<div class="right" style="width:35%;">
 			<div class="halfHeight">
+				<?php if (Yii::app()->params['fife']) {?>
+					<?php echo $form->dropDownList($element, 'skin_preparation_id', CHtml::listData(CataractSkinPreparation::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
+				<?php }?>
 				<?php echo $form->dropDownList($element, 'iol_type_id', CHtml::listData(IOLType::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'))?>
 				<?php echo $form->textField($element, 'iol_power', array('size' => '10'))?>
 				<?php echo $form->dropDownList($element, 'iol_position_id', CHtml::listData(IOLPosition::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'))?>
