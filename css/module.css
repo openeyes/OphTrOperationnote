@@ -23,7 +23,7 @@ div.ElementComments > h4 { background-color: #fff; margin-bottom: 5px !important
 #div_ElementComments_postop_instructions_TextSelection { display: inline-block; float: right; margin-right: 150px; }
 #div_ElementComments_postop_instructions { display: inline-block; float: right; margin-right: 35px; }
 
-#ElementComments_postop_instructions { display: block; margin-top: 12px; }
+#ElementComments_postop_instructions { display: block; }
 
 #div_ElementPersonnel { padding-bottom: 25px !important; }
 #div_ElementPersonnel_operating_department_practitioner_id { padding-bottom: 28px !important; }
