@@ -22,7 +22,7 @@
 	<div class="left">
 		<h4><?php echo $element->elementType->name ?></h4>
 		<div class="eventHighlight">
-			<h4><?php echo $element->surgeon->fullName?></h4>
+			<h4><?php echo $element->surgeon->reversedFullName?></h4>
 		</div>
 	</div>
 </div>

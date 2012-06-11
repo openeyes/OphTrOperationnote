@@ -29,9 +29,9 @@
 			'supervising_surgeon_id'
 		),
 		array(
-			CHtml::listData($element->surgeons, 'id', 'FullName'),
-			CHtml::listData($element->surgeons, 'id', 'FullName'),
-			CHtml::listData($element->surgeons, 'id', 'FullName')
+			CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),
+			CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),
+			CHtml::listData($element->surgeons, 'id', 'ReversedFullName')
 		),
 		array(
 			array('empty'=>'- Please select -'),
