@@ -47,6 +47,10 @@
           <td><?php echo CHtml::encode($element->getAttributeLabel('deep_suture'))?>:</td>
           <td><span class="big"><?php echo $element->deep_suture ? 'Yes' : 'No'?></span></td>
         </tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('report'))?>:</td>
+					<td><span class="big"><?php echo $element->report?></span></td>
+				</tr>
       </tbody>
     </table>
 	</div>

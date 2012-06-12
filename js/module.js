@@ -69,6 +69,14 @@ $(document).ready(function() {
 	$('#et_save').unbind('click').click(function() {
 		if (!$(this).hasClass('inactive')) {
 			disableButtons();
+
+			if ($('#ElementBuckle_report').length >0) {
+				$('#ElementBuckle_report').val(ed_drawing_edit_Buckle.report());
+			}
+			if ($('#ElementCataract_report2').length >0) {
+				$('#ElementCataract_report2').val(ed_drawing_edit_Cataract.report());
+			}
+
 			return true;
 		}
 		return false;

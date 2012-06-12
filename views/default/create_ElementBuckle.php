@@ -33,6 +33,7 @@
 			'offset_y' => 10,
 		));
 		?>
+		<?php echo $form->hiddenInput($element, 'report', '')?>
 		<div class="halfHeight">
 			<?php echo $form->dropDownList($element, 'drainage_type_id', CHtml::listData(DrainageType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
 			<?php echo $form->radioBoolean($element, 'drain_haem')?>

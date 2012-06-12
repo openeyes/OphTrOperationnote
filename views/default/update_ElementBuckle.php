@@ -24,7 +24,7 @@
 	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
 		<?php
 		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetBuckle', array(
-			'side'=>$element->getSelectedEye()->getShortName(),
+			'side'=>$element->eye->getShortName(),
 			'mode'=>'edit',
 			'size'=>300,
 			'model'=>$element,
@@ -33,6 +33,7 @@
 			'offset_y' => 10,
 		));
 		?>
+		<?php echo $form->hiddenInput($element, 'report', $element->report)?>
 		<div class="halfHeight">
 			<?php echo $form->dropDownList($element, 'drainage_type_id', CHtml::listData(DrainageType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
 			<?php echo $form->radioBoolean($element, 'drain_haem')?>

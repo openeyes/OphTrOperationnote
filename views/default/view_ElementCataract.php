@@ -60,6 +60,10 @@
 					<td><?php echo CHtml::encode($element->getAttributeLabel('incision_type_id'))?>:</td>
 					<td><span class="big"><?php echo $element->incision_type->name?></span></td>
 				</tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('report2'))?>:</td>
+					<td><span class="big"><?php echo $element->report2?></span></td>
+				</tr>
 				<?php if (Yii::app()->params['fife']) {?>
 					<tr>
 						<td><?php echo CHtml::encode($element->getAttributeLabel('intraocular_solution_id'))?>:</td>
