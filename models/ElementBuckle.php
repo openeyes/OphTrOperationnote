@@ -161,5 +161,7 @@ class ElementBuckle extends BaseEventTypeElement
 		if (isset($_GET['eye'])) {
 			return Eye::model()->findByPk($_GET['eye']);
 		}
+
+		return new Eye;
 	}
 }
