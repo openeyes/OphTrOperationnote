@@ -32,6 +32,7 @@
 class ElementAnaesthetic extends BaseEventTypeElement
 {
 	public $service;
+	public $surgeonlist;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -58,11 +59,11 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment', 'safe'),
+			array('event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe'),
 			array('anaesthetic_type_id, anaesthetist_id, anaesthetic_delivery_id', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment', 'safe', 'on' => 'search'),
+			array('id, event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe', 'on' => 'search'),
 		);
 	}
 	
@@ -84,6 +85,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 			'anaesthetic_delivery' => array(self::BELONGS_TO, 'AnaestheticDelivery', 'anaesthetic_delivery_id'),
 			'anaesthetic_agents' => array(self::HAS_MANY, 'OperationAnaestheticAgent', 'et_ophtroperationnote_anaesthetic_id'),
 			'anaesthetic_complications' => array(self::HAS_MANY, 'AnaestheticComplication', 'et_ophtroperationnote_anaesthetic_id'),
+			'witness' => array(self::BELONGS_TO, 'User', 'anaesthetic_witness_id'),
 		);
 	}
 
@@ -97,6 +99,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 			'event_id' => 'Event',
 			'agents' => 'Agents',
 			'anaesthetic_type_id' => 'Type',
+			'anaesthetic_witness_id' => 'Witness',
 			'anaesthetist_id' => 'Given by',
 			'anaesthetic_delivery_id' => 'Delivery',
 			'anaesthetic_comment' => 'Comments',
@@ -144,7 +147,20 @@ class ElementAnaesthetic extends BaseEventTypeElement
 			return (@$_POST['ElementAnaesthetic']['anaesthetic_type_id'] == 5);
 		}
 	}
-	
+
+	public function getWitness_hidden() {
+		if (Yii::app()->getController()->getAction()->id == 'create') {
+			return (@$_POST['ElementAnaesthetic']['anaesthetist_id'] != 3);
+		} else {
+			if (empty($_POST)) {
+				$anaesthetic_element = ElementAnaesthetic::model()->find('event_id=?',array($this->event_id));
+				return ($anaesthetic_element->anaesthetist_id != 3);
+			}
+
+			return (@$_POST['ElementAnaesthetic']['anaesthetist_id'] != 3);
+		}
+	}
+
 	public function getAnaesthetic_agent_list() {
 		return $this->getAnaestheticAgentsBySiteAndSubspecialty();
 	}
@@ -235,5 +251,29 @@ class ElementAnaesthetic extends BaseEventTypeElement
 	}
 
 	public function getAnaesthetic_complication_list() {
+	}
+
+	public function getSurgeons() {
+		if (!$this->surgeonlist) {
+			$criteria = new CDbCriteria;
+			$criteria->compare('is_doctor',1);
+			$criteria->order = 'first_name,last_name asc';
+
+			$this->surgeonlist = User::model()->findAll($criteria);
+		}
+
+		return $this->surgeonlist;
+	}
+
+	public function beforeValidate() {
+		if (Yii::app()->params['fife']) {
+			if (@$_POST['ElementAnaesthetic']['anaesthetist_id'] == 3) {
+				if (!@$_POST['ElementAnaesthetic']['anaesthetic_witness_id']) {
+					$this->addError('anaesthetic_witness_id','Please select a witness');
+				}
+			}
+		}
+
+		return parent::beforeValidate();
 	}
 }

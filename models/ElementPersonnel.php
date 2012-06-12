@@ -18,22 +18,21 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "et_ophtroperationnote_personnel".
  *
- * The followings are the available columns in table 'element_operation':
+ * The followings are the available columns in table 'et_ophtroperationnote_personnel':
  * @property string $id
  * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
+ * @property integer $scrub_nurse_id
+ * @property integer $floor_nurse_id
+ * @property integer $accompanying_nurse_id
+ * @property integer $operating_department_practitioner_id
  *
  * The followings are the available model relations:
  * @property Event $event
  */
-class ElementBuckle extends BaseEventTypeElement
+class ElementPersonnel extends BaseEventTypeElement
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return ElementOperation the static model class
@@ -48,7 +47,7 @@ class ElementBuckle extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophtroperationnote_buckle';
+		return 'et_ophtroperationnote_personnel';
 	}
 
 	/**
@@ -59,11 +58,11 @@ class ElementBuckle extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, drainage_type_id, drain_haem, deep_suture, eyedraw, report', 'safe'),
-			array('drainage_type_id, eyedraw', 'required'),
+			array('event_id, scrub_nurse_id, floor_nurse_id, accompanying_nurse_id, operating_department_practitioner_id', 'safe'),
+			array('scrub_nurse_id, floor_nurse_id, accompanying_nurse_id, operating_department_practitioner_id', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, drainage_type_id, drain_haem, deep_suture, eyedraw', 'safe', 'on' => 'search'),
+			array('id, event_id, scrub_nurse_id, floor_nurse_id, accompanying_nurse_id, operating_department_practitioner_id', 'safe', 'on' => 'search'),
 		);
 	}
 	
@@ -76,10 +75,14 @@ class ElementBuckle extends BaseEventTypeElement
 		// class name for the relations automatically generated below.
 		return array(
 			'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
+			'eventType' => array(self::BELONGS_TO, 'EventType', 'event_type_id'),
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'drainage_type' => array(self::BELONGS_TO, 'DrainageType', 'drainage_type_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+			'scrub_nurse' => array(self::BELONGS_TO, 'PersonnelScrubNurse', 'scrub_nurse_id'),
+			'floor_nurse' => array(self::BELONGS_TO, 'PersonnelFloorNurse', 'floor_nurse_id'),
+			'accompanying_nurse' => array(self::BELONGS_TO, 'PersonnelAccompanyingNurse', 'accompanying_nurse_id'),
+			'operating_department_practitioner' => array(self::BELONGS_TO, 'PersonnelOperatingDepartmentPractitioner', 'operating_department_practitioner_id'),
 		);
 	}
 
@@ -90,9 +93,11 @@ class ElementBuckle extends BaseEventTypeElement
 	{
 		return array(
 			'id' => 'ID',
-			'drainage_type_id' => 'Drainage type',
-			'drain_haem' => 'Drain haem',
-			'deep_suture' => 'Deep suture'
+			'event_id' => 'Event',
+			'scrub_nurse_id' => 'Scrub nurse',
+			'floor_nurse_id' => 'Floor nurse',
+			'accompanying_nurse_id' => 'Accompanying nurse',
+			'operating_department_practitioner_id' => 'Operating department practitioner',
 		);
 	}
 
@@ -109,59 +114,25 @@ class ElementBuckle extends BaseEventTypeElement
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('drainage_type_id', $this->drainage_type_id);
-		$criteria->compare('drain_haem', $this->drain_haem);
-		$criteria->compare('deep_suture', $this->deep_suture);
 		
 		return new CActiveDataProvider(get_class($this), array(
-				'criteria' => $criteria,
-			));
+			'criteria' => $criteria,
+		));
 	}
 
-	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
+	public function getScrub_nurses() {
+		return Contact::model()->findAllByParentClass('OphTrOperationnote_Personnel_scrub_nurses');
 	}
 
-	protected function beforeSave()
-	{
-		return parent::beforeSave();
+	public function getFloor_nurses() {
+		return Contact::model()->findAllByParentClass('OphTrOperationnote_Personnel_floor_nurses');
 	}
 
-	protected function afterSave()
-	{
-		return parent::afterSave();
+	public function getAccompanying_nurses() {
+		return Contact::model()->findAllByParentClass('OphTrOperationnote_Personnel_accompanying_nurses');
 	}
 
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
-	}
-
-	public function getEye() {
-		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
-	}
-
-	public function getSelectedEye() {
-		if (Yii::app()->getController()->getAction()->id == 'create') {
-			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
-			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
-			}
-
-			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($booking = $episode->getMostRecentBooking()) {
-					return $booking->elementOperation->eye;
-				}
-			}
-		}
-
-		if (isset($_GET['eye'])) {
-			return Eye::model()->findByPk($_GET['eye']);
-		}
-
-		return new Eye;
+	public function getOperating_department_practitioners() {
+		return Contact::model()->findAllByParentClass('OphTrOperationnote_Personnel_operating_department_practitioners');
 	}
 }

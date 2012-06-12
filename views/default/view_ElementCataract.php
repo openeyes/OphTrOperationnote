@@ -60,6 +60,20 @@
 					<td><?php echo CHtml::encode($element->getAttributeLabel('incision_type_id'))?>:</td>
 					<td><span class="big"><?php echo $element->incision_type->name?></span></td>
 				</tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('report2'))?>:</td>
+					<td><span class="big"><?php echo $element->report2?></span></td>
+				</tr>
+				<?php if (Yii::app()->params['fife']) {?>
+					<tr>
+						<td><?php echo CHtml::encode($element->getAttributeLabel('intraocular_solution_id'))?>:</td>
+						<td><span class="big"><?php echo $element->intraocular_solution ? $element->intraocular_solution->name : 'Not specified'?></span></td>
+					</tr>
+					<tr>
+						<td><?php echo CHtml::encode($element->getAttributeLabel('skin_preparation_id'))?>:</td>
+						<td><span class="big"><?php echo $element->skin_preparation ? $element->skin_preparation->name : 'Not specified'?></span></td>
+					</tr>
+				<?php }?>
 			</tbody>
 		</table>
 	</div>
