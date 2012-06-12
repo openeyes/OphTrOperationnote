@@ -21,25 +21,22 @@
 <div class="<?php echo $element->elementType->class_name?> ondemand<?php if (@$ondemand){?> hidden<?php }?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
-	<?php
-	$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-		'identifier'=> 'Buckle',
-		'side'=>'R',
-		'mode'=>'edit',
-		'size'=>300,
-		'model'=>$element,
-		'attribute'=>'eyedraw',
-		'doodleToolBarArray'=>array('CircumferentialBuckle','EncirclingBand','RadialSponge','BuckleSuture','DrainageSite'),
-		'onLoadedCommandArray'=>array(
-			array('addDoodle', array('BuckleOperation')),
-			array('deselectDoodles', array()),
-		),
-		'offset_x' => 10,
-		'offset_y' => 10,
-	));
-	?>
-	<?php echo $form->dropDownList($element, 'drainage_type_id', CHtml::listData(DrainageType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
-	<?php echo $form->radioBoolean($element, 'drain_haem')?>
-	<?php echo $form->radioBoolean($element, 'deep_suture')?>
-	<?php echo $form->textArea($element, 'report', array('rows'=>8,'cols'=>50,'button'=>array('id'=>'generate_report','colour'=>'blue','size'=>'venti','label'=>'Generate')))?>
+	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
+		<?php
+		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetBuckle', array(
+			'side'=>$element->getSelectedEye()->getShortName(),
+			'mode'=>'edit',
+			'size'=>300,
+			'model'=>$element,
+			'attribute'=>'eyedraw',
+			'offset_x' => 10,
+			'offset_y' => 10,
+		));
+		?>
+		<div class="halfHeight">
+			<?php echo $form->dropDownList($element, 'drainage_type_id', CHtml::listData(DrainageType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
+			<?php echo $form->radioBoolean($element, 'drain_haem')?>
+			<?php echo $form->radioBoolean($element, 'deep_suture')?>
+		</div>
+	</div>
 </div>
