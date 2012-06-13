@@ -136,11 +136,40 @@ class ElementSurgeon extends BaseEventTypeElement
 
 	public function getSurgeons() {
 		if (!$this->surgeonlist) {
-			$criteria = new CDbCriteria;
-			$criteria->compare('is_doctor',1);
-			$criteria->order = 'first_name,last_name asc';
+			
+			$sub_spec = Yii::app()->db->createCommand()
+					->select("ssa.subspecialty_id")
+					->from("service_subspecialty_assignment ssa")
+					->join("firm f", "f.service_subspecialty_assignment_id = ssa.id")
+					->where("f.id = :id", array(':id' => Yii::app()->session['selected_firm_id']))
+					->queryRow();
+			
+			if(empty($sub_spec)){
+				throw new CHttpException(500,'No subspeciality found matching current firm selection.');
+			}
+			
+			$firms = Yii::app()->db->createCommand()
+					->select("f.id")
+					->from("firm f")
+					->join("service_subspecialty_assignment ssa", "ssa.id = f.service_subspecialty_assignment_id")
+					->where("ssa.subspecialty_id = :id", array(":id" => $sub_spec['subspecialty_id']))
+					->queryAll();
+			
+			if(!empty($firms)){
+				$firm_ids = array();
+				foreach($firms as $firm){
+					$firm_ids[] = $firm['id'];
+				}
+			}else{
+				throw new CHttpException(500,'No firms found matching subspeciality.');
+			}
 
-			$this->surgeonlist = User::model()->findAll($criteria);
+			$criteria = new CDbCriteria;
+			$criteria->compare("firmUserAssignments.firm_id", $firm_ids, "IN");
+			$criteria->compare('is_doctor',1);
+			$criteria->order = 'last_name,first_name asc';
+
+			$this->surgeonlist = User::model()->with('firmUserAssignments')->findAll($criteria);
 		}
 
 		return $this->surgeonlist;
