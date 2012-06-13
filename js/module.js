@@ -31,7 +31,7 @@ function callbackAddProcedure(procedure_id) {
 function callbackRemoveProcedure(procedure_id) {
 	var procedures = '';
 
-	$('div.procedureItem').children('input[type="hidden"]').map(function() {
+	$('input[name="Procedures[]"]').map(function() {
 		if (procedures.length >0) {
 			procedures += ',';
 		}
