@@ -59,8 +59,8 @@ class ElementBuckle extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, drainage_type_id, drain_haem, deep_suture, eyedraw', 'safe'),
-			array('drainage_type_id, eyedraw, report', 'required'),
+			array('event_id, drainage_type_id, drain_haem, deep_suture, eyedraw, report', 'safe'),
+			array('drainage_type_id, eyedraw', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, drainage_type_id, drain_haem, deep_suture, eyedraw', 'safe', 'on' => 'search'),
@@ -138,5 +138,30 @@ class ElementBuckle extends BaseEventTypeElement
 	protected function beforeValidate()
 	{
 		return parent::beforeValidate();
+	}
+
+	public function getEye() {
+		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
+	}
+
+	public function getSelectedEye() {
+		if (Yii::app()->getController()->getAction()->id == 'create') {
+			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
+			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
+			}
+
+			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+				if ($booking = $episode->getMostRecentBooking()) {
+					return $booking->elementOperation->eye;
+				}
+			}
+		}
+
+		if (isset($_GET['eye'])) {
+			return Eye::model()->findByPk($_GET['eye']);
+		}
+
+		return new Eye;
 	}
 }

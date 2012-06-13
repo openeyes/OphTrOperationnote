@@ -31,7 +31,7 @@ function callbackAddProcedure(procedure_id) {
 function callbackRemoveProcedure(procedure_id) {
 	var procedures = '';
 
-	$('div.procedureItem').children('input[type="hidden"]').map(function() {
+	$('input[name="Procedures[]"]').map(function() {
 		if (procedures.length >0) {
 			procedures += ',';
 		}
@@ -69,6 +69,14 @@ $(document).ready(function() {
 	$('#et_save').unbind('click').click(function() {
 		if (!$(this).hasClass('inactive')) {
 			disableButtons();
+
+			if ($('#ElementBuckle_report').length >0) {
+				$('#ElementBuckle_report').val(ed_drawing_edit_Buckle.report());
+			}
+			if ($('#ElementCataract_report2').length >0) {
+				$('#ElementCataract_report2').val(ed_drawing_edit_Cataract.report());
+			}
+
 			return true;
 		}
 		return false;

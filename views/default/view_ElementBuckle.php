@@ -18,46 +18,40 @@
  */
 ?>
 
-<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
+<h4><?php echo $element->elementType->name ?></h4>
 
-<div class="view">
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('drainage_type_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->drainage_type->name ?></div>
-	</div>
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('drain_haem')); ?></div>
-		<div class="eventHighlight"><?php echo $element->drain_haem ? 'Yes' : 'No'; ?></div>
-	</div>
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('deep_suture')); ?></div>
-		<div class="eventHighlight"><?php echo $element->deep_suture ? 'Yes' : 'No'; ?></div>
-	</div>
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('report')); ?></div>
-		<div class="eventHighlight"><?php echo $element->report ?></div>
-	</div>
-
-	<div class="col1" style="margin-top: 1em;">
+<div class="cols2">
+	<div class="right">
 		<?php
-		$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-			'identifier'=> 'Buckle',
-			'side'=>'R',
+		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetBuckle', array(
+			'side'=>$element->eye->getShortName(),
 			'mode'=>'view',
-			'size'=>300,
+			'size'=>200,
 			'model'=>$element,
 			'attribute'=>'eyedraw',
-			'doodleToolBarArray'=>array(),
-			'onLoadedCommandArray'=>array(
-				array('addDoodle', array('BuckleOperation')),
-				array('deselectDoodles', array()),
-			),
 		));
 		?>
 	</div>
+	<div class="left">
+		<table class="subtleWhite normalText">
+      <tbody>
+        <tr>
+          <td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('drainage_type_id'))?>:</td>
+          <td><span class="big"><?php echo $element->drainage_type->name?></span></td>
+        </tr>
+        <tr>
+          <td><?php echo CHtml::encode($element->getAttributeLabel('drain_haem'))?>:</td>
+          <td><span class="big"><?php echo $element->drain_haem ? 'Yes' : 'No'?></span></td>
+        </tr>
+        <tr>
+          <td><?php echo CHtml::encode($element->getAttributeLabel('deep_suture'))?>:</td>
+          <td><span class="big"><?php echo $element->deep_suture ? 'Yes' : 'No'?></span></td>
+        </tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('report'))?>:</td>
+					<td><span class="big"><?php echo $element->report?></span></td>
+				</tr>
+      </tbody>
+    </table>
+	</div>
 </div>
-

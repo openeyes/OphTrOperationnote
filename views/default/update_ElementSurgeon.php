@@ -21,5 +21,22 @@
 <div class="<?php echo $element->elementType->class_name?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
-	<?php echo $form->dropDownListRow($element, array('surgeon_id','assistant_id','supervising_surgeon_id'),array(CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),CHtml::listData($element->surgeons, 'id', 'ReversedFullName')),array(array('empty'=>'- Please select -'),array('empty'=>'- None -'),array('empty'=>'- None -')))?>
+	<?php echo $form->dropDownListRow(
+		$element,
+		array(
+			'surgeon_id',
+			'assistant_id',
+			'supervising_surgeon_id'
+		),
+		array(
+			CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),
+			CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),
+			CHtml::listData($element->surgeons, 'id', 'ReversedFullName')
+		),
+		array(
+			array('empty'=>'- Please select -'),
+			array('empty'=>'- None -'),
+			array('empty'=>'- None -')
+		)
+	)?>
 </div>

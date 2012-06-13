@@ -34,6 +34,7 @@
 				'offset_y' => 10,
 			));
 			?>
+			<?php echo $form->hiddenInput($element, 'report2', '')?>
 			<div class="halfHeight">
 				<?php echo $form->dropDownList($element, 'incision_site_id', CHtml::listData(IncisionSite::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
 				<?php echo $form->textField($element, 'length', array('size' => '10'))?>
