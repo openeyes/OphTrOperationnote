@@ -13,6 +13,11 @@ class DefaultController extends BaseEventTypeController {
 		parent::actionView($id);
 	}
 
+	public function actionPrint($id) {
+		OECClientScript::registerCssFile($this->cssPath.'/print.js');
+		return parent::actionPrint($id);
+	}
+
 	public function getDefaultElements($action, $event_type_id=false, $event=false) {
 		$elements = parent::getDefaultElements($action, $event_type_id, $event);
 

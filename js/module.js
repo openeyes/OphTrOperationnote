@@ -116,6 +116,13 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$('#et_print').unbind('click').click(function() {
+		/*var m = window.location.href.match(/\/view\/([0-9]+)/);
+		printUrl('/OphTrOperationnote/Default/print/'+m[1],null,$('#moduleCSSPath').val());*/
+		window.print_iframe.print();
+		return false;
+	});
+
 	$('#ElementCataract_incision_site_id').die('change').live('change',function(e) {
 		e.preventDefault();
 
