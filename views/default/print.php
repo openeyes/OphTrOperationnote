@@ -17,27 +17,180 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-<div class="banner clearfix">
-	<div class="seal"><img src="/img/_print/letterhead_seal.jpg" alt="letterhead_seal" /></div>
-	<div class="logo"><img src="/img/_print/letterhead_Moorfields_NHS.jpg" alt="letterhead_Moorfields_NHS" /></div>
-</div>
-<?php if (isset($site)) {?>
-	<div class="fromAddress">
-		<?php echo $site->letterhtml ?>
-		<br />Tel: <?php echo CHtml::encode($site->telephone) ?>
-		<?php if($site->fax) { ?>
-		<br />Fax: <?php echo CHtml::encode($site->fax) ?>
-		<?php } ?>
+<div class="page">
+	<div class="header">
+		<div class="title middle">
+			<img src="/img/_print/letterhead_seal.jpg" alt="letterhead_seal" class="seal" width="100" height="83"/>
+			<h1>Operation Note</h1>
+		</div>
+		<div class="headerInfo">
+			<div class="patientDetails">
+				<strong><?php echo $this->patient->addressname?></strong>
+				<br />
+				<?php echo $this->patient->address->getLetterHtml()?>
+				<br>
+				<br>
+				Hospital No: <strong><?php echo $this->patient->hos_num ?></strong>
+				<br>
+				NHS No: <strong><?php echo $this->patient->nhs_num ?></strong>
+				<br>
+				DOB: <strong><? echo Helper::convertDate2NHS($this->patient->dob) ?> (<?php echo $this->patient->getAge()?>)</strong>
+			</div>
+			<div class="headerDetails">
+				<strong><?php echo $this->event->episode->firm->getConsultant()->contact->getFullName() ?></strong>
+				<br>
+				Service: <strong><?php echo $this->event->episode->firm->getSubspecialtyText() ?></strong>
+			</div>
+			<div class="noteDates">
+				Note Created: <strong><?php echo Helper::convertDate2NHS($this->event->created_date) ?></strong>
+				<br>
+				Note Printed: <strong><?php echo Helper::convertDate2NHS(date('Y-m-d')) ?></strong>
+			</div>
+		</div>
 	</div>
-<?php }?>
-<div class="toAddress">
-	<?php echo $this->patient->addressname?>
-	<br />
-	<?php echo $this->patient->address->getLetterHtml()?>
+	
+	<div class="body">
+		<div class="operationMeta">
+			<div class="detailRow leftAlign">
+				<div class="label">
+					Operation(s) Performed:
+				</div>
+				<div class="value pronounced">
+					<?php
+						$operations_perf = ElementProcedureList::model()->find("event_id = ?", array($this->event->id));
+						foreach($operations_perf->procedures as $procedure){
+							echo "<strong>{$operations_perf->eye->name} {$procedure->term}</strong><br>";
+						}
+					?>
+				</div>
+			</div>
+			<div class="surgeonList">
+				<?php 
+					$surgeon_element = ElementSurgeon::model()->find("event_id = ?", array($this->event->id));
+					$surgeon_name = ($surgeon = Contact::model()->findByPk($surgeon_element->surgeon_id)) ? $surgeon->getFullName() : "Unknown";
+					$assistant_name = ($assistant = Contact::model()->findByPk($surgeon_element->assistant_id)) ? $assistant->getFullName() : "Unknown";
+					$supervising_surg_name = ($supervising_surg = Contact::model()->findByPk($surgeon_element->supervising_surgeon_id)) ? $supervising_surg->getFullName() : "Unknown";
+				?>
+				<div>
+					First Surgeon
+					<br>
+					<strong><?php echo $surgeon_name ?></strong>
+				</div>
+				<div>
+					Assistant Surgeon
+					<br>
+					<strong><?php echo $assistant_name ?></strong>
+				</div>
+				<div>
+					Supervising surgeon
+					<br>
+					<strong><?php echo $supervising_surg_name ?></strong>
+				</div>
+			</div>
+		</div>
+		
+		<h2>Operation Details</h2>
+		<div class="operationDetails details">
+			<?php $this->renderPartial('print_OperationDetails') ?>
+		</div>
+		
+		<h2>Anaesthetic Details</h2>
+		<?php
+			$anaesthetic_element = ElementAnaesthetic::model()->find("event_id = ?", array($this->event->id));
+		?>
+		<div class="anaestheticDetails details">
+			<div class="detailRow inline">
+				<div class="label">
+					Anaesthetic Type:
+				</div>
+				<div class="value">
+					<?php echo ($anaesthetic_type = $anaesthetic_element->anaesthetic_type->name) ? $anaesthetic_type : 'Unknown' ?>
+				</div>
+			</div>
+			<div class="detailRow inline">
+				<div class="label">
+					Given By:
+				</div>
+				<div class="value">
+					<?php echo ($anaesthetist = $anaesthetic_element->anaesthetist->name) ? $anaesthetist : 'Unknown' ?>
+				</div>
+			</div>
+			<div class="detailRow inline">
+				<div class="label">
+					Route Administered:
+				</div>
+				<div class="value">
+					<?php echo ($delivery = $anaesthetic_element->anaesthetic_delivery->name) ? $delivery : 'Unknown' ?>
+				</div>
+			</div>
+			<div class="detailRow inline">
+				<div class="label">
+					Anaesthetic Agents Used:
+				</div>
+				<div class="value">
+					<?php
+						foreach ($anaesthetic_element->anaesthetic_agents as $agent){
+							echo "{$agent->name}<br>\n";
+						}
+					?>
+				</div>
+			</div>
+			<div class="detailRow inline">
+				<div class="label">
+					Complications:
+				</div>
+				<div class="value">
+					<?php
+						foreach ($anaesthetic_element->anaesthetic_complications as $complication){
+							echo "{$complication->name}<br>\n";
+						}
+					?>
+				</div>
+			</div>
+			<div class="detailRow clearVal">
+				<div class="label">
+					Comments
+				</div>
+				<div class="value">
+					<?php echo $anaesthetic_element->anaesthetic_comment ?>
+				</div>
+			</div>
+		</div>
+
+		<div class="detailRow leftAlign">
+			<?php
+				$postdrugs_element = ElementPostOpDrugs::model()->find("event_id = ?", array($this->event->id));
+			?>
+			<div class="label">
+				Per-op Drugs:
+			</div>
+			<div class="value">
+				<?php foreach ($postdrugs_element->drugs as $drug) {?>
+					<?php echo $drug->name ?>
+				<?php }?>
+			</div>
+		</div>
+		<div class="detailRow clearVal">
+			<?php
+				$comments_element = ElementComments::model()->find("event_id = ?", array($this->event->id));
+			?>
+			<div class="label">
+				Post-op Instructions
+			</div>
+			<div class="value">
+				<?php echo $comments_element->postop_instructions ?>
+			</div>
+		</div>
+		<div class="detailRow clearVal">
+			<div class="label">
+				Comments
+			</div>
+			<div class="value">
+				<?php echo $comments_element->comments ?>
+			</div>
+		</div>
+		<div class="footer">
+			Created by <strong><?php echo ($created_user = User::model()->findByPk($this->event->created_user_id)) ? $created_user->getFullName() .' '.$created_user->qualifications : 'Unknown' ?></strong>
+		</div>
+	</div>
 </div>
-
-
-<br/><br/>
-
-<?php $this->renderDefaultElements($this->action->id); ?>
-<?php $this->renderOptionalElements($this->action->id); ?>

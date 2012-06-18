@@ -18,46 +18,65 @@
  */
 ?>
 
-<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
-
-<div class="view">
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('drainage_type_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->drainage_type->name ?></div>
+<h3 class="elementTypeName"><?php echo $element->elementType->name ?></h3>
+<div class="procedureContainer clearfix">
+	<div class="rightHalf">
+		<div class="detailRow clearfix">
+			<?php
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+				'identifier'=> 'Buckle',
+				'side'=>'R',
+				'mode'=>'view',
+				'size'=>200,
+				'model'=>$element,
+				'attribute'=>'eyedraw',
+				'doodleToolBarArray'=>array(),
+				'onLoadedCommandArray'=>array(
+					array('addDoodle', array('BuckleOperation')),
+					array('deselectDoodles', array()),
+				),
+				'to_image' => true,
+			));
+			?>
+		</div>
 	</div>
+	
+	<div class="leftHalf">
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('drainage_type_id')); ?>:
+			</div>
+			<div class="value">
+				<?php echo $element->drainage_type->name ?>
+			</div>
+		</div>
 
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('drain_haem')); ?></div>
-		<div class="eventHighlight"><?php echo $element->drain_haem ? 'Yes' : 'No'; ?></div>
-	</div>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('drain_haem')); ?>:
+			</div>
+			<div class="value">
+				<?php echo $element->drain_haem ? 'Yes' : 'No'; ?>
+			</div>
+		</div>
 
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('deep_suture')); ?></div>
-		<div class="eventHighlight"><?php echo $element->deep_suture ? 'Yes' : 'No'; ?></div>
-	</div>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('deep_suture')); ?>:
+			</div>
+			<div class="value">
+				<?php echo $element->deep_suture ? 'Yes' : 'No'; ?>
+			</div>
+		</div>
 
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('report')); ?></div>
-		<div class="eventHighlight"><?php echo $element->report ?></div>
-	</div>
-
-	<div class="col1" style="margin-top: 1em;">
-		<?php
-		$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-			'identifier'=> 'Buckle',
-			'side'=>'R',
-			'mode'=>'view',
-			'size'=>300,
-			'model'=>$element,
-			'attribute'=>'eyedraw',
-			'doodleToolBarArray'=>array(),
-			'onLoadedCommandArray'=>array(
-				array('addDoodle', array('BuckleOperation')),
-				array('deselectDoodles', array()),
-			),
-		));
-		?>
+		<div class="detailRow clearVal">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('report')); ?>
+			</div>
+			<div class="value">
+				<?php echo $element->report ?>
+			</div>
+		</div>
 	</div>
 </div>
 

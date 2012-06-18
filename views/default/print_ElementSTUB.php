@@ -17,12 +17,14 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
-<div class="cols2">
-	<div class="left">
-		<h4><?php echo $element->elementType->name ?></h4>
-		<div class="eventHighlight">
-			<h4><?php echo $element->comments?></h4>
+<h3><?php echo $element->elementType->name ?></h3>
+<div class="procedureContainer clearfix<?php echo ($last) ? ' last' : ''; ?>">
+	<div class="detailRow clearVal">
+		<div class="label">
+			Comment
+		</div>
+		<div class="value">
+			<strong><?php echo $element->comments ?></strong>
 		</div>
 	</div>
 </div>

@@ -1,0 +1,1 @@
+<?php $this->renderAllProcedureElements($this->action->id); ?>

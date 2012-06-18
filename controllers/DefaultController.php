@@ -89,4 +89,37 @@ class DefaultController extends BaseEventTypeController {
 
 		return ProcedureListOperationElement::model()->findAll($criteria);
 	}
+	
+	public function getAllProcedureElements($action){
+		$elements = $this->getDefaultElements($action);
+		$current_procedure_elements = array();
+		
+		foreach($elements as $element){
+			$element_type = ElementType::model()->find('class_name = ?', array(get_class($element)));
+			$procedure_elements = ProcedureListOperationElement::model()->find('element_type_id = ?', array($element_type->id));
+			if($procedure_elements){
+				$current_procedure_elements[] = $element;
+			}
+		}
+		
+		return $current_procedure_elements;
+	}
+	
+	public function renderAllProcedureElements($action, $form=false, $data=false) {
+		$elements = $this->getAllProcedureElements($action);
+		$count = count($elements);
+		$i = 0;
+		$last = false;
+		foreach ($elements as $element) {
+			if($count == ($i + 1)){
+				$last = true;
+			}
+			$this->renderPartial(
+				$action . '_' . $element->{$action.'_view'},
+				array('element' => $element, 'data' => $data, 'form' => $form, 'last' => $last),
+				false, false
+			);
+			$i++;
+		}
+	}
 }

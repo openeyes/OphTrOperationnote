@@ -18,22 +18,38 @@
  */
 ?>
 
-<h4><?php echo $element->elementType->name ?></h4>
+<h3><?php echo $element->elementType->name ?></h3>
+<div class="procedureContainer">
+	<?php if ($element->membrane_blue) {?>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('membrane_blue'))?>:
+			</div>
+			<div class="value">
+				Yes
+			</div>
+		</div>
+	<?php }?>
 
-<?php if ($element->membrane_blue) {?>
-	<div class="eventHighlight">
-		<h4><?php echo CHtml::encode($element->getAttributeLabel('membrane_blue'))?></h4>
-	</div>
-<?php }?>
+	<?php if ($element->brilliant_blue) {?>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('brilliant_blue'))?>:
+			</div>
+			<div class="value">
+				Yes
+			</div>
+		</div>
+	<?php }?>
 
-<?php if ($element->brilliant_blue) {?>
-	<div class="eventHighlight">
-		<h4><?php echo CHtml::encode($element->getAttributeLabel('brilliant_blue'))?></h4>
-	</div>
-<?php }?>
-
-<?php if ($element->other_dye) {?>
-	<div class="eventHighlight">
-		<h4><?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>: <?php echo $element->other_dye?></h4>
-	</div>
-<?php }?>
+	<?php if ($element->other_dye) {?>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->other_dye?>
+			</div>
+		</div>
+	<?php }?>
+</div>

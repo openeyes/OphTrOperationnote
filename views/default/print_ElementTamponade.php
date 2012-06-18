@@ -18,23 +18,35 @@
  */
 ?>
 
-<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
+<h3 class="elementTypeName"><?php echo $element->elementType->name ?></h3>
 
-<div class="view">
+<div class="procedureContainer">
 
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('gas_type_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->gas_type->name ?></div>
+	<div class="detailRow">
+		<div class="label">
+			<?php echo CHtml::encode($element->getAttributeLabel('gas_type_id')); ?>:
+		</div>
+		<div class="value">
+			<?php echo $element->gas_type->name ?>
+		</div>
 	</div>
 
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('gas_percentage_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->gas_percentage->value ?>%</div>
+	<div class="detailRow">
+		<div class="label">
+			<?php echo CHtml::encode($element->getAttributeLabel('gas_percentage_id')); ?>:
+		</div>
+		<div class="value">
+			<?php echo $element->gas_percentage->value ?>%
+		</div>
 	</div>
 
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('gas_volume_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->gas_volume->value ?></div>
+	<div class="detailRow">
+		<div class="label">
+			<?php echo CHtml::encode($element->getAttributeLabel('gas_volume_id')); ?>:
+		</div>
+		<div class="value">
+			<?php echo $element->gas_volume->value ?>
+		</div>
 	</div>
 
 </div>

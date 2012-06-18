@@ -18,75 +18,142 @@
  */
 ?>
 
-<h4><?php echo $element->elementType->name ?></h4>
-
-<div class="cols2">
-	<div class="right">
-		<?php
-		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetCataract', array(
-			'side'=>$element->eye->getShortName(),
-			'mode'=>'view',
-			'size'=>200,
-			'model'=>$element,
-			'attribute'=>'eyedraw',
-		));
-		?>
-		<?php
-		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
-			'side'=>$element->eye->getShortName(),
-			'mode'=>'view',
-			'size'=>200,
-			'model'=>$element,
-			'attribute'=>'eyedraw2',
-		));
-		?>
+<h3><?php echo $element->elementType->name ?></h3>
+<div class="procedureContainer clearfix<?php echo ($last) ? ' last' : ''; ?>">
+	<div class="rightHalf">
+		<div class="detailRow clearfix">
+			<?php
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetCataract', array(
+				'side'=>$element->eye->getShortName(),
+				'mode'=>'view',
+				'size'=>200,
+				'model'=>$element,
+				'attribute'=>'eyedraw',
+				'to_image'=>true,
+			));
+			?>
+			<?php
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
+				'side'=>$element->eye->getShortName(),
+				'mode'=>'view',
+				'size'=>200,
+				'model'=>$element,
+				'attribute'=>'eyedraw2',
+				'to_image'=>true
+			));
+			?>
+		</div>
+		<div class="detailRow leftAlign">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('iol_type_id'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->iol_type->name?>
+			</div>
+		</div>
+		<div class="detailRow leftAlign">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->iol_power ?>
+			</div>
+		</div>
+		<div class="detailRow leftAlign">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('iol_position_id'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->iol_position->name?>
+			</div>
+		</div>
+		<div class="detailRow clearVal">
+			<div class="label">
+				Complication Notes
+			</div>
+			<div class="value">
+				<?php echo $element->complication_notes ?>
+			</div>
+		</div>
 	</div>
-	<div class="left">
-		<div class="eventHighlight">
-			<h4><?php echo CHtml::encode($element->getAttributeLabel('incision_site_id'))?>: <?php echo $element->incision_site->name?></h4>
+	<div class="leftHalf">
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('incision_site_id'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->incision_site->name?>
+			</div>
 		</div>
-		<div class="eventHighlight">
-			<h4><?php echo CHtml::encode($element->getAttributeLabel('length'))?>: <?php echo $element->length?></h4>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('length'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->length?>
+			</div>
 		</div>
-		<div class="eventHighlight">
-			<h4><?php echo CHtml::encode($element->getAttributeLabel('meridian'))?>: <?php echo $element->meridian?></h4>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('meridian'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->meridian?>
+			</div>
 		</div>
-		<div class="eventHighlight">
-			<h4><?php echo CHtml::encode($element->getAttributeLabel('incision_type_id'))?>: <?php echo $element->incision_type->name?></h4>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('incision_type_id'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->incision_type->name?>
+			</div>
 		</div>
-	</div>
-</div>
-
-<h4>Cataract report</h4>
-<div class="eventHighlight">
-	<?php foreach (explode(chr(10),$element->report) as $line) {?>
-		<h4><?php echo $line?></h4>
-	<?php }?>
-</div>
-
-<div class="cols2">
-	<div class="right">
-		<h4>Cataract devices</h4>
-		<div class="eventHighlight">
-			<?php if (!$element->operative_devices) {?>
-				<h4>None</h4>
-			<?php } else {?>
-				<?php foreach ($element->operative_devices as $device) {?>
-					<h4><?php echo $device->name?></h4>
+		<div class="detailRow clearVal">
+			<div class="label">
+				Details
+			</div>
+			<div class="value">
+				<?php echo $element->report2 ?>
+			</div>
+		</div>
+		<div class="detailRow clearVal">
+			<div class="label">
+				Cataract Report
+			</div>
+			<div class="value pronounced">
+				<?php foreach (explode(chr(10),$element->report) as $line) {?>
+					<strong><?php echo $line?></strong><br>
 				<?php }?>
-			<?php }?>
+			</div>
 		</div>
-	</div>
-	<div class="left">
-		<h4>Cataract complications</h4>
-		<div class="eventHighlight">
-			<?php if (!$element->complications) {?>
-				<h4>None</h4>
-			<?php } else {?>
-				<?php foreach ($element->complications as $complication) {?>
-					<h4><?php echo $complication->name?></h4>
+		<div class="detailRow">
+			<div class="label">
+				Devices Used:
+			</div>
+			<div class="value">
+				<?php if (!$element->operative_devices) {?>
+					None
+				<?php } else {?>
+					<?php foreach ($element->operative_devices as $device) {?>
+						<?php echo $device->name?><br>
+					<?php }?>
 				<?php }?>
-			<?php }?>
+			</div>
+		</div>
+		<div class="detailRow clearVal">
+			<div class="label">
+				Per Operative Complication
+			</div>
+			<div class="value">
+				<?php if (!$element->complications) {?>
+					None
+				<?php } else {?>
+					<?php foreach ($element->complications as $complication) {?>
+						<?php echo $complication->name?></br>
+					<?php }?>
+				<?php }?>
+			</div>
 		</div>
 	</div>
 </div>
