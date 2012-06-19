@@ -151,7 +151,7 @@
 				<div class="label">
 					Comments
 				</div>
-				<div class="value">
+				<div class="value noBorder">
 					<?php echo $anaesthetic_element->anaesthetic_comment ?>
 				</div>
 			</div>
