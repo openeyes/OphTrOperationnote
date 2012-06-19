@@ -133,6 +133,18 @@ class ElementAnaesthetic extends BaseEventTypeElement
 	*/
 	public function setDefaultOptions() {
 		$this->anaesthetic_type_id = 1;
+
+		if (Yii::app()->getController()->getAction()->id == 'create') {
+			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
+			}
+
+			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+				if ($booking = $episode->getMostRecentBooking()) {
+					$this->anaesthetic_type_id = $booking->elementOperation->anaesthetic_type_id;
+				}
+			}
+		}
 	}
 
 	public function getHidden() {
