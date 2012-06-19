@@ -19,6 +19,6 @@
 	<button type="submit" class="classy blue venti" id="et_print" name="print"><span class="button-span button-span-blue">Print</span></button>
 </div>
 
-<iframe id="print_iframe" name="print_iframe" style="display: none;" src="http://localhost/OphTrOperationnote/Default/print/137"></iframe>
+<iframe id="print_iframe" name="print_iframe" style="display: none;" src="/OphTrOperationnote/Default/print/<?php echo $this->event->id?>"></iframe>
 
 <?php $this->footer()?>
