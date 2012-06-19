@@ -126,6 +126,10 @@ $(document).ready(function() {
 
 		magic.setDoodleParameter('PhakoIncision', 'incisionSite', $(this).children('option:selected').text());
 
+		if ($('#ElementCataract_length').val() > 9.9) {
+			$('#ElementCataract_length').val(9.9);
+		}
+
 		return false;
 	});
 
