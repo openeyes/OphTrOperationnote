@@ -108,7 +108,7 @@
 	
 	<div class="colThird">
 		<h4>Cataract complications</h4>
-		<div class="eventHighlight none">
+		<div class="eventHighlight medium">
 			<?php if (!$element->complications) {?>
 				<h4>None</h4>
 			<?php }else{?>
