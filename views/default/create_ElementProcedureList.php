@@ -28,7 +28,8 @@
 		'selected_procedures' => $element->selected_procedures,
 		'newRecord' => true,
 		'last' => true,
-		'hidden' => ($element->getSelectedEye() == null && !@$_POST['ElementProcedureList']['eye_id'])
+		'hidden' => ($element->getSelectedEye() == null && !@$_POST['ElementProcedureList']['eye_id']),
+		'short_version' => false,
 	));
 	?>
 </div>

@@ -27,7 +27,8 @@
 		'element' => $element,
 		'selected_procedures' => $element->selected_procedures,
 		'newRecord' => true,
-		'last' => true
+		'last' => true,
+		'short_version' => false,
 	));
 	?>
 </div>
