@@ -80,6 +80,19 @@ h3{
 .detailRow{
 	position: relative;
 	margin-bottom: 3px;
+	page-break-inside: avoid;
+}
+
+.detailRow.grouped{
+	border: 1px solid #000;
+	margin-bottom: 10px;
+}
+
+.detailRow.grouped .value{
+	width: auto;
+	padding: 5px 5px;
+	text-align: left;
+	margin: 0;
 }
 
 .detailRow .label{
@@ -96,6 +109,10 @@ h3{
 	font-weight: bold;
 }
 
+.detailRow .value.noBorder{
+	border: none !important;
+}
+
 .detailRow.inline{
 	display: inline-block;
 	width: 19%;
@@ -105,12 +122,13 @@ h3{
 .detailRow.inline .label{
 	width: auto;
 	text-align: left;
+	position: relative;
 }
 
 .detailRow.inline .value{
 	width: auto;
 	float: left;
-	margin: 35px 0 0 0;
+	margin: 5px 0 0 0;
 }
 
 .detailRow.leftAlign .label{

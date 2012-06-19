@@ -21,27 +21,32 @@
 <h3><?php echo $element->elementType->name ?></h3>
 <div class="procedureContainer clearfix<?php echo ($last) ? ' last' : ''; ?>">
 	<div class="rightHalf">
-		<div class="detailRow clearfix">
-			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetCataract', array(
-				'side'=>$element->eye->getShortName(),
-				'mode'=>'view',
-				'size'=>200,
-				'model'=>$element,
-				'attribute'=>'eyedraw',
-				'to_image'=>true,
-			));
-			?>
-			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
-				'side'=>$element->eye->getShortName(),
-				'mode'=>'view',
-				'size'=>200,
-				'model'=>$element,
-				'attribute'=>'eyedraw2',
-				'to_image'=>true
-			));
-			?>
+		<div class="detailRow grouped">
+			<div class="clearfix">
+				<?php
+				$this->widget('application.modules.eyedraw.OEEyeDrawWidgetCataract', array(
+					'side'=>$element->eye->getShortName(),
+					'mode'=>'view',
+					'size'=>200,
+					'model'=>$element,
+					'attribute'=>'eyedraw',
+					'to_image'=>true,
+				));
+				?>
+				<?php
+				$this->widget('application.modules.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
+					'side'=>$element->eye->getShortName(),
+					'mode'=>'view',
+					'size'=>200,
+					'model'=>$element,
+					'attribute'=>'eyedraw2',
+					'to_image'=>true
+				));
+				?>
+			</div>
+			<div class="value">
+				<?php echo $element->report2 ?>
+			</div>
 		</div>
 		<div class="detailRow leftAlign">
 			<div class="label">
@@ -65,14 +70,6 @@
 			</div>
 			<div class="value">
 				<?php echo $element->iol_position->name?>
-			</div>
-		</div>
-		<div class="detailRow clearVal">
-			<div class="label">
-				Complication Notes
-			</div>
-			<div class="value">
-				<?php echo $element->complication_notes ?>
 			</div>
 		</div>
 	</div>
@@ -113,14 +110,6 @@
 			<div class="label">
 				Details
 			</div>
-			<div class="value">
-				<?php echo $element->report2 ?>
-			</div>
-		</div>
-		<div class="detailRow clearVal">
-			<div class="label">
-				Cataract Report
-			</div>
 			<div class="value pronounced">
 				<?php foreach (explode(chr(10),$element->report) as $line) {?>
 					<strong><?php echo $line?></strong><br>
@@ -143,15 +132,16 @@
 		</div>
 		<div class="detailRow clearVal">
 			<div class="label">
-				Per Operative Complication
+				Per Operative Complications
 			</div>
 			<div class="value">
-				<?php if (!$element->complications) {?>
+				<?php if (!$element->complications && !$element->complication_notes) {?>
 					None
 				<?php } else {?>
 					<?php foreach ($element->complications as $complication) {?>
 						<?php echo $complication->name?></br>
 					<?php }?>
+					<?php echo $element->complication_notes ?>
 				<?php }?>
 			</div>
 		</div>
