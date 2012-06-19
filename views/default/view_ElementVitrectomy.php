@@ -18,19 +18,21 @@
  */
 ?>
 
-<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
+<h4><?php echo $element->elementType->name ?></h4>
 
-<div class="view">
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('gauge_id')); ?></div>
-		<div class="eventHighlight"><?php echo $element->gauge->value ?></div>
+<div class="cols2">
+	<div class="left">
+		<table class="subtleWhite normalText">
+			<tbody>
+				<tr>
+					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('gauge_id'))?></td>
+					<td><span class="big"><?php echo $element->gauge->value?></span></td>
+				</tr>
+				<tr>
+					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('pvd_induced'))?></td>
+					<td><span class="big"><?php echo $element->pvd_induced ? 'Yes' : 'No'; ?></span></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-
-	<div class="col1">
-		<div class="label"><?php echo CHtml::encode($element->getAttributeLabel('pvd_induced')); ?></div>
-		<div class="eventHighlight"><?php echo $element->pvd_induced ? 'Yes' : 'No'; ?></div>
-	</div>
-
 </div>
-
