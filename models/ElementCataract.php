@@ -280,4 +280,22 @@ class ElementCataract extends BaseEventTypeElement
 
 		return parent::beforeValidate();
 	}
+
+	public function getIOLTypes_NHS() {
+		$criteria = new CDbCriteria;
+
+		$criteria->compare('private', 0);
+		$criteria->order = 'display_order asc';
+
+		return IOLType::model()->findAll($criteria);
+	}
+
+	public function getIOLTypes_Private() {
+		$criteria = new CDbCriteria;
+	
+		$criteria->compare('private', 1);
+		$criteria->order = 'display_order asc';
+
+		return IOLType::model()->findAll($criteria);
+	}
 }
