@@ -24,19 +24,19 @@
 	<div class="colStack">
 		<h4><?php echo CHtml::encode($element->getAttributeLabel('surgeon_id'))?></h4>
 		<div class="eventHighlight">
-			<h4><?php echo $element->surgeon->reversedFullNameAndTitle?></h4>
+			<h4><?php echo $element->surgeon->fullNameAndTitle?></h4>
 		</div>
 	</div>
 	<div class="colStack">
 		<h4><?php echo CHtml::encode($element->getAttributeLabel('assistant_id'))?></h4>
 		<div class="eventHighlight<?php if (!$element->assistant) {?> none<?php }?>">
-			<h4><?php echo ($element->assistant ? $element->assistant->reversedFullNameAndTitle : 'None')?></h4>
+			<h4><?php echo ($element->assistant ? $element->assistant->fullNameAndTitle : 'None')?></h4>
 		</div>
 	</div>
 	<div class="colStack">
 		<h4><?php echo CHtml::encode($element->getAttributeLabel('supervising_surgeon_id'))?></h4>
 		<div class="eventHighlight<?php if (!$element->supervising_surgeon) {?> none<?php }?>">
-			<h4><?php echo ($element->supervising_surgeon ? $element->supervising_surgeon->reversedFullNameAndTitle : 'None')?></h4>
+			<h4><?php echo ($element->supervising_surgeon ? $element->supervising_surgeon->fullNameAndTitle : 'None')?></h4>
 		</div>
 	</div>
 </div>
