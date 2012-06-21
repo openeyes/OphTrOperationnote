@@ -67,9 +67,9 @@
 			<div class="surgeonList">
 				<?php 
 					$surgeon_element = ElementSurgeon::model()->find("event_id = ?", array($this->event->id));
-					$surgeon_name = ($surgeon = Contact::model()->findByPk($surgeon_element->surgeon_id)) ? $surgeon->getFullName() : "Unknown";
-					$assistant_name = ($assistant = Contact::model()->findByPk($surgeon_element->assistant_id)) ? $assistant->getFullName() : "Unknown";
-					$supervising_surg_name = ($supervising_surg = Contact::model()->findByPk($surgeon_element->supervising_surgeon_id)) ? $supervising_surg->getFullName() : "Unknown";
+					$surgeon_name = ($surgeon = User::model()->findByPk($surgeon_element->surgeon_id)) ? $surgeon->getFullNameAndTitle() : "Unknown";
+					$assistant_name = ($assistant = User::model()->findByPk($surgeon_element->assistant_id)) ? $assistant->getFullNameAndTitle() : "None";
+					$supervising_surg_name = ($supervising_surg = User::model()->findByPk($surgeon_element->supervising_surgeon_id)) ? $supervising_surg->getFullNameAndTitle() : "None";
 				?>
 				<div>
 					First Surgeon
