@@ -89,7 +89,7 @@ class ElementComments extends BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'comments' => 'Comments',
+			'comments' => 'Operation comments',
 			'postop_instructions' => 'Post-op instructions',
 		);
 	}
