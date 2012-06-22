@@ -157,7 +157,7 @@
 			</div>
 		</div>
 
-		<div class="detailRow leftAlign">
+		<div class="detailRow leftAlign clearVal">
 			<?php
 				$postdrugs_element = ElementPostOpDrugs::model()->find("event_id = ?", array($this->event->id));
 			?>
