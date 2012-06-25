@@ -27,7 +27,7 @@
 			<div class="patientDetails">
 				<strong><?php echo $this->patient->addressname?></strong>
 				<br />
-				<?php echo $this->patient->address->getLetterHtml()?>
+				<?php echo $this->patient->address ? $this->patient->address->getLetterHtml() : ''?>
 				<br>
 				<br>
 				Hospital No: <strong><?php echo $this->patient->hos_num ?></strong>
