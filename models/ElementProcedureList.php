@@ -176,7 +176,11 @@ class ElementProcedureList extends BaseEventTypeElement
 			$selected_procedures = array();
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($booking = $episode->getMostRecentBooking()) {
+				$bookings = $episode->getBookingsForToday();
+
+				if (count($bookings) == 1) {
+					$booking = Booking::model()->findByPk($bookings[0]['id']);
+
 					foreach ($booking->elementOperation->procedures as $procedure) {
 						$selected_procedures[] = $procedure;
 					}
@@ -198,7 +202,10 @@ class ElementProcedureList extends BaseEventTypeElement
 		}
 
 		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($booking = $episode->getMostRecentBooking()) {
+			$bookings = $episode->getBookingsForToday();
+
+			if (count($bookings) == 1) {
+				$booking = Booking::model()->findByPk($bookings[0]['id']);
 				return $booking->elementOperation->eye;
 			}
 		}
