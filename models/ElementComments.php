@@ -114,4 +114,19 @@ class ElementComments extends BaseEventTypeElement
 			'criteria' => $criteria,
 		));
 	}
+
+	public function getPostop_instructions_list() {
+		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
+		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
+		$site_id = Yii::app()->request->cookies['site_id']->value;
+
+		$params = array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id);
+
+		return CHtml::listData(Yii::app()->db->createCommand()
+			->select('et_ophtroperationnote_site_subspecialty_postop_instructions.id, et_ophtroperationnote_site_subspecialty_postop_instructions.content')
+			->from('et_ophtroperationnote_site_subspecialty_postop_instructions')
+			->where('et_ophtroperationnote_site_subspecialty_postop_instructions.subspecialty_id = :subSpecialtyId and et_ophtroperationnote_site_subspecialty_postop_instructions.site_id = :siteId', $params)
+			->order('et_ophtroperationnote_site_subspecialty_postop_instructions.display_order asc')
+			->queryAll(), 'id', 'content');
+	}
 }

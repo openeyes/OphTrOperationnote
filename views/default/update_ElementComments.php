@@ -20,7 +20,7 @@
 
 <div class="<?php echo $element->elementType->class_name?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
-	<?php echo $form->dropDownTextSelection($element, 'postop_instructions', CHtml::listData(PostopInstruction::model()->findAll(array('order'=>'display_order')), 'id', 'content'))?>
+	<?php echo $form->dropDownTextSelection($element, 'postop_instructions', $element->postop_instructions_list)?>
 	<?php echo $form->textArea($element, 'postop_instructions', array('rows' => 4, 'cols' => 40))?>
 	<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 40))?>
 </div>
