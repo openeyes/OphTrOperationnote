@@ -56,15 +56,9 @@
 		</div>
 		<div class="right" style="width:35%;">
 			<div class="halfHeight">
-				<?php if (Yii::app()->params['fife']) {?>
-					<?php echo $form->dropDownList($element, 'skin_preparation_id', CHtml::listData(CataractSkinPreparation::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
-				<?php }?>
 				<?php echo $form->dropDownList($element, 'iol_type_id', array(CHtml::listData($element->IOLTypes_NHS,'id','name'),CHtml::listData($element->IOLTypes_Private,'id','name')),array('empty'=>'- Please select -','divided'=>true))?>
 				<?php echo $form->textField($element, 'iol_power', array('size' => '10'))?>
 				<?php echo $form->dropDownList($element, 'iol_position_id', CHtml::listData(IOLPosition::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'))?>
-				<?php if (Yii::app()->params['fife']) {?>
-					<?php echo $form->dropDownList($element, 'intraocular_solution_id', CHtml::listData(CataractIntraocularSolution::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
-				<?php }?>
 				<?php echo $form->multiSelectList($element, 'CataractOperativeDevices', 'operative_devices', 'operative_device_id', $element->operative_device_list, $element->operative_device_defaults, array('empty' => '- Devices -', 'label' => 'Devices'))?>
 				<?php echo $form->multiSelectList($element, 'CataractComplications', 'complications', 'complication_id', CHtml::listData(CataractComplications::model()->findAll(), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'))?>
 				<?php echo $form->textArea($element, 'complication_notes', array('rows'=>5,'cols'=>35))?>
