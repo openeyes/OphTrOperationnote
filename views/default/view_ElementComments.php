@@ -25,7 +25,7 @@
 			<h4><?php echo $element->postop_instructions ? $element->postop_instructions : 'None'?></h4>
 		</div>
 	</div>
-	<div class="colStack">
+	<div class="colStack" style="width: 60%;">
 		<h4><?php echo CHtml::encode($element->getAttributeLabel('comments'))?></h4>
 		<div class="eventHighlight<?php if (!$element->comments) {?> none<?php }?>">
 			<h4><?php echo $element->comments ? $element->comments : 'None'?></h4>
