@@ -18,14 +18,19 @@
  */
 
 /**
- * This is the model class for table "et_ophtroperationnote_cataract_intraocular_solution".
+ * This is the model class for table "et_ophtroperationnote_preparation".
  *
- * The followings are the available columns in table 'et_ophtroperationnote_cataract_intraocular_solution':
+ * The followings are the available columns in table 'et_ophtroperationnote_preparation':
  * @property string $id
- * @property varchar $name
+ * @property integer $event_id
+ *
+ * The followings are the available model relations:
+ * @property Event $event
  */
-class CataractIntraocularSolution extends BaseEventTypeElement
+class ElementPreparation extends BaseEventTypeElement
 {
+	public $service;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return ElementOperation the static model class
@@ -40,7 +45,7 @@ class CataractIntraocularSolution extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophtroperationnote_cataract_intraocular_solution';
+		return 'et_ophtroperationnote_preparation';
 	}
 
 	/**
@@ -51,9 +56,11 @@ class CataractIntraocularSolution extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('event_id, spo2, oxygen, pulse, skin_preparation_id, intraocular_solution_id', 'safe'),
+			array('spo2, oxygen, pulse, skin_preparation_id, intraocular_solution_id', 'required'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -62,6 +69,11 @@ class CataractIntraocularSolution extends BaseEventTypeElement
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
+			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+			'skin_preparation' => array(self::BELONGS_TO, 'PreparationSkinPreparation', 'skin_preparation_id'),
+			'intraocular_solution' => array(self::BELONGS_TO, 'PreparationIntraocularSolution', 'intraocular_solution_id'),
 		);
 	}
 
@@ -71,6 +83,13 @@ class CataractIntraocularSolution extends BaseEventTypeElement
 	public function attributeLabels()
 	{
 		return array(
+			'id' => 'ID',
+			'comments' => 'Comments',
+			'spo2' => 'SpO2',
+			'oxygen' => 'Oxygen',
+			'pulse' => 'Pulse',
+			'skin_preparation_id' => 'Skin preparation',
+			'intraocular_solution_id' => 'Intraocular solution',
 		);
 	}
 
@@ -86,10 +105,11 @@ class CataractIntraocularSolution extends BaseEventTypeElement
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
+		$criteria->compare('event_id', $this->event_id, true);
+		$criteria->compare('comments', $this->comments, true);
 
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
 	}
 }
-?>

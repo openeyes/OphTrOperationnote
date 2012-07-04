@@ -32,3 +32,5 @@ div.ElementComments > h4 { background-color: #fff; margin-bottom: 5px !important
 
 #div_ElementPersonnel { padding-bottom: 25px !important; }
 #div_ElementPersonnel_operating_department_practitioner_id { padding-bottom: 28px !important; }
+
+input.widgetSlider { width: 300px !important; }

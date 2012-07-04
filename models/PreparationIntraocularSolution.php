@@ -18,13 +18,13 @@
  */
 
 /**
- * This is the model class for table "et_ophtroperationnote_cataract_skin_preparation".
+ * This is the model class for table "et_ophtroperationnote_preparation_intraocular_solution".
  *
- * The followings are the available columns in table 'et_ophtroperationnote_cataract_skin_preparation':
+ * The followings are the available columns in table 'et_ophtroperationnote_preparation_intraocular_solution':
  * @property string $id
  * @property varchar $name
  */
-class CataractSkinPreparation extends BaseEventTypeElement
+class PreparationIntraocularSolution extends BaseEventTypeElement
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -40,7 +40,7 @@ class CataractSkinPreparation extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophtroperationnote_cataract_skin_preparation';
+		return 'et_ophtroperationnote_preparation_intraocular_solution';
 	}
 
 	/**
