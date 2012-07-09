@@ -59,11 +59,10 @@ class ElementCataract extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, incision_site_id, length, meridian, incision_type_id, iol_position_id, iol_power, iol_type_id, eyedraw, report, complication_notes, eyedraw2, report2', 'safe'),
-			array('incision_site_id, length, meridian, incision_type_id, iol_position_id, iol_power, iol_type_id, eyedraw, report, eyedraw2', 'required'),
+			array('event_id, incision_site_id, length, meridian, incision_type_id, iol_position_id, iol_type_id, iol_power, eyedraw, report, complication_notes, eyedraw2, report2', 'safe'),
+			array('incision_site_id, length, meridian, incision_type_id, iol_position_id, eyedraw, report, eyedraw2', 'required'),
 			array('length', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9](\.[0-9])?$/', 'message' => 'Length must be 0 - 9.9 in increments of 0.1'),
 			array('meridian', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9]{1,3}(\.[0-9])?$/', 'min' => 000, 'max' => 360, 'message' => 'Meridian must be 000.5 - 360.0 degrees'),
-			array('iol_power', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^\-?[0-9]{1,3}(\.[0-9])?$/', 'message' => 'IOL power must be a number with an optional single decimal place'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			//array('id, event_id, incision_site_id, length, meridian, incision_type_id, eyedraw, report, wound_burn, iris_trauma, zonular_dialysis, pc_rupture, decentered_iol, iol_exchange, dropped_nucleus, op_cancelled, corneal_odema, iris_prolapse, zonular_rupture, vitreous_loss, iol_into_vitreous, other_iol_problem, choroidal_haem', 'on' => 'search'),
@@ -280,5 +279,22 @@ class ElementCataract extends BaseEventTypeElement
 		$criteria->order = 'display_order asc';
 
 		return IOLType::model()->findAll($criteria);
+	}
+
+	public function beforeValidate() {
+		$iol_position = IOLPosition::model()->findByPk($this->iol_position_id);
+
+		if (!$iol_position || $iol_position->name != 'None') {
+			if (!$this->iol_type_id) {
+				$this->addError('Cataract','IOL type cannot be blank');
+			}
+			if (!$this->iol_power) {
+				$this->addError('Cataract','IOL power cannot be blank');
+			} else if (!preg_match('/^\-?[0-9]{1,3}(\.[0-9])?$/',$this->iol_power)) {
+				$this->addError('Cataract','IOL power must be a number with an optional single decimal place');
+			}
+		}
+
+		return parent::beforeValidate();
 	}
 }
