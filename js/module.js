@@ -161,8 +161,7 @@ $(document).ready(function() {
 	$('#ElementCataract_meridian').die('change').live('change',function() {
 		if (doodle = magic.getDoodle('PhakoIncision')) {
 			if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-				doodle.setParameter('incisionMeridian',$(this).val());
-				magic.repaintCataract();
+				doodle.setParameterWithAnimation('incisionMeridian',$(this).val());
 				magic.followSurgeon = false;
 			}
 		}
@@ -175,8 +174,7 @@ $(document).ready(function() {
 			} else if (parseFloat($(this).val()) < 0.1) {
 				$(this).val(0.1);
 			}
-			doodle.setParameter('incisionLength',$(this).val());
-			magic.repaintCataract();
+			doodle.setParameterWithAnimation('incisionLength',$(this).val());
 		}
 	});
 
