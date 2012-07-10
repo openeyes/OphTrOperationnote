@@ -23,18 +23,13 @@
 	<div class="rightHalf">
 		<div class="detailRow clearfix">
 			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetBuckle', array(
 				'identifier'=> 'Buckle',
-				'side'=>'R',
+				'side'=>$element->eye->getShortName(),
 				'mode'=>'view',
 				'size'=>200,
 				'model'=>$element,
 				'attribute'=>'eyedraw',
-				'doodleToolBarArray'=>array(),
-				'onLoadedCommandArray'=>array(
-					array('addDoodle', array('BuckleOperation')),
-					array('deselectDoodles', array()),
-				),
 				'to_image' => true,
 			));
 			?>
@@ -77,6 +72,14 @@
 				<?php echo $element->report ?>
 			</div>
 		</div>
+
+		<div class="detailRow clearVal">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>
+			</div>
+			<div class="value">
+				<?php echo $element->comments ?>
+			</div>
+		</div>
 	</div>
 </div>
-

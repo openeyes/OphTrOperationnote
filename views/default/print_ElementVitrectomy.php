@@ -20,21 +20,50 @@
 
 <h3 class="elementTypeName"><?php echo $element->elementType->name ?></h3>
 <div class="procedureContainer clearfix">
-	<div class="detailRow">
-		<div class="label">
-			<?php echo CHtml::encode($element->getAttributeLabel('gauge_id')); ?>:
-		</div>
-		<div class="value">
-			<?php echo $element->gauge->value ?>
+	<div class="rightHalf">
+		<div class="detailRow clearfix">
+			<?php
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetVitrectomy', array(
+				'identifier'=> 'Vitrectomy',
+				'side'=>$element->eye->getShortName(),
+				'mode'=>'view',
+				'size'=>200,
+				'model'=>$element,
+				'attribute'=>'eyedraw',
+				'to_image' => true,
+			));
+			?>
 		</div>
 	</div>
-	<div class="detailRow">
-		<div class="label">
-			<?php echo CHtml::encode($element->getAttributeLabel('pvd_induced')); ?>:
+
+	<div class="leftHalf">
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('gauge_id')); ?>:
+			</div>
+			<div class="value">
+				<?php echo $element->gauge->value ?>
+			</div>
 		</div>
-		<div class="value">
-			<?php echo $element->pvd_induced ? 'Yes' : 'No'; ?>
+
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('pvd_induced')); ?>:
+			</div>
+			<div class="value">
+				<?php echo $element->pvd_induced ? 'Yes' : 'No'; ?>
+			</div>
 		</div>
+
+		<?php if ($element->comments) {?>
+			<div class="detailRow">
+				<div class="label">
+					<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>:
+				</div>
+				<div class="value">
+					<?php echo $element->comments ?>
+				</div>
+			</div>
+		<?php }?>
 	</div>
 </div>
-

@@ -52,4 +52,15 @@
 			</div>
 		</div>
 	<?php }?>
+
+	<?php if ($element->comments) {?>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->comments?>
+			</div>
+		</div>
+	<?php }?>
 </div>
