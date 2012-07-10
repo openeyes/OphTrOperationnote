@@ -92,7 +92,7 @@ class ElementTamponade extends BaseEventTypeElement
 	{
 		return array(
 			'id' => 'ID',
-			'gas_type_id' => 'Gas type',
+			'gas_type_id' => 'Type',
 			'gas_percentage_id' => 'Percentage',
 			'gas_volume_id' => 'Volume (PR)'
 		);

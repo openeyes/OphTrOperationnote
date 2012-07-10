@@ -51,6 +51,10 @@
 					<td><?php echo CHtml::encode($element->getAttributeLabel('report'))?>:</td>
 					<td><span class="big"><?php echo $element->report?></span></td>
 				</tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:</td>
+					<td><span class="big"><?php echo $element->comments?></span></td>
+				</tr>
       </tbody>
     </table>
 	</div>

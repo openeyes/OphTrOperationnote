@@ -59,7 +59,7 @@ class ElementVitrectomy extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, gauge_id, pvd_induced', 'safe'),
+			array('event_id, gauge_id, pvd_induced, eyedraw, comments', 'safe'),
 			array('gauge_id', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -136,5 +136,30 @@ class ElementVitrectomy extends BaseEventTypeElement
 	protected function beforeValidate()
 	{
 		return parent::beforeValidate();
+	}
+
+	public function getEye() {
+		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
+	}
+
+	public function getSelectedEye() {
+		if (Yii::app()->getController()->getAction()->id == 'create') {
+			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
+			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
+			}
+
+			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+				if ($booking = $episode->getMostRecentBooking()) {
+					return $booking->elementOperation->eye;
+				}
+			}
+		}
+
+		if (isset($_GET['eye'])) {
+			return Eye::model()->findByPk($_GET['eye']);
+		}
+
+		return new Eye;
 	}
 }

@@ -37,3 +37,9 @@
 		<h4><?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>: <?php echo $element->other_dye?></h4>
 	</div>
 <?php }?>
+
+<?php if ($element->comments) {?>
+	<div class="eventHighlight">
+		<h4><?php echo CHtml::encode($element->getAttributeLabel('comments'))?>: <?php echo $element->comments?></h4>
+	</div>
+<?php }?>

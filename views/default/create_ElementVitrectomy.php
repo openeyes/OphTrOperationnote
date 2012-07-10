@@ -21,6 +21,23 @@
 <div class="<?php echo $element->elementType->class_name?> ondemand<?php if (@$ondemand){?> hidden<?php }?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
-	<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(VitrectomyGauge::model()->findAll(),'id','value'),array('empty'=>'- Please select -'))?>
-	<?php echo $form->radioBoolean($element, 'pvd_induced')?>
+	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
+		<?php
+		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetVitrectomy', array(
+			'side'=>$element->getSelectedEye()->getShortName(),
+			'mode'=>'edit',
+			'size'=>300,
+			'model'=>$element,
+			'attribute'=>'eyedraw',
+			'offset_x' => 10,
+			'offset_y' => 10,
+		));
+		?>
+		<?php //echo $form->hiddenInput($element, 'report', '')?>
+		<div class="halfHeight">
+			<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(VitrectomyGauge::model()->findAll(),'id','value'),array('empty'=>'- Please select -'))?>
+			<?php echo $form->radioBoolean($element, 'pvd_induced')?>
+			<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 55))?>
+		</div>
+	</div>
 </div>

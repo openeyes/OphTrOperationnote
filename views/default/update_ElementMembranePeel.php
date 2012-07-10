@@ -24,4 +24,5 @@
 	<?php echo $form->radioBoolean($element, 'membrane_blue')?>
 	<?php echo $form->radioBoolean($element, 'brilliant_blue')?>
 	<?php echo $form->textField($element, 'other_dye')?>
+	<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 60))?>
 </div>

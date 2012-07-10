@@ -59,7 +59,7 @@ class ElementBuckle extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, drainage_type_id, drain_haem, deep_suture, eyedraw, report', 'safe'),
+			array('event_id, drainage_type_id, comments, drain_haem, deep_suture, eyedraw, report', 'safe'),
 			array('drainage_type_id, eyedraw', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

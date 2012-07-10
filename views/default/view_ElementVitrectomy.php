@@ -21,6 +21,17 @@
 <h4><?php echo $element->elementType->name ?></h4>
 
 <div class="cols2">
+	<div class="right">
+		<?php
+		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetVitrectomy', array(
+			'side'=>$element->eye->getShortName(),
+			'mode'=>'view',
+			'size'=>200,
+			'model'=>$element,
+			'attribute'=>'eyedraw',
+		));
+		?>
+	</div>
 	<div class="left">
 		<table class="subtleWhite normalText">
 			<tbody>
@@ -31,6 +42,10 @@
 				<tr>
 					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('pvd_induced'))?></td>
 					<td><span class="big"><?php echo $element->pvd_induced ? 'Yes' : 'No'; ?></span></td>
+				</tr>
+				<tr>
+					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('comments'))?></td>
+					<td><span class="big"><?php echo $element->comments?></span></td>
 				</tr>
 			</tbody>
 		</table>

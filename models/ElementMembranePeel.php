@@ -59,7 +59,7 @@ class ElementMembranePeel extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, membrane_blue, brilliant_blue, other_dye', 'safe'),
+			array('event_id, membrane_blue, brilliant_blue, comments, other_dye', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, membrane_blue, brilliant_blue, other_dye', 'safe', 'on' => 'search'),

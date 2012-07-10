@@ -4,6 +4,7 @@
 #event_OphTrOperationnote .ElementBuckle .halfHeight .eventDetail { margin-left: 535px; }
 #event_OphTrOperationnote .ElementCataract .eventDetail .label { background: none !important; }
 #event_OphTrOperationnote .ElementBuckle .eventDetail .label { background: none !important; }
+#event_OphTrOperationnote .ElementVitrectomy .halfHeight { margin-left: 575px; }
 
 #ed_canvas_edit_Cataract { background-color: #fff; border: 1px solid #000; margin-left: 9px; }
 #ed_canvas_edit_Position { background-color: #DAE6F1; margin-left: 89px; margin-top: -115px; }
@@ -16,8 +17,11 @@
 #div_ElementCataract_Complications .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
 #div_ElementCataract_Complications ul.MultiSelectList { width: 185px; }
 #div_ElementCataract_Devices ul.MultiSelectList { width: 230px; }
+#div_ElementVitrectomy_comments { display: inline-block; }
 
 #div_ElementBuckle_drainage_type_id { margin-bottom: 10px; }
+
+#ed_canvas_edit_Vitrectomy { margin-left: 10px; }
 
 #div_ElementSurgeon { padding-bottom: 28px !important; }
 
