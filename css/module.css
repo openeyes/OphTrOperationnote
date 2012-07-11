@@ -21,7 +21,7 @@
 
 #div_ElementBuckle_drainage_type_id { margin-bottom: 10px; }
 
-#ed_canvas_edit_Vitrectomy { margin-left: 10px; }
+#ed_canvas_edit_Vitrectomy { background: #fff; border: 1px solid #000; margin-left: 10px; }
 #ed_canvas_view_Vitrectomy { margin-top: -26px; }
 
 #div_ElementSurgeon { padding-bottom: 28px !important; }
