@@ -200,6 +200,7 @@ $(document).ready(function() {
 				}
 				doodle.setParameterWithAnimation('incisionLength',$(this).val());
 			}
+			$('#ElementCataract_meridian').select().focus();
 			return false;
 		}
 	});
