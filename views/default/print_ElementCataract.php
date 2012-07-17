@@ -53,7 +53,7 @@
 				<?php echo CHtml::encode($element->getAttributeLabel('iol_type_id'))?>:
 			</div>
 			<div class="value">
-				<?php echo $element->iol_type->name?>
+				<?php echo $element->iol_type ? $element->iol_type->name : 'None'?>
 			</div>
 		</div>
 		<div class="detailRow leftAlign">
