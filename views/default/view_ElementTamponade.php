@@ -25,16 +25,16 @@
 		<table class="subtleWhite normalText">
 			<tbody>
 				<tr>
-					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('gas_type_id'))?></div>
-					<td><span class="big"><?php echo $element->gas_type->name?></div>
+					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('gas_type_id'))?></td>
+					<td><span class="big"><?php echo $element->gas_type->name?></span></td>
 				</tr>
 				<tr>
-					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('gas_percentage_id'))?></div>
-					<td><span class="big"><?php echo $element->gas_percentage->value?>%</div>
+					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('gas_percentage_id'))?></td>
+					<td><span class="big"><?php echo $element->gas_percentage->value?>%</span></td>
 				</tr>
 				<tr>
-					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('gas_volume_id'))?></div>
-					<td><span class="big"><?php echo $element->gas_volume->value?></div>
+					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('gas_volume_id'))?></td>
+					<td><span class="big"><?php echo $element->gas_volume->value?></span></td>
 				</tr>
 			</tbody>
 		</table>

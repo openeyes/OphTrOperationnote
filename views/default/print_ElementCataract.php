@@ -139,7 +139,7 @@
 					None
 				<?php } else {?>
 					<?php foreach ($element->complications as $complication) {?>
-						<?php echo $complication->name?></br>
+						<?php echo $complication->name?><br/>
 					<?php }?>
 					<?php echo $element->complication_notes ?>
 				<?php }?>
