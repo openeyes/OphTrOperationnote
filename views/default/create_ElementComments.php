@@ -23,5 +23,4 @@
 	<?php echo $form->dropDownTextSelection($element, 'postop_instructions', $element->postop_instructions_list)?>
 	<?php echo $form->textArea($element, 'postop_instructions', array('rows' => 4, 'cols' => 40))?>
 	<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 40))?>
-	</div>
 </div>

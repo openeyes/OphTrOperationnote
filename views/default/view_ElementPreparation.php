@@ -49,7 +49,7 @@
 		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('skin_preparation_id'))?></h4>
 			<div class="eventHighlight">
-				<h4><?php echo ($element->skin_preparation ? $element->skin_preparation->name : 'Not specified'?></h4>
+				<h4><?php echo ($element->skin_preparation ? $element->skin_preparation->name : 'Not specified') ?></h4>
 			</div>
 		</div>
 	</div>
