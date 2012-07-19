@@ -176,11 +176,11 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 		}
 
 		return CHtml::listData(Yii::app()->db->createCommand()
-			->select('drug.id, drug.name')
-			->from('drug')
-			->join('site_subspecialty_drug','site_subspecialty_drug.drug_id = drug.id')
+			->select('postop_drug.id, postop_drug.name')
+			->from('postop_drug')
+			->join('site_subspecialty_drug','site_subspecialty_drug.drug_id = postop_drug.id')
 			->where('site_subspecialty_drug.subspecialty_id = :subSpecialtyId and site_subspecialty_drug.site_id = :siteId'.@$where, $params)
-			->order('drug.name asc')
+			->order('postop_drug.name asc')
 			->queryAll(), 'id', 'name');
 	}
 

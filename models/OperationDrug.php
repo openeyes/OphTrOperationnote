@@ -61,7 +61,7 @@ class OperationDrug extends BaseEventTypeElement
 	}
 	
 	public function getName() {
-		return Drug::model()->findByPk($this->drug_id)->name;
+		return PostopDrug::model()->findByPk($this->drug_id)->name;
 	}
 
 	/**
