@@ -30,8 +30,6 @@
 				'size'=>300,
 				'model'=>$element,
 				'attribute'=>'eyedraw',
-				'offset_x' => 10,
-				'offset_y' => 10,
 			));
 			?>
 			<?php echo $form->hiddenInput($element, 'report2', $element->report2)?>
@@ -49,8 +47,6 @@
 				'size'=>140,
 				'model'=>$element,
 				'attribute'=>'eyedraw2',
-				'offset_x' => 10,
-				'offset_y' => 10,
 			));
 			?>
 		</div>
