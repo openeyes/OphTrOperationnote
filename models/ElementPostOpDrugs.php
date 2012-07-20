@@ -171,16 +171,16 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 		$params = array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id);
 
 		if ($default) {
-			$where = ' and site_subspecialty_drug.default = :default ';
+			$where = ' AND et_ophtroperationnote_postop_site_subspecialty_drug.default = :default ';
 			$params[':default'] = 1;
 		}
 
 		return CHtml::listData(Yii::app()->db->createCommand()
-			->select('postop_drug.id, postop_drug.name')
-			->from('postop_drug')
-			->join('site_subspecialty_drug','site_subspecialty_drug.drug_id = postop_drug.id')
-			->where('site_subspecialty_drug.subspecialty_id = :subSpecialtyId and site_subspecialty_drug.site_id = :siteId'.@$where, $params)
-			->order('postop_drug.name asc')
+			->select('et_ophtroperationnote_postop_drug.id, et_ophtroperationnote_postop_drug.name')
+			->from('et_ophtroperationnote_postop_drug')
+			->join('et_ophtroperationnote_postop_site_subspecialty_drug','et_ophtroperationnote_postop_site_subspecialty_drug.drug_id = et_ophtroperationnote_postop_drug.id')
+			->where('et_ophtroperationnote_postop_site_subspecialty_drug.subspecialty_id = :subSpecialtyId and et_ophtroperationnote_postop_site_subspecialty_drug.site_id = :siteId'.@$where, $params)
+			->order('et_ophtroperationnote_postop_drug.name asc')
 			->queryAll(), 'id', 'name');
 	}
 

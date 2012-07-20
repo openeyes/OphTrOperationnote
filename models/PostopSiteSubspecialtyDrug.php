@@ -18,52 +18,45 @@
  */
 
 /**
- * This is the model class for table "et_ophtroperationnote_postop_drugs_drug".
+ * This is the model class for table "et_ophtroperationnote_postop_drug".
  *
- * The followings are the available columns in table 'et_ophtroperationnote_postop_drugs_drug':
- * @property string $id
- * @property integer $et_ophtroperationnote_postop_drugs_id
+ * The followings are the available columns in table 'et_ophtroperationnote_postop_site_subspecialty_drug':
+ * @property integer $id
+ * @property integer $site_id
+ * @property integer $subspecialty_id
  * @property integer $drug_id
  */
-class OperationDrug extends BaseEventTypeElement
-{
+class PostopSiteSubspecialtyDrug extends BaseEventTypeElement {
+
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return OperationDrug the static model class
+	 * @return PostopSiteSubspecialtyDrug the static model class
 	 */
-	public static function model($className = __CLASS__)
-	{
+	public static function model($className = __CLASS__) {
 		return parent::model($className);
 	}
 
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
-		return 'et_ophtroperationnote_postop_drugs_drug';
+	public function tableName() {
+		return 'et_ophtroperationnote_postop_site_subspecialty_drug';
 	}
 
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	public function rules()
-	{
+	public function rules() {
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
 		);
 	}
-	
-	public function getName() {
-		return PostopDrug::model()->findByPk($this->drug_id)->name;
-	}
 
 	/**
 	 * @return array relational rules.
 	 */
-	public function relations()
-	{
+	public function relations() {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
@@ -73,8 +66,7 @@ class OperationDrug extends BaseEventTypeElement
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return array(
 		);
 	}
@@ -83,8 +75,7 @@ class OperationDrug extends BaseEventTypeElement
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search()
-	{
+	public function search() {
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
@@ -94,7 +85,7 @@ class OperationDrug extends BaseEventTypeElement
 
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
-			));
+		));
 	}
+
 }
-?>
