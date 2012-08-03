@@ -21,11 +21,10 @@ class DefaultController extends BaseEventTypeController {
 	public function getDefaultElements($action, $event_type_id=false, $event=false) {
 		$elements = parent::getDefaultElements($action, $event_type_id, $event);
 
-		$proclist = new ElementProcedureList;
-
 		// If we're loading the create form and there are procedures pulled from the booking which map to elements
 		// then we need to include them in the form
 		if ($action == 'create' && empty($_POST)) {
+			$proclist = new ElementProcedureList;
 			$extra_elements = array();
 
 			$new_elements = array(array_shift($elements));
@@ -46,6 +45,42 @@ class DefaultController extends BaseEventTypeController {
 			}
 
 			$elements = array_merge($new_elements, $elements);
+		}
+
+		// Procedure list elements need to be shown in the order they were selected, not the default sort order from the element_type
+		// TODO: This probably needs replacing with a some better code
+			
+		// Get correct order for procedure elements
+		$procedure_list = ElementProcedureList::model()->find(
+				'event_id = :event_id',
+				array(':event_id' => $this->event->id)
+		);
+		if($procedure_list) {
+			$procedure_classes = array();
+			foreach($procedure_list->procedure_assignments as $procedure_assignment) {
+				$procedure_classes[] = ProcedureListOperationElement::model()->find('procedure_id = ?', array($procedure_assignment->proc_id))->element_type->class_name;
+			}
+			
+			// Resort procedure elements
+			// This code assumes that the elements are grouped into three distinct blocks, with the procedures in the middle
+			$sorted_elements = array();
+			$index = 0;
+			$section = 'top';
+			foreach($elements as $element) {
+				if(in_array(get_class($element), $procedure_classes)) {
+					$section = 'procedure';
+					$index = 1000 + array_search(get_class($element), $procedure_classes);
+				} else if($section == 'procedure') {
+					$section = 'bottom';
+					$index = 2000;
+				} else {
+					$index++;
+				}
+				Yii::log($index);
+				$sorted_elements[$index] = $element;
+			}
+			ksort($sorted_elements);
+			$elements = $sorted_elements;
 		}
 
 		return $elements;

@@ -18,14 +18,11 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "et_ophtroperationnote_procedurelist".
  *
- * The followings are the available columns in table 'element_operation':
+ * The followings are the available columns in table 'et_ophtroperationnote_procedurelist':
  * @property string $id
  * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
  *
  * The followings are the available model relations:
  * @property Event $event
@@ -36,7 +33,7 @@ class ElementProcedureList extends BaseEventTypeElement
 
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
+	 * @return ElementProcedureList the static model class
 	 */
 	public static function model($className = __CLASS__)
 	{
@@ -83,6 +80,7 @@ class ElementProcedureList extends BaseEventTypeElement
 			'anaesthetic_type' => array(self::BELONGS_TO, 'AnaestheticType', 'anaesthetic_type_id'),
 			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 			'procedures' => array(self::MANY_MANY, 'Procedure', 'et_ophtroperationnote_procedurelist_procedure_assignment(procedurelist_id, proc_id)', 'order' => 'display_order ASC'),
+			'procedure_assignments' => array(self::HAS_MANY, 'ProcedureListProcedureAssignment', 'procedurelist_id', 'order' => 'display_order ASC'),
 		);
 	}
 
@@ -121,28 +119,39 @@ class ElementProcedureList extends BaseEventTypeElement
 	protected function afterSave() {
 		if (!empty($_POST['Procedures'])) {
 
-			$existing_procedure_ids = array();
-
-			foreach (ProcedureListProcedureAssignment::model()->findAll('procedurelist_id = :id', array(':id' => $this->id)) as $pa) {
-				$existing_procedure_ids[] = $pa->proc_id;
+			$existing_procedure_assignments = array();
+			foreach(ProcedureListProcedureAssignment::model()->findAll('procedurelist_id = :id', array(':id' => $this->id)) as $procedure_assignment) {
+				$existing_procedure_assignments[$procedure_assignment->proc_id] = $procedure_assignment;
 			}
 
-			foreach ($_POST['Procedures'] as $id) {
-				if (!in_array($id,$existing_procedure_ids)) {
-					$procedure = new ProcedureListProcedureAssignment;
-					$procedure->procedurelist_id = $this->id;
-					$procedure->proc_id = $id;
-
-					if (!$procedure->save()) {
-						throw new Exception('Unable to save procedure');
+			$current_display_order = 1;
+			foreach($_POST['Procedures'] as $procedure_id) {
+				if(isset($existing_procedure_assignments[$procedure_id])) {
+					$procedure_assignment = $existing_procedure_assignments[$procedure_id];
+					if($procedure_assignment->display_order != $current_display_order) {
+						// Updated display order of existing assignment
+						$procedure_assignment->display_order = $current_display_order;
+						if (!$procedure_assignment->save()) {
+							throw new Exception('Unable to save procedure assignment');
+						}
+					}
+				} else {
+					// Create new assignment
+					$procedure_assignment = new ProcedureListProcedureAssignment;
+					$procedure_assignment->procedurelist_id = $this->id;
+					$procedure_assignment->proc_id = $procedure_id;
+					$procedure_assignment->display_order = $current_display_order;
+					if (!$procedure_assignment->save()) {
+						throw new Exception('Unable to save procedure assignment');
 					}
 				}
+				$current_display_order++;
 			}
 
-			foreach ($existing_procedure_ids as $id) {
-				if (!in_array($id,$_POST['Procedures'])) {
-					$pa = ProcedureListProcedureAssignment::model()->find('procedurelist_id = :id and proc_id = :procId',array(':id' => $this->id, ':procId' => $id));
-					if (!$pa->delete()) {
+			foreach ($existing_procedure_assignments as $procedure_id => $procedure_assignment) {
+				if(!in_array($procedure_id, $_POST['Procedures'])) {
+					// Delete removed procedure
+					if(!$procedure_assignment->delete()) {
 						throw new Exception('Unable to delete procedure assignment: '.print_r($pa->getErrors(),true));
 					}
 				}

@@ -18,14 +18,11 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "et_ophtroperationnote_procedurelist_procedure_assignment".
  *
- * The followings are the available columns in table 'element_operation':
- * @property string $id
+ * The followings are the available columns in table 'et_ophtroperationnote_procedurelist_procedure_assignment':
+ * @property integer $id
  * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
  *
  * The followings are the available model relations:
  * @property Event $event
@@ -34,7 +31,7 @@ class ProcedureListProcedureAssignment extends BaseEventTypeElement
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
+	 * @return ProcedureListProcedureAssignment the static model class
 	 */
 	public static function model($className = __CLASS__)
 	{
