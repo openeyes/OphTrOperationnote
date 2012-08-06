@@ -51,11 +51,11 @@ class DefaultController extends BaseEventTypeController {
 		// TODO: This probably needs replacing with a some better code
 			
 		// Get correct order for procedure elements
-		$procedure_list = ElementProcedureList::model()->find(
-				'event_id = :event_id',
-				array(':event_id' => $this->event->id)
-		);
-		if($procedure_list) {
+		if($this->event) {
+			$procedure_list = ElementProcedureList::model()->find(
+					'event_id = :event_id',
+					array(':event_id' => $this->event->id)
+			);
 			$procedure_classes = array();
 			foreach($procedure_list->procedure_assignments as $procedure_assignment) {
 				$procedure_classes[] = ProcedureListOperationElement::model()->find('procedure_id = ?', array($procedure_assignment->proc_id))->element_type->class_name;
