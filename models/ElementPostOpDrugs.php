@@ -18,23 +18,21 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "et_ophtroperationnote_postop_drugs".
  *
- * The followings are the available columns in table 'element_operation':
- * @property string $id
+ * The followings are the available columns in table 'et_ophtroperationnote_postop_drugs':
+ * @property integer $id
  * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
  *
  * The followings are the available model relations:
  * @property Event $event
+ * @property OperationDrug[] $drugs
  */
 class ElementPostOpDrugs extends BaseEventTypeElement
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
+	 * @return ElementPostOpDrugs the static model class
 	 */
 	public static function model($className = __CLASS__)
 	{
@@ -114,6 +112,15 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 	{
 	}
 
+	/**
+	 * Need to delete associated records
+	 * @see CActiveRecord::beforeDelete()
+	 */
+	protected function beforeDelete() {
+		OperationDrug::model()->deleteAllByAttributes(array('et_ophtroperationnote_postop_drugs_id' => $this->id));
+		return parent::beforeDelete();
+	}
+	
 	protected function beforeSave()
 	{
 		return parent::beforeSave();

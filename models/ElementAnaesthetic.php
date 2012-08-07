@@ -18,16 +18,28 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "et_ophtroperationnote_anaesthetic".
  *
- * The followings are the available columns in table 'element_operation':
- * @property string $id
+ * The followings are the available columns in table 'et_ophtroperationnote_anaesthetic':
+ * @property integer $id
  * @property integer $event_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
+ * @property integer $anaesthetic_type_id
+ * @property integer $anaesthetist_id
+ * @property integer $anaesthetic_delivery_id
+ * @property string $anaesthetic_comment
+ * @property integer $display_order
+ * @property integer $anaesthetic_witness_id
  *
  * The followings are the available model relations:
  * @property Event $event
+ * @property EventType $eventType
+ * @property ElementType $element_type
+ * @property AnaestheticType $anaesthetic_type
+ * @property Anaesthetist $anaesthetist
+ * @property AnaestheticDelivery $anaesthetic_delivery
+ * @property OperationAnaestheticAgent[] $anaesthetic_agents
+ * @property AnaestheticComplication[] $anaesthetic_complications
+ * @property User $witness
  */
 class ElementAnaesthetic extends BaseEventTypeElement
 {
@@ -36,7 +48,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
+	 * @return ElementAnaesthetic the static model class
 	 */
 	public static function model($className = __CLASS__)
 	{
@@ -202,6 +214,16 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		return $ids;
 	}
 
+	/**
+	 * Need to delete associated records
+	 * @see CActiveRecord::beforeDelete()
+	 */
+	protected function beforeDelete() {
+		OperationAnaestheticAgent::model()->deleteAllByAttributes(array('et_ophtroperationnote_anaesthetic_id' => $this->id));
+		AnaestheticComplication::model()->deleteAllByAttributes(array('et_ophtroperationnote_anaesthetic_id' => $this->id));
+		return parent::beforeDelete();
+	}
+	
 	protected function afterSave() {
 		if (!empty($_POST['AnaestheticAgent'])) {
 

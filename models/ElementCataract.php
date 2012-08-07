@@ -18,17 +18,32 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "et_ophtroperationnote_cataract".
  *
- * The followings are the available columns in table 'element_operation':
- * @property string $id
+ * The followings are the available columns in table 'et_ophtroperationnote_cataract':
+ * @property integer $id
  * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
+ * @property integer $incision_site_id
+ * @property string $length
+ * @property string $meridian
+ * @property integer $incision_type_id
+ * @property string $eyedraw
+ * @property string $report
+ * @property integer $iol_position_id
+ * @property string $complication_notes
+ * @property string $eyedraw2
+ * @property string $iol_power
+ * @property integer $iol_type_id
+ * @property string $report2
  *
  * The followings are the available model relations:
  * @property Event $event
+ * @property IncisionType $incision_type
+ * @property IncisionSite $incision_site
+ * @property IOLPosition $iol_position
+ * @property CataractComplication[] $complications
+ * @property CataractOperativeDevice[] $operative_devices
+ * @property IOLType $iol_type
  */
 class ElementCataract extends BaseEventTypeElement
 {
@@ -36,7 +51,7 @@ class ElementCataract extends BaseEventTypeElement
 
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
+	 * @return ElementCataract the static model class
 	 */
 	public static function model($className = __CLASS__)
 	{
@@ -135,6 +150,16 @@ class ElementCataract extends BaseEventTypeElement
 	{
 	}
 
+	/**
+	 * Need to delete associated records
+	 * @see CActiveRecord::beforeDelete()
+	 */
+	protected function beforeDelete() {
+		CataractComplication::model()->deleteAllByAttributes(array('cataract_id' => $this->id));
+		CataractOperativeDevice::model()->deleteAllByAttributes(array('cataract_id' => $this->id));
+		return parent::beforeDelete();
+	}
+	
 	protected function beforeSave()
 	{
 		return parent::beforeSave();
