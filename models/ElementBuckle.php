@@ -125,21 +125,6 @@ class ElementBuckle extends BaseEventTypeElement
 	{
 	}
 
-	protected function beforeSave()
-	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-		return parent::afterSave();
-	}
-
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
-	}
-
 	public function getEye() {
 		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
 	}

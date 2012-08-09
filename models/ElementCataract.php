@@ -167,14 +167,13 @@ class ElementCataract extends BaseEventTypeElement
 
 	protected function afterSave()
 	{
-		if (!empty($_POST['CataractComplications'])) {
+		$existing_complication_ids = array();
 
-			$existing_complication_ids = array();
+		foreach (CataractComplication::model()->findAll('cataract_id = :cataractId', array(':cataractId' => $this->id)) as $cc) {
+			$existing_complication_ids[] = $cc->complication_id;
+		}
 
-			foreach (CataractComplication::model()->findAll('cataract_id = :cataractId', array(':cataractId' => $this->id)) as $cc) {
-				$existing_complication_ids[] = $cc->complication_id;
-			}
-
+		if (isset($_POST['CataractComplications'])) {
 			foreach ($_POST['CataractComplications'] as $id) {
 				if (!in_array($id,$existing_complication_ids)) {
 					$complication = new CataractComplication;
@@ -186,25 +185,24 @@ class ElementCataract extends BaseEventTypeElement
 					}
 				}
 			}
+		}
 
-			foreach ($existing_complication_ids as $id) {
-				if (!in_array($id,$_POST['CataractComplications'])) {
-					$cc = CataractComplication::model()->find('cataract_id = :cataractId and complication_id = :complicationId',array(':cataractId' => $this->id, ':complicationId' => $id));
-					if (!$cc->delete()) {
-						throw new Exception('Unable to delete cataract complication: '.print_r($cc->getErrors(),true));
-					}
+		foreach ($existing_complication_ids as $id) {
+			if (!isset($_POST['CataractComplications']) || !in_array($id,$_POST['CataractComplications'])) {
+				$cc = CataractComplication::model()->find('cataract_id = :cataractId and complication_id = :complicationId',array(':cataractId' => $this->id, ':complicationId' => $id));
+				if (!$cc->delete()) {
+					throw new Exception('Unable to delete cataract complication: '.print_r($cc->getErrors(),true));
 				}
 			}
 		}
 
-		if (!empty($_POST['CataractOperativeDevices'])) {
-			
-			$existing_device_ids = array();
+		$existing_device_ids = array();
 
-			foreach (CataractOperativeDevice::model()->findAll('cataract_id = :cataractId', array(':cataractId' => $this->id)) as $cod) {
-				$existing_device_ids[] = $cod->operative_device_id;
-			}
+		foreach (CataractOperativeDevice::model()->findAll('cataract_id = :cataractId', array(':cataractId' => $this->id)) as $cod) {
+			$existing_device_ids[] = $cod->operative_device_id;
+		}
 
+		if (isset($_POST['CataractOperativeDevices'])) {
 			foreach ($_POST['CataractOperativeDevices'] as $id) {
 				if (!in_array($id,$existing_device_ids)) {
 					$operative_device = new CataractOperativeDevice;
@@ -216,13 +214,13 @@ class ElementCataract extends BaseEventTypeElement
 					}
 				}
 			}
+		}
 
-			foreach ($existing_device_ids as $id) {
-				if (!in_array($id,$_POST['CataractOperativeDevices'])) {
-					$cod = CataractOperativeDevice::model()->find('cataract_id = :cataractId and operative_device_id = :operativeDeviceId', array(':cataractId' => $this->id, ':operativeDeviceId' => $id));
-					if (!$cod->delete()) {
-						throw new Exception('Unable to delete operative device: '.print_r($cod->getErrors(),true));
-					}
+		foreach ($existing_device_ids as $id) {
+			if (!isset($_POST['CataractOperativeDevices']) || !in_array($id,$_POST['CataractOperativeDevices'])) {
+				$cod = CataractOperativeDevice::model()->find('cataract_id = :cataractId and operative_device_id = :operativeDeviceId', array(':cataractId' => $this->id, ':operativeDeviceId' => $id));
+				if (!$cod->delete()) {
+					throw new Exception('Unable to delete operative device: '.print_r($cod->getErrors(),true));
 				}
 			}
 		}

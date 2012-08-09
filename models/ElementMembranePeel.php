@@ -121,19 +121,4 @@ class ElementMembranePeel extends BaseEventTypeElement
 	public function setDefaultOptions()
 	{
 	}
-
-	protected function beforeSave()
-	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-		return parent::afterSave();
-	}
-
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
-	}
 }
