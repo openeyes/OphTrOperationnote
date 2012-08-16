@@ -18,15 +18,13 @@
  */
 ?>
 
-<?php if (Yii::app()->params['fife']) {?>
+<?php if ($element->getSetting('fife')) {?>
 	<div class="<?php echo $element->elementType->class_name?>">
-		<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
-
-		<?php echo $form->slider($element, 'spo2', array('min'=>0,'max'=>100,'step'=>1,'append'=>'%'))?>
-		<?php echo $form->slider($element, 'oxygen', array('min'=>0,'max'=>100,'step'=>1,'append'=>'%'))?>
-		<?php echo $form->slider($element, 'pulse', array('min'=>1, 'max'=>300,'step'=>1))?>
-		<?php echo $form->dropDownList($element, 'skin_preparation_id', CHtml::listData(PreparationSkinPreparation::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
-		<?php echo $form->dropDownList($element, 'intraocular_solution_id', CHtml::listData(PreparationIntraocularSolution::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
-
+	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
+	<?php echo $form->slider($element, 'spo2', array('min'=>0,'max'=>100,'step'=>1,'append'=>'%'))?>
+	<?php echo $form->slider($element, 'oxygen', array('min'=>0,'max'=>100,'step'=>1,'append'=>'%'))?>
+	<?php echo $form->slider($element, 'pulse', array('min'=>1, 'max'=>300,'step'=>1))?>
+	<?php echo $form->dropDownList($element, 'skin_preparation_id', CHtml::listData(PreparationSkinPreparation::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
+	<?php echo $form->dropDownList($element, 'intraocular_solution_id', CHtml::listData(PreparationIntraocularSolution::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
 	</div>
 <?php }?>

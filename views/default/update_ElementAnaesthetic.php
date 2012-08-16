@@ -20,10 +20,9 @@
 
 <div class="<?php echo $element->elementType->class_name?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
-
 	<?php echo $form->radioButtons($element, 'anaesthetic_type_id', 'anaesthetic_type');?>
 	<?php echo $form->radioButtons($element, 'anaesthetist_id', 'anaesthetist', false, false, $element->hidden)?>
-	<?php if (Yii::app()->params['fife']) {?>
+	<?php if ($element->getSetting('fife')) {?>
 		<?php echo $form->dropDownList($element, 'anaesthetic_witness_id', CHtml::listData($element->surgeons, 'id', 'FullName'), array('empty'=>'- Please select -'), $element->witness_hidden)?>
 	<?php }?>
 	<?php echo $form->radioButtons($element, 'anaesthetic_delivery_id', 'anaesthetic_delivery',false,4, $element->hidden)?>

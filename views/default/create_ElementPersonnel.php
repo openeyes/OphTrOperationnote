@@ -18,7 +18,7 @@
  */
 ?>
 
-<?php if (Yii::app()->params['fife']) {?>
+<?php if ($element->getSetting('fife')) {?>
 	<div class="<?php echo $element->elementType->class_name?>">
 		<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 

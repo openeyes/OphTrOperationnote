@@ -18,7 +18,7 @@
  */
 ?>
 
-<?php if (Yii::app()->params['fife']) {?>
+<?php if ($element->getSetting('fife')) {?>
 	<h4><?php echo $element->elementType->name ?></h4>
 
 	<div class="colsX clearfix">
