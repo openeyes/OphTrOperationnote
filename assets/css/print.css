@@ -1,4 +1,4 @@
-@import "/css/printcontent.css";
+@import "../../../css/printcontent.css";
 
 .clearfix:after {
 	visibility: hidden;
