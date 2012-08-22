@@ -7,7 +7,7 @@ function callbackAddProcedure(procedure_id) {
 		'url': baseUrl+'/OphTrOperationnote/Default/loadElementByProcedure?procedure_id='+procedure_id+'&eye='+eye,
 		'success': function(html) {
 			if (html.length >0) {
-				var m = html.match(/<div class="(Element.*?)"/);
+				var m = html.match(/data-element-type-class="(Element.*?)"/);
 				if (m) {
 					m[1] = m[1].replace(/ .*$/,'');
 
