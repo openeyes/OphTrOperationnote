@@ -121,7 +121,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#ElementCataract_incision_site_id').die('change').live('change',function(e) {
+	$('div[data-element-type-class="ElementCataract"]').undelegate('#ElementCataract_incision_site_id','change').delegate('#ElementCataract_incision_site_id','change',function(e) {
 		e.preventDefault();
 
 		magic.setDoodleParameter('PhakoIncision', 'incisionSite', $(this).children('option:selected').text());
@@ -133,7 +133,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#ElementCataract_incision_type_id').die('change').live('change',function(e) {
+	$('div[data-element-type-class="ElementCataract"]').undelegate('#ElementCataract_incision_type_id','change').delegate('#ElementCataract_incision_type_id','change',function(e) {
 		e.preventDefault();
 
 		magic.setDoodleParameter('PhakoIncision', 'incisionType', $(this).children('option:selected').text());
@@ -141,8 +141,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('input[name="ElementProcedureList\[eye_id\]"]').die('change').live('change',function() {
-
+	$('div[data-element-type-class="ElementProcedureList"]').undelegate('input[name="ElementProcedureList\[eye_id\]"]','change').delegate('input[name="ElementProcedureList\[eye_id\]"]','change',function() {
 		if ($('#typeProcedure').is(':hidden')) {
 			$('#typeProcedure').slideToggle('fast');
 		}
@@ -150,15 +149,15 @@ $(document).ready(function() {
 		magic.eye_changed($(this).val());
 	});
 
-	$('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]').die('click').live('click',function(e) {
+	$('div[data-element-type-class="ElementAnaesthetic"]').undelegate('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]','click').delegate('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]','click',function(e) {
 		anaestheticSlide.handleEvent($(this));
 	});
 
-	$('input[name="ElementAnaesthetic\[anaesthetist_id\]"]').die('click').live('click',function(e) {
+	$('div[data-element-type-class="ElementCataract"]').undelegate('input[name="ElementAnaesthetic\[anaesthetist_id\]"]','click').delegate('input[name="ElementAnaesthetic\[anaesthetist_id\]"]','click',function(e) {
 		anaestheticGivenBySlide.handleEvent($(this));
 	});
 
-	$('#ElementCataract_meridian').die('change').live('change',function() {
+	$('div[data-element-type-class="ElementCataract"]').undelegate('#ElementCataract_meridian','change').delegate('#ElementCataract_meridian','change',function() {
 		if (doodle = magic.getDoodle('PhakoIncision')) {
 			if (doodle.getParameter('incisionMeridian') != $(this).val()) {
 				doodle.setParameterWithAnimation('incisionMeridian',$(this).val());
@@ -167,7 +166,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#ElementCataract_meridian').die('keypress').live('keypress',function(e) {
+	$('div[data-element-type-class="ElementCataract"]').undelegate('#ElementCataract_meridian','keypress').delegate('#ElementCataract_meridian','keypress',function(e) {
 		if (e.keyCode == 13) {
 			if (doodle = magic.getDoodle('PhakoIncision')) {
 				if (doodle.getParameter('incisionMeridian') != $(this).val()) {
@@ -179,7 +178,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#ElementCataract_length').die('change').live('change',function() {
+	$('div[data-element-type-class="ElementCataract"]').undelegate('#ElementCataract_length','change').delegate('#ElementCataract_length','change',function() {
 		if (doodle = magic.getDoodle('PhakoIncision')) {
 			if (parseFloat($(this).val()) > 9.9) {
 				$(this).val(9.9);
@@ -190,7 +189,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#ElementCataract_length').die('keypress').live('keypress',function(e) {
+	$('div[data-element-type-class="ElementCataract"]').undelegate('#ElementCataract_length','keypress').delegate('#ElementCataract_length','keypress',function(e) {
 		if (e.keyCode == 13) {
 			if (doodle = magic.getDoodle('PhakoIncision')) {
 				if (parseFloat($(this).val()) > 9.9) {
@@ -205,7 +204,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
+	$('div[data-element-type-class="ElementCataract"]').undelegate('#ElementCataract_iol_type_id','change').delegate('#ElementCataract_iol_type_id','change',function() {
 		if ($(this).children('option:selected').text() == 'MTA3UO' || $(this).children('option:selected').text() == 'MTA4UO') {
 			$('#ElementCataract_iol_position_id').val(4);
 		}
