@@ -14,7 +14,6 @@ class DefaultController extends BaseEventTypeController {
 	}
 
 	public function actionPrint($id) {
-		OECClientScript::registerCssFile($this->cssPath.'/print.js');
 		return parent::actionPrint($id);
 	}
 
