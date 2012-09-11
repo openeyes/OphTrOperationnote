@@ -25,6 +25,7 @@
 #ed_canvas_view_Vitrectomy { margin-top: -26px; }
 
 #div_ElementSurgeon { padding-bottom: 28px !important; }
+#div_ElementSurgeon_supervising_surgeon_id > .label { font-size: 13px !important; }
 
 div.ElementComments { background-color: #DAE6F1; height: 200px; }
 div.ElementComments > h4 { background-color: #fff; margin-bottom: 5px !important; padding-bottom: 5px !important; }
