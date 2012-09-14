@@ -75,7 +75,6 @@ class DefaultController extends BaseEventTypeController {
 				} else {
 					$index++;
 				}
-				Yii::log($index);
 				$sorted_elements[$index] = $element;
 			}
 			ksort($sorted_elements);
