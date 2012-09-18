@@ -92,7 +92,16 @@ class DefaultController extends BaseEventTypeController {
 		$form = new BaseEventTypeCActiveForm;
 
 		foreach ($this->getProcedureSpecificElements($proc->id) as $element) {
-			$element = new $element->element_type->class_name;
+			$class_name = $element->element_type->class_name;
+
+			$element = new $class_name;
+
+			if (in_array($class_name,array('ElementCataract','ElementVitrectomy','ElementBuckle'))) {
+				if (!in_array(@$_GET['eye'],array(1,2))) {
+					echo "must-select-eye";
+					return;
+				}
+			}
 
 			$this->renderPartial(
 				'create' . '_' . $element->create_view,
@@ -159,5 +168,75 @@ class DefaultController extends BaseEventTypeController {
 			);
 			$i++;
 		}
+	}
+
+	public function actionVerifyprocedure() {
+		$list = Yii::app()->session['Procedures'];
+		$found = false;
+
+		if (!isset($_GET['short_version'])) {
+			$_GET['short_version'] = true;
+		}
+
+		if (!empty($_GET['name'])) {
+			if (!empty($list)) {
+				foreach ($list as $id => $procedure) {
+					if ($procedure['term'] == $_GET['name']) {
+						if ($this->procedure_requires_eye($id)) {
+							echo "no";
+						} else {
+							echo "yes";
+						}
+						return;
+					}
+				}
+			}
+
+			// if not in the session, check in the db
+			if (!$found) {
+				$procedure = Yii::app()->db->createCommand()
+					->select('*')
+					->from('proc')
+					->where('term=:term', array(':term'=>$_GET['name']))
+					->queryRow();
+				if (!empty($procedure)) {
+					if ($this->procedure_requires_eye($procedure['id'])) {
+						echo "no";
+					} else {
+						echo "yes";
+					}
+					return;
+				}
+			}
+		} else {
+			$i = 0;
+			$result = true;
+			$procs = array();
+			while (isset($_GET['proc'.$i])) {
+				if ($this->procedure_requires_eye($_GET['proc'.$i])) {
+					$result = false;
+					$procs[] = Procedure::model()->findByPk($_GET['proc'.$i])->term;
+				}
+				$i++;
+			}
+			if ($result) {
+				echo "yes";
+			} else {
+				echo implode("\n",$procs);
+			}
+		}
+	}
+
+	// returns true if the passed procedure id requires the selection of 'left' or 'right' eye
+	function procedure_requires_eye($procedure_id) {
+		foreach (ProcedureListOperationElement::model()->findAll('procedure_id=?',array($procedure_id)) as $plpa) {
+			$element_type = ElementType::model()->findByPk($plpa->element_type_id);
+
+			if (in_array($element_type->class_name,array('ElementCataract','ElementBuckle','ElementVitrectomy'))) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

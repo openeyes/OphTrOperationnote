@@ -7,15 +7,28 @@ function callbackAddProcedure(procedure_id) {
 		'url': baseUrl+'/OphTrOperationnote/Default/loadElementByProcedure?procedure_id='+procedure_id+'&eye='+eye,
 		'success': function(html) {
 			if (html.length >0) {
-				var m = html.match(/data-element-type-class="(Element.*?)"/);
-				if (m) {
-					m[1] = m[1].replace(/ .*$/,'');
+				if (html.match(/must-select-eye/)) {
+					$('div.procedureItem').map(function(e) {
+						var r = new RegExp('<input type="hidden" value="'+procedure_id+'" name="Procedures');
+						if ($(this).html().match(r)) {
+							$(this).remove();
+						}
+					});
+					if ($('div.procedureItem').length == 0) {
+						$('#procedureList').hide();
+					}
+					alert("You must select either the right or the left eye to add this procedure.");
+				} else {
+					var m = html.match(/data-element-type-class="(Element.*?)"/);
+					if (m) {
+						m[1] = m[1].replace(/ .*$/,'');
 
-					if ($('div.'+m[1]).length <1) {
-						$('div.ElementAnaesthetic').before(html);
-						$('div.'+m[1]).attr('style','display: none;');
-						$('div.'+m[1]).removeClass('hidden');
-						$('div.'+m[1]).slideToggle('fast');
+						if ($('div.'+m[1]).length <1) {
+							$('div.ElementAnaesthetic').before(html);
+							$('div.'+m[1]).attr('style','display: none;');
+							$('div.'+m[1]).removeClass('hidden');
+							$('div.'+m[1]).slideToggle('fast');
+						}
 					}
 				}
 			}
@@ -141,12 +154,72 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('div[data-element-type-class="ElementProcedureList"]').undelegate('input[name="ElementProcedureList\[eye_id\]"]','change').delegate('input[name="ElementProcedureList\[eye_id\]"]','change',function() {
-		if ($('#typeProcedure').is(':hidden')) {
-			$('#typeProcedure').slideToggle('fast');
-		}
+	var last_ElementProcedureList_eye_id = null;
 
-		magic.eye_changed($(this).val());
+	$('div[data-element-type-class="ElementProcedureList"]').undelegate('input[name="ElementProcedureList\[eye_id\]"]','change').delegate('input[name="ElementProcedureList\[eye_id\]"]','change',function() {
+		var element = $(this);
+
+		if ($(this).val() == 3) {
+			var i = 0;
+			var procs = '';
+			$('input[name="Procedures[]"]').map(function() {
+				if (procs.length >0) {
+					procs += '&';
+				}
+				procs += 'proc'+i+'='+$(this).val();
+				i += 1;
+			});
+
+			if (procs.length >0) {
+				$.ajax({
+					'type': 'GET',
+					'url': baseUrl+'/OphTrOperationnote/default/verifyprocedure',
+					'data': procs,
+					'success': function(result) {
+						if (result != 'yes') {
+							$('#ElementProcedureList_eye_id_'+last_ElementProcedureList_eye_id).attr('checked','checked');
+							if (parseInt(result.split("\n").length) == 1) {
+								alert("The following procedure requires a specific eye selection and cannot be entered for both eyes at once:\n\n"+result);
+							} else {
+								alert("The following procedures require a specific eye selection and cannot be entered for both eyes at once:\n\n"+result);
+							}
+							return false;
+						} else {
+							if ($('#typeProcedure').is(':hidden')) {
+								$('#typeProcedure').slideToggle('fast');
+							}
+
+							magic.eye_changed(element.val());
+							last_ElementProcedureList_eye_id = element.val();
+
+							return true;
+						}
+					}
+				});
+			} else {
+				if ($('#typeProcedure').is(':hidden')) {
+					$('#typeProcedure').slideToggle('fast');
+				}
+
+				magic.eye_changed($(this).val());
+				
+				last_ElementProcedureList_eye_id = $(this).val();
+
+				return true;
+			}
+
+			return false;
+		} else {
+			if ($('#typeProcedure').is(':hidden')) {
+				$('#typeProcedure').slideToggle('fast');
+			}
+
+			magic.eye_changed($(this).val());
+			
+			last_ElementProcedureList_eye_id = $(this).val();
+
+			return true;
+		}
 	});
 
 	$('div[data-element-type-class="ElementAnaesthetic"]').undelegate('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]','click').delegate('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]','click',function(e) {
@@ -210,6 +283,28 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function callbackVerifyAddProcedure(proc_name,durations,short_version,callback) {
+	var eye = $('input[name="ElementProcedureList\[eye_id\]"]:checked').val();
+
+	if (eye != 3) {
+		callback(true);
+		return;
+	}
+
+	$.ajax({
+		'type': 'GET',
+		'url': baseUrl+'/OphTrOperationnote/Default/verifyprocedure?name='+proc_name+'&durations='+durations+'short_version='+short_version,
+		'success': function(result) {
+			if (result == 'yes') {
+				callback(true);
+			} else {
+				alert("You must select either the right or the left eye before adding this procedure.");
+				callback(false);
+			}
+		}
+	});
+}
 
 function AnaestheticSlide() {if (this.init) this.init.apply(this, arguments); }
 

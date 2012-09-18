@@ -21,6 +21,6 @@
 <h4><?php echo $element->elementType->name ?></h4>
 <div class="eventHighlight priority">
 	<?php foreach ($element->procedures as $procedure) {?>
-		<h4><?php echo $element->eye->name?> <?php echo $procedure->term?></h4>
+		<h4><?php echo $element->eye->adjective?> <?php echo $procedure->term?></h4>
 	<?php }?>
 </div>

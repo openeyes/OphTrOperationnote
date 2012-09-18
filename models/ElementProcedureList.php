@@ -219,4 +219,42 @@ class ElementProcedureList extends BaseEventTypeElement
 			}
 		}
 	}
+
+	public function getFormOptions($table) {
+		if ($table == 'eye') {
+			$event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
+			$element_type = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'ElementProcedureList'));
+
+			$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
+
+			$list = array();
+
+			if (in_array($firm->serviceSubspecialtyAssignment->subspecialty_id,array(2,14))) {
+				foreach (Yii::app()->db->createCommand()
+					->select('eye.id, eye.name')
+					->from('eye')
+					->join('element_type_eye','element_type_eye.eye_id = eye.id')
+					->where('element_type_eye.element_type_id = '.$element_type->id)
+					->order('display_order asc')
+					->queryAll() as $row) {
+					$list[$row['id']] = $row['name'];
+				}
+				return $list;
+			}
+
+			foreach (Yii::app()->db->createCommand()
+				->select('eye.id, eye.name')
+				->from('eye')
+				->join('element_type_eye','element_type_eye.eye_id = eye.id')
+				->where('element_type_eye.element_type_id = '.$element_type->id.' and eye.id != 3')
+				->order('display_order asc')
+				->queryAll() as $row) {
+				$list[$row['id']] = $row['name'];
+			}
+
+			return $list;
+		}
+
+		return parent::getFormOptions($table);
+	}
 }
