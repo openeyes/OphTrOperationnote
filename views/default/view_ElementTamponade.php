@@ -34,7 +34,7 @@
 				</tr>
 				<tr>
 					<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('gas_volume_id'))?></td>
-					<td><span class="big"><?php echo $element->gas_volume->value?></span></td>
+					<td><span class="big"><?php echo $element->gas_volume ? $element->gas_volume->value : '-'?></span></td>
 				</tr>
 			</tbody>
 		</table>
