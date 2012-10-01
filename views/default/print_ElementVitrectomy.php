@@ -61,7 +61,7 @@
 					<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>:
 				</div>
 				<div class="value">
-					<?php echo $element->comments ?>
+					<?php echo CHtml::encode($element->comments)?>
 				</div>
 			</div>
 		<?php }?>

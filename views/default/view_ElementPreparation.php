@@ -25,19 +25,19 @@
 		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('spo2'))?></h4>
 			<div class="eventHighlight">
-				<h4><?php echo $element->spo2?>%</h4>
+				<h4><?php echo CHtml::encode($element->spo2)?>%</h4>
 			</div>
 		</div>
 		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('oxygen'))?></h4>
 			<div class="eventHighlight">
-				<h4><?php echo $element->oxygen?>%</h4>
+				<h4><?php echo CHtml::encode($element->oxygen)?>%</h4>
 			</div>
 		</div>
 		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('pulse'))?></h4>
 			<div class="eventHighlight">
-				<h4><?php echo $element->pulse?></h4>
+				<h4><?php echo CHtml::encode($element->pulse)?></h4>
 			</div>
 		</div>
 		<div class="colStack">
