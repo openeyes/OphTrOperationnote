@@ -45,7 +45,7 @@
 				?>
 			</div>
 			<div class="value">
-				<?php echo $element->report2 ?>
+				<?php echo CHtml::encode($element->report2)?>
 			</div>
 		</div>
 		<div class="detailRow leftAlign">
@@ -61,7 +61,7 @@
 				<?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?>:
 			</div>
 			<div class="value">
-				<?php echo $element->iol_power ?>
+				<?php echo CHtml::encode($element->iol_power)?>
 			</div>
 		</div>
 		<div class="detailRow leftAlign">
@@ -87,7 +87,7 @@
 				<?php echo CHtml::encode($element->getAttributeLabel('length'))?>:
 			</div>
 			<div class="value">
-				<?php echo $element->length?>
+				<?php echo CHtml::encode($element->length)?>
 			</div>
 		</div>
 		<div class="detailRow">
@@ -95,7 +95,7 @@
 				<?php echo CHtml::encode($element->getAttributeLabel('meridian'))?>:
 			</div>
 			<div class="value">
-				<?php echo $element->meridian?>
+				<?php echo CHtml::encode($element->meridian)?>
 			</div>
 		</div>
 		<div class="detailRow">
@@ -111,7 +111,7 @@
 				Details
 			</div>
 			<div class="value pronounced">
-				<?php foreach (explode(chr(10),$element->report) as $line) {?>
+				<?php foreach (explode(chr(10),CHtml::encode($element->report)) as $line) {?>
 					<strong><?php echo $line?></strong><br>
 				<?php }?>
 			</div>
@@ -141,7 +141,7 @@
 					<?php foreach ($element->complications as $complication) {?>
 						<?php echo $complication->name?><br/>
 					<?php }?>
-					<?php echo $element->complication_notes ?>
+					<?php echo CHtml::encode($element->complication_notes)?>
 				<?php }?>
 			</div>
 		</div>

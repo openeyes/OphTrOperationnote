@@ -48,7 +48,7 @@
 				<?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>:
 			</div>
 			<div class="value">
-				<?php echo $element->other_dye?>
+				<?php echo CHtml::encode($element->other_dye)?>
 			</div>
 		</div>
 	<?php }?>
@@ -59,7 +59,7 @@
 				<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:
 			</div>
 			<div class="value">
-				<?php echo $element->comments?>
+				<?php echo CHtml::encode($element->comments)?>
 			</div>
 		</div>
 	<?php }?>

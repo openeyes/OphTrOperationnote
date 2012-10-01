@@ -62,7 +62,7 @@
 				</tr>
 				<tr>
 					<td><?php echo CHtml::encode($element->getAttributeLabel('report2'))?>:</td>
-					<td><span class="big"><?php echo $element->report2?></span></td>
+					<td><span class="big"><?php echo CHtml::encode($element->report2)?></span></td>
 				</tr>
 				<?php if ($element->getSetting('fife')) {?>
 					<tr>
@@ -84,7 +84,7 @@
 		<h4>Cataract report</h4>
 		<div class="eventHighlight medium">
 			<h4>
-				<?php foreach (explode(chr(10),$element->report) as $line) {?>
+				<?php foreach (explode(chr(10),CHtml::encode($element->report)) as $line) {?>
 					<?php echo $line?><br/>
 				<?php }?>
 			</h4>
@@ -116,7 +116,7 @@
 					<?php foreach ($element->complications as $complication) {?>
 						<?php echo $complication->name?><br/>
 					<?php }?>
-					<?php echo $element->complication_notes?>
+					<?php echo CHtml::encode($element->complication_notes)?>
 				</h4>
 			<?php }?>
 		</div>

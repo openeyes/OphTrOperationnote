@@ -69,7 +69,7 @@
 				<?php echo CHtml::encode($element->getAttributeLabel('report')); ?>
 			</div>
 			<div class="value">
-				<?php echo $element->report ?>
+				<?php echo CHtml::encode($element->report)?>
 			</div>
 		</div>
 
@@ -78,7 +78,7 @@
 				<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>
 			</div>
 			<div class="value">
-				<?php echo $element->comments ?>
+				<?php echo CHtml::encode($element->comments)?>
 			</div>
 		</div>
 	</div>
