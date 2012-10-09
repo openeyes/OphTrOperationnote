@@ -235,7 +235,7 @@ class ElementProcedureList extends BaseEventTypeElement
 					->from('eye')
 					->join('element_type_eye','element_type_eye.eye_id = eye.id')
 					->where('element_type_eye.element_type_id = '.$element_type->id)
-					->order('display_order asc')
+					->order('element_type_eye.display_order asc')
 					->queryAll() as $row) {
 					$list[$row['id']] = $row['name'];
 				}
@@ -247,7 +247,7 @@ class ElementProcedureList extends BaseEventTypeElement
 				->from('eye')
 				->join('element_type_eye','element_type_eye.eye_id = eye.id')
 				->where('element_type_eye.element_type_id = '.$element_type->id.' and eye.id != 3')
-				->order('display_order asc')
+				->order('element_type_eye.display_order asc')
 				->queryAll() as $row) {
 				$list[$row['id']] = $row['name'];
 			}
