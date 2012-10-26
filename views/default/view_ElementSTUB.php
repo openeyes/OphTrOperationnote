@@ -18,7 +18,7 @@
  */
 ?>
 
-<div class="cols2">
+<div class="colsX clearfix">
 	<div class="left">
 		<h4><?php echo $element->elementType->name ?></h4>
 		<div class="eventHighlight">
