@@ -46,6 +46,30 @@ class DefaultController extends BaseEventTypeController {
 			$elements = array_merge($new_elements, $elements);
 		}
 
+		/* If an opnote was saved with a procedure in the procedure list but the associated element wasn't saved, include it here */
+		if ($action == 'update' && empty($_POST)) {
+			$extra_elements = array();
+			$new_elements = array(array_shift($elements));
+
+			foreach (ElementProcedureList::model()->find('event_id = :event_id',array(':event_id' => $this->event->id))->selected_procedures as $procedure) {
+				$criteria = new CDbCriteria;
+				$criteria->compare('procedure_id',$procedure->id);
+				$criteria->order = 'display_order asc';
+
+				foreach (ProcedureListOperationElement::model()->findAll($criteria) as $element) {
+					$class = $element->element_type->class_name;
+					$element = new $element->element_type->class_name;
+
+					if (!$class::model()->find('event_id=?',array($this->event->id))) {
+						$extra_elements[] = get_class($element);
+						$new_elements[] = $element;
+					}
+				}
+			}
+
+			$elements = array_merge($new_elements, $elements);
+		}
+
 		// Procedure list elements need to be shown in the order they were selected, not the default sort order from the element_type
 		// TODO: This probably needs replacing with a some better code
 			
