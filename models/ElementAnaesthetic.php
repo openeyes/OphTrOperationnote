@@ -168,8 +168,10 @@ class ElementAnaesthetic extends BaseEventTypeElement
 			}
 		} else {
 			if (empty($_POST)) {
-				$anaesthetic_element = ElementAnaesthetic::model()->find('event_id=?',array($this->event_id));
-				return ($anaesthetic_element->anaesthetic_type_id == 5);
+				if ($this->event_id) {
+					$anaesthetic_element = ElementAnaesthetic::model()->find('event_id=?',array($this->event_id));
+					return ($anaesthetic_element->anaesthetic_type_id == 5);
+				}
 			}
 
 			return (@$_POST['ElementAnaesthetic']['anaesthetic_type_id'] == 5);
