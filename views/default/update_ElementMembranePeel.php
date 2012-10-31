@@ -18,11 +18,14 @@
  */
 ?>
 
-<div class="element <?php echo $element->elementType->class_name?> ondemand"
+<div class="element <?php echo $element->elementType->class_name?> ondemand<?php if (!$element->event_id) {?> missing<?php }?>"
 	data-element-type-id="<?php echo $element->elementType->id ?>"
 	data-element-type-class="<?php echo $element->elementType->class_name ?>"
 	data-element-type-name="<?php echo $element->elementType->name ?>"
 	data-element-display-order="<?php echo $element->elementType->display_order ?>">
+	<?php if (!$element->event_id) {?>
+		<span class="missingtext">This element is missing and needs to be completed</span>
+	<?php }?>
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
 	<?php echo $form->radioBoolean($element, 'membrane_blue')?>
