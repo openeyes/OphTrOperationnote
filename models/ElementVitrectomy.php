@@ -124,7 +124,9 @@ class ElementVitrectomy extends BaseEventTypeElement
 	}
 
 	public function getEye() {
-		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
+		if ($this->event_id && $pl = ElementProcedureList::model()->find('event_id=?',array($this->event_id))) {
+			return $pl->eye;
+		}
 	}
 
 	public function getSelectedEye() {
@@ -137,6 +139,17 @@ class ElementVitrectomy extends BaseEventTypeElement
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($booking = $episode->getMostRecentBooking()) {
 					return $booking->elementOperation->eye;
+				}
+			}
+		}
+
+		if (Yii::app()->getController()->getAction()->id == 'update') {
+			if ($this->eye) {
+				return $this->eye;
+			}
+			if (preg_match('/\/default\/update\/([0-9]+)$/',$_SERVER['REQUEST_URI'],$m)) {
+				if ($pl = ElementProcedureList::model()->find('event_id=?',array($m[1]))) {
+					return $pl->eye;
 				}
 			}
 		}
