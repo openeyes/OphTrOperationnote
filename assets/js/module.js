@@ -278,7 +278,7 @@ $(document).ready(function() {
 	});
 
 	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
-		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('option:selected').text() == 'MTA4UO') {
+		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('optgroup').children('option:selected').text() == 'MTA4UO') {
 			$('#ElementCataract_iol_position_id').val(4);
 		}
 	});
