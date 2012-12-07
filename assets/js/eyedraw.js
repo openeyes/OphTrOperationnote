@@ -405,10 +405,12 @@ ED_Magic.prototype = {
 
 	repaintCataract : function() {
 		ed_drawing_edit_Cataract.repaint();
+		$('#ElementCataract_eyedraw').val(ed_drawing_edit_Cataract.save());
 	},
 
 	repaintSurgeon : function() {
 		ed_drawing_edit_Position.repaint();
+		$('#ElementCataract_eyedraw2').val(ed_drawing_edit_Position.save());
 	}
 }
 
