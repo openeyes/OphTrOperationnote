@@ -300,6 +300,7 @@ ED_Magic.prototype = {
 			ed_drawing_edit_Cataract.modified = false;
 			this.followSurgeon = true;
 			this.incisionMoving = 0;
+			$('#ElementCataract_eyedraw').val(ed_drawing_edit_Cataract.save());
 		} else {
 			setTimeout('magic.moveIncisionAndSidePorts(1);', this.timerSpeed);
 		}
@@ -360,6 +361,7 @@ ED_Magic.prototype = {
 					this.followSurgeon = true;
 					this.surgeonMoveTable = 0;
 					this.surgeonMoving = 0;
+					$('#ElementCataract_eyedraw2').val(ed_drawing_edit_Position.save());
 				}
 			} else {
 				setTimeout('magic.moveSurgeon(1);', this.timerSpeed);
@@ -405,12 +407,10 @@ ED_Magic.prototype = {
 
 	repaintCataract : function() {
 		ed_drawing_edit_Cataract.repaint();
-		$('#ElementCataract_eyedraw').val(ed_drawing_edit_Cataract.save());
 	},
 
 	repaintSurgeon : function() {
 		ed_drawing_edit_Position.repaint();
-		$('#ElementCataract_eyedraw2').val(ed_drawing_edit_Position.save());
 	}
 }
 
