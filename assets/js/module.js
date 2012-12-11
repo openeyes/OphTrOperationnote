@@ -134,26 +134,6 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#ElementCataract_incision_site_id').die('change').live('change',function(e) {
-		e.preventDefault();
-
-		magic.setDoodleParameter('PhakoIncision', 'incisionSite', $(this).children('option:selected').text());
-
-		if ($('#ElementCataract_length').val() > 9.9) {
-			$('#ElementCataract_length').val(9.9);
-		}
-
-		return false;
-	});
-
-	$('#ElementCataract_incision_type_id').die('change').live('change',function(e) {
-		e.preventDefault();
-
-		magic.setDoodleParameter('PhakoIncision', 'incisionType', $(this).children('option:selected').text());
-
-		return false;
-	});
-
 	var last_ElementProcedureList_eye_id = null;
 
 	$('div[data-element-type-class="ElementProcedureList"]').undelegate('input[name="ElementProcedureList\[eye_id\]"]','change').delegate('input[name="ElementProcedureList\[eye_id\]"]','change',function() {
@@ -228,53 +208,6 @@ $(document).ready(function() {
 
 	$('div[data-element-type-class="ElementCataract"]').undelegate('input[name="ElementAnaesthetic\[anaesthetist_id\]"]','click').delegate('input[name="ElementAnaesthetic\[anaesthetist_id\]"]','click',function(e) {
 		anaestheticGivenBySlide.handleEvent($(this));
-	});
-
-	$('#ElementCataract_meridian').die('change').live('change',function() {
-		if (doodle = magic.getDoodle('PhakoIncision')) {
-			if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-				doodle.setParameterWithAnimation('incisionMeridian',$(this).val());
-				magic.followSurgeon = false;
-			}
-		}
-	});
-
-	$('#ElementCataract_meridian').die('keypress').live('keypress',function(e) {
-		if (e.keyCode == 13) {
-			if (doodle = magic.getDoodle('PhakoIncision')) {
-				if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-					doodle.setParameterWithAnimation('incisionMeridian',$(this).val());
-					magic.followSurgeon = false;
-				}
-			}
-			return false;
-		}
-	});
-
-	$('#ElementCataract_length').die('change').live('change',function() {
-		if (doodle = magic.getDoodle('PhakoIncision')) {
-			if (parseFloat($(this).val()) > 9.9) {
-				$(this).val(9.9);
-			} else if (parseFloat($(this).val()) < 0.1) {
-				$(this).val(0.1);
-			}
-			doodle.setParameterWithAnimation('incisionLength',$(this).val());
-		}
-	});
-
-	$('#ElementCataract_length').die('keypress').live('keypress',function(e) {
-		if (e.keyCode == 13) {
-			if (doodle = magic.getDoodle('PhakoIncision')) {
-				if (parseFloat($(this).val()) > 9.9) {
-					$(this).val(9.9);
-				} else if (parseFloat($(this).val()) < 0.1) {
-					$(this).val(0.1);
-				}
-				doodle.setParameterWithAnimation('incisionLength',$(this).val());
-			}
-			$('#ElementCataract_meridian').select().focus();
-			return false;
-		}
 	});
 
 	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
