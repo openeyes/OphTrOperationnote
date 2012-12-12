@@ -214,6 +214,13 @@ $(document).ready(function() {
 			$('#ElementCataract_iol_position_id').val(4);
 		}
 	});
+
+	$('#ElementCataract_iol_power').die('keypress').live('keypress',function(e) {
+		if (e.keyCode == 13) {
+			return false;
+		}
+		return true;
+	});
 });
 
 function callbackVerifyAddProcedure(proc_name,durations,short_version,callback) {
