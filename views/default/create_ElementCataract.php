@@ -36,8 +36,6 @@
 				'onReadyCommandArray' => array(
 					array('addDoodle', array('AntSeg')),
 					array('addDoodle', array('PhakoIncision')),
-					array('addDoodle', array('SidePort',0)),
-					array('addDoodle', array('SidePort',3.1415926535898)),
 					array('addDoodle', array('PCIOL')),
 					array('deselectDoodles', array()),
 				),
@@ -48,6 +46,9 @@
 						'incisionLength' => array('id' => 'ElementCataract_length'),
 						'incisionMeridian' => array('id' => 'ElementCataract_meridian'),
 					),
+				),
+				'listenerArray' => array(
+					'sidePortController'
 				),
 				'idSuffix' => 'Cataract',
 				'side' => $element->getSelectedEye()->getShortName(),
@@ -74,6 +75,9 @@
 					array('addDoodle', array('OperatingTable')),
 					array('addDoodle', array('Surgeon')),
 					array('deselectDoodles', array()),
+				),
+				'syncArray' => array(
+					'Cataract' => array('Surgeon' => array('PhakoIncision' => array('parameters' => array('rotation')))),
 				),
 				'idSuffix' => 'Position',
 				'side' => $element->getSelectedEye()->getShortName(),
