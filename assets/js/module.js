@@ -233,7 +233,7 @@ $(document).ready(function() {
 	$('#ElementCataract_meridian').die('change').live('change',function() {
 		if (doodle = magic.getDoodle('PhakoIncision')) {
 			if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-				doodle.setParameterWithAnimation('incisionMeridian',$(this).val());
+				doodle.setParameter('incisionMeridian',$(this).val());
 				magic.followSurgeon = false;
 			}
 		}
@@ -243,12 +243,19 @@ $(document).ready(function() {
 		if (e.keyCode == 13) {
 			if (doodle = magic.getDoodle('PhakoIncision')) {
 				if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-					doodle.setParameterWithAnimation('incisionMeridian',$(this).val());
+					doodle.setParameter('incisionMeridian',$(this).val());
 					magic.followSurgeon = false;
 				}
 			}
 			return false;
 		}
+	});
+
+	$('#ElementCataract_iol_power').die('keypress').live('keypress',function(e) {
+		if (e.keyCode == 13) {
+			return false;
+		}
+		return true;
 	});
 
 	$('#ElementCataract_length').die('change').live('change',function() {
@@ -258,7 +265,7 @@ $(document).ready(function() {
 			} else if (parseFloat($(this).val()) < 0.1) {
 				$(this).val(0.1);
 			}
-			doodle.setParameterWithAnimation('incisionLength',$(this).val());
+			doodle.setParameter('incisionLength',$(this).val());
 		}
 	});
 
@@ -270,7 +277,7 @@ $(document).ready(function() {
 				} else if (parseFloat($(this).val()) < 0.1) {
 					$(this).val(0.1);
 				}
-				doodle.setParameterWithAnimation('incisionLength',$(this).val());
+				doodle.setParameter('incisionLength',$(this).val());
 			}
 			$('#ElementCataract_meridian').select().focus();
 			return false;
@@ -278,7 +285,7 @@ $(document).ready(function() {
 	});
 
 	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
-		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('option:selected').text() == 'MTA4UO') {
+		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('optgroup').children('option:selected').text() == 'MTA4UO') {
 			$('#ElementCataract_iol_position_id').val(4);
 		}
 	});
