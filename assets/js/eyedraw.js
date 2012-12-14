@@ -269,6 +269,12 @@ ED_Magic.prototype = {
 
 	adjust_meridian : function(doodle) {
 		var angle = (((Math.PI * 2 - doodle.rotation + Math.PI/2) * 180/Math.PI) + 360) % 360;
+		angle += 90;
+		if (angle > 360) {
+			angle = 360-angle;
+		} else if (angle <0) {
+			angle = 0-angle;
+		}
 		if (angle == 360) angle = 0;
 		$('#ElementCataract_meridian').val(angle);
 	},
