@@ -263,14 +263,9 @@ ED_Magic.prototype = {
 	},
 
 	moveDoodle : function(doodle, rotation) {
+		console.log(rotation);
 		doodle.rotation = this.toRadians(rotation);
-		this.adjust_meridian(doodle);
-	},
-
-	adjust_meridian : function(doodle) {
-		var angle = (((Math.PI * 2 - doodle.rotation + Math.PI/2) * 180/Math.PI) + 360) % 360;
-		if (angle == 360) angle = 0;
-		$('#ElementCataract_meridian').val(angle);
+		$('#ElementCataract_meridian').val(180-rotation);
 	},
 
 	moveIncisionAndSidePorts : function(initial) {

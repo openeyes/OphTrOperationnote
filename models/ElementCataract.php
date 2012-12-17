@@ -148,6 +148,9 @@ class ElementCataract extends BaseEventTypeElement
 	 */
 	public function setDefaultOptions()
 	{
+		if ($this->getSelectedEye()->id == 1) {
+			$this->meridian = 0;
+		}
 	}
 
 	/**
