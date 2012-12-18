@@ -265,7 +265,11 @@ ED_Magic.prototype = {
 	moveDoodle : function(doodle, rotation) {
 		console.log(rotation);
 		doodle.rotation = this.toRadians(rotation);
-		$('#ElementCataract_meridian').val(180-rotation);
+		var meridian = 180-rotation;
+		if (meridian <0) {
+			meridian += 360;
+		}
+		$('#ElementCataract_meridian').val(meridian);
 	},
 
 	moveIncisionAndSidePorts : function(initial) {
