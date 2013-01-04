@@ -18,10 +18,10 @@
  */
 ?>
 
-<h4><?php echo $element->elementType->name ?></h4>
+<h3 class="subsection"><?php echo $element->elementType->name ?></h3>
 
-<div class="cols2">
-	<div class="right">
+<div class="cols2 colsX clearfix">
+	<div class="right" style="margin-top: 30px;">
 		<?php
 		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetBuckle', array(
 			'side'=>$element->eye->getShortName(),
