@@ -260,6 +260,11 @@ ED_Magic.prototype = {
 				}
 			}
 		}
+		
+		if (window.ed_drawing_edit_Vitrectomy !== undefined) {
+			window.ed_drawing_edit_Vitrectomy.eye = (eye_id == this.eye_right) ? ED.eye.Right : ED.eye.Left;
+			window.ed_drawing_edit_Vitrectomy.repaint();
+		}
 	},
 
 	moveDoodle : function(doodle, rotation) {
