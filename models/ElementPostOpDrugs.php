@@ -185,7 +185,7 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 			->select('et_ophtroperationnote_postop_drug.id, et_ophtroperationnote_postop_drug.name')
 			->from('et_ophtroperationnote_postop_drug')
 			->join('et_ophtroperationnote_postop_site_subspecialty_drug','et_ophtroperationnote_postop_site_subspecialty_drug.drug_id = et_ophtroperationnote_postop_drug.id')
-			->where('et_ophtroperationnote_postop_site_subspecialty_drug.subspecialty_id = :subSpecialtyId and et_ophtroperationnote_postop_site_subspecialty_drug.site_id = :siteId'.@$where, $params)
+			->where('et_ophtroperationnote_postop_site_subspecialty_drug.subspecialty_id = :subSpecialtyId and et_ophtroperationnote_postop_site_subspecialty_drug.site_id = :siteId and et_ophtroperationnote_postop_drug.deleted = 0'.@$where, $params)
 			->order('et_ophtroperationnote_postop_drug.name asc')
 			->queryAll(), 'id', 'name');
 	}
