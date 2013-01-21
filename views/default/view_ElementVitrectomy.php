@@ -20,7 +20,7 @@
 
 <h4><?php echo $element->elementType->name ?></h4>
 
-<div class="cols2">
+<div class="cols2 colsX clearfix">
 	<div class="right">
 		<?php
 		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetVitrectomy', array(
