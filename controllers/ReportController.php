@@ -115,6 +115,31 @@ class ReportController extends BaseController {
 		$data['age']['mean'] = (count($ages) >0) ? number_format(array_sum($ages)/count($ages),2) : 0;
 		$data['pc_ruptures']['percentage'] = ($data['cataracts'] >0) ? number_format($data['pc_ruptures']['number']/($data['cataracts']/100),2) : 0;
 		$data['complications']['percentage'] = ($data['cataracts'] >0) ? number_format($data['complications']['number']/($data['cataracts']/100),2) : 0;
+		$data['pc_rupture_average']['number'] = 0;
+		$data['complication_average']['number'] = 0;
+
+		foreach (Yii::app()->db->createCommand()
+			->select("pl.eye_id, p.dob, p.date_of_death, comp.id as comp_id, pc.id as pc_id")
+			->from("et_ophtroperationnote_procedurelist pl")
+			->join("et_ophtroperationnote_cataract c","pl.event_id = c.event_id")
+			->join("event e","c.event_id = e.id")
+			->join("et_ophtroperationnote_surgeon s","s.event_id = e.id")
+			->join("episode ep","e.episode_id = ep.id")
+			->join("firm f","ep.firm_id = f.id")
+			->join("patient p","ep.patient_id = p.id")
+			->leftJoin("et_ophtroperationnote_cataract_complication comp","comp.cataract_id = c.id")
+			->leftJoin("et_ophtroperationnote_cataract_complication pc","pc.cataract_id = c.id and pc.complication_id = 11")
+			->where("e.deleted = 0 and ep.deleted = 0")
+			->queryAll() as $i => $row) {
+
+			$row['pc_id'] and $data['pc_rupture_average']['number']++;
+			$row['comp_id'] and $data['complication_average']['number']++;
+		}
+
+		$i++;
+
+		$data['pc_rupture_average']['percentage'] = number_format($data['pc_rupture_average']['number']/($i/100),2);
+		$data['complication_average']['percentage'] = number_format($data['complication_average']['number']/($i/100),2);
 
 		return $data;
 	}
