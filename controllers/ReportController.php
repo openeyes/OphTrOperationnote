@@ -74,7 +74,11 @@ class ReportController extends BaseController {
 
 		$ages = array();
 
-		foreach (Yii::app()->db->createCommand()
+		if (!($db = Yii::app()->params['report_db'])) {
+			$db = 'db';
+		}
+
+		foreach (Yii::app()->$db->createCommand()
 			->select("pl.eye_id, p.dob, p.date_of_death, comp.id as comp_id, pc.id as pc_id")
 			->from("et_ophtroperationnote_procedurelist pl")
 			->join("et_ophtroperationnote_cataract c","pl.event_id = c.event_id")
@@ -118,7 +122,11 @@ class ReportController extends BaseController {
 		$data['pc_rupture_average']['number'] = 0;
 		$data['complication_average']['number'] = 0;
 
-		foreach (Yii::app()->db->createCommand()
+		if (!($db = Yii::app()->params['report_db'])) {
+			$db = 'db';
+		}
+
+		foreach (Yii::app()->$db->createCommand()
 			->select("pl.eye_id, p.dob, p.date_of_death, comp.id as comp_id, pc.id as pc_id")
 			->from("et_ophtroperationnote_procedurelist pl")
 			->join("et_ophtroperationnote_cataract c","pl.event_id = c.event_id")
@@ -170,7 +178,11 @@ class ReportController extends BaseController {
 			$where .= " and ($clause)";
 		}
 
-		foreach (Yii::app()->db->createCommand()
+		if (!($db = Yii::app()->params['report_db'])) {
+			$db = 'db';
+		}
+
+		foreach (Yii::app()->$db->createCommand()
 			->select("p.hos_num, c.first_name, c.last_name, e.datetime, s.surgeon_id, s.assistant_id, s.supervising_surgeon_id, pl.id as pl_id, e.id as event_id, cat.id as cat_id, eye.name as eye")
 			->from('patient p')
 			->join('contact c',"c.parent_class = 'Patient' and c.parent_id = p.id")
