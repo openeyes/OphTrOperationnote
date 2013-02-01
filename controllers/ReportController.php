@@ -131,14 +131,14 @@ class ReportController extends BaseController {
 
 		if ($user = User::model()->findByPk($params['surgeon_id'])) {
 			$clause = '';
-			if (@$_POST['match_surgeon']) {
+			if (@$params['match_surgeon']) {
 				$clause .= "s.surgeon_id = $user->id";
 			}
-			if (@$_POST['match_assistant_surgeon']) {
+			if (@$params['match_assistant_surgeon']) {
 				if ($clause) $clause .= ' or ';
 				$clause .= "s.assistant_id = $user->id";
 			}
-			if (@$_POST['match_supervising_surgeon']) {
+			if (@$params['match_supervising_surgeon']) {
 				if ($clause) $clause .= ' or ';
 				$clause .= "s.supervising_surgeon_id = $user->id";
 			}
