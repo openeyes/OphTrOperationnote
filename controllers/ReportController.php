@@ -122,15 +122,27 @@ class ReportController extends BaseController {
 	public function reportOperations($params=array()) {
 		$where = '';
 
-		if (strtotime($_POST['date_from'])) {
-			$where .= " and e.datetime >= '".date('Y-m-d',strtotime($_POST['date_from']))." 00:00:00'";
+		if (strtotime($params['date_from'])) {
+			$where .= " and e.datetime >= '".date('Y-m-d',strtotime($params['date_from']))." 00:00:00'";
 		}
-		if (strtotime($_POST['date_to'])) {
-			$where .= " and e.datetime <= '".date('Y-m-d',strtotime($_POST['date_to']))." 23:59:59'";
+		if (strtotime($params['date_to'])) {
+			$where .= " and e.datetime <= '".date('Y-m-d',strtotime($params['date_to']))." 23:59:59'";
 		}
 
 		if ($user = User::model()->findByPk($params['surgeon_id'])) {
-			$where .= " and (s.surgeon_id = $user->id or s.assistant_id = $user->id or s.supervising_surgeon_id = $user->id)";
+			$clause = '';
+			if (@$_POST['match_surgeon']) {
+				$clause .= "s.surgeon_id = $user->id";
+			}
+			if (@$_POST['match_assistant_surgeon']) {
+				if ($clause) $clause .= ' or ';
+				$clause .= "s.assistant_id = $user->id";
+			}
+			if (@$_POST['match_supervising_surgeon']) {
+				if ($clause) $clause .= ' or ';
+				$clause .= "s.supervising_surgeon_id = $user->id";
+			}
+			$where .= " and ($clause)";
 		}
 
 		foreach (Yii::app()->db->createCommand()
