@@ -118,4 +118,59 @@ class ReportController extends BaseController {
 
 		return $data;
 	}
+
+	public function reportOperations($params=array()) {
+		$where = '';
+
+		if (strtotime($_POST['date_from'])) {
+			$where .= " and e.datetime >= '".date('Y-m-d',strtotime($_POST['date_from']))." 00:00:00'";
+		}
+		if (strtotime($_POST['date_to'])) {
+			$where .= " and e.datetime <= '".date('Y-m-d',strtotime($_POST['date_to']))." 23:59:59'";
+		}
+
+		if ($user = User::model()->findByPk($params['surgeon_id'])) {
+			$where .= " and (s.surgeon_id = $user->id or s.assistant_id = $user->id or s.supervising_surgeon_id = $user->id)";
+		}
+
+		foreach (Yii::app()->db->createCommand()
+			->select("p.hos_num, c.first_name, c.last_name, e.datetime, s.surgeon_id, s.assistant_id, s.supervising_surgeon_id, pl.id as pl_id, e.id as event_id, cat.id as cat_id, eye.name as eye")
+			->from('patient p')
+			->join('contact c',"c.parent_class = 'Patient' and c.parent_id = p.id")
+			->join('episode ep','ep.patient_id = p.id')
+			->join('event e','e.episode_id = ep.id')
+			->join('et_ophtroperationnote_procedurelist pl','pl.event_id = e.id')
+			->join('eye','pl.eye_id = eye.id')
+			->join('et_ophtroperationnote_surgeon s','s.event_id = e.id')
+			->leftJoin('et_ophtroperationnote_cataract cat','cat.event_id = e.id')
+			->where("e.deleted = 0 and ep.deleted = 0 $where")
+			->order('e.datetime asc')
+			->queryAll() as $row) {
+
+			$operations[] = array(
+				'date' => date('j M Y',strtotime($row['datetime'])),
+				'hos_num' => $row['hos_num'],
+				'first_name' => $row['first_name'],
+				'last_name' => $row['last_name'],
+				'procedures' => array(),
+				'complications' => array(),
+				'role' => ($row['surgeon_id'] == $user->id ? 'Surgeon' : ($row['assistant_id'] == $user->id ? 'Assistant surgeon' : 'Supervising surgeon')),
+			);
+
+			foreach (ProcedureListProcedureAssignment::model()->findAll('procedurelist_id=?',array($row['pl_id'])) as $i => $pa) {
+				$operations[count($operations)-1]['procedures'][] = array(
+					'eye' => $row['eye'],
+					'procedure' => $pa->procedure->term,
+				);
+			}
+
+			if ($row['cat_id']) {
+				foreach (CataractComplication::model()->findAll('cataract_id=?',array($row['cat_id'])) as $complication) {
+					$operations[count($operations)-1]['complications'][] = array('complication'=>$complication->complication->name);
+				}
+			}
+		}
+
+		return array('operations'=>$operations);
+	}
 }
