@@ -1,3 +1,5 @@
+#event_content.watermarkBox { background:#fafafa url(../img/watermark.png) top left repeat-y; }
+#event_content h3.withEventIcon { background:transparent url(../img/medium.png) center left no-repeat; }
 
 #event_OphTrOperationnote .ElementCataract .left .halfHeight .eventDetail { margin-left: 320px; }
 #event_OphTrOperationnote .ElementCataract .right .halfHeight .eventDetail { width: 110px !important; }
