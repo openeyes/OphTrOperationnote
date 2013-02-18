@@ -31,14 +31,38 @@
 	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
 		<div class="left" style="width:65%;">
 			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetCataract', array(
-				'side'=>$element->eye->getShortName(),
-				'mode'=>'edit',
-				'size'=>300,
-				'model'=>$element,
-				'attribute'=>'eyedraw',
-				'offset_x'=>10,
-				'offset_y'=>10,
+			$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+				'doodleToolBarArray' => array(
+					0 => array('PhakoIncision','SidePort','IrisHook','PCIOL','ACIOL','PI'),
+					1 => array('MattressSuture','CapsularTensionRing','CornealSuture','ToricPCIOL','LimbalRelaxingIncision'),
+				),
+				'onReadyCommandArray' => array(
+					array('addDoodle', array('AntSeg')),
+					array('addDoodle', array('PhakoIncision')),
+					array('addDoodle', array('PCIOL')),
+					array('deselectDoodles', array()),
+				),
+				'bindingArray' => array(
+					'PhakoIncision' => array(
+						'incisionSite' => array('id' => 'ElementCataract_incision_site_id', 'attribute' => 'data-value'),
+						'incisionType' => array('id' => 'ElementCataract_incision_type_id', 'attribute' => 'data-value'),
+						'incisionLength' => array('id' => 'ElementCataract_length'),
+						'incisionMeridian' => array('id' => 'ElementCataract_meridian'),
+					),
+				),
+				'listenerArray' => array(
+					'sidePortController'
+				),
+				'idSuffix' => 'Cataract',
+				'side' => $element->getSelectedEye()->getShortName(),
+				'mode' => 'edit',
+				'width' => 300,
+				'height' => 300,
+				'model' => $element,
+				'attribute' => 'eyedraw',
+				'offsetX' => 10,
+				'offsetY' => 10,
+				'template' => 'OEEyeDrawWidgetCataract',
 			));
 			?>
 			<?php echo $form->hiddenInput($element, 'report2', $element->report2)?>
@@ -50,14 +74,26 @@
 				<?php echo $form->textArea($element, 'report', array('rows'=>6,'cols'=>35))?>
 			</div>
 			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
-				'side'=>$element->eye->getShortName(),
-				'mode'=>'edit',
-				'size'=>140,
-				'model'=>$element,
-				'attribute'=>'eyedraw2',
-				'offset_x'=>10,
-				'offset_y'=>10,
+			$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+				'onReadyCommandArray' => array(
+					array('addDoodle', array('OperatingTable')),
+					array('addDoodle', array('Surgeon')),
+					array('deselectDoodles', array()),
+				),
+				'syncArray' => array(
+					'Cataract' => array('Surgeon' => array('PhakoIncision' => array('parameters' => array('rotation')))),
+				),
+				'idSuffix' => 'Position',
+				'side' => $element->getSelectedEye()->getShortName(),
+				'mode' => 'edit',
+				'width' => 140,
+				'height' => 140,
+				'model' => $element,
+				'attribute' => 'eyedraw2',
+				'offsetX' => 10,
+				'offsetY' => 10,
+				'toolbar' => false,
+				'template' => 'OEEyeDrawWidgetSurgeonPosition',
 			));
 			?>
 		</div>
