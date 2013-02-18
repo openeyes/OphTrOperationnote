@@ -134,26 +134,6 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#ElementCataract_incision_site_id').die('change').live('change',function(e) {
-		e.preventDefault();
-
-		magic.setDoodleParameter('PhakoIncision', 'incisionSite', $(this).children('option:selected').text());
-
-		if ($('#ElementCataract_length').val() > 9.9) {
-			$('#ElementCataract_length').val(9.9);
-		}
-
-		return false;
-	});
-
-	$('#ElementCataract_incision_type_id').die('change').live('change',function(e) {
-		e.preventDefault();
-
-		magic.setDoodleParameter('PhakoIncision', 'incisionType', $(this).children('option:selected').text());
-
-		return false;
-	});
-
 	var last_ElementProcedureList_eye_id = null;
 
 	$('div[data-element-type-class="ElementProcedureList"]').undelegate('input[name="ElementProcedureList\[eye_id\]"]','change').delegate('input[name="ElementProcedureList\[eye_id\]"]','change',function() {
@@ -189,7 +169,7 @@ $(document).ready(function() {
 								$('#typeProcedure').slideToggle('fast');
 							}
 
-							magic.eye_changed(element.val());
+							changeEye();
 							last_ElementProcedureList_eye_id = element.val();
 
 							return true;
@@ -201,8 +181,8 @@ $(document).ready(function() {
 					$('#typeProcedure').slideToggle('fast');
 				}
 
-				magic.eye_changed($(this).val());
-				
+				changeEye();
+
 				last_ElementProcedureList_eye_id = $(this).val();
 
 				return true;
@@ -214,8 +194,7 @@ $(document).ready(function() {
 				$('#typeProcedure').slideToggle('fast');
 			}
 
-			magic.eye_changed($(this).val());
-			
+			changeEye();	
 			last_ElementProcedureList_eye_id = $(this).val();
 
 			return true;
@@ -230,24 +209,9 @@ $(document).ready(function() {
 		anaestheticGivenBySlide.handleEvent($(this));
 	});
 
-	$('#ElementCataract_meridian').die('change').live('change',function() {
-		if (doodle = magic.getDoodle('PhakoIncision')) {
-			if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-				doodle.setParameter('incisionMeridian',$(this).val());
-				magic.followSurgeon = false;
-			}
-		}
-	});
-
-	$('#ElementCataract_meridian').die('keypress').live('keypress',function(e) {
-		if (e.keyCode == 13) {
-			if (doodle = magic.getDoodle('PhakoIncision')) {
-				if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-					doodle.setParameter('incisionMeridian',$(this).val());
-					magic.followSurgeon = false;
-				}
-			}
-			return false;
+	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
+		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('option:selected').text() == 'MTA4UO') {
+			$('#ElementCataract_iol_position_id').val(4);
 		}
 	});
 
@@ -256,38 +220,6 @@ $(document).ready(function() {
 			return false;
 		}
 		return true;
-	});
-
-	$('#ElementCataract_length').die('change').live('change',function() {
-		if (doodle = magic.getDoodle('PhakoIncision')) {
-			if (parseFloat($(this).val()) > 9.9) {
-				$(this).val(9.9);
-			} else if (parseFloat($(this).val()) < 0.1) {
-				$(this).val(0.1);
-			}
-			doodle.setParameter('incisionLength',$(this).val());
-		}
-	});
-
-	$('#ElementCataract_length').die('keypress').live('keypress',function(e) {
-		if (e.keyCode == 13) {
-			if (doodle = magic.getDoodle('PhakoIncision')) {
-				if (parseFloat($(this).val()) > 9.9) {
-					$(this).val(9.9);
-				} else if (parseFloat($(this).val()) < 0.1) {
-					$(this).val(0.1);
-				}
-				doodle.setParameter('incisionLength',$(this).val());
-			}
-			$('#ElementCataract_meridian').select().focus();
-			return false;
-		}
-	});
-
-	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
-		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('optgroup').children('option:selected').text() == 'MTA4UO') {
-			$('#ElementCataract_iol_position_id').val(4);
-		}
 	});
 });
 
@@ -387,3 +319,87 @@ AnaestheticGivenBySlide.prototype = {
 
 var anaestheticSlide = new AnaestheticSlide;
 var anaestheticGivenBySlide = new AnaestheticGivenBySlide;
+
+function sidePortController(_drawing)
+{
+	var phakoIncision;
+	var sidePort1;
+	var sidePort2;
+	
+	// Register controller for notifications
+	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'parameterChanged']);
+	
+	// Method called for notification
+	this.notificationHandler = function(_messageArray)
+	{
+		switch (_messageArray['eventName'])
+		{
+			// Ready notification
+			case 'ready':
+				// Get reference to the phakoIncision
+				phakoIncision = _drawing.firstDoodleOfClass('PhakoIncision');
+				
+				// If this is a newly created drawing, add two sideports
+				if (_drawing.isNew)
+				{
+					sidePort1 = _drawing.addDoodle('SidePort', {rotation:0});
+					sidePort2 = _drawing.addDoodle('SidePort', {rotation:Math.PI});
+					_drawing.deselectDoodles();
+				}
+				// Else cancel sync for an updated drawing
+				else
+				{
+					phakoIncision.willSync = false;
+				}
+				break;
+			
+			// Parameter change notification
+			case 'parameterChanged':
+				// Only sync for new drawings
+				if (_drawing.isNew)
+				{
+					// Get rotation value of surgeon doodle
+					var surgeonDrawing = window['ed_drawing_edit_Position'];
+					var surgeonRotation = surgeonDrawing.firstDoodleOfClass('Surgeon').rotation;
+
+					// Get doodle that has moved in opnote drawing
+					var masterDoodle = _messageArray['object'].doodle;
+
+					// Stop syncing if PhakoIncision or a SidePort is changed
+					if (masterDoodle.drawing.isActive && (masterDoodle.className == 'PhakoIncision' || masterDoodle.className == 'SidePort'))
+					{
+						phakoIncision.willSync = false;
+					}
+			
+					// Keep sideports in sync with PhakoIncision while surgeon is still syncing with it
+					if (masterDoodle.className == "PhakoIncision" && masterDoodle.willSync)
+					{
+						if (typeof(sidePort1) != 'undefined')
+						{
+							sidePort1.setSimpleParameter('rotation', (surgeonRotation + Math.PI/2)%(2* Math.PI));
+						}
+						if (typeof(sidePort2) != 'undefined')
+						{
+							sidePort2.setSimpleParameter('rotation', (surgeonRotation - Math.PI/2)%(2* Math.PI));
+						}
+					}
+				}
+				break;
+		}
+	}
+}
+
+function changeEye() {
+	// Swap side of each drawing
+	var drawingEdit1 = window['ed_drawing_edit_Position'];
+	var drawingEdit2 = window['ed_drawing_edit_Cataract'];
+
+	if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;
+	else drawingEdit1.eye = ED.eye.Right;
+	if (drawingEdit2.eye == ED.eye.Right) drawingEdit2.eye = ED.eye.Left;
+	else drawingEdit2.eye = ED.eye.Right;
+	
+	// Set surgeon position to temporal side
+	var doodle = drawingEdit1.firstDoodleOfClass('Surgeon');
+	doodle.setParameterWithAnimation('surgeonPosition', 'Temporal');
+}
