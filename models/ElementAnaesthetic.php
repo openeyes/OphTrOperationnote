@@ -153,7 +153,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($booking = $episode->getMostRecentBooking()) {
-					$this->anaesthetic_type_id = $booking->elementOperation->anaesthetic_type_id;
+					$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
 				}
 			}
 		}
