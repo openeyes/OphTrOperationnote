@@ -56,7 +56,7 @@ class ElementProcedureList extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, eye_id', 'safe'),
+			array('event_id, eye_id, booking_event_id', 'safe'),
 			array('eye_id', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -117,7 +117,7 @@ class ElementProcedureList extends BaseEventTypeElement
 	}
 
 	protected function afterSave() {
-		if (!empty($_POST['Procedures'])) {
+		if (!empty($_POST['Procedures_procs'])) {
 
 			$existing_procedure_assignments = array();
 			foreach(ProcedureListProcedureAssignment::model()->findAll('procedurelist_id = :id', array(':id' => $this->id)) as $procedure_assignment) {
@@ -125,7 +125,7 @@ class ElementProcedureList extends BaseEventTypeElement
 			}
 
 			$current_display_order = 1;
-			foreach($_POST['Procedures'] as $procedure_id) {
+			foreach($_POST['Procedures_procs'] as $procedure_id) {
 				if(isset($existing_procedure_assignments[$procedure_id])) {
 					$procedure_assignment = $existing_procedure_assignments[$procedure_id];
 					if($procedure_assignment->display_order != $current_display_order) {
@@ -149,7 +149,7 @@ class ElementProcedureList extends BaseEventTypeElement
 			}
 
 			foreach ($existing_procedure_assignments as $procedure_id => $procedure_assignment) {
-				if(!in_array($procedure_id, $_POST['Procedures'])) {
+				if(!in_array($procedure_id, $_POST['Procedures_procs'])) {
 					// Delete removed procedure
 					if(!$procedure_assignment->delete()) {
 						throw new Exception('Unable to delete procedure assignment: '.print_r($pa->getErrors(),true));
@@ -168,7 +168,7 @@ class ElementProcedureList extends BaseEventTypeElement
 	}
 
 	protected function beforeValidate() {
-		if (!empty($_POST) && (!isset($_POST['Procedures']) || empty($_POST['Procedures']))) {
+		if (!empty($_POST) && (!isset($_POST['Procedures_procs']) || empty($_POST['Procedures_procs']))) {
 			$this->addError('no_field', 'At least one procedure must be entered');
 		}
 

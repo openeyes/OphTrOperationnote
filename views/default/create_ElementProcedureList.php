@@ -25,6 +25,7 @@
 	data-element-display-order="<?php echo $element->elementType->display_order ?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
+	<?php echo $form->hiddenField($element, 'booking_event_id', array('value'=>@$_GET['booking_event_id']))?>
 	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->getSelectedEye() ? $element->getSelectedEye()->id : null))?>
 	<?php
 	$form->widget('application.widgets.ProcedureSelection',array(
