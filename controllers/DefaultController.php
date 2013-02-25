@@ -23,7 +23,7 @@ class DefaultController extends BaseEventTypeController {
 		} else {
 			$bookings = array();
 
-			if ($api = Yii::app()->moduleAPI->get('OphTrOperation')) {
+			if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
 				if ($episode = $this->patient->getEpisodeForCurrentSubspecialty()) {
 					$bookings = $api->getOpenBookingsForEpisode($episode->id);
 				}
