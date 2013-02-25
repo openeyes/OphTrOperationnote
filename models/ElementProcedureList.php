@@ -165,7 +165,7 @@ class ElementProcedureList extends BaseEventTypeElement
 		}
 
 		if (Yii::app()->getController()->getAction()->id == 'create') {
-			if ($api = Yii::app()->moduleAPI->get('OphTrOperation')) {
+			if ($this->booking_event_id && $api = Yii::app()->moduleAPI->get('OphTrOperation')) {
 				$api->setOperationStatus($this->booking_event_id, 'Completed');
 			}
 		}
@@ -183,9 +183,10 @@ class ElementProcedureList extends BaseEventTypeElement
 
 	public function getSelected_procedures() {
 		if (Yii::app()->getController()->getAction()->id == 'create') {
-			if ($api = Yii::app()->moduleAPI->get('OphTrOperation')) {
+			if (ctype_digit($_GET['booking_event_id']) && $api = Yii::app()->moduleAPI->get('OphTrOperation')) {
 				return $api->getProceduresForOperation($_GET['booking_event_id']);
 			}
+			return array();
 		}
 
 		if (Yii::app()->getController()->getAction()->id == 'update') {
@@ -194,7 +195,7 @@ class ElementProcedureList extends BaseEventTypeElement
 	}
 
 	public function getSelectedEye() {
-		if ($api = Yii::app()->moduleAPI->get('OphTrOperation')) {
+		if (ctype_digit($_GET['booking_event_id']) && $api = Yii::app()->moduleAPI->get('OphTrOperation')) {
 			return $api->getEyeForOperation($_GET['booking_event_id']);
 		}
 	}

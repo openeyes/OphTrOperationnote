@@ -1,10 +1,10 @@
-<?php 	$this->breadcrumbs=array($this->module->id);
+<?php		$this->breadcrumbs=array($this->module->id);
 	$this->header();
 ?>
 <h3 class="withEventIcon" style="background:transparent url(<?php echo $this->assetPath?>/img/medium.png) center left no-repeat;"><?php echo $this->event_type->name ?></h3>
 
 <div>
-	<?php 		$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
+	<?php			$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
 			'id'=>'clinical-create',
 			'enableAjaxValidation'=>false,
 			'htmlOptions' => array('class'=>'sliding'),
@@ -13,38 +13,42 @@
 	?>
 	<?php  $this->displayErrors($errors)?>
 
-	<?php if (count($bookings) <1) {?>
-		<p>
-			Sorry, there are no open booked operations in the current episode so you cannot create an Operation note.
-		</p>
-	<?php }else{?>
-		<p>
-			Please select the booked operation that this opnote is for:
-		</p>
+	<p>
+		<?php if (count($bookings) >0) {?>
+			Please indicate whether this operation note relates to a booking or an unbooked emergency:
+		<?php }else{?>
+			No open operations exist in the current episode so only an emergency operation note can be created.
+		<?php }?>
+	</p>
 
-		<table class="select_procedures">
+	<table class="select_procedures">
+		<tr>
+			<th class="select"></th>
+			<th class="date">Date</th>
+			<th class="procedures">Procedures</th>
+		</tr>
+		<?php foreach ($bookings as $booking) {?>
 			<tr>
-				<th class="select"></th>
-				<th class="date">Date</th>
-				<th class="procedures">Procedures</th>
+				<td>
+					<input type="radio" name="SelectBooking" value="booking<?php echo $booking->operation->event_id?>" />
+				</td>
+				<td>
+					<?php echo date('j M Y',strtotime($booking->session->date))?>
+				</td>
+				<td>
+					<?php foreach ($booking->operation->procedures as $procedure) {?>
+						<?php echo $procedure->term?><br/>
+					<?php }?>
+				</td>
 			</tr>
-			<?php foreach ($bookings as $booking) {?>
-				<tr>
-					<td>
-						<input type="radio" name="SelectBooking" value="booking<?php echo $booking->operation->event_id?>" />
-					</td>
-					<td>
-						<?php echo date('j M Y',strtotime($booking->session->date))?>
-					</td>
-					<td>
-						<?php foreach ($booking->operation->procedures as $procedure) {?>
-							<?php echo $procedure->term?><br/>
-						<?php }?>
-					</td>
-				</tr>
-			<?php }?>
-		</table>
-	<?php }?>
+		<?php }?>
+		<tr>
+			<td>
+				<input type="radio" name="SelectBooking" value="emergency" />
+			</td>
+			<td colspan="2">Emergency</td>
+		</tr>
+	</table>
 
 	<?php  $this->displayErrors($errors)?>
 		<div class="cleartall"></div>

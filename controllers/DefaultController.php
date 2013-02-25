@@ -11,7 +11,10 @@ class DefaultController extends BaseEventTypeController {
 		if (!empty($_POST)) {
 			if (preg_match('/^booking([0-9]+)$/',@$_POST['SelectBooking'],$m)) {
 				return $this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id='.$m[1]));
+			} else if (@$_POST['SelectBooking'] == 'emergency') {
+				return $this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id=emergency'));
 			}
+
 			$errors = array('Operation' => array('Please select a booked operation'));
 		}
 
