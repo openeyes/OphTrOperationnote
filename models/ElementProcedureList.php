@@ -164,6 +164,12 @@ class ElementProcedureList extends BaseEventTypeElement
 			throw new Exception('Unable to change episode status for episode '.$this->event->episode->id);
 		}
 
+		if (Yii::app()->getController()->getAction()->id == 'create') {
+			if ($api = Yii::app()->moduleAPI->get('OphTrOperation')) {
+				$api->setOperationStatus($this->booking_event_id, 'Completed');
+			}
+		}
+
 		return parent::afterSave();
 	}
 
@@ -177,26 +183,9 @@ class ElementProcedureList extends BaseEventTypeElement
 
 	public function getSelected_procedures() {
 		if (Yii::app()->getController()->getAction()->id == 'create') {
-			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
-			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
+			if ($api = Yii::app()->moduleAPI->get('OphTrOperation')) {
+				return $api->getProceduresForOperation($_GET['booking_event_id']);
 			}
-
-			$selected_procedures = array();
-
-			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				$bookings = $episode->getBookingsForToday();
-
-				if (count($bookings) == 1) {
-					$booking = Booking::model()->findByPk($bookings[0]['id']);
-
-					foreach ($booking->elementOperation->procedures as $procedure) {
-						$selected_procedures[] = $procedure;
-					}
-				}
-			}
-
-			return $selected_procedures;
 		}
 
 		if (Yii::app()->getController()->getAction()->id == 'update') {
@@ -205,18 +194,8 @@ class ElementProcedureList extends BaseEventTypeElement
 	}
 
 	public function getSelectedEye() {
-		// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
-		if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-			throw new SystemException('Patient not found: '.@$_GET['patient_id']);
-		}
-
-		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			$bookings = $episode->getBookingsForToday();
-
-			if (count($bookings) == 1) {
-				$booking = Booking::model()->findByPk($bookings[0]['id']);
-				return $booking->elementOperation->eye;
-			}
+		if ($api = Yii::app()->moduleAPI->get('OphTrOperation')) {
+			return $api->getEyeForOperation($_GET['booking_event_id']);
 		}
 	}
 

@@ -13,38 +13,46 @@
 	?>
 	<?php  $this->displayErrors($errors)?>
 
-	<p>
-		Please select the booked operation that this opnote is for:
-	</p>
+	<?php if (count($bookings) <1) {?>
+		<p>
+			Sorry, there are no open booked operations in the current episode so you cannot create an Operation note.
+		</p>
+	<?php }else{?>
+		<p>
+			Please select the booked operation that this opnote is for:
+		</p>
 
-	<table class="select_procedures">
-		<tr>
-			<th class="select"></th>
-			<th class="date">Date</th>
-			<th class="procedures">Procedures</th>
-		</tr>
-		<?php foreach ($bookings as $booking) {?>
+		<table class="select_procedures">
 			<tr>
-				<td>
-					<input type="radio" name="SelectBooking" value="booking<?php echo $booking->operation->event_id?>" />
-				</td>
-				<td>
-					<?php echo date('j M Y',strtotime($booking->session->date))?>
-				</td>
-				<td>
-					<?php foreach ($booking->operation->procedures as $procedure) {?>
-						<?php echo $procedure->term?><br/>
-					<?php }?>
-				</td>
+				<th class="select"></th>
+				<th class="date">Date</th>
+				<th class="procedures">Procedures</th>
 			</tr>
-		<?php }?>
-	</table>
+			<?php foreach ($bookings as $booking) {?>
+				<tr>
+					<td>
+						<input type="radio" name="SelectBooking" value="booking<?php echo $booking->operation->event_id?>" />
+					</td>
+					<td>
+						<?php echo date('j M Y',strtotime($booking->session->date))?>
+					</td>
+					<td>
+						<?php foreach ($booking->operation->procedures as $procedure) {?>
+							<?php echo $procedure->term?><br/>
+						<?php }?>
+					</td>
+				</tr>
+			<?php }?>
+		</table>
+	<?php }?>
 
 	<?php  $this->displayErrors($errors)?>
 		<div class="cleartall"></div>
 		<div class="form_button">
 			<img class="loader" style="display: none;" src="/img/ajax-loader.gif" alt="loading..." />&nbsp;
-			<button type="submit" class="classy green venti" id="et_save" name="save"><span class="button-span button-span-green">Create operation note</span></button>
+			<?php if (count($bookings) >0) {?>
+				<button type="submit" class="classy green venti" id="et_save" name="save"><span class="button-span button-span-green">Create operation note</span></button>
+			<?php }?>
 			<button type="submit" class="classy red venti" id="et_cancel" name="cancel"><span class="button-span button-span-red">Cancel</span></button>
 		</div>
 	<?php  $this->endWidget(); ?></div>
