@@ -221,6 +221,13 @@ $(document).ready(function() {
 		}
 		return true;
 	});
+
+	$('tr.clickable').disableSelection();
+
+	$('tr.clickable').click(function() {
+		$(this).children('td:first').children('input[type="radio"]').attr('checked',true);
+		return false;
+	});
 });
 
 function callbackVerifyAddProcedure(proc_name,durations,short_version,callback) {

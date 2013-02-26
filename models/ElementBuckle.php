@@ -137,8 +137,10 @@ class ElementBuckle extends BaseEventTypeElement
 			}
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($booking = $episode->getMostRecentBooking()) {
-					return $booking->elementOperation->eye;
+				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+					if ($booking = $api->getMostRecentBookingForEpisode($episode->id)) {
+						return $booking->elementOperation->eye;
+					}
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 <?php		$this->breadcrumbs=array($this->module->id);
 	$this->header();
+	$assetpath = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.OphTrOperationbooking.assets')).'/';
 ?>
 <h3 class="withEventIcon" style="background:transparent url(<?php echo $this->assetPath?>/img/medium.png) center left no-repeat;"><?php echo $this->event_type->name ?></h3>
 
@@ -13,52 +14,50 @@
 	?>
 	<?php  $this->displayErrors($errors)?>
 
-	<p>
+	<h4>Create Operation note</h4>
+	<h3 class="sectiondivider">
 		<?php if (count($bookings) >0) {?>
 			Please indicate whether this operation note relates to a booking or an unbooked emergency:
 		<?php }else{?>
-			No open operations exist in the current episode so only an emergency operation note can be created.
+			There are no open bookings in the current episode so only an emergency operation note can be created.
 		<?php }?>
-	</p>
+	</h3>
 
-	<table class="select_procedures">
-		<tr>
-			<th class="select"></th>
-			<th class="date">Date</th>
-			<th class="procedures">Procedures</th>
-		</tr>
-		<?php foreach ($bookings as $booking) {?>
-			<tr>
-				<td>
-					<input type="radio" name="SelectBooking" value="booking<?php echo $booking->operation->event_id?>" />
-				</td>
-				<td>
-					<?php echo date('j M Y',strtotime($booking->session->date))?>
-				</td>
-				<td>
-					<?php foreach ($booking->operation->procedures as $procedure) {?>
-						<?php echo $procedure->term?><br/>
+	<div class="edetail">
+		<div class="label">Select:</div>
+		<div class="data">
+			<table class="grid nodivider valignmiddle">
+				<tbody>
+					<?php foreach ($bookings as $booking) {?>
+						<tr class="odd clickable">
+							<td><input type="radio" value="booking<?php echo $booking->operation->event_id?>" name="SelectBooking" /></td>
+							<td><img src="<?php echo Yii::app()->createUrl($assetpath.'img/small.png')?>" alt="op" width="19" height="19" /></td>
+							<td><?php echo $booking->session->NHSDate('date')?></td>
+							<td>Operation</td>
+							<td>
+								<?php foreach ($booking->operation->procedures as $i => $procedure) {
+									if ($i >0) { echo "<br/>"; }
+									echo $procedure->term;
+								}?>
+							</td>
+						</tr>
 					<?php }?>
-				</td>
-			</tr>
-		<?php }?>
-		<tr>
-			<td>
-				<input type="radio" name="SelectBooking" value="emergency" />
-			</td>
-			<td colspan="2">Emergency</td>
-		</tr>
-	</table>
+					<tr class="odd clickable">
+						<td><input type="radio" value="emergency" name="SelectBooking" <?php if (count($bookings)==0) {?>checked="checked" <?php }?>/></td>
+						<td></td>
+						<td colspan="3">Emergency</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="btngroup padtop">
+				<img class="loader" style="display: none;" src="/img/ajax-loader.gif" alt="loading..." />&nbsp;
+				<button type="submit" class="classy green mini" id="et_save" name="save"><span class="btn green">Create Operation note</span></button>
+				<button type="submit" class="classy red mini" id="et_cancel" name="cancel"><span class="button-span button-span-red">Cancel</span></button>
+			</div>
+		</div>
+	</div>
 
 	<?php  $this->displayErrors($errors)?>
-		<div class="cleartall"></div>
-		<div class="form_button">
-			<img class="loader" style="display: none;" src="/img/ajax-loader.gif" alt="loading..." />&nbsp;
-			<?php if (count($bookings) >0) {?>
-				<button type="submit" class="classy green venti" id="et_save" name="save"><span class="button-span button-span-green">Create operation note</span></button>
-			<?php }?>
-			<button type="submit" class="classy red venti" id="et_cancel" name="cancel"><span class="button-span button-span-red">Cancel</span></button>
-		</div>
 	<?php  $this->endWidget(); ?></div>
 
 <?php  $this->footer(); ?>
