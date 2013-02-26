@@ -139,7 +139,7 @@ class ElementVitrectomy extends BaseEventTypeElement
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
 					if ($booking = $api->getMostRecentBookingForEpisode($episode->id)) {
-						return $booking->elementOperation->eye;
+						return $booking->operation->eye;
 					}
 				}
 			}
