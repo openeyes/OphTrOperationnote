@@ -23,10 +23,11 @@
 <div class="cols2 colsX clearfix">
 	<div class="right" style="margin-top: 30px;">
 		<?php
-		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetBuckle', array(
+		$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
 			'side'=>$element->eye->getShortName(),
 			'mode'=>'view',
-			'size'=>200,
+			'width'=>200,
+			'height'=>200,
 			'model'=>$element,
 			'attribute'=>'eyedraw',
 		));

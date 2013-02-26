@@ -17,31 +17,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
-<div class="element <?php echo $element->elementType->class_name?> ondemand<?php if (@$ondemand){?> hidden<?php }?>"
-	data-element-type-id="<?php echo $element->elementType->id ?>"
-	data-element-type-class="<?php echo $element->elementType->class_name ?>"
-	data-element-type-name="<?php echo $element->elementType->name ?>"
-	data-element-display-order="<?php echo $element->elementType->display_order ?>">
-	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
-
-	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
-		<?php
-		$this->widget('application.modules.eyedraw.OEEyeDrawWidgetVitrectomy', array(
-			'side'=>$element->getSelectedEye()->getShortName(),
-			'mode'=>'edit',
-			'size'=>300,
-			'model'=>$element,
-			'attribute'=>'eyedraw',
-			'offset_x' => 10,
-			'offset_y' => 10,
-		));
-		?>
-		<?php //echo $form->hiddenInput($element, 'report', '')?>
-		<div class="halfHeight">
-			<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(VitrectomyGauge::model()->findAll(),'id','value'),array('empty'=>'- Please select -'))?>
-			<?php echo $form->radioBoolean($element, 'pvd_induced')?>
-			<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 55))?>
-		</div>
-	</div>
-</div>
+<?php $this->renderPartial(
+		'form_' . get_class($element),
+		array('element' => $element, 'data' => $data, 'form' => $form),
+		false, false
+)?>

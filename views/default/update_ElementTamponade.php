@@ -17,18 +17,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
-<div class="element <?php echo $element->elementType->class_name?> ondemand<?php if (!$element->event_id) {?> missing<?php }?>"
-	data-element-type-id="<?php echo $element->elementType->id ?>"
-	data-element-type-class="<?php echo $element->elementType->class_name ?>"
-	data-element-type-name="<?php echo $element->elementType->name ?>"
-	data-element-display-order="<?php echo $element->elementType->display_order ?>">
-	<?php if (!$element->event_id) {?>
-		<span class="missingtext">This element is missing and needs to be completed</span>
-	<?php }?>
-	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
-
-	<?php echo $form->dropDownList($element, 'gas_type_id', CHtml::listData(GasType::model()->findAll(array('order'=>'display_order')),'id','name'),array('empty'=>'- Please select -'))?>
-	<?php echo $form->dropDownList($element, 'gas_percentage_id', CHtml::listData(GasPercentage::model()->findAll(array('order'=>'display_order')),'id','value'),array('empty'=>'- Please select -'))?>
-	<?php echo $form->dropDownList($element, 'gas_volume_id', CHtml::listData(GasVolume::model()->findAll(array('order'=>'display_order')),'id','value'),array('empty'=>'- Please select -'))?>
-</div>
+<?php $this->renderPartial(
+		'form_' . get_class($element),
+		array('element' => $element, 'data' => $data, 'form' => $form),
+		false, false
+)?>

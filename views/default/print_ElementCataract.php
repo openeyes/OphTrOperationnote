@@ -24,23 +24,25 @@
 		<div class="detailRow grouped">
 			<div class="clearfix">
 				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidgetCataract', array(
+				$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+					'idSuffix'=>'Cataract',
 					'side'=>$element->eye->getShortName(),
 					'mode'=>'view',
-					'size'=>200,
+					'width'=>200,
+					'height'=>200,
 					'model'=>$element,
 					'attribute'=>'eyedraw',
-					'to_image'=>true,
 				));
 				?>
 				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidgetSurgeonPosition', array(
+				$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+					'idSuffix'=>'Position',
 					'side'=>$element->eye->getShortName(),
 					'mode'=>'view',
-					'size'=>200,
+					'width'=>200,
+					'height'=>200,
 					'model'=>$element,
 					'attribute'=>'eyedraw2',
-					'to_image'=>true
 				));
 				?>
 			</div>

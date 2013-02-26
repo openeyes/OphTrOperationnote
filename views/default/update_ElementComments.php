@@ -17,14 +17,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
-<div class="element <?php echo $element->elementType->class_name?>"
-	data-element-type-id="<?php echo $element->elementType->id ?>"
-	data-element-type-class="<?php echo $element->elementType->class_name ?>"
-	data-element-type-name="<?php echo $element->elementType->name ?>"
-	data-element-display-order="<?php echo $element->elementType->display_order ?>">
-	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
-	<?php echo $form->dropDownTextSelection($element, 'postop_instructions', $element->postop_instructions_list)?>
-	<?php echo $form->textArea($element, 'postop_instructions', array('rows' => 4, 'cols' => 40))?>
-	<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 40))?>
-</div>
+<?php $this->renderPartial(
+		'form_' . get_class($element),
+		array('element' => $element, 'data' => $data, 'form' => $form),
+		false, false
+)?>

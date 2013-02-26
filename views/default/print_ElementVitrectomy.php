@@ -23,14 +23,14 @@
 	<div class="rightHalf">
 		<div class="detailRow clearfix">
 			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidgetVitrectomy', array(
-				'identifier'=> 'Vitrectomy',
+			$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+				'idSuffix'=>'Vitrectomy',
 				'side'=>$element->eye->getShortName(),
 				'mode'=>'view',
-				'size'=>200,
+				'width'=>200,
+				'height'=>200,
 				'model'=>$element,
 				'attribute'=>'eyedraw',
-				'to_image' => true,
 			));
 			?>
 		</div>
