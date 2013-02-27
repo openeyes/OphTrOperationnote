@@ -50,9 +50,10 @@
 				</tbody>
 			</table>
 			<div class="btngroup padtop">
-				<img class="loader" style="display: none;" src="/img/ajax-loader.gif" alt="loading..." />&nbsp;
 				<button type="submit" class="classy green mini" id="et_save" name="save"><span class="btn green">Create Operation note</span></button>
 				<button type="submit" class="classy red mini" id="et_cancel" name="cancel"><span class="button-span button-span-red">Cancel</span></button>
+				&nbsp;
+				<img class="loader" style="display: none;" src="/img/ajax-loader.gif" alt="loading..." />
 			</div>
 		</div>
 	</div>
