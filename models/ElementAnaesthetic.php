@@ -153,7 +153,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForEpisode($episode->id)) {
+					if ($booking = $api->getMostRecentBookingForCurrentEpisode($patient)) {
 						$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
 					}
 				}

@@ -240,7 +240,7 @@ class ElementCataract extends BaseEventTypeElement
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForEpisode($episode->id)) {
+					if ($booking = $api->getMostRecentBookingForCurrentEpisode($patient)) {
 						return $booking->operation->eye;
 					}
 				}
