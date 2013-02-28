@@ -79,54 +79,33 @@ function setCataractInput(key, value) {
 }
 
 $(document).ready(function() {
-	$('#et_save').unbind('click').click(function() {
-		if (!$(this).hasClass('inactive')) {
-			disableButtons();
-
-			if ($('#ElementBuckle_report').length >0) {
-				$('#ElementBuckle_report').val(ed_drawing_edit_Buckle.report());
-			}
-			if ($('#ElementCataract_report2').length >0) {
-				$('#ElementCataract_report2').val(ed_drawing_edit_Cataract.report());
-			}
-
-			return true;
+	handleButton($('#et_save'),function() {
+		if ($('#ElementBuckle_report').length >0) {
+			$('#ElementBuckle_report').val(ed_drawing_edit_Buckle.report());
 		}
-		return false;
+		if ($('#ElementCataract_report2').length >0) {
+			$('#ElementCataract_report2').val(ed_drawing_edit_Cataract.report());
+		}
 	});
 
-	$('#et_cancel').unbind('click').click(function() {
-		if (!$(this).hasClass('inactive')) {
-			disableButtons();
-
-			if (m = window.location.href.match(/\/update\/[0-9]+/)) {
-				window.location.href = window.location.href.replace('/update/','/view/');
-			} else {
-				window.location.href = baseUrl+'/patient/episodes/'+et_patient_id;
-			}
+	handleButton($('#et_cancel'),function(e) {
+		if (m = window.location.href.match(/\/update\/[0-9]+/)) {
+			window.location.href = window.location.href.replace('/update/','/view/');
+		} else {
+			window.location.href = baseUrl+'/patient/episodes/'+et_patient_id;
 		}
-		return false;
+		e.preventDefault();
 	});
 
-	$('#et_deleteevent').unbind('click').click(function() {
-		if (!$(this).hasClass('inactive')) {
-			disableButtons();
-			return true;
-		}
-		return false;
-	});
+	handleButton($('#et_deleteevent'));
 
-	$('#et_canceldelete').unbind('click').click(function() {
-		if (!$(this).hasClass('inactive')) {
-			disableButtons();
-
-			if (m = window.location.href.match(/\/delete\/[0-9]+/)) {
-				window.location.href = window.location.href.replace('/delete/','/view/');
-			} else {
-				window.location.href = baseUrl+'/patient/episodes/'+et_patient_id;
-			}
+	handleButton($('#et_canceldelete'),function(e) {
+		if (m = window.location.href.match(/\/delete\/[0-9]+/)) {
+			window.location.href = window.location.href.replace('/delete/','/view/');
+		} else {
+			window.location.href = baseUrl+'/patient/episodes/'+et_patient_id;
 		}
-		return false;
+		e.preventDefault();
 	});
 
 	$('#et_print').unbind('click').click(function() {
