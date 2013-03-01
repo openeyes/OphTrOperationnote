@@ -43,6 +43,8 @@ class DefaultController extends BaseEventTypeController {
 	}
 
 	public function actionView($id) {
+		$cs = Yii::app()->getClientScript();
+		$cs->registerScript('scr_opnote_view', "opnote_print_url = '" . Yii::app()->createUrl('OphTrOperationnote/Default/print/'.$id) . "';\nmodule_css_path = '" . $this->assetPath . "/css';", CClientScript::POS_READY);
 		parent::actionView($id);
 	}
 

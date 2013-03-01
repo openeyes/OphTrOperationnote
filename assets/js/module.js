@@ -1,3 +1,4 @@
+var opnote_print_url, module_css_path;
 
 function callbackAddProcedure(procedure_id) {
 	var eye = $('input[name="ElementProcedureList\[eye_id\]"]:checked').val();
@@ -108,9 +109,9 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
-	$('#et_print').unbind('click').click(function() {
-		window.print_iframe.print();
-		return false;
+	handleButton($('#et_print'),function(e) {
+		OphTrOperationnote_do_print();
+		e.preventDefault();
 	});
 
 	var last_ElementProcedureList_eye_id = null;
@@ -388,4 +389,9 @@ function changeEye() {
 	// Set surgeon position to temporal side
 	var doodle = drawingEdit1.firstDoodleOfClass('Surgeon');
 	doodle.setParameterWithAnimation('surgeonPosition', 'Temporal');
+}
+
+function OphTrOperationnote_do_print() {
+	printIFrameUrl(opnote_print_url, null);
+	enableButtons();
 }
