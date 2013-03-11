@@ -31,7 +31,7 @@
 	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
 		<div class="left" style="width:65%;">
 			<?php
-			$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+			$this->widget('application.modules.OphTrOperationnote.widgets.OEEyeDrawWidgetCataract', array(
 				'doodleToolBarArray' => array(
 					0 => array('PhakoIncision','SidePort','IrisHook','PCIOL','ACIOL','PI'),
 					1 => array('MattressSuture','CapsularTensionRing','CornealSuture','ToricPCIOL','LimbalRelaxingIncision'),
@@ -73,7 +73,7 @@
 				<?php echo $form->textArea($element, 'report', array('rows'=>6,'cols'=>35))?>
 			</div>
 			<?php
-			$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+			$this->widget('application.modules.OphTrOperationnote.widgets.OEEyeDrawWidgetCataract', array(
 				'onReadyCommandArray' => array(
 					array('addDoodle', array('OperatingTable')),
 					array('addDoodle', array('Surgeon')),
