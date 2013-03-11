@@ -375,6 +375,11 @@ function sidePortController(_drawing)
 					$('#div_ElementCataract_iol_type_id').hide();
 					$('#div_ElementCataract_iol_power').hide();
 					$('#div_ElementCataract_iol_position_id').hide();
+					$('#ElementCataract_iol_position_id').children('option').map(function() {
+						if ($(this).text() == 'None') {
+							$(this).attr('selected','selected');
+						}
+					});
 				}
 				break;
 			case 'doodleAdded':
@@ -382,6 +387,13 @@ function sidePortController(_drawing)
 					$('#div_ElementCataract_iol_type_id').show();
 					$('#div_ElementCataract_iol_power').show();
 					$('#div_ElementCataract_iol_position_id').show();
+					if ($('#ElementCataract_iol_position_id').children('option:selected').text() == 'None') {
+						$('#ElementCataract_iol_position_id').children('option').map(function() {
+							if ($(this).text() == '- Please select -') {
+								$(this).attr('selected','selected');
+							}
+						});
+					}
 				}
 				break;
 		}

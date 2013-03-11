@@ -19,6 +19,7 @@ class DefaultController extends BaseEventTypeController {
 		}
 
 		if (isset($_GET['booking_event_id']) || @$_GET['unbooked']) {
+			$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
 			parent::actionCreate();
 		} else {
 			$bookings = array();
@@ -39,6 +40,7 @@ class DefaultController extends BaseEventTypeController {
 	}
 
 	public function actionUpdate($id) {
+		$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
 		parent::actionUpdate($id);
 	}
 
