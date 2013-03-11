@@ -1,5 +1,3 @@
-var opnote_print_url, module_css_path;
-
 function callbackAddProcedure(procedure_id) {
 	var eye = $('input[name="ElementProcedureList\[eye_id\]"]:checked').val();
 
@@ -93,7 +91,7 @@ $(document).ready(function() {
 		if (m = window.location.href.match(/\/update\/[0-9]+/)) {
 			window.location.href = window.location.href.replace('/update/','/view/');
 		} else {
-			window.location.href = baseUrl+'/patient/episodes/'+et_patient_id;
+			window.location.href = baseUrl+'/patient/episodes/'+OE_patient_id;
 		}
 		e.preventDefault();
 	});
@@ -104,7 +102,7 @@ $(document).ready(function() {
 		if (m = window.location.href.match(/\/delete\/[0-9]+/)) {
 			window.location.href = window.location.href.replace('/delete/','/view/');
 		} else {
-			window.location.href = baseUrl+'/patient/episodes/'+et_patient_id;
+			window.location.href = baseUrl+'/patient/episodes/'+OE_patient_id;
 		}
 		e.preventDefault();
 	});
@@ -406,6 +404,6 @@ function changeEye() {
 }
 
 function OphTrOperationnote_do_print() {
-	printIFrameUrl(opnote_print_url, null);
+	printIFrameUrl(OE_print_url, null);
 	enableButtons();
 }
