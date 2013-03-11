@@ -50,6 +50,18 @@ class DefaultController extends BaseEventTypeController {
 		parent::actionView($id);
 	}
 
+	public function actionDelete($id) {
+		$proclist = ElementProcedureList::model()->find('event_id=?',array($id));
+
+		if (parent::actionDelete($id)) {
+			if ($proclist && $proclist->booking_event_id) {
+				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+					$api->setOperationStatus($proclist->booking_event_id, 'Scheduled or Rescheduled');
+				}
+			}
+		}
+	}
+
 	public function actionPrint($id) {
 		return parent::actionPrint($id);
 	}
