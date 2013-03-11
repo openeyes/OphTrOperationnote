@@ -314,7 +314,7 @@ function sidePortController(_drawing)
 	var sidePort2;
 	
 	// Register controller for notifications
-	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'parameterChanged']);
+	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'parameterChanged', 'doodleAdded', 'doodleDeleted']);
 	
 	// Method called for notification
 	this.notificationHandler = function(_messageArray)
@@ -370,6 +370,20 @@ function sidePortController(_drawing)
 							sidePort2.setSimpleParameter('rotation', (surgeonRotation - Math.PI/2)%(2* Math.PI));
 						}
 					}
+				}
+				break;
+			case 'doodleDeleted':
+				if ($.inArray(_messageArray['object'],eyedraw_iol_classes) != -1) {
+					$('#div_ElementCataract_iol_type_id').hide();
+					$('#div_ElementCataract_iol_power').hide();
+					$('#div_ElementCataract_iol_position_id').hide();
+				}
+				break;
+			case 'doodleAdded':
+				if ($.inArray(_messageArray['object']['className'],eyedraw_iol_classes) != -1) {
+					$('#div_ElementCataract_iol_type_id').show();
+					$('#div_ElementCataract_iol_power').show();
+					$('#div_ElementCataract_iol_position_id').show();
 				}
 				break;
 		}

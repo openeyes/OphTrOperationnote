@@ -325,4 +325,31 @@ class ElementCataract extends BaseEventTypeElement
 
 		return parent::beforeValidate();
 	}
+
+	public function getIol_hidden() {
+		if (!empty($_POST)) {
+			$eyedraw = json_decode($_POST['ElementCataract']['eyedraw']);
+
+			foreach ($eyedraw as $object) {
+				if (in_array($object->subclass,Yii::app()->params['eyedraw_iol_classes'])) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		if ($eyedraw = @json_decode($this->eyedraw)) {
+			if (is_array($eyedraw)) {
+				foreach ($eyedraw as $object) {
+					if (in_array($object->subclass,Yii::app()->params['eyedraw_iol_classes'])) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
