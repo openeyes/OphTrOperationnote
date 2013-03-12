@@ -23,7 +23,7 @@
 <div class="cols2 colsX clearfix">
 	<div class="right">
 		<?php
-		$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+		$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 			'side'=>$element->eye->getShortName(),
 			'mode'=>'view',
 			'width'=>200,

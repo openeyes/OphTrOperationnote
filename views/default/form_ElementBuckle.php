@@ -32,7 +32,7 @@
 	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
 		<div class="left" style="width:45%;">
 			<?php
-			$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 				'doodleToolBarArray' => array(
 					0 => 'CircumferentialBuckle','EncirclingBand','RadialSponge','BuckleSuture','DrainageSite',
 				),

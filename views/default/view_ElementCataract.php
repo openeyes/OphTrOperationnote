@@ -23,7 +23,7 @@
 <div class="cols2">
 	<div class="right">
 		<?php
-		$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+		$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 			'idSuffix'=>'Cataract',
 			'side'=>$element->eye->getShortName(),
 			'mode'=>'view',
@@ -34,7 +34,7 @@
 		));
 		?>
 		<?php
-		$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+		$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 			'idSuffix'=>'Position',
 			'side'=>$element->eye->getShortName(),
 			'mode'=>'view',

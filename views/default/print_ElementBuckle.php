@@ -23,7 +23,7 @@
 	<div class="rightHalf">
 		<div class="detailRow clearfix">
 			<?php
-			$this->widget('application.modules.eyedraw2.OEEyeDrawWidget', array(
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 				'idSuffix'=> 'Buckle',
 				'side'=>$element->eye->getShortName(),
 				'mode'=>'view',
