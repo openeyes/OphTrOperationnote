@@ -165,7 +165,7 @@ class ElementProcedureList extends BaseEventTypeElement
 			throw new Exception('Unable to change episode status for episode '.$this->event->episode->id);
 		}
 
-		if (Yii::app()->getController()->getAction()->id == 'create') {
+		if (Yii::app()->getController() && Yii::app()->getController()->getAction()->id == 'create') {
 			if ($this->booking_event_id && $api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
 				$api->setOperationStatus($this->booking_event_id, 'Completed');
 			}
