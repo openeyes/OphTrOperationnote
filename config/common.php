@@ -24,5 +24,8 @@ return array(
 			'ACIOL',
 			'ToricPCIOL',
 		),
+		'admin_menu' => array(
+			'Post-op drugs' => '/OphTrOperationnote/admin/viewPostOpDrugs',
+		),
 	),
 );

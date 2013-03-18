@@ -60,3 +60,13 @@ div.ElementComments > h4 { background-color: #fff; margin-bottom: 5px !important
 #div_ElementPersonnel_operating_department_practitioner_id { padding-bottom: 28px !important; }
 
 input.widgetSlider { width: 300px !important; }
+
+ul.grid li.header .column_checkbox { width: 10px; display: inline-block; }
+ul.grid li.header .column_name { width: 750px; display: inline-block; }
+ul.grid li.header .column_deleted { width: 40px; display: inline-block; }
+ul.grid li.even .column_checkbox { width: 10px; display: inline-block; }
+ul.grid li.even .column_name { width: 749px; display: inline-block; }
+ul.grid li.even .column_deleted { width: 39px; display: inline-block; }
+ul.grid li.odd .column_checkbox { width: 10px; display: inline-block; }
+ul.grid li.odd .column_name { width: 749px; display: inline-block; }
+ul.grid li.odd .column_deleted { width: 39px; display: inline-block; }
