@@ -1,12 +1,8 @@
 $(document).ready(function() {
-	$('#selectall').click(function() {
-		$('input[name="drugs[]"]').attr('checked',this.checked);
-	});
-
 	$('#et_add').click(function(e) {
 		var last = $('div.sortable').children('li:last').attr('class');
 		var row = (last == 'even' ? 'odd' : 'even');
-		$('div.sortable').append('<li class="'+row+'"> <span class="column_checkbox"><input type="checkbox" name="drugs[]" value="NONE" /></span> <span class="column_name"><input type="text" name="newdrug" class="newdrug" value="" /></span> <span class="column_deleted">No</span> </li>');
+		$('div.sortable').append('<li class="'+row+'" data-attr-id="NONE"> <span class="column_name"><input type="text" name="newdrug" class="newdrug" value="" /></span> <span class="column_deleted"><a class="deleteDrugItem" href="#" rel="NONE">delete</a></span> </li>');
 		$('input.newdrug').focus();
 		e.preventDefault();
 	});
@@ -15,12 +11,15 @@ $(document).ready(function() {
 		if ($(this).val().length <1) {
 			$(this).parent().parent().remove();
 		} else {
-			addNewDrug($(this),false);
+			if (!no_update) {
+				addNewDrug($(this),false);
+			}
 		}
 	});
 
 	$('input.newdrug').die('keypress').live('keypress',function(e) {
 		if (e.keyCode == 13) {
+			no_update = true;
 			addNewDrug($(this),true);
 			e.preventDefault();
 		}
@@ -41,7 +40,6 @@ $(document).ready(function() {
 				$('input[name="drugs[]"]:checked').map(function() {
 					$(this).parent().next('span').next('span').html('Yes');
 				});
-				$('input[type="checkbox"]').attr('checked',false);
 			}
 		});
 	});
@@ -55,7 +53,6 @@ $(document).ready(function() {
 				$('input[name="drugs[]"]:checked').map(function() {
 					$(this).parent().next('span').next('span').html('No');
 				});
-				$('input[type="checkbox"]').attr('checked',false);
 			}
 		});
 	});
@@ -106,6 +103,24 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	$('a.deleteDrugItem').die('click').live('click',function(e) {
+		var obj = $(this);
+
+		$.ajax({
+			'type': 'POST',
+			'url': baseUrl+'/OphTrOperationnote/admin/deletePostOpDrug/'+obj.attr('rel'),
+			'success': function(html) {
+				if (html != "1") {
+					alert("Unable to delete drug, please contact support.");
+				} else {
+					obj.parent().parent().remove();
+				}
+			}
+		});
+
+		e.preventDefault();
+	});
 });
 
 function updateDrug(obj) {
@@ -150,8 +165,10 @@ function addNewDrug(obj, another) {
 				alert(data['errors'][i]);
 			}
 			if (data['errors'].length == 0) {
-				obj.parent().prev('span').children('input').val(data['id']);
+				var li = obj.parent().parent();
 				obj.parent().html('<a class="drugItem" href="#" rel="'+data['id']+'">'+obj.val()+'</a>');
+				obj.parent().next('span').children('a').attr('rel',obj.val());
+				li.attr('data-attr-id',data['id']);
 				if (another) {
 					$('#et_add').click();
 				}

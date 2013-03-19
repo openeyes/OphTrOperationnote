@@ -38,12 +38,33 @@ class AdminController extends BaseController {
 			throw new Exception("Missing name");
 		}
 
+		if ($drug = PostopDrug::model()->find(array('order'=>'display_order desc'))) {
+			$display_order = $drug->display_order+1;
+		} else {
+			$display_order = 1;
+		}
+
 		$drug = new PostopDrug;
 		$drug->name = @$_POST['name'];
+		$drug->display_order = $display_order;
 
 		if (!$drug->save()) {
 			echo json_encode(array('errors'=>$drug->getErrors()));
 			return;
+		}
+
+		// TODO: this is a hack for the Orbis demo and should be removed when full site/subspecialty functionality has been implemented
+		$specialty = Specialty::model()->find('code=?',array('OPH'));
+		foreach (Site::model()->findAll('institution_id=?',array(1)) as $site) {
+			foreach (Subspecialty::model()->findAll('specialty_id=?',array($specialty->id)) as $subspecialty) {
+				$ssd = new PostopSiteSubspecialtyDrug;
+				$ssd->site_id = $site->id;
+				$ssd->subspecialty_id = $subspecialty->id;
+				$ssd->drug_id = $drug->id;
+				if (!$ssd->save()) {
+					echo json_encode(array('errors'=>$ssd->getErrors()));
+				}
+			}
 		}
 
 		echo json_encode(array('id'=>$drug->id,'errors'=>array()));
@@ -63,30 +84,15 @@ class AdminController extends BaseController {
 		echo json_encode(array('errors'=>array()));
 	}
 
-	public function actionDeletePostOpDrug() {
-		if (!empty($_POST['drugs'])) {
-			foreach ($_POST['drugs'] as $drug_id) {
-				if ($drug = PostopDrug::model()->findByPk($drug_id)) {
-					$drug->deleted = 1;
-					if (!$drug->save()) {
-						throw new Exception("Unable to delete drug: ".print_r($drug->getErrors(),true));
-					}
-				}
+	public function actionDeletePostOpDrug($id) {
+		if ($drug = PostopDrug::model()->findByPk($id)) {
+			$drug->deleted = 1;
+			if ($drug->save()) {
+				echo "1";
+				return;
 			}
 		}
-	}
-
-	public function actionUndeletePostOpDrug() {
-		if (!empty($_POST['drugs'])) {
-			foreach ($_POST['drugs'] as $drug_id) {
-				if ($drug = PostopDrug::model()->findByPk($drug_id)) {
-					$drug->deleted = 0;
-					if (!$drug->save()) {
-						throw new Exception("Unable to delete drug: ".print_r($drug->getErrors(),true));
-					}
-				}
-			}
-		}
+		echo "0";
 	}
 
 	public function actionSortPostOpDrugs() {
