@@ -17,17 +17,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 
-class AdminController extends BaseController {
-	public $layout = '//layouts/admin';
-	public $assetPath;
-
-	protected function beforeAction($action) {
-		$this->assetPath = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.'.$this->getModule()->name.'.assets'), false, -1, YII_DEBUG);
-		Yii::app()->clientScript->registerScriptFile($this->assetPath.'/js/admin.js');
-		Yii::app()->clientScript->registerCssFile($this->assetPath.'/css/module.css');
-
-		return parent::beforeAction($action);
-	}
+class AdminController extends ModuleAdminController {
 
 	public function actionViewPostOpDrugs() {
 		$this->render('postopdrugs');
