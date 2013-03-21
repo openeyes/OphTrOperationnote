@@ -18,7 +18,7 @@
  */
 ?>
 <?php $this->renderPartial(
-		'form_' . get_class($element),
+		'form_ElementSTUB',
 		array('element' => $element, 'data' => $data, 'form' => $form),
 		false, false
 )?>
