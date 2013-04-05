@@ -30,4 +30,18 @@ class OphTrOperationnote_API extends BaseAPI {
 
 		return $return;
 	}
+
+	public function getOpnoteWithCataractElementInCurrentEpisode($patient) {
+		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+			$event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
+
+			$criteria = new CDbCriteria;
+			$criteria->compare('episode_id',$episode->id);
+			$criteria->compare('event_type_id',$event_type->id);
+
+			return ElementCataract::model()
+				->with('event')
+				->find($criteria);
+		}
+	}
 }
