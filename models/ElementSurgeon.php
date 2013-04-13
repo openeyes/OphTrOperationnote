@@ -136,7 +136,7 @@ class ElementSurgeon extends BaseEventTypeElement
 
 	public function getSurgeons() {
 		if (!$this->surgeonlist) {
-			$this->surgeonlist = User::getSurgeons();
+			$this->surgeonlist = User::model()->getSurgeons();
 		}
 
 		return $this->surgeonlist;
