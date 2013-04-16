@@ -17,19 +17,23 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-<?php		$this->breadcrumbs=array($this->module->id);
+<?php
 	$this->header();
 	$assetpath = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.OphTrOperationbooking.assets')).'/';
 ?>
-<h3 class="withEventIcon" style="background:transparent url(<?php echo $this->assetPath?>/img/medium.png) center left no-repeat;"><?php echo $this->event_type->name ?></h3>
+<h3 class="withEventIcon"><?php echo $this->event_type->name ?></h3>
 
 <div>
-	<?php			$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
+	<?php $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
 			'id'=>'clinical-create',
 			'enableAjaxValidation'=>false,
 			'htmlOptions' => array('class'=>'sliding'),
 			// 'focus'=>'#procedure_id'
 		));
+	
+		// Event actions
+		$this->event_actions[] = EventAction::button('Create Operation Note', 'save', array('colour' => 'green'));
+		$this->renderPartial('//patient/event_actions');
 	?>
 	<?php  $this->displayErrors($errors)?>
 
@@ -68,16 +72,13 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="btngroup padtop">
-				<button type="submit" class="classy green mini" id="et_save" name="save"><span class="btn green">Create Operation note</span></button>
-				<button type="submit" class="classy red mini" id="et_cancel" name="cancel"><span class="button-span button-span-red">Cancel</span></button>
-				&nbsp;
-				<img class="loader" style="display: none;" src="/img/ajax-loader.gif" alt="loading..." />
-			</div>
 		</div>
 	</div>
 
 	<?php  $this->displayErrors($errors)?>
-	<?php  $this->endWidget(); ?></div>
+	
+	<div class="cleartall"></div>
+	<?php  $this->endWidget(); ?>
+</div>
 
 <?php  $this->footer(); ?>
