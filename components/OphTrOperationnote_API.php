@@ -18,10 +18,20 @@
  */
 
 class OphTrOperationnote_API extends BaseAPI {
-	public function getLetterProcedures($patient, $snomed_terms=false) {
+	
+	/**
+	 * Return the list of procedures as a string for use in correspondence for the given patient and episode.
+	 * if the $snomed_terms is true, return the snomed_term, otherwise the standard text term.
+	 * 
+	 * @param Patient $patient
+	 * @param Episode $episode
+	 * @param boolean $snomed_terms
+	 * @return string
+	 */
+	public function getLetterProcedures($patient, $episode, $snomed_terms=false) {
 		$return = '';
 
-		if ($plist = $this->getElementForLatestEventInEpisode($patient, 'ElementProcedureList')) {
+		if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'ElementProcedureList')) {
 			foreach ($plist->procedures as $i => $procedure) {
 				if ($i) $return .= ', ';
 				$return .= $plist->eye->adjective.' '.($snomed_terms ? $procedure->snomed_term : $procedure->term);
