@@ -62,6 +62,7 @@ class DefaultController extends BaseEventTypeController {
 							array('colour' => 'red', 'level' => 'secondary')
 					)
 			);
+			$this->processJsVars();
 			$this->renderPartial('select_event',array(
 				'errors' => $errors,
 				'bookings' => $bookings,
