@@ -49,6 +49,7 @@ class DefaultController extends BaseEventTypeController {
 
 			$this->event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
 			$this->title = "Please select booking";
+			$this->processJsVars();
 			$this->renderPartial('select_event',array(
 				'errors' => $errors,
 				'bookings' => $bookings,
