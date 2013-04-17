@@ -136,12 +136,7 @@ class ElementSurgeon extends BaseEventTypeElement
 
 	public function getSurgeons() {
 		if (!$this->surgeonlist) {
-			$criteria = new CDbCriteria;
-			$criteria->compare('is_doctor',1);
-			$criteria->compare('active',1);
-			$criteria->order = 'last_name,first_name asc';
-
-			$this->surgeonlist = User::model()->findAll($criteria);
+			$this->surgeonlist = User::model()->getSurgeons();
 		}
 
 		return $this->surgeonlist;
