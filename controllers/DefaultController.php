@@ -18,6 +18,13 @@
  */
 
 class DefaultController extends BaseEventTypeController {
+	protected function beforeAction($action) {
+		$this->assetPath = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.'.$this->getModule()->name.'.assets'), false, -1, YII_DEBUG);
+		Yii::app()->clientScript->registerScriptFile($this->assetPath.'/js/eyedraw.js');
+
+		return parent::beforeAction($action);
+	}
+
 	public function actionCreate() {
 		$errors = array();
 
