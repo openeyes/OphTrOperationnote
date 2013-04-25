@@ -56,6 +56,19 @@ class DefaultController extends BaseEventTypeController {
 
 			$this->event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
 			$this->title = "Please select booking";
+			$this->event_tabs = array(
+					array(
+							'label' => 'Select a booking',
+							'active' => true,
+					),
+			);
+			$cancel_url = ($this->episode) ? '/patient/episode/'.$this->episode->id : '/patient/episodes/'.$this->patient->id;
+			$this->event_actions = array(
+					EventAction::link('Cancel',
+							Yii::app()->createUrl($cancel_url),
+							array('colour' => 'red', 'level' => 'secondary')
+					)
+			);
 			$this->processJsVars();
 			$this->renderPartial('select_event',array(
 				'errors' => $errors,
