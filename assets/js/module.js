@@ -423,14 +423,19 @@ function changeEye() {
 	var drawingEdit1 = window['ed_drawing_edit_Position'];
 	var drawingEdit2 = window['ed_drawing_edit_Cataract'];
 
-	if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;
-	else drawingEdit1.eye = ED.eye.Right;
-	if (drawingEdit2.eye == ED.eye.Right) drawingEdit2.eye = ED.eye.Left;
-	else drawingEdit2.eye = ED.eye.Right;
-	
-	// Set surgeon position to temporal side
-	var doodle = drawingEdit1.firstDoodleOfClass('Surgeon');
-	doodle.setParameterWithAnimation('surgeonPosition', 'Temporal');
+	if (typeof(drawingEdit1) != 'undefined') {
+		if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;
+		else drawingEdit1.eye = ED.eye.Right;
+
+		// Set surgeon position to temporal side
+		var doodle = drawingEdit1.firstDoodleOfClass('Surgeon');
+		doodle.setParameterWithAnimation('surgeonPosition', 'Temporal');
+	}
+
+	if (typeof(drawingEdit2) != 'undefined') {
+		if (drawingEdit2.eye == ED.eye.Right) drawingEdit2.eye = ED.eye.Left;
+		else drawingEdit2.eye = ED.eye.Right;
+	}
 }
 
 function OphTrOperationnote_do_print() {
