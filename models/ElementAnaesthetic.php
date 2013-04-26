@@ -200,7 +200,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 	public function getAnaestheticAgentsBySiteAndSubspecialty($table='site_subspecialty_anaesthetic_agent') {
 		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
 		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
-		$site_id = Yii::app()->request->cookies['site_id']->value;
+		$site_id = Yii::app()->session['selected_site_id'];
 
 		return CHtml::listData(Yii::app()->db->createCommand()
 			->select('anaesthetic_agent.id, anaesthetic_agent.name')

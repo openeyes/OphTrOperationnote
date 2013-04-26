@@ -273,7 +273,7 @@ class ElementCataract extends BaseEventTypeElement
 	public function getDevicesBySiteAndSubspecialty($default=false) {
 		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
 		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
-		$site_id = Yii::app()->request->cookies['site_id']->value;
+		$site_id = Yii::app()->session['selected_site_id'];
 
 		$params = array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id);
 
