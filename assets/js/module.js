@@ -222,7 +222,6 @@ $(document).ready(function() {
 
 	$('tr.clickable').click(function() {
 		$(this).children('td:first').children('input[type="radio"]').attr('checked',true);
-		return false;
 	});
 });
 
