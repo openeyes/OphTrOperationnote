@@ -307,13 +307,8 @@ class DefaultController extends BaseEventTypeController {
 
 			// if not in the session, check in the db
 			if (!$found) {
-				$procedure = Yii::app()->db->createCommand()
-					->select('*')
-					->from('proc')
-					->where('term=:term', array(':term'=>$_GET['name']))
-					->queryRow();
-				if (!empty($procedure)) {
-					if ($this->procedure_requires_eye($procedure['id'])) {
+				if ($procedure = Procedure::model()->find('term=:term',array(':term'=>$_GET['name']))) {
+					if ($this->procedure_requires_eye($procedure->id)) {
 						echo "no";
 					} else {
 						echo "yes";
