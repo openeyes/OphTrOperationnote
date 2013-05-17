@@ -25,9 +25,9 @@
 		</div>
 		<div class="headerInfo">
 			<div class="patientDetails">
-				<strong><?php echo $this->patient->addressname?></strong>
+				<strong><?php echo $this->patient->contact->fullName?></strong>
 				<br />
-				<?php echo $this->patient->address ? $this->patient->address->getLetterHtml() : ''?>
+				<?php echo $this->patient->getLetterAddress(array('delimiter'=>'<br/>'))?>
 				<br>
 				<br>
 				Hospital No: <strong><?php echo $this->patient->hos_num ?></strong>
@@ -37,7 +37,7 @@
 				DOB: <strong><?php echo Helper::convertDate2NHS($this->patient->dob) ?> (<?php echo $this->patient->getAge()?>)</strong>
 			</div>
 			<div class="headerDetails">
-				<strong><?php echo $this->event->episode->firm->getConsultantName() ?></strong>
+				<strong><?php echo $this->event->episode->firm->consultant->fullName?></strong>
 				<br>
 				Service: <strong><?php echo $this->event->episode->firm->getSubspecialtyText() ?></strong>
 			</div>
