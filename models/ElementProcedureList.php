@@ -209,7 +209,7 @@ class ElementProcedureList extends BaseEventTypeElement
 			$criteria = new CDbCriteria;
 			$criteria->addCondition('element_type_id = :elementTypeId');
 			$criteria->params[':elementTypeId'] = $element_type->id;
-			$criteria->order = 'display_order asc';
+			$criteria->order = 't.display_order asc';
 
 			if (!in_array(Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty->name,array('Adnexal','Strabismus'))) {
 				$criteria->addCondition('t.id != :three');
