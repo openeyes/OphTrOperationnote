@@ -18,6 +18,13 @@
  */
 
 class DefaultController extends BaseEventTypeController {
+	protected function beforeAction($action) {
+		$this->assetPath = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.'.$this->getModule()->name.'.assets'), false, -1, YII_DEBUG);
+		Yii::app()->clientScript->registerScriptFile($this->assetPath.'/js/eyedraw.js');
+
+		return parent::beforeAction($action);
+	}
+
 	public function actionCreate() {
 		$errors = array();
 
@@ -49,6 +56,20 @@ class DefaultController extends BaseEventTypeController {
 
 			$this->event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
 			$this->title = "Please select booking";
+			$this->event_tabs = array(
+					array(
+							'label' => 'Select a booking',
+							'active' => true,
+					),
+			);
+			$cancel_url = ($this->episode) ? '/patient/episode/'.$this->episode->id : '/patient/episodes/'.$this->patient->id;
+			$this->event_actions = array(
+					EventAction::link('Cancel',
+							Yii::app()->createUrl($cancel_url),
+							array('colour' => 'red', 'level' => 'secondary')
+					)
+			);
+			$this->processJsVars();
 			$this->renderPartial('select_event',array(
 				'errors' => $errors,
 				'bookings' => $bookings,
@@ -286,13 +307,8 @@ class DefaultController extends BaseEventTypeController {
 
 			// if not in the session, check in the db
 			if (!$found) {
-				$procedure = Yii::app()->db->createCommand()
-					->select('*')
-					->from('proc')
-					->where('term=:term', array(':term'=>$_GET['name']))
-					->queryRow();
-				if (!empty($procedure)) {
-					if ($this->procedure_requires_eye($procedure['id'])) {
+				if ($procedure = Procedure::model()->find('term=:term',array(':term'=>$_GET['name']))) {
+					if ($this->procedure_requires_eye($procedure->id)) {
 						echo "no";
 					} else {
 						echo "yes";

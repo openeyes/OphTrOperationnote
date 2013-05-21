@@ -153,7 +153,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForCurrentEpisode($patient)) {
+					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
 						$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
 					}
 				}
@@ -197,22 +197,25 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		return $this->getAnaestheticAgentsBySiteAndSubspecialty();
 	}
 
-	public function getAnaestheticAgentsBySiteAndSubspecialty($table='site_subspecialty_anaesthetic_agent') {
-		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
-		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
-		$site_id = Yii::app()->request->cookies['site_id']->value;
+	public function getAnaestheticAgentsBySiteAndSubspecialty($relation = 'siteSubspecialtyAssignments') {
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('site_id = :siteId and subspecialty_id = :subspecialtyId');
+		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
+		$criteria->params[':subspecialtyId'] = Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty_id;
+		$criteria->order = 'name';
 
-		return CHtml::listData(Yii::app()->db->createCommand()
-			->select('anaesthetic_agent.id, anaesthetic_agent.name')
-			->from('anaesthetic_agent')
-			->join($table,$table.'.anaesthetic_agent_id = anaesthetic_agent.id')
-			->where($table.'.subspecialty_id = :subSpecialtyId and '.$table.'.site_id = :siteId',array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id))
-			->queryAll(), 'id', 'name');
+		return CHtml::listData(AnaestheticAgent::model()
+			->with(array(
+				$relation => array(
+					'joinType' => 'JOIN',
+				),
+			))
+			->findAll($criteria),'id','name');
 	}
 
 	public function getAnaesthetic_agent_defaults() {
 		$ids = array();
-		foreach ($this->getAnaestheticAgentsBySiteAndSubspecialty('site_subspecialty_anaesthetic_agent_default') as $id => $anaesthetic_agent) {
+		foreach ($this->getAnaestheticAgentsBySiteAndSubspecialty('siteSubspecialtyAssignmentDefaults') as $id => $anaesthetic_agent) {
 			$ids[] = $id;
 		}
 		return $ids;

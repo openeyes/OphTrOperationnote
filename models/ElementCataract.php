@@ -240,7 +240,7 @@ class ElementCataract extends BaseEventTypeElement
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForCurrentEpisode($patient)) {
+					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
 						return $booking->operation->eye;
 					}
 				}
@@ -271,24 +271,25 @@ class ElementCataract extends BaseEventTypeElement
 	}
 
 	public function getDevicesBySiteAndSubspecialty($default=false) {
-		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
-		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
-		$site_id = Yii::app()->request->cookies['site_id']->value;
-
-		$params = array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id);
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
+		$criteria->params[':subspecialtyId'] = Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty_id;
+		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
 
 		if ($default) {
-			$where = ' and site_subspecialty_operative_device.default = :default ';
-			$params[':default'] = 1;
+			$criteria->addCondition('siteSubspecialtyAssignments.default = :one');
+			$criteria->params[':one'] = 1;
 		}
 
-		return CHtml::listData(Yii::app()->db->createCommand()
-			->select('operative_device.id, operative_device.name')
-			->from('operative_device')
-			->join('site_subspecialty_operative_device','site_subspecialty_operative_device.operative_device_id = operative_device.id')
-			->where('site_subspecialty_operative_device.subspecialty_id = :subSpecialtyId and site_subspecialty_operative_device.site_id = :siteId'.@$where, $params)
-			->order('operative_device.name asc')
-			->queryAll(), 'id', 'name');
+		$criteria->order = 'name asc';
+
+		return CHtml::listData(OperativeDevice::model()
+			->with(array(
+				'siteSubspecialtyAssignments' => array(
+					'joinType' => 'JOIN',
+				),
+			))
+			->findAll($criteria),'id','name');
 	}
 
 	public function getIOLTypes_NHS() {

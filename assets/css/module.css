@@ -31,7 +31,10 @@
 #ed_canvas_edit_Buckle { background-color: #fff; border: 1px solid #000; margin-left: 9px; }
 #ed_canvas_view_Buckle { margin-top: -25px; }
 
-#div_ElementCataract_incision_site_id { margin-top: 150px; }
+#div_ElementCataract_incision_site_id { margin-top: 150px; height: 20px; }
+#div_ElementCataract_length { height: 26px; }
+#div_ElementCataract_meridian { height: 26px; }
+#div_ElementCataract_incision_type_id { height: 26px; }
 #div_ElementCataract_vision_blue { padding-bottom: 7px !important; }
 #div_ElementCataract_iol_position_id .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
 #div_ElementCataract_Complications .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
@@ -47,12 +50,10 @@
 #div_ElementSurgeon { padding-bottom: 28px !important; }
 #div_ElementSurgeon_supervising_surgeon_id > .label { font-size: 13px !important; }
 
-div.ElementComments { background-color: #DAE6F1; height: 200px; }
+div.ElementComments { background-color: #DAE6F1; }
 div.ElementComments > h4 { background-color: #fff; margin-bottom: 5px !important; padding-bottom: 5px !important; }
 
-#div_ElementComments_comments { display: inline-block; }
-#div_ElementComments_postop_instructions_TextSelection { display: inline-block; float: right; margin-right: 155px; }
-#div_ElementComments_postop_instructions { display: inline-block; float: right; margin-right: 35px; }
+div.ElementComments .half { width: 50%; float: left; }
 
 #ElementComments_postop_instructions { display: block; }
 

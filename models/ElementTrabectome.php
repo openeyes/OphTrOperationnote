@@ -18,19 +18,17 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "et_ophtroperationnote_trabectome".
  *
- * The followings are the available columns in table 'element_operation':
+ * The followings are the available columns in table 'et_ophtroperationnote_trabectome':
  * @property string $id
  * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
+ * @property string $comments
  *
  * The followings are the available model relations:
  * @property Event $event
  */
-class ElementBuckle extends BaseEventTypeElement
+class ElementTrabectome extends BaseEventTypeElement
 {
 	public $service;
 
@@ -48,7 +46,7 @@ class ElementBuckle extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophtroperationnote_buckle';
+		return 'et_ophtroperationnote_trabectome';
 	}
 
 	/**
@@ -59,14 +57,10 @@ class ElementBuckle extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, drainage_type_id, comments, drain_haem, deep_suture, eyedraw, report', 'safe'),
-			array('drainage_type_id, eyedraw', 'required'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, event_id, drainage_type_id, drain_haem, deep_suture, eyedraw', 'safe', 'on' => 'search'),
+			array('event_id, comments', 'safe'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -75,9 +69,7 @@ class ElementBuckle extends BaseEventTypeElement
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'drainage_type' => array(self::BELONGS_TO, 'DrainageType', 'drainage_type_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 		);
@@ -90,9 +82,7 @@ class ElementBuckle extends BaseEventTypeElement
 	{
 		return array(
 			'id' => 'ID',
-			'drainage_type_id' => 'Drainage type',
-			'drain_haem' => 'Drain haem',
-			'deep_suture' => 'Deep suture'
+			'comments' => 'Comments',
 		);
 	}
 
@@ -109,46 +99,26 @@ class ElementBuckle extends BaseEventTypeElement
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('drainage_type_id', $this->drainage_type_id);
-		$criteria->compare('drain_haem', $this->drain_haem);
-		$criteria->compare('deep_suture', $this->deep_suture);
-		
+		$criteria->compare('comments', $this->comments, true);
+
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
 	}
 
-	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
+	public function getCreate_view() {
+		return 'ElementSTUB';
 	}
 
-	public function getEye() {
-		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
+	public function getUpdate_view() {
+		return 'ElementSTUB';
 	}
 
-	public function getSelectedEye() {
-		if (Yii::app()->getController()->getAction()->id == 'create') {
-			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
-			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
-			}
+	public function getView_view() {
+		return 'ElementSTUB';
+	}
 
-			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
-						return $booking->operation->eye;
-					}
-				}
-			}
-		}
-
-		if (isset($_GET['eye'])) {
-			return Eye::model()->findByPk($_GET['eye']);
-		}
-
-		return new Eye;
+	public function getPrint_view() {
+		return 'ElementSTUB';
 	}
 }
