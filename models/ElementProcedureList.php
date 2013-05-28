@@ -197,7 +197,15 @@ class ElementProcedureList extends BaseEventTypeElement
 
 	public function getSelectedEye() {
 		if (ctype_digit(@$_GET['booking_event_id']) && $api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-			return $api->getEyeForOperation($_GET['booking_event_id']);
+			$eye = $api->getEyeForOperation($_GET['booking_event_id']);
+
+			$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
+
+			if ($eye->name == 'Both' && !in_array($firm->serviceSubspecialtyAssignment->subspecialty_id,array(2,14))) {
+				return Eye::model()->find('name=?',array('Right'));
+			}
+
+			return $eye;
 		}
 	}
 
