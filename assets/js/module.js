@@ -71,7 +71,7 @@ function callbackRemoveProcedure(procedure_id) {
 	$.ajax({
 		'type': 'POST',
 		'url': baseUrl+'/OphTrOperationnote/Default/getElementsToDelete',
-		'data': "remaining_procedures="+procedures+"&procedure_id="+procedure_id,
+		'data': "remaining_procedures="+procedures+"&procedure_id="+procedure_id+"&YII_CSRF_TOKEN="+YII_CSRF_TOKEN,
 		'dataType': 'json',
 		'success': function(data) {
 			$.each(data, function(key, val) {
