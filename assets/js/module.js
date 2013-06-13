@@ -1,3 +1,20 @@
+/**
+ * OpenEyes
+ *
+ * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
+ * (C) OpenEyes Foundation, 2011-2013
+ * This file is part of OpenEyes.
+ * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with OpenEyes in a file titled COPYING. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package OpenEyes
+ * @link http://www.openeyes.org.uk
+ * @author OpenEyes <info@openeyes.org.uk>
+ * @copyright Copyright (c) 2008-2011, Moorfields Eye Hospital NHS Foundation Trust
+ * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
+ * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
+ */
 
 function callbackAddProcedure(procedure_id) {
 	var eye = $('input[name="ElementProcedureList\[eye_id\]"]:checked').val();
@@ -44,7 +61,7 @@ function callbackAddProcedure(procedure_id) {
 function callbackRemoveProcedure(procedure_id) {
 	var procedures = '';
 
-	$('input[name="Procedures[]"]').map(function() {
+	$('input[name="Procedures_procs[]"]').map(function() {
 		if (procedures.length >0) {
 			procedures += ',';
 		}
@@ -54,7 +71,7 @@ function callbackRemoveProcedure(procedure_id) {
 	$.ajax({
 		'type': 'POST',
 		'url': baseUrl+'/OphTrOperationnote/Default/getElementsToDelete',
-		'data': "remaining_procedures="+procedures+"&procedure_id="+procedure_id,
+		'data': "remaining_procedures="+procedures+"&procedure_id="+procedure_id+"&YII_CSRF_TOKEN="+YII_CSRF_TOKEN,
 		'dataType': 'json',
 		'success': function(data) {
 			$.each(data, function(key, val) {
@@ -79,79 +96,38 @@ function setCataractInput(key, value) {
 }
 
 $(document).ready(function() {
-	$('#et_save').unbind('click').click(function() {
-		if (!$(this).hasClass('inactive')) {
-			disableButtons();
-
-			if ($('#ElementBuckle_report').length >0) {
-				$('#ElementBuckle_report').val(ed_drawing_edit_Buckle.report());
-			}
-			if ($('#ElementCataract_report2').length >0) {
-				$('#ElementCataract_report2').val(ed_drawing_edit_Cataract.report());
-			}
-
-			return true;
+	handleButton($('#et_save'),function() {
+		if ($('#ElementBuckle_report').length >0) {
+			$('#ElementBuckle_report').val(ed_drawing_edit_Buckle.report());
 		}
-		return false;
-	});
-
-	$('#et_cancel').unbind('click').click(function() {
-		if (!$(this).hasClass('inactive')) {
-			disableButtons();
-
-			if (m = window.location.href.match(/\/update\/[0-9]+/)) {
-				window.location.href = window.location.href.replace('/update/','/view/');
-			} else {
-				window.location.href = baseUrl+'/patient/episodes/'+et_patient_id;
-			}
+		if ($('#ElementCataract_report2').length >0) {
+			$('#ElementCataract_report2').val(ed_drawing_edit_Cataract.report());
 		}
-		return false;
 	});
 
-	$('#et_deleteevent').unbind('click').click(function() {
-		if (!$(this).hasClass('inactive')) {
-			disableButtons();
-			return true;
+	handleButton($('#et_cancel'),function(e) {
+		if (m = window.location.href.match(/\/update\/[0-9]+/)) {
+			window.location.href = window.location.href.replace('/update/','/view/');
+		} else {
+			window.location.href = baseUrl+'/patient/episodes/'+OE_patient_id;
 		}
-		return false;
-	});
-
-	$('#et_canceldelete').unbind('click').click(function() {
-		if (!$(this).hasClass('inactive')) {
-			disableButtons();
-
-			if (m = window.location.href.match(/\/delete\/[0-9]+/)) {
-				window.location.href = window.location.href.replace('/delete/','/view/');
-			} else {
-				window.location.href = baseUrl+'/patient/episodes/'+et_patient_id;
-			}
-		}
-		return false;
-	});
-
-	$('#et_print').unbind('click').click(function() {
-		window.print_iframe.print();
-		return false;
-	});
-
-	$('#ElementCataract_incision_site_id').die('change').live('change',function(e) {
 		e.preventDefault();
-
-		magic.setDoodleParameter('PhakoIncision', 'incisionSite', $(this).children('option:selected').text());
-
-		if ($('#ElementCataract_length').val() > 9.9) {
-			$('#ElementCataract_length').val(9.9);
-		}
-
-		return false;
 	});
 
-	$('#ElementCataract_incision_type_id').die('change').live('change',function(e) {
+	handleButton($('#et_deleteevent'));
+
+	handleButton($('#et_canceldelete'),function(e) {
+		if (m = window.location.href.match(/\/delete\/[0-9]+/)) {
+			window.location.href = window.location.href.replace('/delete/','/view/');
+		} else {
+			window.location.href = baseUrl+'/patient/episodes/'+OE_patient_id;
+		}
 		e.preventDefault();
+	});
 
-		magic.setDoodleParameter('PhakoIncision', 'incisionType', $(this).children('option:selected').text());
-
-		return false;
+	handleButton($('#et_print'),function(e) {
+		OphTrOperationnote_do_print();
+		e.preventDefault();
 	});
 
 	var last_ElementProcedureList_eye_id = null;
@@ -189,7 +165,7 @@ $(document).ready(function() {
 								$('#typeProcedure').slideToggle('fast');
 							}
 
-							magic.eye_changed(element.val());
+							changeEye();
 							last_ElementProcedureList_eye_id = element.val();
 
 							return true;
@@ -201,8 +177,8 @@ $(document).ready(function() {
 					$('#typeProcedure').slideToggle('fast');
 				}
 
-				magic.eye_changed($(this).val());
-				
+				changeEye();
+
 				last_ElementProcedureList_eye_id = $(this).val();
 
 				return true;
@@ -214,8 +190,7 @@ $(document).ready(function() {
 				$('#typeProcedure').slideToggle('fast');
 			}
 
-			magic.eye_changed($(this).val());
-			
+			changeEye();	
 			last_ElementProcedureList_eye_id = $(this).val();
 
 			return true;
@@ -230,24 +205,9 @@ $(document).ready(function() {
 		anaestheticGivenBySlide.handleEvent($(this));
 	});
 
-	$('#ElementCataract_meridian').die('change').live('change',function() {
-		if (doodle = magic.getDoodle('PhakoIncision')) {
-			if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-				doodle.setParameter('incisionMeridian',$(this).val());
-				magic.followSurgeon = false;
-			}
-		}
-	});
-
-	$('#ElementCataract_meridian').die('keypress').live('keypress',function(e) {
-		if (e.keyCode == 13) {
-			if (doodle = magic.getDoodle('PhakoIncision')) {
-				if (doodle.getParameter('incisionMeridian') != $(this).val()) {
-					doodle.setParameter('incisionMeridian',$(this).val());
-					magic.followSurgeon = false;
-				}
-			}
-			return false;
+	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
+		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('option:selected').text() == 'MTA4UO') {
+			$('#ElementCataract_iol_position_id').val(4);
 		}
 	});
 
@@ -258,36 +218,10 @@ $(document).ready(function() {
 		return true;
 	});
 
-	$('#ElementCataract_length').die('change').live('change',function() {
-		if (doodle = magic.getDoodle('PhakoIncision')) {
-			if (parseFloat($(this).val()) > 9.9) {
-				$(this).val(9.9);
-			} else if (parseFloat($(this).val()) < 0.1) {
-				$(this).val(0.1);
-			}
-			doodle.setParameter('incisionLength',$(this).val());
-		}
-	});
+	$('tr.clickable').disableSelection();
 
-	$('#ElementCataract_length').die('keypress').live('keypress',function(e) {
-		if (e.keyCode == 13) {
-			if (doodle = magic.getDoodle('PhakoIncision')) {
-				if (parseFloat($(this).val()) > 9.9) {
-					$(this).val(9.9);
-				} else if (parseFloat($(this).val()) < 0.1) {
-					$(this).val(0.1);
-				}
-				doodle.setParameter('incisionLength',$(this).val());
-			}
-			$('#ElementCataract_meridian').select().focus();
-			return false;
-		}
-	});
-
-	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
-		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('optgroup').children('option:selected').text() == 'MTA4UO') {
-			$('#ElementCataract_iol_position_id').val(4);
-		}
+	$('tr.clickable').click(function() {
+		$(this).children('td:first').children('input[type="radio"]').attr('checked',true);
 	});
 });
 
@@ -387,3 +321,123 @@ AnaestheticGivenBySlide.prototype = {
 
 var anaestheticSlide = new AnaestheticSlide;
 var anaestheticGivenBySlide = new AnaestheticGivenBySlide;
+
+function sidePortController(_drawing)
+{
+	var phakoIncision;
+	var sidePort1;
+	var sidePort2;
+	
+	// Register controller for notifications
+	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'parameterChanged', 'doodleAdded', 'doodleDeleted']);
+	
+	// Method called for notification
+	this.notificationHandler = function(_messageArray)
+	{
+		switch (_messageArray['eventName'])
+		{
+			// Ready notification
+			case 'ready':
+				// Get reference to the phakoIncision
+				phakoIncision = _drawing.firstDoodleOfClass('PhakoIncision');
+				
+				// If this is a newly created drawing, add two sideports
+				if (_drawing.isNew)
+				{
+					sidePort1 = _drawing.addDoodle('SidePort', {rotation:0});
+					sidePort2 = _drawing.addDoodle('SidePort', {rotation:Math.PI});
+					_drawing.deselectDoodles();
+				}
+				// Else cancel sync for an updated drawing
+				else
+				{
+					phakoIncision.willSync = false;
+				}
+				break;
+			
+			// Parameter change notification
+			case 'parameterChanged':
+				// Only sync for new drawings
+				if (_drawing.isNew)
+				{
+					// Get rotation value of surgeon doodle
+					var surgeonDrawing = window['ed_drawing_edit_Position'];
+					var surgeonRotation = surgeonDrawing.firstDoodleOfClass('Surgeon').rotation;
+
+					// Get doodle that has moved in opnote drawing
+					var masterDoodle = _messageArray['object'].doodle;
+
+					// Stop syncing if PhakoIncision or a SidePort is changed
+					if (masterDoodle.drawing.isActive && (masterDoodle.className == 'PhakoIncision' || masterDoodle.className == 'SidePort'))
+					{
+						phakoIncision.willSync = false;
+					}
+			
+					// Keep sideports in sync with PhakoIncision while surgeon is still syncing with it
+					if (masterDoodle.className == "PhakoIncision" && masterDoodle.willSync)
+					{
+						if (typeof(sidePort1) != 'undefined')
+						{
+							sidePort1.setSimpleParameter('rotation', (surgeonRotation + Math.PI/2)%(2* Math.PI));
+						}
+						if (typeof(sidePort2) != 'undefined')
+						{
+							sidePort2.setSimpleParameter('rotation', (surgeonRotation - Math.PI/2)%(2* Math.PI));
+						}
+					}
+				}
+				break;
+			case 'doodleDeleted':
+				if ($.inArray(_messageArray['object'],eyedraw_iol_classes) != -1) {
+					$('#div_ElementCataract_iol_type_id').hide();
+					$('#div_ElementCataract_iol_power').hide();
+					$('#div_ElementCataract_iol_position_id').hide();
+					$('#ElementCataract_iol_position_id').children('option').map(function() {
+						if ($(this).text() == 'None') {
+							$(this).attr('selected','selected');
+						}
+					});
+				}
+				break;
+			case 'doodleAdded':
+				if ($.inArray(_messageArray['object']['className'],eyedraw_iol_classes) != -1) {
+					$('#div_ElementCataract_iol_type_id').show();
+					$('#div_ElementCataract_iol_power').show();
+					$('#div_ElementCataract_iol_position_id').show();
+					if ($('#ElementCataract_iol_position_id').children('option:selected').text() == 'None') {
+						$('#ElementCataract_iol_position_id').children('option').map(function() {
+							if ($(this).text() == '- Please select -') {
+								$(this).attr('selected','selected');
+							}
+						});
+					}
+				}
+				break;
+		}
+	}
+}
+
+function changeEye() {
+	// Swap side of each drawing
+	var drawingEdit1 = window['ed_drawing_edit_Position'];
+	var drawingEdit2 = window['ed_drawing_edit_Cataract'];
+
+	if (typeof(drawingEdit1) != 'undefined') {
+		if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;
+		else drawingEdit1.eye = ED.eye.Right;
+
+		// Set surgeon position to temporal side
+		var doodle = drawingEdit1.firstDoodleOfClass('Surgeon');
+		doodle.setParameterWithAnimation('surgeonPosition', 'Temporal');
+	}
+
+	if (typeof(drawingEdit2) != 'undefined') {
+		if (drawingEdit2.eye == ED.eye.Right) drawingEdit2.eye = ED.eye.Left;
+		else drawingEdit2.eye = ED.eye.Right;
+	}
+}
+
+function OphTrOperationnote_do_print() {
+	printIFrameUrl(OE_print_url, null);
+	enableButtons();
+}

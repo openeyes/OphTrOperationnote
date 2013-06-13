@@ -77,7 +77,7 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 				'KEY `procedure_id` (`proc_id`)',
 				'KEY `et_ophtroperationnote_plpa_last_modified_user_id_fk` (`last_modified_user_id`)',
 				'KEY `et_ophtroperationnote_plpa_created_user_id_fk` (`created_user_id`)',
-				'CONSTRAINT `et_ophtroperationnote_plpa_operation_fk` FOREIGN KEY (`procedurelist_id`) REFERENCES `element_operation` (`id`)',
+				'CONSTRAINT `et_ophtroperationnote_plpa_operation_fk` FOREIGN KEY (`procedurelist_id`) REFERENCES `et_ophtroperationnote_procedurelist` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_plpa_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_plpa_ibfk_1` FOREIGN KEY (`proc_id`) REFERENCES `proc` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_plpa_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)'
@@ -1926,7 +1926,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBandageContactLens'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'57'))->queryRow();
+		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term and snomed_code = :snomed_code',array(':term'=>'Insertion of bandage contact lens',':snomed_code'=>'428497007'))->queryRow();
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 			$this->createTable('et_ophtroperationnote_capsulotomypost', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',

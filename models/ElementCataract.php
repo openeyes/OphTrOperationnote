@@ -3,7 +3,7 @@
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
- * (C) OpenEyes Foundation, 2011-2012
+ * (C) OpenEyes Foundation, 2011-2013
  * This file is part of OpenEyes.
  * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -13,7 +13,7 @@
  * @link http://www.openeyes.org.uk
  * @author OpenEyes <info@openeyes.org.uk>
  * @copyright Copyright (c) 2008-2011, Moorfields Eye Hospital NHS Foundation Trust
- * @copyright Copyright (c) 2011-2012, OpenEyes Foundation
+ * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 
@@ -239,8 +239,10 @@ class ElementCataract extends BaseEventTypeElement
 			}
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($booking = $episode->getMostRecentBooking()) {
-					return $booking->elementOperation->eye;
+				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
+						return $booking->operation->eye;
+					}
 				}
 			}
 		}
@@ -269,24 +271,25 @@ class ElementCataract extends BaseEventTypeElement
 	}
 
 	public function getDevicesBySiteAndSubspecialty($default=false) {
-		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
-		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
-		$site_id = Yii::app()->request->cookies['site_id']->value;
-
-		$params = array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id);
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
+		$criteria->params[':subspecialtyId'] = Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty_id;
+		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
 
 		if ($default) {
-			$where = ' and site_subspecialty_operative_device.default = :default ';
-			$params[':default'] = 1;
+			$criteria->addCondition('siteSubspecialtyAssignments.default = :one');
+			$criteria->params[':one'] = 1;
 		}
 
-		return CHtml::listData(Yii::app()->db->createCommand()
-			->select('operative_device.id, operative_device.name')
-			->from('operative_device')
-			->join('site_subspecialty_operative_device','site_subspecialty_operative_device.operative_device_id = operative_device.id')
-			->where('site_subspecialty_operative_device.subspecialty_id = :subSpecialtyId and site_subspecialty_operative_device.site_id = :siteId'.@$where, $params)
-			->order('operative_device.name asc')
-			->queryAll(), 'id', 'name');
+		$criteria->order = 'name asc';
+
+		return CHtml::listData(OperativeDevice::model()
+			->with(array(
+				'siteSubspecialtyAssignments' => array(
+					'joinType' => 'JOIN',
+				),
+			))
+			->findAll($criteria),'id','name');
 	}
 
 	public function getIOLTypes_NHS() {
@@ -322,5 +325,32 @@ class ElementCataract extends BaseEventTypeElement
 		}
 
 		return parent::beforeValidate();
+	}
+
+	public function getIol_hidden() {
+		if (!empty($_POST)) {
+			$eyedraw = json_decode($_POST['ElementCataract']['eyedraw']);
+
+			foreach ($eyedraw as $object) {
+				if (in_array($object->subclass,Yii::app()->params['eyedraw_iol_classes'])) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		if ($eyedraw = @json_decode($this->eyedraw)) {
+			if (is_array($eyedraw)) {
+				foreach ($eyedraw as $object) {
+					if (in_array($object->subclass,Yii::app()->params['eyedraw_iol_classes'])) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

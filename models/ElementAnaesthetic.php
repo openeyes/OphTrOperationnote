@@ -3,7 +3,7 @@
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
- * (C) OpenEyes Foundation, 2011-2012
+ * (C) OpenEyes Foundation, 2011-2013
  * This file is part of OpenEyes.
  * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -13,7 +13,7 @@
  * @link http://www.openeyes.org.uk
  * @author OpenEyes <info@openeyes.org.uk>
  * @copyright Copyright (c) 2008-2011, Moorfields Eye Hospital NHS Foundation Trust
- * @copyright Copyright (c) 2011-2012, OpenEyes Foundation
+ * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 
@@ -152,8 +152,10 @@ class ElementAnaesthetic extends BaseEventTypeElement
 			}
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($booking = $episode->getMostRecentBooking()) {
-					$this->anaesthetic_type_id = $booking->elementOperation->anaesthetic_type_id;
+				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
+						$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
+					}
 				}
 			}
 		}
@@ -195,22 +197,25 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		return $this->getAnaestheticAgentsBySiteAndSubspecialty();
 	}
 
-	public function getAnaestheticAgentsBySiteAndSubspecialty($table='site_subspecialty_anaesthetic_agent') {
-		$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
-		$subspecialty_id = $firm->serviceSubspecialtyAssignment->subspecialty_id;
-		$site_id = Yii::app()->request->cookies['site_id']->value;
+	public function getAnaestheticAgentsBySiteAndSubspecialty($relation = 'siteSubspecialtyAssignments') {
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('site_id = :siteId and subspecialty_id = :subspecialtyId');
+		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
+		$criteria->params[':subspecialtyId'] = Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty_id;
+		$criteria->order = 'name';
 
-		return CHtml::listData(Yii::app()->db->createCommand()
-			->select('anaesthetic_agent.id, anaesthetic_agent.name')
-			->from('anaesthetic_agent')
-			->join($table,$table.'.anaesthetic_agent_id = anaesthetic_agent.id')
-			->where($table.'.subspecialty_id = :subSpecialtyId and '.$table.'.site_id = :siteId',array(':subSpecialtyId'=>$subspecialty_id,':siteId'=>$site_id))
-			->queryAll(), 'id', 'name');
+		return CHtml::listData(AnaestheticAgent::model()
+			->with(array(
+				$relation => array(
+					'joinType' => 'JOIN',
+				),
+			))
+			->findAll($criteria),'id','name');
 	}
 
 	public function getAnaesthetic_agent_defaults() {
 		$ids = array();
-		foreach ($this->getAnaestheticAgentsBySiteAndSubspecialty('site_subspecialty_anaesthetic_agent_default') as $id => $anaesthetic_agent) {
+		foreach ($this->getAnaestheticAgentsBySiteAndSubspecialty('siteSubspecialtyAssignmentDefaults') as $id => $anaesthetic_agent) {
 			$ids[] = $id;
 		}
 		return $ids;

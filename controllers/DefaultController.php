@@ -1,16 +1,103 @@
 <?php
+/**
+ * OpenEyes
+ *
+ * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
+ * (C) OpenEyes Foundation, 2011-2013
+ * This file is part of OpenEyes.
+ * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with OpenEyes in a file titled COPYING. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package OpenEyes
+ * @link http://www.openeyes.org.uk
+ * @author OpenEyes <info@openeyes.org.uk>
+ * @copyright Copyright (c) 2008-2011, Moorfields Eye Hospital NHS Foundation Trust
+ * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
+ * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
+ */
 
 class DefaultController extends BaseEventTypeController {
+	protected function beforeAction($action) {
+		$this->assetPath = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.'.$this->getModule()->name.'.assets'), false, -1, YII_DEBUG);
+		Yii::app()->clientScript->registerScriptFile($this->assetPath.'/js/eyedraw.js');
+
+		return parent::beforeAction($action);
+	}
+
 	public function actionCreate() {
-		parent::actionCreate();
+		$errors = array();
+
+		if (!$this->patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+			throw new Exception("Patient not found: ".@$_GET['patient_id']);
+		}
+
+		if (!empty($_POST)) {
+			if (preg_match('/^booking([0-9]+)$/',@$_POST['SelectBooking'],$m)) {
+				return $this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id='.$m[1]));
+			} else if (@$_POST['SelectBooking'] == 'emergency') {
+				return $this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id=emergency'));
+			}
+
+			$errors = array('Operation' => array('Please select a booked operation'));
+		}
+
+		if (isset($_GET['booking_event_id']) || @$_GET['unbooked']) {
+			$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
+			parent::actionCreate();
+		} else {
+			$bookings = array();
+
+			if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+				if ($episode = $this->patient->getEpisodeForCurrentSubspecialty()) {
+					$bookings = $api->getOpenBookingsForEpisode($episode->id);
+				}
+			}
+
+			$this->event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
+			$this->title = "Please select booking";
+			$this->event_tabs = array(
+					array(
+							'label' => 'Select a booking',
+							'active' => true,
+					),
+			);
+			$cancel_url = ($this->episode) ? '/patient/episode/'.$this->episode->id : '/patient/episodes/'.$this->patient->id;
+			$this->event_actions = array(
+					EventAction::link('Cancel',
+							Yii::app()->createUrl($cancel_url),
+							array('colour' => 'red', 'level' => 'secondary')
+					)
+			);
+			$this->processJsVars();
+			$this->renderPartial('select_event',array(
+				'errors' => $errors,
+				'bookings' => $bookings,
+			), false, true);
+		}
 	}
 
 	public function actionUpdate($id) {
+		$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
 		parent::actionUpdate($id);
 	}
 
 	public function actionView($id) {
+		$cs = Yii::app()->getClientScript();
+		$cs->registerScript('scr_opnote_view', "opnote_print_url = '" . Yii::app()->createUrl('OphTrOperationnote/Default/print/'.$id) . "';\nmodule_css_path = '" . $this->assetPath . "/css';", CClientScript::POS_READY);
 		parent::actionView($id);
+	}
+
+	public function actionDelete($id) {
+		$proclist = ElementProcedureList::model()->find('event_id=?',array($id));
+
+		if (parent::actionDelete($id)) {
+			if ($proclist && $proclist->booking_event_id) {
+				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+					$api->setOperationStatus($proclist->booking_event_id, 'Scheduled or Rescheduled');
+				}
+			}
+		}
 	}
 
 	public function actionPrint($id) {
@@ -220,13 +307,8 @@ class DefaultController extends BaseEventTypeController {
 
 			// if not in the session, check in the db
 			if (!$found) {
-				$procedure = Yii::app()->db->createCommand()
-					->select('*')
-					->from('proc')
-					->where('term=:term', array(':term'=>$_GET['name']))
-					->queryRow();
-				if (!empty($procedure)) {
-					if ($this->procedure_requires_eye($procedure['id'])) {
+				if ($procedure = Procedure::model()->find('term=:term',array(':term'=>$_GET['name']))) {
+					if ($this->procedure_requires_eye($procedure->id)) {
 						echo "no";
 					} else {
 						echo "yes";
