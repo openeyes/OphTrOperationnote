@@ -28,13 +28,30 @@ class OphTrOperationnote_API extends BaseAPI {
 	 * @param boolean $snomed_terms
 	 * @return string
 	 */
-	public function getLetterProcedures($patient, $episode, $snomed_terms=false) {
+	public function getLetterProcedures($patient) {
 		$return = '';
 
-		if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'ElementProcedureList')) {
-			foreach ($plist->procedures as $i => $procedure) {
-				if ($i) $return .= ', ';
-				$return .= $plist->eye->adjective.' '.($snomed_terms ? $procedure->snomed_term : $procedure->term);
+		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'ElementProcedureList')) {
+				foreach ($plist->procedures as $i => $procedure) {
+					if ($i) $return .= ', ';
+					$return .= $plist->eye->adjective.' '.$procedure->term;
+				}
+			}
+		}
+
+		return $return;
+	}
+
+	public function getLetterProceduresSNOMED($patient) {
+		$return = '';
+
+		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'ElementProcedureList')) {
+				foreach ($plist->procedures as $i => $procedure) {
+					if ($i) $return .= ', ';
+					$return .= $plist->eye->adjective.' '.$procedure->snomed_term;
+				}
 			}
 		}
 
