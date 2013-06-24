@@ -98,6 +98,11 @@
 		<div class="right" style="width:35%;">
 			<div class="halfHeight">
 				<?php echo $form->dropDownList($element, 'iol_type_id', array(CHtml::listData($element->IOLTypes_NHS,'id','name'),CHtml::listData($element->IOLTypes_Private,'id','name')),array('empty'=>'- Please select -','divided'=>true),$element->iol_hidden)?>
+				<div>
+					<div style="float: right">
+						<?php echo $form->textField($element, 'predicted_refraction',array('size'=>10))?>
+					</div>
+				</div>
 				<?php echo $form->textField($element, 'iol_power', array('size' => '10', 'hide' => $element->iol_hidden))?>
 				<?php echo $form->dropDownList($element, 'iol_position_id', CHtml::listData(IOLPosition::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'),$element->iol_hidden)?>
 				<?php echo $form->multiSelectList($element, 'CataractOperativeDevices', 'operative_devices', 'operative_device_id', $element->operative_device_list, $element->operative_device_defaults, array('empty' => '- Devices -', 'label' => 'Devices'))?>
