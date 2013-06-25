@@ -71,7 +71,7 @@ function callbackRemoveProcedure(procedure_id) {
 	$.ajax({
 		'type': 'POST',
 		'url': baseUrl+'/OphTrOperationnote/Default/getElementsToDelete',
-		'data': "remaining_procedures="+procedures+"&procedure_id="+procedure_id,
+		'data': "remaining_procedures="+procedures+"&procedure_id="+procedure_id+"&YII_CSRF_TOKEN="+YII_CSRF_TOKEN,
 		'dataType': 'json',
 		'success': function(data) {
 			$.each(data, function(key, val) {
@@ -351,7 +351,9 @@ function sidePortController(_drawing)
 				// Else cancel sync for an updated drawing
 				else
 				{
-					phakoIncision.willSync = false;
+					if (typeof(phakoIncision) != 'undefined') {
+						phakoIncision.willSync = false;
+					}
 				}
 				break;
 			
@@ -370,7 +372,9 @@ function sidePortController(_drawing)
 					// Stop syncing if PhakoIncision or a SidePort is changed
 					if (masterDoodle.drawing.isActive && (masterDoodle.className == 'PhakoIncision' || masterDoodle.className == 'SidePort'))
 					{
-						phakoIncision.willSync = false;
+						if (typeof(phakoIncision) != 'undefined') {
+							phakoIncision.willSync = false;
+						}
 					}
 			
 					// Keep sideports in sync with PhakoIncision while surgeon is still syncing with it

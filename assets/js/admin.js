@@ -35,7 +35,7 @@ $(document).ready(function() {
 		$.ajax({
 			'type': 'POST',
 			'url': baseUrl+'/OphTrOperationnote/admin/deletePostOpDrug',
-			'data': $('#drugs').serialize(),
+			'data': $('#drugs').serialize()+"&YII_CSRF_TOKEN="+YII_CSRF_TOKEN,
 			'success': function(data) {
 				$('input[name="drugs[]"]:checked').map(function() {
 					$(this).parent().next('span').next('span').html('Yes');
@@ -48,7 +48,7 @@ $(document).ready(function() {
 		$.ajax({
 			'type': 'POST',
 			'url': baseUrl+'/OphTrOperationnote/admin/undeletePostOpDrug',
-			'data': $('#drugs').serialize(),
+			'data': $('#drugs').serialize()+"&YII_CSRF_TOKEN="+YII_CSRF_TOKEN,
 			'success': function(data) {
 				$('input[name="drugs[]"]:checked').map(function() {
 					$(this).parent().next('span').next('span').html('No');
@@ -97,7 +97,7 @@ $(document).ready(function() {
 			$.ajax({
 				'type': 'POST',
 				'url': baseUrl+'/OphTrOperationnote/admin/sortPostOpDrugs',
-				'data': {order: ids},
+				'data': {order: ids, 'YII_CSRF_TOKEN': YII_CSRF_TOKEN},
 				'success': function(data) {
 				}
 			});
@@ -110,6 +110,7 @@ $(document).ready(function() {
 		$.ajax({
 			'type': 'POST',
 			'url': baseUrl+'/OphTrOperationnote/admin/deletePostOpDrug/'+obj.attr('rel'),
+			'data': 'YII_CSRF_TOKEN='+YII_CSRF_TOKEN,
 			'success': function(html) {
 				if (html != "1") {
 					alert("Unable to delete drug, please contact support.");
@@ -135,7 +136,7 @@ function updateDrug(obj) {
 			$.ajax({
 				'type': 'POST',
 				'url': baseUrl+'/OphTrOperationnote/admin/updatePostOpDrug',
-				'data': {"id": postopdrugs_editing_value, "name": value},
+				'data': {"id": postopdrugs_editing_value, "name": value, "YII_CSRF_TOKEN": YII_CSRF_TOKEN},
 				'dataType': 'json',
 				'success': function(data) {
 					for (var i in data['errors']) {
@@ -158,7 +159,7 @@ function addNewDrug(obj, another) {
 	$.ajax({
 		'type': 'POST',
 		'url': baseUrl+'/OphTrOperationnote/admin/createPostOpDrug',
-		'data': {"name": obj.val()},
+		'data': {"name": obj.val(), 'YII_CSRF_TOKEN': YII_CSRF_TOKEN},
 		'dataType': 'json',
 		'success': function(data) {
 			for (var i in data['errors']) {

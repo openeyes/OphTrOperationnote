@@ -69,7 +69,7 @@ class CataractComplication extends BaseEventTypeElement
 		// class name for the relations automatically generated below.
 		return array(
 			'cataract' => array(self::HAS_ONE, 'ElementCataract', 'cataract_id'),
-			'complication' => array(self::HAS_ONE, 'CataractComplications', 'complication_id'),
+			'complication' => array(self::BELONGS_TO, 'CataractComplications', 'complication_id'),
 		);
 	}
 
