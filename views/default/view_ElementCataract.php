@@ -68,6 +68,10 @@
 					<td><?php echo CHtml::encode($element->getAttributeLabel('report2'))?>:</td>
 					<td><span class="big"><?php echo CHtml::encode($element->report2)?></span></td>
 				</tr>
+				<tr>
+					<td><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:</td>
+					<td><span class="big"><?php echo CHtml::encode($element->predicted_refraction)?></span></td>
+				</tr>
 				<?php if ($element->getSetting('fife')) {?>
 					<tr>
 						<td><?php echo CHtml::encode($element->getAttributeLabel('intraocular_solution_id'))?>:</td>
