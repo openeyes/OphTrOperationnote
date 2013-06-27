@@ -25,7 +25,7 @@ class m130425_145858_trabectome_element extends CDbMigration
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
 
 		$element_type = Yii::app()->db->createCommand()->select("id")->from("element_type")->where('event_type_id=:event_type_id and class_name=:class_name',array(':event_type_id'=>$event_type['id'],':class_name'=>'ElementTrabectome'))->queryRow();
-		$proc = Yii::app()->db->createCommand()->select("id")->from("proc")->where("snomed_code=:snomed_code",array(':snomed_code'=>'31337'))->queryRow();
+		$proc = Yii::app()->db->createCommand()->select("id")->from("proc")->where("snomed_term=:snomed_term",array(':snomed_term'=>'Trabectome'))->queryRow();
 
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 	}
