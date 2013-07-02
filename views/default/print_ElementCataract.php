@@ -108,6 +108,14 @@
 				<?php echo $element->incision_type->name?>
 			</div>
 		</div>
+		<div class="detailRow">
+			<div class="label">
+				<?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:
+			</div>
+			<div class="value">
+				<?php echo $element->predicted_refraction?>
+			</div>
+		</div>
 		<div class="detailRow clearVal">
 			<div class="label">
 				Details
