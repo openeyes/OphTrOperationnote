@@ -29,12 +29,12 @@
 			'htmlOptions' => array('class'=>'sliding'),
 			'focus'=>'#procedure_id'
 		));
-	
+
 		// Event actions
 		$this->event_actions[] = EventAction::button('Save', 'save', array('colour' => 'green'));
 		$this->renderPartial('//patient/event_actions');
 	?>
-	
+
 		<?php $this->displayErrors($errors)?>
 
 		<div class="elements">

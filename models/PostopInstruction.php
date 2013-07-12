@@ -59,7 +59,7 @@ class PostopInstruction extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */

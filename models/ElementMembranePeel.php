@@ -66,7 +66,7 @@ class ElementMembranePeel extends BaseEventTypeElement
 			array('id, event_id, membrane_blue, brilliant_blue, other_dye', 'safe', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -110,7 +110,7 @@ class ElementMembranePeel extends BaseEventTypeElement
 		$criteria->compare('event_id', $this->event_id, true);
 		$criteria->compare('gauge_id', $this->gauge_id);
 		$criteria->compare('pvd_induced', $this->pvd_induced);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));

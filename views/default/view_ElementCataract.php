@@ -113,13 +113,13 @@
 			<?php }?>
 		</div>
 	</div>
-	
+
 	<div class="colThird">
 		<h4>Cataract complications</h4>
 		<div class="eventHighlight medium">
 			<?php if (!$element->complications && !$element->complication_notes) {?>
 				<h4>None</h4>
-			<?php }else{?>
+			<?php } else {?>
 				<h4>
 					<?php foreach ($element->complications as $complication) {?>
 						<?php echo $complication->name?><br/>

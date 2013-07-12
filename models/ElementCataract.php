@@ -84,7 +84,7 @@ class ElementCataract extends BaseEventTypeElement
 			//array('id, event_id, incision_site_id, length, meridian, incision_type_id, eyedraw, report, wound_burn, iris_trauma, zonular_dialysis, pc_rupture, decentered_iol, iol_exchange, dropped_nucleus, op_cancelled, corneal_odema, iris_prolapse, zonular_rupture, vitreous_loss, iol_into_vitreous, other_iol_problem, choroidal_haem', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -140,7 +140,7 @@ class ElementCataract extends BaseEventTypeElement
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('event_id', $this->event_id, true);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
@@ -160,12 +160,13 @@ class ElementCataract extends BaseEventTypeElement
 	 * Need to delete associated records
 	 * @see CActiveRecord::beforeDelete()
 	 */
-	protected function beforeDelete() {
+	protected function beforeDelete()
+	{
 		CataractComplication::model()->deleteAllByAttributes(array('cataract_id' => $this->id));
 		CataractOperativeDevice::model()->deleteAllByAttributes(array('cataract_id' => $this->id));
 		return parent::beforeDelete();
 	}
-	
+
 	protected function beforeSave()
 	{
 		return parent::beforeSave();
@@ -234,7 +235,8 @@ class ElementCataract extends BaseEventTypeElement
 		return parent::afterSave();
 	}
 
-	public function getSelectedEye() {
+	public function getSelectedEye()
+	{
 		if (Yii::app()->getController()->getAction()->id == 'create') {
 			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
 			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
@@ -257,15 +259,18 @@ class ElementCataract extends BaseEventTypeElement
 		return new Eye;
 	}
 
-	public function getEye() {
+	public function getEye()
+	{
 		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
 	}
 
-	public function getOperative_device_list() {
+	public function getOperative_device_list()
+	{
 		return $this->getDevicesBySiteAndSubspecialty();
 	}
 
-	public function getOperative_device_defaults() {
+	public function getOperative_device_defaults()
+	{
 		$ids = array();
 		foreach ($this->getDevicesBySiteAndSubspecialty(true) as $id => $item) {
 			$ids[] = $id;
@@ -273,7 +278,8 @@ class ElementCataract extends BaseEventTypeElement
 		return $ids;
 	}
 
-	public function getDevicesBySiteAndSubspecialty($default=false) {
+	public function getDevicesBySiteAndSubspecialty($default=false)
+	{
 		$criteria = new CDbCriteria;
 		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
 		$criteria->params[':subspecialtyId'] = Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty_id;
@@ -295,7 +301,8 @@ class ElementCataract extends BaseEventTypeElement
 			->findAll($criteria),'id','name');
 	}
 
-	public function getIOLTypes_NHS() {
+	public function getIOLTypes_NHS()
+	{
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('private', 0);
@@ -304,16 +311,18 @@ class ElementCataract extends BaseEventTypeElement
 		return IOLType::model()->findAll($criteria);
 	}
 
-	public function getIOLTypes_Private() {
+	public function getIOLTypes_Private()
+	{
 		$criteria = new CDbCriteria;
-	
+
 		$criteria->compare('private', 1);
 		$criteria->order = 'display_order asc';
 
 		return IOLType::model()->findAll($criteria);
 	}
 
-	public function beforeValidate() {
+	public function beforeValidate()
+	{
 		$iol_position = IOLPosition::model()->findByPk($this->iol_position_id);
 
 		if (!$iol_position || $iol_position->name != 'None') {
@@ -330,7 +339,8 @@ class ElementCataract extends BaseEventTypeElement
 		return parent::beforeValidate();
 	}
 
-	public function getIol_hidden() {
+	public function getIol_hidden()
+	{
 		if (!empty($_POST)) {
 			$eyedraw = json_decode($_POST['ElementCataract']['eyedraw']);
 

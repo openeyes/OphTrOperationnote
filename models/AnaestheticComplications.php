@@ -59,7 +59,7 @@ class AnaestheticComplications extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */

@@ -30,7 +30,7 @@
 			'htmlOptions' => array('class'=>'sliding'),
 			// 'focus'=>'#procedure_id'
 		));
-	
+
 		// Event actions
 		$this->event_actions[] = EventAction::button('Create Operation Note', 'save', array('colour' => 'green'));
 		$this->renderPartial('//patient/event_actions');
@@ -41,7 +41,7 @@
 	<h3 class="sectiondivider">
 		<?php if (count($bookings) >0) {?>
 			Please indicate whether this operation note relates to a booking or an unbooked emergency:
-		<?php }else{?>
+		<?php } else {?>
 			There are no open bookings in the current episode so only an emergency operation note can be created.
 		<?php }?>
 	</h3>
@@ -76,7 +76,7 @@
 	</div>
 
 	<?php  $this->displayErrors($errors)?>
-	
+
 	<div class="cleartall"></div>
 	<?php  $this->endWidget(); ?>
 </div>

@@ -78,7 +78,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 			array('id, event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -134,7 +134,7 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		$criteria->compare('anaesthetic_type_id', $this->anaesthetic_type_id);
 		$criteria->compare('anaesthetist_id', $this->anaesthetist_id);
 		$criteria->compare('anaesthetic_type_id', $this->anaesthetic_type_id);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
@@ -143,7 +143,8 @@ class ElementAnaesthetic extends BaseEventTypeElement
 	/**
 	* Set default values for forms on create
 	*/
-	public function setDefaultOptions() {
+	public function setDefaultOptions()
+	{
 		$this->anaesthetic_type_id = 1;
 
 		if (Yii::app()->getController()->getAction()->id == 'create') {
@@ -161,7 +162,8 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		}
 	}
 
-	public function getHidden() {
+	public function getHidden()
+	{
 		if (Yii::app()->getController()->getAction()->id == 'create') {
 			if (empty($_POST)) {
 				return ($this->anaesthetic_type_id == 5);
@@ -180,7 +182,8 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		}
 	}
 
-	public function getWitness_hidden() {
+	public function getWitness_hidden()
+	{
 		if (Yii::app()->getController()->getAction()->id == 'create') {
 			return (@$_POST['ElementAnaesthetic']['anaesthetist_id'] != 3);
 		} else {
@@ -193,11 +196,13 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		}
 	}
 
-	public function getAnaesthetic_agent_list() {
+	public function getAnaesthetic_agent_list()
+	{
 		return $this->getAnaestheticAgentsBySiteAndSubspecialty();
 	}
 
-	public function getAnaestheticAgentsBySiteAndSubspecialty($relation = 'siteSubspecialtyAssignments') {
+	public function getAnaestheticAgentsBySiteAndSubspecialty($relation = 'siteSubspecialtyAssignments')
+	{
 		$criteria = new CDbCriteria;
 		$criteria->addCondition('site_id = :siteId and subspecialty_id = :subspecialtyId');
 		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
@@ -213,7 +218,8 @@ class ElementAnaesthetic extends BaseEventTypeElement
 			->findAll($criteria),'id','name');
 	}
 
-	public function getAnaesthetic_agent_defaults() {
+	public function getAnaesthetic_agent_defaults()
+	{
 		$ids = array();
 		foreach ($this->getAnaestheticAgentsBySiteAndSubspecialty('siteSubspecialtyAssignmentDefaults') as $id => $anaesthetic_agent) {
 			$ids[] = $id;
@@ -225,13 +231,15 @@ class ElementAnaesthetic extends BaseEventTypeElement
 	 * Need to delete associated records
 	 * @see CActiveRecord::beforeDelete()
 	 */
-	protected function beforeDelete() {
+	protected function beforeDelete()
+	{
 		OperationAnaestheticAgent::model()->deleteAllByAttributes(array('et_ophtroperationnote_anaesthetic_id' => $this->id));
 		AnaestheticComplication::model()->deleteAllByAttributes(array('et_ophtroperationnote_anaesthetic_id' => $this->id));
 		return parent::beforeDelete();
 	}
-	
-	protected function afterSave() {
+
+	protected function afterSave()
+	{
 		$existing_agent_ids = array();
 
 		foreach (OperationAnaestheticAgent::model()->findAll('et_ophtroperationnote_anaesthetic_id = :anaestheticId', array(':anaestheticId' => $this->id)) as $oaa) {
@@ -293,10 +301,12 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		return parent::afterSave();
 	}
 
-	public function getAnaesthetic_complication_list() {
+	public function getAnaesthetic_complication_list()
+	{
 	}
 
-	public function getSurgeons() {
+	public function getSurgeons()
+	{
 		if (!$this->surgeonlist) {
 			$criteria = new CDbCriteria;
 			$criteria->compare('is_doctor',1);
@@ -308,7 +318,8 @@ class ElementAnaesthetic extends BaseEventTypeElement
 		return $this->surgeonlist;
 	}
 
-	public function beforeValidate() {
+	public function beforeValidate()
+	{
 		if (Yii::app()->params['fife']) {
 			if (@$_POST['ElementAnaesthetic']['anaesthetist_id'] == 3) {
 				if (!@$_POST['ElementAnaesthetic']['anaesthetic_witness_id']) {

@@ -1,8 +1,10 @@
 <?php
 
-class ReportController extends BaseController {
+class ReportController extends BaseController
+{
 	// disables the need to pass an argument to the constructor
-	function __construct($blah=null) {
+	function __construct($blah=null)
+	{
 		parent::__construct($blah);
 	}
 
@@ -27,7 +29,8 @@ class ReportController extends BaseController {
 			- pc ruptures (number and percentage)
 			- complications (number and percentage)
 	*/
-	public function reportCataractOperations($params=array()) {
+	public function reportCataractOperations($params=array())
+	{
 		$data = array();
 
 		$where = '';
@@ -152,7 +155,8 @@ class ReportController extends BaseController {
 		return $data;
 	}
 
-	public function reportOperations($params=array()) {
+	public function reportOperations($params=array())
+	{
 		$where = '';
 
 		if (strtotime($params['date_from'])) {

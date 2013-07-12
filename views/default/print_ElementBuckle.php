@@ -35,7 +35,7 @@
 			?>
 		</div>
 	</div>
-	
+
 	<div class="leftHalf">
 		<div class="detailRow">
 			<div class="label">

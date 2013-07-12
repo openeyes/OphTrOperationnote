@@ -106,19 +106,23 @@ class ElementInferiorRectusResection extends BaseEventTypeElement
 			));
 	}
 
-	public function getCreate_view() {
+	public function getCreate_view()
+	{
 		return 'ElementSTUB';
 	}
 
-	public function getUpdate_view() {
+	public function getUpdate_view()
+	{
 		return 'ElementSTUB';
 	}
 
-	public function getView_view() {
+	public function getView_view()
+	{
 		return 'ElementSTUB';
 	}
 
-	public function getPrint_view() {
+	public function getPrint_view()
+	{
 		return 'ElementSTUB';
 	}
 }

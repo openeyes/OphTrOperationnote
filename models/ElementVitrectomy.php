@@ -66,7 +66,7 @@ class ElementVitrectomy extends BaseEventTypeElement
 			array('id, event_id, gauge_id, pvd_induced', 'safe', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -110,7 +110,7 @@ class ElementVitrectomy extends BaseEventTypeElement
 		$criteria->compare('event_id', $this->event_id, true);
 		$criteria->compare('gauge_id', $this->gauge_id);
 		$criteria->compare('pvd_induced', $this->pvd_induced);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
@@ -123,13 +123,15 @@ class ElementVitrectomy extends BaseEventTypeElement
 	{
 	}
 
-	public function getEye() {
+	public function getEye()
+	{
 		if ($this->event_id && $pl = ElementProcedureList::model()->find('event_id=?',array($this->event_id))) {
 			return $pl->eye;
 		}
 	}
 
-	public function getSelectedEye() {
+	public function getSelectedEye()
+	{
 		if (Yii::app()->getController()->getAction()->id == 'create') {
 			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
 			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {

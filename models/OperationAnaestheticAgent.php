@@ -54,8 +54,9 @@ class OperationAnaestheticAgent extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
-	public function getName() {
+
+	public function getName()
+	{
 		return AnaestheticAgent::model()->findByPk($this->anaesthetic_agent_id)->name;
 	}
 

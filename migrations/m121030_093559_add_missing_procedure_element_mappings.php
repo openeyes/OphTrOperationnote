@@ -9,7 +9,7 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPosteriorSynechiolysis'))->queryRow();
 
-		if(!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Posterior synechiolysis'))->queryRow()) {
+		if (!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Posterior synechiolysis'))->queryRow()) {
 			$this->insert('proc',array(
 					'term' => 'Posterior synechiolysis',
 					'short_format' => 'Post syn lysis',
@@ -43,7 +43,7 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorSynechiolysis'))->queryRow();
 
-		if(!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Anterior synechiolysis'))->queryRow()) {
+		if (!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Anterior synechiolysis'))->queryRow()) {
 			$this->insert('proc',array(
 					'term' => 'Anterior synechiolysis',
 					'short_format' => 'Ant syn lysis',
@@ -53,7 +53,7 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 			));
 			$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Anterior synechiolysis'))->queryRow();
 		}
-		
+
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_anterior_synechiolysis', array(
@@ -77,7 +77,7 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEyelidLacerationFullThickness'))->queryRow();
 
-		if(!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Repair of eyelid laceration, full-thickness involving lid margin'))->queryRow()) {
+		if (!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Repair of eyelid laceration, full-thickness involving lid margin'))->queryRow()) {
 			$this->insert('proc',array(
 					'term' => 'Repair of eyelid laceration, full-thickness involving lid margin',
 					'short_format' => 'Lid laceration full',
@@ -87,7 +87,7 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 			));
 			$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Repair of eyelid laceration, full-thickness involving lid margin'))->queryRow();
 		}
-		
+
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_eyelid_laceration_full_thickness', array(
@@ -108,10 +108,10 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 		);
 
 		$this->insert('element_type', array('name' => 'Repair of eyelid laceration, partial-thickness involving lid margin', 'class_name' => 'ElementEyelidLacerationPartialThickness', 'event_type_id' => $event_type['id'], 'display_order' => 20, 'default' => 0));
-		
+
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEyelidLacerationPartialThickness'))->queryRow();
 
-		if(!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Repair of eyelid laceration, partial-thickness involving lid margin'))->queryRow()) {
+		if (!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Repair of eyelid laceration, partial-thickness involving lid margin'))->queryRow()) {
 			$this->insert('proc',array(
 					'term' => 'Repair of eyelid laceration, partial-thickness involving lid margin',
 					'short_format' => 'Lid laceration partial',
@@ -121,7 +121,7 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 			));
 			$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Repair of eyelid laceration, partial-thickness involving lid margin'))->queryRow();
 		}
-		
+
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_eyelid_laceration_partial_thickness', array(
@@ -145,7 +145,7 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfBuccalMucosa'))->queryRow();
 
-		if(!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Biopsy of buccal mucosa'))->queryRow()) {
+		if (!$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Biopsy of buccal mucosa'))->queryRow()) {
 			$this->insert('proc',array(
 					'term' => 'Biopsy of buccal mucosa',
 					'short_format' => 'Buccal biopsy',
@@ -155,7 +155,7 @@ class m121030_093559_add_missing_procedure_element_mappings extends CDbMigration
 			));
 			$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term',array(':term' => 'Biopsy of buccal mucosa'))->queryRow();
 		}
-		
+
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_biopsy_buccal_mucosa', array(

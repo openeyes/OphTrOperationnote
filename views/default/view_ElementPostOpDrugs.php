@@ -23,7 +23,7 @@
 	<div class="eventHighlight medium<?php if (!$element->drugs) {?> none<?php }?>">
 		<?php if (!$element->drugs) {?>
 			<h4>None</h4>
-		<?php }else{?>
+		<?php } else {?>
 			<h4>
 				<?php foreach ($element->drugs as $drug) {?>
 					<?php echo $drug->name?><br/>

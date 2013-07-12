@@ -1,7 +1,8 @@
 <?php
 class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 {
-	public function up() {
+	public function up()
+	{
 				// create et_ophtroperationnote_procedurelist
 		$this->createTable('et_ophtroperationnote_procedurelist', array(
 			'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -240,7 +241,7 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 			$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTamponade'))->queryRow();
-		
+
 		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Injection of silicone oil into vitreous'))->queryRow();
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 			$this->createTable('et_ophtroperationnote_buckle_drainage_type', array(
@@ -7125,8 +7126,8 @@ Aspiration of soft lens matter'");
 		$this->update('element_type',array('display_order'=>5),'id='.$element_type['id']);
 	}
 
-	public function down() {
-	
+	public function down()
+	{
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:event_type_id and name=:name', array(':event_type_id'=>$event_type['id'],':name'=>'Procedure list'))->queryRow();
@@ -7155,28 +7156,28 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:event_type_id and name=:name', array(':event_type_id'=>$event_type['id'],':name'=>'Post-op drugs'))->queryRow();
 		$this->update('element_type',array('display_order'=>5),'id='.$element_type['id']);
-	
-	
+
+
 		$this->dropTable('et_ophtroperationnote_site_subspecialty_postop_instructions');
-	
-	
+
+
 		$this->delete('et_ophtroperationnote_cataract_iol_type');
 
 		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>1,'name'=>'Type 1','display_order'=>1));
 		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>2,'name'=>'Type 2','display_order'=>2));
 		$this->insert('et_ophtroperationnote_cataract_iol_type',array('id'=>3,'name'=>'Type 3','display_order'=>3));
-	
-	
+
+
 		$this->dropForeignKey('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract');
 		$this->dropIndex('et_ophtroperationnote_cataract_iol_type_id_fk','et_ophtroperationnote_cataract');
 		$this->dropColumn('et_ophtroperationnote_cataract','iol_type_id');
 
 		$this->dropTable('et_ophtroperationnote_cataract_iol_type');
-	
+
 		$this->addColumn('et_ophtroperationnote_cataract','vision_blue',"tinyint(1) unsigned NOT NULL DEFAULT '1'");
-	
+
 		$this->dropColumn('et_ophtroperationnote_cataract','iol_power');
-	
+
 		$this->delete('et_ophtroperationnote_cataract_iol_position','id=8');
 
 		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>1),'id=1');
@@ -7186,9 +7187,9 @@ Aspiration of soft lens matter'");
 		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>5),'id=5');
 		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>6),'id=6');
 		$this->update('et_ophtroperationnote_cataract_iol_position',array('display_order'=>7),'id=7');
-	
+
 		$this->dropTable('et_ophtroperationnote_cataract_operative_device');
-	
+
 		$this->renameTable('et_ophtroperationnote_postop_drugs_drug','et_ophtroperationnote_drugs_drug');
 		$this->dropForeignKey('et_ophtroperationnote_pdd_drugs_id_fk','et_ophtroperationnote_drugs_drug');
 		$this->dropForeignKey('et_ophtroperationnote_pdd_drug_id_fk','et_ophtroperationnote_drugs_drug');
@@ -7222,13 +7223,13 @@ Aspiration of soft lens matter'");
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:event_type_id',array(':name'=>'Post-op drugs',':event_type_id'=>$event_type['id']))->queryRow();
 
 		$this->update('element_type',array('name'=>'Drugs','class_name'=>'ElementDrugs'),'id='.$element_type['id']);
-	
+
 
 		$this->dropTable('et_ophtroperationnote_comments');
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementComments'))->queryRow();
-		
+
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSurgeon'))->queryRow();
@@ -7236,7 +7237,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDrugs'))->queryRow();
 		$this->update('element_type',array('display_order'=>8),'id='.$element_type['id']);
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfTemporalArtery'))->queryRow();
 
@@ -7244,7 +7245,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_tempartrybiopsy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorRectusHorizontalTransposition'))->queryRow();
 
@@ -7252,7 +7253,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_sr_transposition');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCombinedOperationOnEyeMuscles'))->queryRow();
 
@@ -7260,7 +7261,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_squint_opn');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueAnteriorTransposition'))->queryRow();
 
@@ -7268,7 +7269,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_so_ant_transposition');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRetrobulbarSteroidInjection'))->queryRow();
 
@@ -7276,7 +7277,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_retro_steroid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRadioactivePlaque'))->queryRow();
 
@@ -7284,7 +7285,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_plaque');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPeriocularSteroidInjection'))->queryRow();
 
@@ -7292,7 +7293,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_periocular_steroid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOpticNerve'))->queryRow();
 
@@ -7300,7 +7301,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_onsdopticdecom');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralRectusVerticalTransposition'))->queryRow();
 
@@ -7308,7 +7309,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lr_vert_trans');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorRectusHorizontalTransposition'))->queryRow();
 
@@ -7316,7 +7317,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ir_transposition');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorObliqueAnteriorTransposition'))->queryRow();
 
@@ -7324,7 +7325,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_io_ant_trans');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorObliqueDisinsertion'))->queryRow();
 
@@ -7332,7 +7333,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_io_');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIntraLASIKEyeSurgery'))->queryRow();
 
@@ -7340,7 +7341,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_intralasik');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInjectionOfAnteriorChamberOfEye'))->queryRow();
 
@@ -7348,7 +7349,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_inj_ac');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFemtosecondAstigmaticKeratotomy'))->queryRow();
 
@@ -7356,7 +7357,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_fsak');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyOfCiliaryBody'))->queryRow();
 
@@ -7364,7 +7365,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_cyclocryo');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfChoroid'))->queryRow();
 
@@ -7372,7 +7373,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_chor_biopsy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfIris'))->queryRow();
 
@@ -7380,7 +7381,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_biopsy_iris');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorRectusFaden'))->queryRow();
 
@@ -7388,7 +7389,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_sr_faden');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueFaden'))->queryRow();
 
@@ -7396,7 +7397,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_so_faden');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueDisinsertion'))->queryRow();
 
@@ -7404,7 +7405,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_so_disinsertion');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfSocketExpander'))->queryRow();
 
@@ -7412,7 +7413,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_sckt_exp');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfStent'))->queryRow();
 
@@ -7420,7 +7421,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_rem_stnt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharospasmOrbicularisMuscleStripping'))->queryRow();
 
@@ -7428,7 +7429,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orbicularismsst');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfOrbitalForeignBody'))->queryRow();
 
@@ -7436,7 +7437,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orb_fb');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExplorationOfOrbit'))->queryRow();
 
@@ -7444,7 +7445,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orb_explrn');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDrainageOfOrbitalAbscess'))->queryRow();
 
@@ -7452,7 +7453,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orb_absc');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementNasendoscopy'))->queryRow();
 
@@ -7460,7 +7461,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_nasedosc');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMedialRectusFaden'))->queryRow();
 
@@ -7468,7 +7469,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_mr_faden');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMMGToOcularSuface'))->queryRow();
 
@@ -7476,7 +7477,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_mmg2');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMouldingOfSocket'))->queryRow();
 
@@ -7484,7 +7485,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_mld');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralRectusFaden'))->queryRow();
 
@@ -7492,7 +7493,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lr_faden');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLacrimalIntubation'))->queryRow();
 
@@ -7500,7 +7501,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lacintub');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIntravenousSteroidInjection'))->queryRow();
 
@@ -7508,7 +7509,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_iv_steroid_injection');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorRectusFaden'))->queryRow();
 
@@ -7516,7 +7517,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ir_faden');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFullThicknessSkinGraft'))->queryRow();
 
@@ -7524,7 +7525,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ftsg');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReconstructionOfEyeSocketWithMMG'))->queryRow();
 
@@ -7532,7 +7533,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_frnx_recon');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEviscerationNoImplant'))->queryRow();
 
@@ -7540,7 +7541,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_evisc_no_ball');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEnucleationNoImplant'))->queryRow();
 
@@ -7548,7 +7549,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_enuc_no_implnt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEntropionCorrectionOfUpperEyelid'))->queryRow();
 
@@ -7556,7 +7557,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ent_upper_lid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEntropionCorrectionOfLowerEyelid'))->queryRow();
 
@@ -7564,7 +7565,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ent_lower_lid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEndonasalRevisionOfDCR'))->queryRow();
 
@@ -7572,7 +7573,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_endo_rev_dcr');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDermolipomaExcisionMicroscope'))->queryRow();
 
@@ -7580,7 +7581,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_drmlpm');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDermisFatGraftToSocket'))->queryRow();
 
@@ -7588,7 +7589,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dfgsock');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOrbitMedialWallForNeuropathy'))->queryRow();
 
@@ -7596,7 +7597,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_decmp_med_only');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOrbitLateralWall'))->queryRow();
 
@@ -7604,7 +7605,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_decmp_lat');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOrbit2WallsBalancedApproach'))->queryRow();
 
@@ -7612,7 +7613,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_decmp_2_balanced');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOrbitalFatProlapseTransConjunctivalReduction'))->queryRow();
 
@@ -7620,7 +7621,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_deblk_ft');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystectomy'))->queryRow();
 
@@ -7628,7 +7629,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dctmy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystorhinostomyRetrotubes'))->queryRow();
 
@@ -7636,7 +7637,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_canaliculodcr');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfLidExcisional'))->queryRow();
 
@@ -7644,7 +7645,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_bx_exc_ld');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfConjunctivaIncisional'))->queryRow();
 
@@ -7652,7 +7653,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_bx_cnj');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBotulinumToxinInjectionToEyelid'))->queryRow();
 
@@ -7660,7 +7661,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_botox_inj');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharophimosisCanthalSurgery'))->queryRow();
 
@@ -7668,7 +7669,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_blphmosis_canth');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorOrbitotomyUpperLidApproach'))->queryRow();
 
@@ -7676,7 +7677,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ant_orb_ul');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorOrbitotomyLowerLidApproach'))->queryRow();
 
@@ -7684,7 +7685,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ant_orb_ll');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDrainageOfEyelidAbscess'))->queryRow();
 
@@ -7692,7 +7693,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_absc_drng');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTelecanthusCorrectionWithWire'))->queryRow();
 
@@ -7700,7 +7701,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_telecnth_wire');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsorrhaphyTemporary'))->queryRow();
 
@@ -7708,7 +7709,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_tars_temp');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsorrhaphyPermanent'))->queryRow();
 
@@ -7716,7 +7717,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_tars_permnt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsorrhaphyMedialPillar'))->queryRow();
 
@@ -7724,7 +7725,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_tars_med');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOperationForSquint'))->queryRow();
 
@@ -7732,7 +7733,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_squint_op');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSplitSkinGraft'))->queryRow();
 
@@ -7740,7 +7741,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_split_skin');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSentinelNodeBiopsy'))->queryRow();
 
@@ -7748,7 +7749,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_snb');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReformationOfSkinCrease'))->queryRow();
 
@@ -7756,7 +7757,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_skin_crease_reformation');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRevisionOfScar'))->queryRow();
 
@@ -7764,7 +7765,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_scar_rvn');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfGoldWeight'))->queryRow();
 
@@ -7772,7 +7773,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_rmv_gld_wt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOfCanaliculus'))->queryRow();
 
@@ -7780,7 +7781,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_rep_canaliculus');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPunctumClosure'))->queryRow();
 
@@ -7788,7 +7789,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_punctal_occl');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPtosisCorrectionApoRepairPosteriorApproach'))->queryRow();
 
@@ -7796,7 +7797,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_pt_post');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPtosisCorrectionApoRepairAnteriorApproach'))->queryRow();
 
@@ -7804,7 +7805,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_pt_ant');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfOrbitalImplant'))->queryRow();
 
@@ -7812,7 +7813,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orb_ball_implnt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOperationOnEyelid'))->queryRow();
 
@@ -7820,7 +7821,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_opn_eyelid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCanthoplastyMedial'))->queryRow();
 
@@ -7828,7 +7829,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_med_cnthplsty');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfLacrimalSac'))->queryRow();
 
@@ -7836,7 +7837,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lsac_bx');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLowerLidElevationSpecifyGraftMaterial'))->queryRow();
 
@@ -7844,7 +7845,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ll_elvtn');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLidLoweringPosteriorApproach'))->queryRow();
 
@@ -7852,7 +7853,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lid_low_post');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLidLoweringAnteriorApproach'))->queryRow();
 
@@ -7860,7 +7861,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lid_low_ant');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCanthoplastyMedialLee'))->queryRow();
 
@@ -7868,7 +7869,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lee');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCanthopexyLateral'))->queryRow();
 
@@ -7876,7 +7877,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lat_cnthpxy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCanthoplastyLateral'))->queryRow();
 
@@ -7884,7 +7885,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lat_cnthplst');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLacrimalSac'))->queryRow();
 
@@ -7892,7 +7893,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lacrimal_sac__excision');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfLacrimalGland'))->queryRow();
 
@@ -7900,7 +7901,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lacrimal_gland_biopsy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOtherProcedureOnLacrimalGland'))->queryRow();
 
@@ -7908,7 +7909,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lacrimal_gland__other');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInjectionIntoEyelid'))->queryRow();
 
@@ -7916,7 +7917,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_inj_lid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementHardpalateGraft'))->queryRow();
 
@@ -7924,7 +7925,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_hpg');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfPapilloma'))->queryRow();
 
@@ -7932,7 +7933,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_exc_papilloma');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLidLesionNoBiopsy'))->queryRow();
 
@@ -7940,7 +7941,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ex_lid_lsn');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEndoscopy'))->queryRow();
 
@@ -7948,7 +7949,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_enscpy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEctropionMedialOnlyCorrection'))->queryRow();
 
@@ -7956,7 +7957,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ectr_med');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDermisFatGraft'))->queryRow();
 
@@ -7964,7 +7965,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dfg');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCongenitalAnomalyCorrection'))->queryRow();
 
@@ -7972,7 +7973,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_corr_anmly');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCheekLift'))->queryRow();
 
@@ -7980,7 +7981,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_chk_lft');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCalaniculotomyForCanaliculitis'))->queryRow();
 
@@ -7988,7 +7989,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_canltmy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBrowLiftInternal'))->queryRow();
 
@@ -7996,7 +7997,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_brow_lift__indirect');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBrowLiftDirect'))->queryRow();
 
@@ -8004,7 +8005,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_brow_lift__direct');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEarCartilageGraft'))->queryRow();
 
@@ -8012,7 +8013,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_aur_cart');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfVitreous'))->queryRow();
 
@@ -8020,7 +8021,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_vit_biopsy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorRectusResection'))->queryRow();
 
@@ -8028,7 +8029,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_sr_2');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorRectusRecession'))->queryRow();
 
@@ -8036,7 +8037,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_sr_');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueTuck'))->queryRow();
 
@@ -8044,7 +8045,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_so_tuck');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueTenotomy'))->queryRow();
 
@@ -8052,7 +8053,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_so_tenotomy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueRecession'))->queryRow();
 
@@ -8060,7 +8061,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_so_');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfOil'))->queryRow();
 
@@ -8068,7 +8069,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_roo');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfBuckle'))->queryRow();
 
@@ -8076,7 +8077,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ro_buckle');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRetinectomy'))->queryRow();
 
@@ -8084,7 +8085,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_retinectomy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfRetina'))->queryRow();
 
@@ -8092,7 +8093,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ret_biopsy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfTubeFromNasolacrimalDuct'))->queryRow();
 
@@ -8100,7 +8101,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_removal_tube');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfIntacs'))->queryRow();
 
@@ -8108,7 +8109,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_removal_of_intacs');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfGas'))->queryRow();
 
@@ -8116,7 +8117,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_removal_of_gas');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSubretinalMembranectomy'))->queryRow();
 
@@ -8124,7 +8125,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_removal_of_cnv');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPanretinalPhotocoagulation'))->queryRow();
 
@@ -8132,7 +8133,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_prp');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPeripheralIridectomy'))->queryRow();
 
@@ -8140,7 +8141,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_pi');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReconstructionOfOrbit'))->queryRow();
 
@@ -8148,7 +8149,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orb_recn');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfOrbitalImplant'))->queryRow();
 
@@ -8156,7 +8157,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orb_implnt_removal');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMedialRectusVerticalTransposition'))->queryRow();
 
@@ -8164,7 +8165,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_mr_vert_trans');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMedialRectusResection'))->queryRow();
 
@@ -8172,7 +8173,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_mr_2');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLASIK'))->queryRow();
 
@@ -8180,7 +8181,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lasik');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLaserRetinopexy'))->queryRow();
 
@@ -8188,7 +8189,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_laser');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKnappProcedure'))->queryRow();
 
@@ -8196,7 +8197,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_knapp');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfIntraocularForeignBody'))->queryRow();
 
@@ -8204,7 +8205,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_iofb');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorObliqueFaden'))->queryRow();
 
@@ -8212,7 +8213,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_io_faden');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIntravitrealInjection'))->queryRow();
 
@@ -8220,7 +8221,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_intravit');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfIntacs'))->queryRow();
 
@@ -8228,7 +8229,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_intacs_');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInternalLimitingMembranePeel'))->queryRow();
 
@@ -8236,7 +8237,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ilm');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueHaradaIto'))->queryRow();
 
@@ -8244,7 +8245,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_haradiito');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfGoldWeight'))->queryRow();
 
@@ -8252,7 +8253,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_gld_wt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFragmatomeLensectomy'))->queryRow();
 
@@ -8260,7 +8261,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_frag');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLacrimalGland'))->queryRow();
 
@@ -8268,7 +8269,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_excision_of_lacrimal_gland');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLesionOfEyebrow'))->queryRow();
 
@@ -8276,7 +8277,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_excision_eyebrow_lesion');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLesionOfCanthus'))->queryRow();
 
@@ -8284,7 +8285,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_excision_cathal_lesion');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExternalDrainageOfSRF'))->queryRow();
 
@@ -8292,7 +8293,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_drain');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDelamination'))->queryRow();
 
@@ -8300,7 +8301,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_delam');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyRetinopexy'))->queryRow();
 
@@ -8308,7 +8309,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_cryo2');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAllogenicImplant'))->queryRow();
 
@@ -8316,7 +8317,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_al_implnt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAdjustableSuture'))->queryRow();
 
@@ -8324,7 +8325,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_adjustable');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTrabeculectomy'))->queryRow();
 
@@ -8332,7 +8333,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_traby');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTrabeculotomy'))->queryRow();
 
@@ -8340,7 +8341,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_trabeculotomy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTattooingOfCornea'))->queryRow();
 
@@ -8348,7 +8349,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_tattooing_corne');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperficialKeratectomy'))->queryRow();
 
@@ -8356,7 +8357,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_superficial_k');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRevisionOfTrabeculectomy'))->queryRow();
 
@@ -8364,7 +8365,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_revision_traby');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRevisionOfAnteriorChamber'))->queryRow();
 
@@ -8372,7 +8373,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_revision_ac');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRevisionOfAqueousShunt'))->queryRow();
 
@@ -8380,7 +8381,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_revaqueousshunt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReformationOfAC'))->queryRow();
 
@@ -8388,7 +8389,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_reformation_ac');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPTKLaserSuperficialKeratectomy'))->queryRow();
 
@@ -8396,7 +8397,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ptk');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOfPenetratingInjury'))->queryRow();
 
@@ -8404,7 +8405,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_penetrating_inj');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOcclusionOfLacrimalPunctum'))->queryRow();
 
@@ -8412,7 +8413,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_occllacrpunctm');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementNeedlingOfBleb'))->queryRow();
 
@@ -8420,7 +8421,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_needlingbleb');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMedialRectusRecession'))->queryRow();
 
@@ -8428,7 +8429,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_mr_');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMucousMembraneGraft'))->queryRow();
 
@@ -8436,7 +8437,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_mmg');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementApplicationOfMMC'))->queryRow();
 
@@ -8444,7 +8445,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_mmc');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralRectusResection'))->queryRow();
 
@@ -8452,7 +8453,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lr_2');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralRectusRecession'))->queryRow();
 
@@ -8460,7 +8461,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lr_');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLimbalCellTransplant'))->queryRow();
 
@@ -8468,7 +8469,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_limbal');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLASIKFlapReposition'))->queryRow();
 
@@ -8476,7 +8477,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lasik_flap');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLaserIridotomy'))->queryRow();
 
@@ -8484,7 +8485,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_laser_pi');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLASEKPRK'))->queryRow();
 
@@ -8492,7 +8493,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lasekprk');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoprosthesis'))->queryRow();
 
@@ -8500,7 +8501,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_kpro');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIridoplasty'))->queryRow();
 
@@ -8508,7 +8509,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_iridoplasty');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorRectusResection'))->queryRow();
 
@@ -8516,7 +8517,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ir_resect');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorRectusRecession'))->queryRow();
 
@@ -8524,7 +8525,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ir_recess');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfAqueousShunt'))->queryRow();
 
@@ -8532,7 +8533,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_insaqueousshunt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementScleralGraft'))->queryRow();
 
@@ -8540,7 +8541,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_graft_to_sclera');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementGoniotomy'))->queryRow();
 
@@ -8548,7 +8549,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_goniotomy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPterygiumExcisionConjAutogrft'))->queryRow();
 
@@ -8556,7 +8557,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_expteryconjaugf');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPingueculumExcision'))->queryRow();
 
@@ -8564,7 +8565,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_excbxpinguecula');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementGraftToSclera'))->queryRow();
 
@@ -8572,7 +8573,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_donorsclera');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLaserCoagulationCiliaryBody'))->queryRow();
 
@@ -8580,7 +8581,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_cyclodiode');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCyclodialysisCleftRepair'))->queryRow();
 
@@ -8588,7 +8589,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_cyclodiaclftrep');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyToLesionOfRetina'))->queryRow();
 
@@ -8596,7 +8597,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_cryo');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSubconjunctivalInjection'))->queryRow();
 
@@ -8604,7 +8605,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_conj_inject');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBotulinumInjectionEyeMuscle'))->queryRow();
 
@@ -8612,7 +8613,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_btxamuscle');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementApplicationOfBetaRadation'))->queryRow();
 
@@ -8620,7 +8621,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_beta_irradiation');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLaserTrabeculoplasty'))->queryRow();
 
@@ -8628,7 +8629,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_alt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementApplicationOf5FU'))->queryRow();
 
@@ -8636,7 +8637,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_5fu');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCapsulotomyYAG'))->queryRow();
 
@@ -8644,7 +8645,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_yag_caps');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSurgicalIridotomy'))->queryRow();
 
@@ -8652,7 +8653,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_surgical_pi');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyRotationAutograft'))->queryRow();
 
@@ -8660,7 +8661,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_rotationlcorgft');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOfProlapsedIris'))->queryRow();
 
@@ -8668,7 +8669,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_repair_iris_prolapse');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealSutureRemoval'))->queryRow();
 
@@ -8676,7 +8677,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_removal_of_sutu');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIridoplastySuture'))->queryRow();
 
@@ -8684,7 +8685,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_pupiloplasty2');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIridoplastyOccluder'))->queryRow();
 
@@ -8692,7 +8693,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_pupiloplasty');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPosteriorCapsulotomy'))->queryRow();
 
@@ -8700,7 +8701,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_post_capsulotomy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyAutomatedMoria'))->queryRow();
 
@@ -8708,7 +8709,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_moria_alk');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIrrigationOfAnteriorChamber'))->queryRow();
 
@@ -8716,7 +8717,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_irrigatn_ac');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIntrastromalCornealInjection'))->queryRow();
 
@@ -8724,7 +8725,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_intrastromal');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealInlayRemoval'))->queryRow();
 
@@ -8732,7 +8733,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_inlay_removal');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealInlayInsertion'))->queryRow();
 
@@ -8740,7 +8741,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_inlay_insert');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInjectionIntoEye'))->queryRow();
 
@@ -8748,7 +8749,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_inj_eye');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyTectonic'))->queryRow();
 
@@ -8756,7 +8757,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_graft_tectonic');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealGlue'))->queryRow();
 
@@ -8764,7 +8765,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_glue');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLesionOfConjunctiva'))->queryRow();
 
@@ -8772,7 +8773,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_excisconjlesion');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExaminationUnderAnaesthesia'))->queryRow();
 
@@ -8780,7 +8781,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_eua');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEpikeratoplasty'))->queryRow();
 
@@ -8788,7 +8789,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_epikeratoplasty');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementChelationOfCornea'))->queryRow();
 
@@ -8796,7 +8797,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_edta_chelation');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExtracapsularCataractExtraction'))->queryRow();
 
@@ -8804,7 +8805,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ecce');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDSAEKRepositioning'))->queryRow();
 
@@ -8812,7 +8813,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dsaek_reposition');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyPosteriorDMEK'))->queryRow();
 
@@ -8820,7 +8821,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dsaek');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyPosteriorDSAEK'))->queryRow();
 
@@ -8828,7 +8829,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dmek');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealDebridement'))->queryRow();
 
@@ -8836,7 +8837,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_debride');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCrosslinkingOfCornea'))->queryRow();
 
@@ -8844,7 +8845,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_crosslinking');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementConjunctivalFlap'))->queryRow();
 
@@ -8852,7 +8853,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_creatn_conjhood');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyPenetrating'))->queryRow();
 
@@ -8860,7 +8861,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_corneal_graft');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfCornealForeignBody'))->queryRow();
 
@@ -8868,7 +8869,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_corneal_fb');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfCornea'))->queryRow();
 
@@ -8876,7 +8877,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_corneal_biopsy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealVesselDiathermy'))->queryRow();
 
@@ -8884,7 +8885,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_corndiath');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCompressionSutureOfGraft'))->queryRow();
 
@@ -8892,7 +8893,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_compression_sut');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealWoundSuture'))->queryRow();
 
@@ -8900,7 +8901,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_closure_cornea');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCapsulotomySurgical'))->queryRow();
 
@@ -8908,7 +8909,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_capsulotomypost');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBandageContactLens'))->queryRow();
 
@@ -8916,7 +8917,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_bandage');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAstigmaticKeratotomy'))->queryRow();
 
@@ -8924,7 +8925,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_astig_keratotom');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyAnteriorLamellar'))->queryRow();
 
@@ -8932,7 +8933,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ant_lam_keratop');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorCapsulotomy'))->queryRow();
 
@@ -8940,7 +8941,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ant_capsulotomy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAmnioticMembraneGraft'))->queryRow();
 
@@ -8948,7 +8949,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_amniotigrft');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealSutureAdjustment'))->queryRow();
 
@@ -8956,7 +8957,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_adjustsuture');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsorrhaphyLateral'))->queryRow();
 
@@ -8964,7 +8965,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_tars_lat');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSyringeAndProbeNasolacrimalDuct'))->queryRow();
 
@@ -8972,7 +8973,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_sp');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPtosisCorrectionAnteriorLevatorExcision'))->queryRow();
 
@@ -8980,7 +8981,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_pt_ant_lev_excn');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOfOrbitalFracture'))->queryRow();
 
@@ -8988,7 +8989,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orbital_fracture');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfOrbit'))->queryRow();
 
@@ -8996,7 +8997,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orbital_biopsy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfOrbitalFloorImplant'))->queryRow();
 
@@ -9004,7 +9005,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ofi');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLesterJonesTube'))->queryRow();
 
@@ -9012,7 +9013,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lj_tube');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReconstructionOfLidWithGraft'))->queryRow();
 
@@ -9020,7 +9021,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lid_recon__graft');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReconstructionOfLidLocalFlaps'))->queryRow();
 
@@ -9028,7 +9029,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lid_recon__flaps');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralOrbitotomy'))->queryRow();
 
@@ -9036,7 +9037,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lat_orbitotomy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIncisionAndCurettageOfCyst'))->queryRow();
 
@@ -9044,7 +9045,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ic');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFornixReconstructionWithMucusMembraneGraft'))->queryRow();
 
@@ -9052,7 +9053,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_fornix_mmg');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFasciaLataHarvest'))->queryRow();
 
@@ -9060,7 +9061,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_fl_harvest');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExenteration'))->queryRow();
 
@@ -9068,7 +9069,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_exent');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEviscerationAndImplant'))->queryRow();
 
@@ -9076,7 +9077,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_evisc__ball');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEnucleationAndImplant'))->queryRow();
 
@@ -9084,7 +9085,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_enuc__impnlt');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEntropionCorrectionNoGraft'))->queryRow();
 
@@ -9092,7 +9093,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ent');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementElectrolysisOfEyelash'))->queryRow();
 
@@ -9100,7 +9101,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_elctrlys');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEctropionCorrection'))->queryRow();
 
@@ -9108,7 +9109,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ectr');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOrbit3Walls'))->queryRow();
 
@@ -9116,7 +9117,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_decomp_3');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystorhinostomyEndonasal'))->queryRow();
 
@@ -9124,7 +9125,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dcr_endo');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystorhinostomy'))->queryRow();
 
@@ -9132,7 +9133,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dcr');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyWithLiquidNitrogen'))->queryRow();
 
@@ -9140,7 +9141,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_cryo_nitro');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyWithCollinCryoprobe'))->queryRow();
 
@@ -9148,7 +9149,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_cryo_collin');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSutureOfCornea'))->queryRow();
 
@@ -9156,7 +9157,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_corneal_suture');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfCornealSuture'))->queryRow();
 
@@ -9164,7 +9165,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_corn_sut_removal');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCapsulectomy'))->queryRow();
 
@@ -9172,7 +9173,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_capsulectomy');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfLidIncisional'))->queryRow();
 
@@ -9180,7 +9181,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_bx_lid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfConjunctivaExcisional'))->queryRow();
 
@@ -9188,7 +9189,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_bx_exc_cnj');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBrowSuspensionWithSyntheticMaterial'))->queryRow();
 
@@ -9196,7 +9197,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_brow_susp_synth');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBrowSuspensionWithFasciaLata'))->queryRow();
 
@@ -9204,7 +9205,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_brow_susp_afl');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharoplastyOfUpperLid'))->queryRow();
 
@@ -9212,7 +9213,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_bleph_upper_lid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharoplastyOfLowerLid'))->queryRow();
 
@@ -9220,7 +9221,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_bleph_lower_lid');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharoplastyOfBothLids'))->queryRow();
 
@@ -9228,7 +9229,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_bleph_both_lids');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorVitrectomy'))->queryRow();
 
@@ -9236,7 +9237,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ant_vity');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorOrbitotomyConjunctivalApproach'))->queryRow();
 
@@ -9244,7 +9245,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ant_orb_conj');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPunctoplasty'))->queryRow();
 
@@ -9252,7 +9253,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_3_snp');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystogram'))->queryRow();
 
@@ -9260,7 +9261,7 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_dacrocystogram');
-	
+
 		$this->dropForeignKey('et_ophtroperationnote_anaesthetic_aca_complication_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_complication');
 		$this->dropIndex('et_ophtroperationnote_anaesthetic_aca_complication_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_complication');
 		$this->dropColumn('et_ophtroperationnote_anaesthetic_anaesthetic_complication','anaesthetic_complication_id');
@@ -9280,7 +9281,7 @@ Aspiration of soft lens matter'");
 		$this->addColumn('et_ophtroperationnote_anaesthetic_anaesthetic_complication','anaesthetic_complication_id','int(10) unsigned NOT NULL');
 		$this->createIndex('et_ophtroperationnote_pac_anaesthetic_complication_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_complication','anaesthetic_complication_id');
 		$this->addForeignKey('et_ophtroperationnote_pac_anaesthetic_complication_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_complication','anaesthetic_complication_id','anaesthetic_complication','id');
-	
+
 		$this->dropForeignKey('et_ophtroperationnote_paa_anaesthetic_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_agent');
 		$this->dropIndex('et_ophtroperationnote_paa_anaesthetic_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_agent');
 		$this->dropColumn('et_ophtroperationnote_anaesthetic_anaesthetic_agent','et_ophtroperationnote_anaesthetic_id');
@@ -9290,9 +9291,9 @@ Aspiration of soft lens matter'");
 		$this->addColumn('et_ophtroperationnote_anaesthetic_anaesthetic_agent','procedurelist_id','int(10) unsigned NOT NULL');
 		$this->createIndex('et_ophtroperationnote_paa_procedurelist_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_agent','procedurelist_id');
 		$this->addForeignKey('et_ophtroperationnote_paa_procedurelist_id_fk','et_ophtroperationnote_anaesthetic_anaesthetic_agent','procedurelist_id','et_ophtroperationnote_procedurelist','id');
-	
+
 		$this->alterColumn('et_ophtroperationnote_anaesthetic','anaesthetic_delivery_id',"int(10) unsigned NOT NULL DEFAULT '1'");
-	
+
 		$this->dropTable('et_ophtroperationnote_cataract_complication');
 		$this->dropTable('et_ophtroperationnote_cataract_complications');
 
@@ -9311,7 +9312,7 @@ Aspiration of soft lens matter'");
 		$this->addColumn('et_ophtroperationnote_cataract','iol_into_vitreous','tinyint(1) unsigned NOT NULL DEFAULT 0');
 		$this->addColumn('et_ophtroperationnote_cataract','other_iol_problem','tinyint(1) unsigned NOT NULL DEFAULT 0');
 		$this->addColumn('et_ophtroperationnote_cataract','choroidal_haem','tinyint(1) unsigned NOT NULL DEFAULT 0');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDrugs'))->queryRow();
 
@@ -9319,16 +9320,16 @@ Aspiration of soft lens matter'");
 
 		$this->dropTable('et_ophtroperationnote_drugs_drug');
 		$this->dropTable('et_ophtroperationnote_drugs');
-	
+
 		$this->dropColumn('et_ophtroperationnote_cataract','eyedraw2');
-	
+
 		$this->update('element_type',array('display_order'=>3),"event_type_id = 4 and class_name = 'ElementMembranePeel'");
 		$this->update('element_type',array('display_order'=>4),"event_type_id = 4 and class_name = 'ElementTamponade'");
 		$this->update('element_type',array('display_order'=>5),"event_type_id = 4 and class_name = 'ElementBuckle'");
 		$this->update('element_type',array('display_order'=>6),"event_type_id = 4 and class_name = 'ElementCataract'");
 		$this->update('element_type',array('display_order'=>7),"event_type_id = 4 and class_name = 'ElementAnaesthetic'");
 		$this->update('element_type',array('display_order'=>8),"event_type_id = 4 and class_name = 'ElementSurgeon'");
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSurgeon'))->queryRow();
 		$this->delete('element_type','id='.$element_type['id']);
@@ -9342,7 +9343,7 @@ Aspiration of soft lens matter'");
 		$this->addForeignKey('et_ophtroperationnote_procedurelist_surgeon_id_fk','et_ophtroperationnote_procedurelist','surgeon_id','consultant','id');
 
 		$this->dropTable('et_ophtroperationnote_surgeon');
-	
+
 		$this->dropTable('et_ophtroperationnote_anaesthetic');
 
 		$this->addColumn('et_ophtroperationnote_procedurelist','anaesthetic_comment','varchar(1024) COLLATE utf8_bin DEFAULT NULL');
@@ -9418,12 +9419,12 @@ Aspiration of soft lens matter'");
 		$this->addForeignKey('et_ophtroperationnote_procedurelist_anaesthetic_type_id_fk','et_ophtroperationnote_procedurelist','anaesthetic_type_id','anaesthetic_type','id');
 
 		$this->delete('element_type', 'id='.$element_type['id']);
-	
+
 		$this->alterColumn('et_ophtroperationnote_cataract','vision_blue',"tinyint(1) unsigned NOT NULL DEFAULT '0'");
 		$this->alterColumn('et_ophtroperationnote_cataract','report',"varchar(4096) COLLATE utf8_bin NOT NULL");
-	
+
 		$this->dropColumn('et_ophtroperationnote_cataract','complication_notes');
-	
+
 		$this->dropColumn('et_ophtroperationnote_procedurelist','anaesthetic_comment');
 
 		$this->dropTable('et_ophtroperationnote_procedurelist_anaesthetic_complication');
@@ -9444,15 +9445,15 @@ Aspiration of soft lens matter'");
 		$this->delete('element_type_anaesthetic_delivery','element_type_id='.$element_type['id']);
 		$this->delete('element_type_anaesthetic_agent','element_type_id='.$element_type['id']);
 		$this->delete('element_type_anaesthetic_complication','element_type_id='.$element_type['id']);
-	
+
 		$this->dropColumn('et_ophtroperationnote_procedurelist','supervising_surgeon_id');
-	
+
 		$this->dropForeignKey('et_ophtroperationnote_cataract_iol_position_fk','et_ophtroperationnote_cataract');
 		$this->dropIndex('et_ophtroperationnote_cataract_iol_position_fk','et_ophtroperationnote_cataract');
 		$this->dropColumn('et_ophtroperationnote_cataract','iol_position_id');
 		$this->dropTable('et_ophtroperationnote_cataract_iol_position');
 		$this->dropColumn('et_ophtroperationnote_cataract','vision_blue');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementProcedureList'))->queryRow();
 
@@ -9461,11 +9462,11 @@ Aspiration of soft lens matter'");
 		$this->dropForeignKey('et_ophtroperationnote_procedurelist_eye_id_fk','et_ophtroperationnote_procedurelist');
 		$this->dropIndex('et_ophtroperationnote_procedurelist_eye_id_fk','et_ophtroperationnote_procedurelist');
 		$this->dropColumn('et_ophtroperationnote_procedurelist','eye_id');
-	
+
 		$this->alterColumn('et_ophtroperationnote_vitrectomy','gauge_id','int(10) unsigned NOT NULL DEFAULT 1');
 		$this->alterColumn('et_ophtroperationnote_tamponade','gas_type_id','int(10) unsigned NOT NULL DEFAULT 1');
 		$this->alterColumn('et_ophtroperationnote_buckle','drainage_type_id','int(10) unsigned NOT NULL DEFAULT 1');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCataract'))->queryRow();
 
@@ -9476,14 +9477,14 @@ Aspiration of soft lens matter'");
 		$this->dropTable('et_ophtroperationnote_cataract');
 		$this->dropTable('et_ophtroperationnote_cataract_incision_type');
 		$this->dropTable('et_ophtroperationnote_cataract_incision_site');
-	
+
 		$this->dropColumn('et_ophtroperationnote_buckle','report');
-	
+
 		$this->alterColumn('et_ophtroperationnote_buckle','eyedraw','varchar(1024) COLLATE utf8_bin NOT NULL');
-	
+
 		$this->createIndex('et_ophtroperationnote_procedurelist_assistant_id_fk','et_ophtroperationnote_procedurelist','assistant_id');
 		$this->addForeignKey('et_ophtroperationnote_procedurelist_assistant_id_fk','et_ophtroperationnote_procedurelist','assistant_id','user','id');
-	
+
 		$this->dropForeignKey('et_ophtroperationnote_tamponade_gv_id','et_ophtroperationnote_tamponade');
 		$this->dropIndex('et_ophtroperationnote_tamponade_gv_id','et_ophtroperationnote_tamponade');
 		$this->dropForeignKey('et_ophtroperationnote_tamponade_pc_id','et_ophtroperationnote_tamponade');
@@ -9495,7 +9496,7 @@ Aspiration of soft lens matter'");
 
 		$this->dropTable('et_ophtroperationnote_gas_volume');
 		$this->dropTable('et_ophtroperationnote_gas_percentage');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBuckle'))->queryRow();
 
@@ -9505,13 +9506,13 @@ Aspiration of soft lens matter'");
 
 		$this->dropTable('et_ophtroperationnote_buckle');
 		$this->dropTable('et_ophtroperationnote_buckle_drainage_type');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTamponade'))->queryRow();
 		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Injection of silicone oil into vitreous'))->queryRow();
 
 		$this->delete('et_ophtroperationnote_procedure_element','element_type_id='.$element_type['id'].' and procedure_id='.$proc['id']);
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTamponade'))->queryRow();
 
@@ -9521,7 +9522,7 @@ Aspiration of soft lens matter'");
 
 		$this->dropTable('et_ophtroperationnote_tamponade');
 		$this->dropTable('et_ophtroperationnote_gas_type');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMembranePeel'))->queryRow();
 
@@ -9529,17 +9530,17 @@ Aspiration of soft lens matter'");
 		$this->dropTable('et_ophtroperationnote_membrane_peel');
 
 		$this->delete('element_type','id = '.$element_type['id']);
-	
+
 		$this->dropTable('et_ophtroperationnote_procedure_element');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$this->delete('element_type','event_type_id = '.$event_type['id']." and class_name = 'ElementVitrectomy'");
 
 		$this->dropTable('et_ophtroperationnote_vitrectomy');
 		$this->dropTable('et_ophtroperationnote_gauge');
-	
+
 		$this->dropTable('et_ophtroperationnote_procedurelist_procedure_assignment');
-	
+
 		$this->dropForeignKey('et_ophtroperationnote_procedurelist_anaesthetic_type_id_fk','et_ophtroperationnote_procedurelist');
 		$this->dropIndex('et_ophtroperationnote_procedurelist_anaesthetic_type_id_fk','et_ophtroperationnote_procedurelist');
 		$this->alterColumn('et_ophtroperationnote_procedurelist','anaesthetic_type_id',"tinyint(1) unsigned DEFAULT '0'");
@@ -9550,12 +9551,12 @@ Aspiration of soft lens matter'");
 		$this->update('et_ophtroperationnote_procedurelist',array('anaesthetic_type'=>2),'anaesthetic_type=3');
 		$this->update('et_ophtroperationnote_procedurelist',array('anaesthetic_type'=>3),'anaesthetic_type=4');
 		$this->update('et_ophtroperationnote_procedurelist',array('anaesthetic_type'=>4),'anaesthetic_type=5');
-	
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:event_type_id',array(':name'=>'Procedure list',':event_type_id'=>$event_type['id']))->queryRow();
 
 		$this->delete('element_type_anaesthetic_type','element_type_id='.$element_type['id']);
-	
+
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name', array(':name'=>'Procedure list'))->queryRow();
 
 		$this->delete('element_type','id='.$element_type['id']);

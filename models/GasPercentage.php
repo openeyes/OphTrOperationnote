@@ -59,7 +59,7 @@ class GasPercentage extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */

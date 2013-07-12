@@ -59,7 +59,7 @@ class ProcedureListOperationElement extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
