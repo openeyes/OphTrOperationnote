@@ -49,7 +49,7 @@ class m120628_130847_fix_procedure_element_associations extends CDbMigration
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementOtherProcedureEyelid'))->queryRow();
 
 		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>336,'element_type_id'=>$element_type['id']));
-		
+
 		// Add missing mapping for Removal of aqueous shunt
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementRemAqueousShunt'))->queryRow();

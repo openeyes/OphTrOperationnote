@@ -59,7 +59,7 @@ class CataractComplications extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -98,4 +98,3 @@ class CataractComplications extends BaseEventTypeElement
 			));
 	}
 }
-?>

@@ -39,7 +39,7 @@
 			<div class="eventHighlight<?php if (!$element->anaesthetic_agents) {?> none<?php }?>">
 				<?php if (!$element->anaesthetic_agents) {?>
 					<h4>None</h4>
-				<?php }else{?>
+				<?php } else {?>
 					<h4>
 						<?php foreach ($element->anaesthetic_agents as $agent) {?>
 							<?php echo $agent->name?><br/>
@@ -53,7 +53,7 @@
 			<div class="eventHighlight<?php if (!$element->anaesthetic_complications) {?> none<?php }?>">
 				<?php if (!$element->anaesthetic_complications) {?>
 					<h4>None</h4>
-				<?php }else{?>
+				<?php } else {?>
 					<h4>
 						<?php foreach ($element->anaesthetic_complications as $complication) {?>
 							<?php echo $complication->name?><br/>

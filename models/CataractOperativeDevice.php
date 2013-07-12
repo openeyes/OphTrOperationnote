@@ -59,7 +59,7 @@ class CataractOperativeDevice extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -73,7 +73,8 @@ class CataractOperativeDevice extends BaseEventTypeElement
 		);
 	}
 
-	public function getName() {
+	public function getName()
+	{
 		return OperativeDevice::model()->findByPk($this->operative_device_id)->name;
 	}
 
@@ -104,4 +105,3 @@ class CataractOperativeDevice extends BaseEventTypeElement
 			));
 	}
 }
-?>

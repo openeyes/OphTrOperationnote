@@ -17,13 +17,15 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 
-class AdminController extends ModuleAdminController {
-
-	public function actionViewPostOpDrugs() {
+class AdminController extends ModuleAdminController
+{
+	public function actionViewPostOpDrugs()
+	{
 		$this->render('postopdrugs');
 	}
 
-	public function actionCreatePostOpDrug() {
+	public function actionCreatePostOpDrug()
+	{
 		if (empty($_POST['name'])) {
 			throw new Exception("Missing name");
 		}
@@ -60,7 +62,8 @@ class AdminController extends ModuleAdminController {
 		echo json_encode(array('id'=>$drug->id,'errors'=>array()));
 	}
 
-	public function actionUpdatePostOpDrug() {
+	public function actionUpdatePostOpDrug()
+	{
 		if (!$drug = PostopDrug::model()->findByPk(@$_POST['id'])) {
 			throw new Exception("Drug not found: ".@$_POST['id']);
 		}
@@ -74,7 +77,8 @@ class AdminController extends ModuleAdminController {
 		echo json_encode(array('errors'=>array()));
 	}
 
-	public function actionDeletePostOpDrug($id) {
+	public function actionDeletePostOpDrug($id)
+	{
 		if ($drug = PostopDrug::model()->findByPk($id)) {
 			$drug->deleted = 1;
 			if ($drug->save()) {
@@ -85,7 +89,8 @@ class AdminController extends ModuleAdminController {
 		echo "0";
 	}
 
-	public function actionSortPostOpDrugs() {
+	public function actionSortPostOpDrugs()
+	{
 		if (!empty($_POST['order'])) {
 			foreach ($_POST['order'] as $i => $id) {
 				if ($drug = PostopDrug::model()->findByPk($id)) {

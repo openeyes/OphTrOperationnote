@@ -59,7 +59,7 @@ class IOLPosition extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -98,4 +98,3 @@ class IOLPosition extends BaseEventTypeElement
 			));
 	}
 }
-?>

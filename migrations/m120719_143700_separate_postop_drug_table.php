@@ -1,8 +1,9 @@
 <?php
 
-class m120719_143700_separate_postop_drug_table extends CDbMigration {
-
-	public function up() {
+class m120719_143700_separate_postop_drug_table extends CDbMigration
+{
+	public function up()
+	{
 		$this->createTable('et_ophtroperationnote_postop_drug',array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'name' => 'varchar(255) COLLATE utf8_bin NOT NULL',
@@ -43,11 +44,11 @@ class m120719_143700_separate_postop_drug_table extends CDbMigration {
 		),
 				'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-		
+
 		// Truncate postopdrugs table
 		// FIXME: THIS WILL RESULT IN LOST DATA
 		$drugs = $this->dbConnection->createCommand()->truncateTable('et_ophtroperationnote_postop_drugs_drug');
-		
+
 		// Drop old foreign key
 		$this->dropForeignKey('et_ophtroperationnote_pdd_drug_id_fk', 'et_ophtroperationnote_postop_drugs_drug');
 
@@ -58,12 +59,12 @@ class m120719_143700_separate_postop_drug_table extends CDbMigration {
 		->from('drug')
 		->join('et_ophtroperationnote_postop_drugs_drug','et_ophtroperationnote_postop_drugs_drug.drug_id = drug.id')
 		->query();
-		if($drugs) {
+		if ($drugs) {
 
 			// Use datestamp to avoid colliding IDs
 			$datestamp = date('Y-m-d H:i:s');
 
-			foreach($drugs as $drug) {
+			foreach ($drugs as $drug) {
 				$new_drug_id = $this->dbConnection->createCommand()
 				->select('id')
 				->from('postop_drug')
@@ -83,15 +84,16 @@ class m120719_143700_separate_postop_drug_table extends CDbMigration {
 
 	}
 
-	public function down() {
+	public function down()
+	{
 		$this->dropForeignKey('et_ophtroperationnote_pdd_drug_id_fk', 'et_ophtroperationnote_postop_drugs_drug');
 		$drugs = $this->dbConnection->createCommand()
 		->select('id, name')
 		->from('postop_drug')
 		->query();
-		if($drugs) {
+		if ($drugs) {
 			$datestamp = date('Y-m-d H:i:s');
-			foreach($drugs as $drug) {
+			foreach ($drugs as $drug) {
 				$new_drug_id = $this->dbConnection->createCommand()
 				->select('id')
 				->from('drug')

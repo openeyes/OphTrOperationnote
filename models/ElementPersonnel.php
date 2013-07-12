@@ -65,7 +65,7 @@ class ElementPersonnel extends BaseEventTypeElement
 			array('id, event_id, scrub_nurse_id, floor_nurse_id, accompanying_nurse_id, operating_department_practitioner_id', 'safe', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -114,25 +114,29 @@ class ElementPersonnel extends BaseEventTypeElement
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('event_id', $this->event_id, true);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
 	}
 
-	public function getScrub_nurses() {
+	public function getScrub_nurses()
+	{
 		return Contact::model()->findAllByParentClass('OphTrOperationnote_Personnel_scrub_nurses');
 	}
 
-	public function getFloor_nurses() {
+	public function getFloor_nurses()
+	{
 		return Contact::model()->findAllByParentClass('OphTrOperationnote_Personnel_floor_nurses');
 	}
 
-	public function getAccompanying_nurses() {
+	public function getAccompanying_nurses()
+	{
 		return Contact::model()->findAllByParentClass('OphTrOperationnote_Personnel_accompanying_nurses');
 	}
 
-	public function getOperating_department_practitioners() {
+	public function getOperating_department_practitioners()
+	{
 		return Contact::model()->findAllByParentClass('OphTrOperationnote_Personnel_operating_department_practitioners');
 	}
 }

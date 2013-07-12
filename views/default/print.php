@@ -48,7 +48,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="body">
 		<div class="operationMeta">
 			<div class="detailRow leftAlign">
@@ -58,14 +58,14 @@
 				<div class="value pronounced">
 					<?php
 						$operations_perf = ElementProcedureList::model()->find("event_id = ?", array($this->event->id));
-						foreach($operations_perf->procedures as $procedure){
+						foreach ($operations_perf->procedures as $procedure) {
 							echo "<strong>{$operations_perf->eye->name} {$procedure->term}</strong><br>";
 						}
 					?>
 				</div>
 			</div>
 			<div class="surgeonList">
-				<?php 
+				<?php
 					$surgeon_element = ElementSurgeon::model()->find("event_id = ?", array($this->event->id));
 					$surgeon_name = ($surgeon = User::model()->findByPk($surgeon_element->surgeon_id)) ? $surgeon->getFullNameAndTitle() : "Unknown";
 					$assistant_name = ($assistant = User::model()->findByPk($surgeon_element->assistant_id)) ? $assistant->getFullNameAndTitle() : "None";
@@ -88,12 +88,12 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<h2>Operation Details</h2>
 		<div class="operationDetails details">
 			<?php $this->renderPartial('print_OperationDetails') ?>
 		</div>
-		
+
 		<h2>Anaesthetic Details</h2>
 		<?php
 			$anaesthetic_element = ElementAnaesthetic::model()->find("event_id = ?", array($this->event->id));
@@ -129,7 +129,7 @@
 				</div>
 				<div class="value">
 					<?php
-						foreach ($anaesthetic_element->anaesthetic_agents as $agent){
+						foreach ($anaesthetic_element->anaesthetic_agents as $agent) {
 							echo "{$agent->name}<br>\n";
 						}
 					?>
@@ -141,7 +141,7 @@
 				</div>
 				<div class="value">
 					<?php
-						foreach ($anaesthetic_element->anaesthetic_complications as $complication){
+						foreach ($anaesthetic_element->anaesthetic_complications as $complication) {
 							echo "{$complication->name}<br>\n";
 						}
 					?>
@@ -197,5 +197,5 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		window.print();
-	}); 
+	});
 </script>
