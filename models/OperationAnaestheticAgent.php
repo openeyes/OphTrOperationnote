@@ -18,17 +18,12 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "et_ophtroperationnote_anaesthetic_anaesthetic_agent".
  *
- * The followings are the available columns in table 'element_operation':
+ * The followings are the available columns in table 'et_ophtroperationnote_anaesthetic_anaesthetic_agent':
  * @property string $id
- * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
+ * @property integer $anaesthetic_agent_id
  *
- * The followings are the available model relations:
- * @property Event $event
  */
 class OperationAnaestheticAgent extends BaseEventTypeElement
 {
