@@ -96,4 +96,3 @@ class ProcedureListProcedureAssignment extends BaseEventTypeElement
 			));
 	}
 }
-?>

@@ -98,4 +98,3 @@ class IncisionType extends BaseEventTypeElement
 			));
 	}
 }
-?>

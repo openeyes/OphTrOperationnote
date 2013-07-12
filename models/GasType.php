@@ -98,4 +98,3 @@ class GasType extends BaseEventTypeElement
 			));
 	}
 }
-?>

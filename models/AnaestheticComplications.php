@@ -98,4 +98,3 @@ class AnaestheticComplications extends BaseEventTypeElement
 			));
 	}
 }
-?>

@@ -98,4 +98,3 @@ class DrainageType extends BaseEventTypeElement
 			));
 	}
 }
-?>

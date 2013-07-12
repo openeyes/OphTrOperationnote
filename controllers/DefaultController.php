@@ -38,7 +38,7 @@ class DefaultController extends BaseEventTypeController
 		if (!empty($_POST)) {
 			if (preg_match('/^booking([0-9]+)$/',@$_POST['SelectBooking'],$m)) {
 				return $this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id='.$m[1]));
-			} else if (@$_POST['SelectBooking'] == 'emergency') {
+			} elseif (@$_POST['SelectBooking'] == 'emergency') {
 				return $this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id=emergency'));
 			}
 
@@ -188,7 +188,7 @@ class DefaultController extends BaseEventTypeController
 				if (in_array(get_class($element), $procedure_classes)) {
 					$section = 'procedure';
 					$index = 1000 + array_search(get_class($element), $procedure_classes);
-				} else if ($section == 'procedure') {
+				} elseif ($section == 'procedure') {
 					$section = 'bottom';
 					$index = 2000;
 				} else {
@@ -350,7 +350,7 @@ class DefaultController extends BaseEventTypeController
 	}
 
 	// returns true if the passed procedure id requires the selection of 'left' or 'right' eye
-	function procedure_requires_eye($procedure_id)
+	public function procedure_requires_eye($procedure_id)
 	{
 		foreach (ProcedureListOperationElement::model()->findAll('procedure_id=?',array($procedure_id)) as $plpa) {
 			$element_type = ElementType::model()->findByPk($plpa->element_type_id);

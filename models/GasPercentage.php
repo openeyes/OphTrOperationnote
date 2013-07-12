@@ -98,4 +98,3 @@ class GasPercentage extends BaseEventTypeElement
 			));
 	}
 }
-?>

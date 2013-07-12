@@ -98,4 +98,3 @@ class IOLPosition extends BaseEventTypeElement
 			));
 	}
 }
-?>

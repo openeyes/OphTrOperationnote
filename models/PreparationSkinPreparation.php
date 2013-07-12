@@ -92,4 +92,3 @@ class PreparationSkinPreparation extends BaseEventTypeElement
 			));
 	}
 }
-?>

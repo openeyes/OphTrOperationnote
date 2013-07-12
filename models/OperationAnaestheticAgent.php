@@ -98,4 +98,3 @@ class OperationAnaestheticAgent extends BaseEventTypeElement
 			));
 	}
 }
-?>

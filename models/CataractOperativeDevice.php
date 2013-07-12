@@ -105,4 +105,3 @@ class CataractOperativeDevice extends BaseEventTypeElement
 			));
 	}
 }
-?>

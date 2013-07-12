@@ -98,4 +98,3 @@ class GasVolume extends BaseEventTypeElement
 			));
 	}
 }
-?>

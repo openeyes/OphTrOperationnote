@@ -92,4 +92,3 @@ class PreparationIntraocularSolution extends BaseEventTypeElement
 			));
 	}
 }
-?>

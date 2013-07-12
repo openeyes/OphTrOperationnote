@@ -98,4 +98,3 @@ class OperationDrug extends BaseEventTypeElement
 			));
 	}
 }
-?>

@@ -98,4 +98,3 @@ class IncisionSite extends BaseEventTypeElement
 			));
 	}
 }
-?>

@@ -3,7 +3,7 @@
 class ReportController extends BaseController
 {
 	// disables the need to pass an argument to the constructor
-	function __construct($blah=null)
+	public function __construct($blah=null)
 	{
 		parent::__construct($blah);
 	}

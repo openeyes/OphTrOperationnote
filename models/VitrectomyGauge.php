@@ -98,4 +98,3 @@ class VitrectomyGauge extends BaseEventTypeElement
 			));
 	}
 }
-?>

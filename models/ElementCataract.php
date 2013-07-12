@@ -331,7 +331,7 @@ class ElementCataract extends BaseEventTypeElement
 			}
 			if (!$this->iol_power) {
 				$this->addError('Cataract','IOL power cannot be blank');
-			} else if (!preg_match('/^\-?[0-9]{1,3}(\.[0-9])?$/',$this->iol_power)) {
+			} elseif (!preg_match('/^\-?[0-9]{1,3}(\.[0-9])?$/',$this->iol_power)) {
 				$this->addError('Cataract','IOL power must be a number with an optional single decimal place');
 			}
 		}
