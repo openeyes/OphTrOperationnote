@@ -59,7 +59,7 @@ class AnaestheticComplication extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -73,7 +73,8 @@ class AnaestheticComplication extends BaseEventTypeElement
 		);
 	}
 
-	public function getName() {
+	public function getName()
+	{
 		return AnaestheticComplications::model()->findByPk($this->anaesthetic_complication_id)->name;
 	}
 
@@ -104,4 +105,3 @@ class AnaestheticComplication extends BaseEventTypeElement
 			));
 	}
 }
-?>

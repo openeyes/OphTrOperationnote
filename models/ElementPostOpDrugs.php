@@ -60,7 +60,7 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 			// Please remove those attributes that should not be searched.
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -99,7 +99,7 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('event_id', $this->event_id, true);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
@@ -116,11 +116,12 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 	 * Need to delete associated records
 	 * @see CActiveRecord::beforeDelete()
 	 */
-	protected function beforeDelete() {
+	protected function beforeDelete()
+	{
 		OperationDrug::model()->deleteAllByAttributes(array('et_ophtroperationnote_postop_drugs_id' => $this->id));
 		return parent::beforeDelete();
 	}
-	
+
 	protected function beforeSave()
 	{
 		return parent::beforeSave();
@@ -165,11 +166,13 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 		return parent::beforeValidate();
 	}
 
-	public function getDrug_list() {
+	public function getDrug_list()
+	{
 		return $this->getDrugsBySiteAndSubspecialty();
 	}
 
-	public function getDrugsBySiteAndSubspecialty($default=false) {
+	public function getDrugsBySiteAndSubspecialty($default=false)
+	{
 		$criteria = new CDbCriteria;
 		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
 		$criteria->params[':subspecialtyId'] = Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty_id;
@@ -191,7 +194,8 @@ class ElementPostOpDrugs extends BaseEventTypeElement
 			->findAll($criteria),'id','name');
 	}
 
-	public function getDrug_defaults() {
+	public function getDrug_defaults()
+	{
 		$ids = array();
 		foreach ($this->getDrugsBySiteAndSubspecialty(true) as $id => $drug) {
 			$ids[] = $id;

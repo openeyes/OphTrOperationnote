@@ -66,7 +66,7 @@ class ElementBuckle extends BaseEventTypeElement
 			array('id, event_id, drainage_type_id, drain_haem, deep_suture, eyedraw', 'safe', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -112,7 +112,7 @@ class ElementBuckle extends BaseEventTypeElement
 		$criteria->compare('drainage_type_id', $this->drainage_type_id);
 		$criteria->compare('drain_haem', $this->drain_haem);
 		$criteria->compare('deep_suture', $this->deep_suture);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
@@ -125,11 +125,13 @@ class ElementBuckle extends BaseEventTypeElement
 	{
 	}
 
-	public function getEye() {
+	public function getEye()
+	{
 		return ElementProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
 	}
 
-	public function getSelectedEye() {
+	public function getSelectedEye()
+	{
 		if (Yii::app()->getController()->getAction()->id == 'create') {
 			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
 			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {

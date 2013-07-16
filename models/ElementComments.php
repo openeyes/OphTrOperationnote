@@ -64,7 +64,7 @@ class ElementComments extends BaseEventTypeElement
 			array('id, event_id, comments, postop_instructions', 'safe', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -115,7 +115,8 @@ class ElementComments extends BaseEventTypeElement
 		));
 	}
 
-	public function getPostop_instructions_list() {
+	public function getPostop_instructions_list()
+	{
 		$criteria = new CDbCriteria;
 
 		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');

@@ -67,7 +67,7 @@ class ElementSurgeon extends BaseEventTypeElement
 			array('id, event_id, surgeon_id, assistant_id, supervising_surgeon_id', 'safe', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -117,7 +117,7 @@ class ElementSurgeon extends BaseEventTypeElement
 		$criteria->compare('surgeon_id', $this->surgeon_id);
 		$criteria->compare('assistant_id', $this->assistant_id);
 		$criteria->compare('supervising_surgeon_id', $this->supervising_surgeon_id);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
@@ -126,7 +126,8 @@ class ElementSurgeon extends BaseEventTypeElement
 	/**
 	* Set default values for forms on create
 	*/
-	public function setDefaultOptions() {
+	public function setDefaultOptions()
+	{
 		$user = Yii::app()->session['user'];
 
 		if ($user->is_doctor) {
@@ -134,7 +135,8 @@ class ElementSurgeon extends BaseEventTypeElement
 		}
 	}
 
-	public function getSurgeons() {
+	public function getSurgeons()
+	{
 		if (!$this->surgeonlist) {
 			$this->surgeonlist = User::model()->getSurgeons();
 		}

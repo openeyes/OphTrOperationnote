@@ -66,7 +66,7 @@ class ElementTamponade extends BaseEventTypeElement
 			array('id, event_id, gas_type_id, gas_percentage_id, gas_volume_id', 'safe', 'on' => 'search'),
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -114,7 +114,7 @@ class ElementTamponade extends BaseEventTypeElement
 		$criteria->compare('gas_type_id', $this->gas_type_id);
 		$criteria->compare('percentage', $this->percentage);
 		$criteria->compare('volume', $this->volume);
-		
+
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
@@ -127,7 +127,8 @@ class ElementTamponade extends BaseEventTypeElement
 	{
 	}
 
-	public function beforeSave() {
+	public function beforeSave()
+	{
 		if (!$this->gas_volume_id) {
 			$this->gas_volume_id = null;
 		}

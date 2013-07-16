@@ -27,9 +27,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-		
+
 		//----
-			
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$this->insert('element_type', array('name' => 'RemAqueousShunt', 'class_name' => 'ElementRemAqueousShunt', 'event_type_id' => $event_type['id'], 'display_order' => 2, 'default' => 0));
 
@@ -53,7 +53,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-			
+
 		//----
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -79,7 +79,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-			
+
 		//----
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -105,7 +105,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-			
+
 		//----
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -131,7 +131,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-			
+
 		//----
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -157,7 +157,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-			
+
 		//----
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -183,7 +183,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-			
+
 		//----
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -209,7 +209,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-			
+
 		//----
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -235,7 +235,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 			),
 			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
-			
+
 		//----
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -272,9 +272,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_ozurdex');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemAqueousShunt'))->queryRow();
 
@@ -282,9 +282,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_rem_aqueous_shunt');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOrbitOther'))->queryRow();
 
@@ -292,9 +292,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_orbit_other');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLidOther'))->queryRow();
 
@@ -302,9 +302,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lid_other');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRedoDCR'))->queryRow();
 
@@ -312,9 +312,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_redo_dcr');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOrbit'))->queryRow();
 
@@ -322,9 +322,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_repair_orbit');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDrainSupra'))->queryRow();
 
@@ -332,9 +332,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_drain_supra');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsoconjDiamond'))->queryRow();
 
@@ -342,9 +342,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_tarsoconj_diamond');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLatCanthSling'))->queryRow();
 
@@ -352,9 +352,9 @@ class m120625_161647_add_new_procedures extends CDbMigration
 		$this->delete('element_type','id='.$element_type['id']);
 
 		$this->dropTable('et_ophtroperationnote_lat_canth_sling');
-		
+
 		//----
-		
+
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementThreeSnip'))->queryRow();
 

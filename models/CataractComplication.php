@@ -59,7 +59,7 @@ class CataractComplication extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -73,7 +73,8 @@ class CataractComplication extends BaseEventTypeElement
 		);
 	}
 
-	public function getName() {
+	public function getName()
+	{
 		return CataractComplications::model()->findByPk($this->complication_id)->name;
 	}
 
@@ -104,4 +105,3 @@ class CataractComplication extends BaseEventTypeElement
 			));
 	}
 }
-?>

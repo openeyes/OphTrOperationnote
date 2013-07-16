@@ -53,7 +53,7 @@ class PreparationSkinPreparation extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -92,4 +92,3 @@ class PreparationSkinPreparation extends BaseEventTypeElement
 			));
 	}
 }
-?>

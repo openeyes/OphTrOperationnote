@@ -56,7 +56,7 @@ class ProcedureListProcedureAssignment extends BaseEventTypeElement
 		return array(
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -96,4 +96,3 @@ class ProcedureListProcedureAssignment extends BaseEventTypeElement
 			));
 	}
 }
-?>
