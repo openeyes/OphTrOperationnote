@@ -152,10 +152,18 @@ class ElementAnaesthetic extends BaseEventTypeElement
 				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
 			}
 
-			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
-						$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
+			if (($episode = $patient->getEpisodeForCurrentSubspecialty()) &&
+				($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) &&
+				($booking = $api->getMostRecentBookingForEpisode($patient, $episode))) {
+				$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
+			} else {
+				if ($patient = Patient::model()->findByPk($patient_id)) {
+					$key = $patient->isChild() ? 'ophtroperationnote_default_anaesthetic_child' : 'ophtroperationnote_default_anaesthetic';
+
+					if (isset(Yii::app()->params[$key])) {
+						if ($at = AnaestheticType::model()->find('code=?',array(Yii::app()->params[$key]))) {
+							$this->anaesthetic_type_id = $at->id;
+						}
 					}
 				}
 			}
