@@ -157,13 +157,11 @@ class ElementAnaesthetic extends BaseEventTypeElement
 				($booking = $api->getMostRecentBookingForEpisode($patient, $episode))) {
 				$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
 			} else {
-				if ($patient = Patient::model()->findByPk($patient_id)) {
-					$key = $patient->isChild() ? 'ophtroperationnote_default_anaesthetic_child' : 'ophtroperationnote_default_anaesthetic';
+				$key = $patient->isChild() ? 'ophtroperationnote_default_anaesthetic_child' : 'ophtroperationnote_default_anaesthetic';
 
-					if (isset(Yii::app()->params[$key])) {
-						if ($at = AnaestheticType::model()->find('code=?',array(Yii::app()->params[$key]))) {
-							$this->anaesthetic_type_id = $at->id;
-						}
+				if (isset(Yii::app()->params[$key])) {
+					if ($at = AnaestheticType::model()->find('code=?',array(Yii::app()->params[$key]))) {
+						$this->anaesthetic_type_id = $at->id;
 					}
 				}
 			}
