@@ -53,8 +53,8 @@ class ReportController extends BaseController
 		if (preg_match('/^[0-9]+[\s\-][a-zA-Z]{3}[\s\-][0-9]{4}$/',@$params['date_to'])) {
 			$params['date_to'] = Helper::convertNHS2MySQL($params['date_to']);
 		}
-		@$params['date_from'] and $where .= " and e.datetime >= '{$params['date_from']}'";
-		@$params['date_to'] and $where .= " and e.datetime <= '{$params['date_to']}'";
+		@$params['date_from'] and $where .= " and e.created_date >= '{$params['date_from']}'";
+		@$params['date_to'] and $where .= " and e.created_date <= '{$params['date_to']}'";
 
 		$data['cataracts'] = 0;
 		$data['eyes'] = array(
@@ -160,10 +160,10 @@ class ReportController extends BaseController
 		$where = '';
 
 		if (strtotime($params['date_from'])) {
-			$where .= " and e.datetime >= '".date('Y-m-d',strtotime($params['date_from']))." 00:00:00'";
+			$where .= " and e.created_date >= '".date('Y-m-d',strtotime($params['date_from']))." 00:00:00'";
 		}
 		if (strtotime($params['date_to'])) {
-			$where .= " and e.datetime <= '".date('Y-m-d',strtotime($params['date_to']))." 23:59:59'";
+			$where .= " and e.created_date <= '".date('Y-m-d',strtotime($params['date_to']))." 23:59:59'";
 		}
 
 		if ($user = User::model()->findByPk($params['surgeon_id'])) {
@@ -187,7 +187,7 @@ class ReportController extends BaseController
 		}
 
 		foreach (Yii::app()->$db->createCommand()
-			->select("p.hos_num, c.first_name, c.last_name, e.datetime, s.surgeon_id, s.assistant_id, s.supervising_surgeon_id, pl.id as pl_id, e.id as event_id, cat.id as cat_id, eye.name as eye")
+			->select("p.hos_num, c.first_name, c.last_name, e.created_date, s.surgeon_id, s.assistant_id, s.supervising_surgeon_id, pl.id as pl_id, e.id as event_id, cat.id as cat_id, eye.name as eye")
 			->from('patient p')
 			->join('contact c',"c.parent_class = 'Patient' and c.parent_id = p.id")
 			->join('episode ep','ep.patient_id = p.id')
@@ -197,11 +197,11 @@ class ReportController extends BaseController
 			->join('et_ophtroperationnote_surgeon s','s.event_id = e.id')
 			->leftJoin('et_ophtroperationnote_cataract cat','cat.event_id = e.id')
 			->where("e.deleted = 0 and ep.deleted = 0 $where")
-			->order('e.datetime asc')
+			->order('e.created_date asc')
 			->queryAll() as $row) {
 
 			$operations[] = array(
-				'date' => date('j M Y',strtotime($row['datetime'])),
+				'date' => date('j M Y',strtotime($row['created_date'])),
 				'hos_num' => $row['hos_num'],
 				'first_name' => $row['first_name'],
 				'last_name' => $row['last_name'],
