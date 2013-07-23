@@ -17,7 +17,7 @@
  */
 
 function callbackAddProcedure(procedure_id) {
-	var eye = $('input[name="ElementProcedureList\[eye_id\]"]:checked').val();
+	var eye = $('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]:checked').val();
 
 	$.ajax({
 		'type': 'GET',
@@ -40,8 +40,8 @@ function callbackAddProcedure(procedure_id) {
 					if (m) {
 						m[1] = m[1].replace(/ .*$/,'');
 
-						if ($('div.'+m[1]).length <1) {
-							$('div.ElementAnaesthetic').before(html);
+						if (m[1] == 'Element_OphTrOperationnote_GenericProcedure' || $('div.'+m[1]).length <1) {
+							$('div.Element_OphTrOperationnote_Anaesthetic').before(html);
 							$('div.'+m[1]).attr('style','display: none;');
 							$('div.'+m[1]).removeClass('hidden');
 							$('div.'+m[1]).slideToggle('fast');
@@ -84,24 +84,24 @@ function callbackRemoveProcedure(procedure_id) {
 }
 
 function setCataractSelectInput(key, value) {
-	$('#ElementCataract_'+key+'_id').children('option').map(function() {
+	$('#Element_OphTrOperationnote_Cataract_'+key+'_id').children('option').map(function() {
 		if ($(this).text() == value) {
-			$('#ElementCataract_'+key+'_id').val($(this).val());
+			$('#Element_OphTrOperationnote_Cataract_'+key+'_id').val($(this).val());
 		}
 	});
 }
 
 function setCataractInput(key, value) {
-	$('#ElementCataract_'+key).val(value);
+	$('#Element_OphTrOperationnote_Cataract_'+key).val(value);
 }
 
 $(document).ready(function() {
 	handleButton($('#et_save'),function() {
-		if ($('#ElementBuckle_report').length >0) {
-			$('#ElementBuckle_report').val(ed_drawing_edit_Buckle.report());
+		if ($('#Element_OphTrOperationnote_Buckle_report').length >0) {
+			$('#Element_OphTrOperationnote_Buckle_report').val(ed_drawing_edit_Buckle.report());
 		}
-		if ($('#ElementCataract_report2').length >0) {
-			$('#ElementCataract_report2').val(ed_drawing_edit_Cataract.report());
+		if ($('#Element_OphTrOperationnote_Cataract_report2').length >0) {
+			$('#Element_OphTrOperationnote_Cataract_report2').val(ed_drawing_edit_Cataract.report());
 		}
 	});
 
@@ -130,9 +130,9 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
-	var last_ElementProcedureList_eye_id = null;
+	var last_Element_OphTrOperationnote_ProcedureList_eye_id = null;
 
-	$('div[data-element-type-class="ElementProcedureList"]').undelegate('input[name="ElementProcedureList\[eye_id\]"]','change').delegate('input[name="ElementProcedureList\[eye_id\]"]','change',function() {
+	$('div[data-element-type-class="Element_OphTrOperationnote_ProcedureList"]').undelegate('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]','change').delegate('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]','change',function() {
 		var element = $(this);
 
 		if ($(this).val() == 3) {
@@ -153,7 +153,7 @@ $(document).ready(function() {
 					'data': procs,
 					'success': function(result) {
 						if (result != 'yes') {
-							$('#ElementProcedureList_eye_id_'+last_ElementProcedureList_eye_id).attr('checked','checked');
+							$('#Element_OphTrOperationnote_ProcedureList_eye_id_'+last_Element_OphTrOperationnote_ProcedureList_eye_id).attr('checked','checked');
 							if (parseInt(result.split("\n").length) == 1) {
 								alert("The following procedure requires a specific eye selection and cannot be entered for both eyes at once:\n\n"+result);
 							} else {
@@ -166,7 +166,7 @@ $(document).ready(function() {
 							}
 
 							changeEye();
-							last_ElementProcedureList_eye_id = element.val();
+							last_Element_OphTrOperationnote_ProcedureList_eye_id = element.val();
 
 							return true;
 						}
@@ -179,7 +179,7 @@ $(document).ready(function() {
 
 				changeEye();
 
-				last_ElementProcedureList_eye_id = $(this).val();
+				last_Element_OphTrOperationnote_ProcedureList_eye_id = $(this).val();
 
 				return true;
 			}
@@ -191,27 +191,27 @@ $(document).ready(function() {
 			}
 
 			changeEye();	
-			last_ElementProcedureList_eye_id = $(this).val();
+			last_Element_OphTrOperationnote_ProcedureList_eye_id = $(this).val();
 
 			return true;
 		}
 	});
 
-	$('div[data-element-type-class="ElementAnaesthetic"]').undelegate('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]','click').delegate('input[name="ElementAnaesthetic\[anaesthetic_type_id\]"]','click',function(e) {
+	$('div[data-element-type-class="Element_OphTrOperationnote_Anaesthetic"]').undelegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetic_type_id\]"]','click').delegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetic_type_id\]"]','click',function(e) {
 		anaestheticSlide.handleEvent($(this));
 	});
 
-	$('div[data-element-type-class="ElementCataract"]').undelegate('input[name="ElementAnaesthetic\[anaesthetist_id\]"]','click').delegate('input[name="ElementAnaesthetic\[anaesthetist_id\]"]','click',function(e) {
+	$('div[data-element-type-class="Element_OphTrOperationnote_Cataract"]').undelegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetist_id\]"]','click').delegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetist_id\]"]','click',function(e) {
 		anaestheticGivenBySlide.handleEvent($(this));
 	});
 
-	$('#ElementCataract_iol_type_id').die('change').live('change',function() {
+	$('#Element_OphTrOperationnote_Cataract_iol_type_id').die('change').live('change',function() {
 		if ($(this).children('optgroup').children('option:selected').text() == 'MTA3UO' || $(this).children('option:selected').text() == 'MTA4UO') {
-			$('#ElementCataract_iol_position_id').val(4);
+			$('#Element_OphTrOperationnote_Cataract_iol_position_id').val(4);
 		}
 	});
 
-	$('#ElementCataract_iol_power').die('keypress').live('keypress',function(e) {
+	$('#Element_OphTrOperationnote_Cataract_iol_power').die('keypress').live('keypress',function(e) {
 		if (e.keyCode == 13) {
 			return false;
 		}
@@ -226,7 +226,7 @@ $(document).ready(function() {
 });
 
 function callbackVerifyAddProcedure(proc_name,durations,short_version,callback) {
-	var eye = $('input[name="ElementProcedureList\[eye_id\]"]:checked').val();
+	var eye = $('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]:checked').val();
 
 	if (eye != 3) {
 		callback(true);
@@ -257,35 +257,35 @@ AnaestheticSlide.prototype = {
 		var slide = false;
 
 		if (!this.anaestheticTypeSliding) {
-			if (e.val() == 5 && !$('#ElementAnaesthetic_anaesthetist_id').is(':hidden')) {
+			if (e.val() == 5 && !$('#Element_OphTrOperationnote_Anaesthetic_anaesthetist_id').is(':hidden')) {
 				this.slide(true);
-			} else if (e.val() != 5 && $('#ElementAnaesthetic_anaesthetist_id').is(':hidden')) {
+			} else if (e.val() != 5 && $('#Element_OphTrOperationnote_Anaesthetic_anaesthetist_id').is(':hidden')) {
 				this.slide(false);
 			}
 		}
 
 		// If topical anaesthetic type is selected, select topical delivery
 		if (e.val() == 1) {
-			$('#ElementAnaesthetic_anaesthetic_delivery_id_5').click();
+			$('#Element_OphTrOperationnote_Anaesthetic_anaesthetic_delivery_id_5').click();
 		}
 	},
 	slide : function(hide) {
 		this.anaestheticTypeSliding = true;
-		$('#ElementAnaesthetic_anaesthetist_id').slideToggle('fast');
+		$('#Element_OphTrOperationnote_Anaesthetic_anaesthetist_id').slideToggle('fast');
 		if (hide) {
-			if (!$('#div_ElementAnaesthetic_anaesthetic_witness_id').is(':hidden')) {
-				$('#div_ElementAnaesthetic_anaesthetic_witness_id').slideToggle('fast');
+			if (!$('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').is(':hidden')) {
+				$('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').slideToggle('fast');
 			}
 		} else {
-			if ($('#ElementAnaesthetic_anaesthetist_id_3').is(':checked') && $('#div_ElementAnaesthetic_anaesthetic_witness_id').is(':hidden')) {
-				$('#div_ElementAnaesthetic_anaesthetic_witness_id').slideToggle('fast');
+			if ($('#Element_OphTrOperationnote_Anaesthetic_anaesthetist_id_3').is(':checked') && $('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').is(':hidden')) {
+				$('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').slideToggle('fast');
 			}
 		}
 
-		$('#ElementAnaesthetic_anaesthetic_delivery_id').slideToggle('fast');
-		$('#div_ElementAnaesthetic_Agents').slideToggle('fast');
-		$('#div_ElementAnaesthetic_Complications').slideToggle('fast');
-		$('#div_ElementAnaesthetic_anaesthetic_comment').slideToggle('fast',function() {
+		$('#Element_OphTrOperationnote_Anaesthetic_anaesthetic_delivery_id').slideToggle('fast');
+		$('#div_Element_OphTrOperationnote_Anaesthetic_Agents').slideToggle('fast');
+		$('#div_Element_OphTrOperationnote_Anaesthetic_Complications').slideToggle('fast');
+		$('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_comment').slideToggle('fast',function() {
 			anaestheticSlide.anaestheticTypeSliding = false;
 		});
 	}
@@ -301,11 +301,11 @@ AnaestheticGivenBySlide.prototype = {
 		var slide = false;
 
 		// if Fife mode is enabled
-		if ($('#div_ElementAnaesthetic_anaesthetic_witness_id')) {
+		if ($('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id')) {
 			// If nurse is selected, show the witness field
 			if (!this.anaestheticTypeWitnessSliding) {
-				if ((e.val() == 3 && $('#div_ElementAnaesthetic_anaesthetic_witness_id').is(':hidden')) ||
-					(e.val() != 3 && !$('#div_ElementAnaesthetic_anaesthetic_witness_id').is(':hidden'))) {
+				if ((e.val() == 3 && $('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').is(':hidden')) ||
+					(e.val() != 3 && !$('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').is(':hidden'))) {
 					this.slide();
 				}
 			}
@@ -313,7 +313,7 @@ AnaestheticGivenBySlide.prototype = {
 	},
 	slide : function() {
 		this.anaestheticTypeWitnessSliding = true;
-		$('#div_ElementAnaesthetic_anaesthetic_witness_id').slideToggle('fast',function() {
+		$('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').slideToggle('fast',function() {
 			anaestheticGivenBySlide.anaestheticTypeWitnessSliding = false;
 		});
 	}
@@ -393,10 +393,10 @@ function sidePortController(_drawing)
 				break;
 			case 'doodleDeleted':
 				if ($.inArray(_messageArray['object'],eyedraw_iol_classes) != -1) {
-					$('#div_ElementCataract_iol_type_id').hide();
-					$('#div_ElementCataract_iol_power').hide();
-					$('#div_ElementCataract_iol_position_id').hide();
-					$('#ElementCataract_iol_position_id').children('option').map(function() {
+					$('#div_Element_OphTrOperationnote_Cataract_iol_type_id').hide();
+					$('#div_Element_OphTrOperationnote_Cataract_iol_power').hide();
+					$('#div_Element_OphTrOperationnote_Cataract_iol_position_id').hide();
+					$('#Element_OphTrOperationnote_Cataract_iol_position_id').children('option').map(function() {
 						if ($(this).text() == 'None') {
 							$(this).attr('selected','selected');
 						}
@@ -405,11 +405,11 @@ function sidePortController(_drawing)
 				break;
 			case 'doodleAdded':
 				if ($.inArray(_messageArray['object']['className'],eyedraw_iol_classes) != -1) {
-					$('#div_ElementCataract_iol_type_id').show();
-					$('#div_ElementCataract_iol_power').show();
-					$('#div_ElementCataract_iol_position_id').show();
-					if ($('#ElementCataract_iol_position_id').children('option:selected').text() == 'None') {
-						$('#ElementCataract_iol_position_id').children('option').map(function() {
+					$('#div_Element_OphTrOperationnote_Cataract_iol_type_id').show();
+					$('#div_Element_OphTrOperationnote_Cataract_iol_power').show();
+					$('#div_Element_OphTrOperationnote_Cataract_iol_position_id').show();
+					if ($('#Element_OphTrOperationnote_Cataract_iol_position_id').children('option:selected').text() == 'None') {
+						$('#Element_OphTrOperationnote_Cataract_iol_position_id').children('option').map(function() {
 							if ($(this).text() == '- Please select -') {
 								$(this).attr('selected','selected');
 							}

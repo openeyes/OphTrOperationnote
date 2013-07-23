@@ -95,7 +95,7 @@ class DefaultController extends BaseEventTypeController
 
 	public function actionDelete($id)
 	{
-		$proclist = ElementProcedureList::model()->find('event_id=?',array($id));
+		$proclist = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($id));
 
 		if (parent::actionDelete($id)) {
 			if ($proclist && $proclist->booking_event_id) {
@@ -118,7 +118,7 @@ class DefaultController extends BaseEventTypeController
 		// If we're loading the create form and there are procedures pulled from the booking which map to elements
 		// then we need to include them in the form
 		if ($action == 'create' && empty($_POST)) {
-			$proclist = new ElementProcedureList;
+			$proclist = new Element_OphTrOperationnote_ProcedureList;
 			$extra_elements = array();
 
 			$new_elements = array(array_shift($elements));
@@ -128,7 +128,7 @@ class DefaultController extends BaseEventTypeController
 				$criteria->compare('procedure_id',$procedure->id);
 				$criteria->order = 'display_order asc';
 
-				foreach (ProcedureListOperationElement::model()->findAll($criteria) as $element) {
+				foreach (OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria) as $element) {
 					$element = new $element->element_type->class_name;
 
 					if (!in_array(get_class($element),$extra_elements)) {
@@ -146,12 +146,12 @@ class DefaultController extends BaseEventTypeController
 			$extra_elements = array();
 			$new_elements = array(array_shift($elements));
 
-			foreach (ElementProcedureList::model()->find('event_id = :event_id',array(':event_id' => $this->event->id))->selected_procedures as $procedure) {
+			foreach (Element_OphTrOperationnote_ProcedureList::model()->find('event_id = :event_id',array(':event_id' => $this->event->id))->selected_procedures as $procedure) {
 				$criteria = new CDbCriteria;
 				$criteria->compare('procedure_id',$procedure->id);
 				$criteria->order = 'display_order asc';
 
-				foreach (ProcedureListOperationElement::model()->findAll($criteria) as $element) {
+				foreach (OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria) as $element) {
 					$class = $element->element_type->class_name;
 					$element = new $element->element_type->class_name;
 
@@ -170,13 +170,17 @@ class DefaultController extends BaseEventTypeController
 
 		// Get correct order for procedure elements
 		if ($this->event) {
-			$procedure_list = ElementProcedureList::model()->find(
+			$procedure_list = Element_OphTrOperationnote_ProcedureList::model()->find(
 					'event_id = :event_id',
 					array(':event_id' => $this->event->id)
 			);
 			$procedure_classes = array();
 			foreach ($procedure_list->procedure_assignments as $procedure_assignment) {
-				$procedure_classes[] = ProcedureListOperationElement::model()->find('procedure_id = ?', array($procedure_assignment->proc_id))->element_type->class_name;
+				if ($pl_element = OphTrOperationnote_ProcedureListOperationElement::model()->find('procedure_id = ?', array($procedure_assignment->proc_id))) {
+					$procedure_classes[] = $pl_element->element_type->class_name;
+				} else {
+					$procedure_classes[] = 'Element_OphTrOperationnote_GenericProcedure';
+				}
 			}
 
 			// Resort procedure elements
@@ -211,17 +215,32 @@ class DefaultController extends BaseEventTypeController
 
 		$form = new BaseEventTypeCActiveForm;
 
-		foreach ($this->getProcedureSpecificElements($proc->id) as $element) {
+		$procedureSpecificElements = $this->getProcedureSpecificElements($proc->id);
+
+		foreach ($procedureSpecificElements as $element) {
 			$class_name = $element->element_type->class_name;
 
 			$element = new $class_name;
 
-			if (in_array($class_name,array('ElementCataract','ElementVitrectomy','ElementBuckle'))) {
+			if (in_array($class_name,array('Element_OphTrOperationnote_Cataract','Element_OphTrOperationnote_Vitrectomy','Element_OphTrOperationnote_Buckle'))) {
 				if (!in_array(@$_GET['eye'],array(1,2))) {
 					echo "must-select-eye";
 					return;
 				}
 			}
+
+			$element->setDefaultOptions();
+
+			$this->renderPartial(
+				'create' . '_' . $element->create_view,
+				array('element' => $element, 'data' => array(), 'form' => $form, 'ondemand' => true),
+				false, true
+			);
+		}
+
+		if (count($procedureSpecificElements) == 0) {
+			$element = new Element_OphTrOperationnote_GenericProcedure;
+			$element->proc_id = $proc->id;
 
 			$element->setDefaultOptions();
 
@@ -244,7 +263,7 @@ class DefaultController extends BaseEventTypeController
 		$elements = array();
 
 		foreach ($this->getProcedureSpecificElements($proc->id) as $element) {
-			if (empty($procedures) || !ProcedureListOperationElement::model()->find('procedure_id in ('.implode(',',$procedures).') and element_type_id = '.$element->element_type->id)) {
+			if (empty($procedures) || !OphTrOperationnote_ProcedureListOperationElement::model()->find('procedure_id in ('.implode(',',$procedures).') and element_type_id = '.$element->element_type->id)) {
 				$elements[] = $element->element_type->class_name;
 			}
 		}
@@ -258,7 +277,7 @@ class DefaultController extends BaseEventTypeController
 		$criteria->compare('procedure_id',$procedure_id);
 		$criteria->order = 'display_order asc';
 
-		return ProcedureListOperationElement::model()->findAll($criteria);
+		return OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria);
 	}
 
 	public function getAllProcedureElements($action)
@@ -268,7 +287,7 @@ class DefaultController extends BaseEventTypeController
 
 		foreach ($elements as $element) {
 			$element_type = ElementType::model()->find('class_name = ?', array(get_class($element)));
-			$procedure_elements = ProcedureListOperationElement::model()->find('element_type_id = ?', array($element_type->id));
+			$procedure_elements = OphTrOperationnote_ProcedureListOperationElement::model()->find('element_type_id = ?', array($element_type->id));
 			if ($procedure_elements) {
 				$current_procedure_elements[] = $element;
 			}
@@ -352,10 +371,10 @@ class DefaultController extends BaseEventTypeController
 	// returns true if the passed procedure id requires the selection of 'left' or 'right' eye
 	public function procedure_requires_eye($procedure_id)
 	{
-		foreach (ProcedureListOperationElement::model()->findAll('procedure_id=?',array($procedure_id)) as $plpa) {
+		foreach (OphTrOperationnote_ProcedureListOperationElement::model()->findAll('procedure_id=?',array($procedure_id)) as $plpa) {
 			$element_type = ElementType::model()->findByPk($plpa->element_type_id);
 
-			if (in_array($element_type->class_name,array('ElementCataract','ElementBuckle','ElementVitrectomy'))) {
+			if (in_array($element_type->class_name,array('Element_OphTrOperationnote_Cataract','Element_OphTrOperationnote_Buckle','Element_OphTrOperationnote_Vitrectomy'))) {
 				return true;
 			}
 		}

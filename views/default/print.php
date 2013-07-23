@@ -57,7 +57,7 @@
 				</div>
 				<div class="value pronounced">
 					<?php
-						$operations_perf = ElementProcedureList::model()->find("event_id = ?", array($this->event->id));
+						$operations_perf = Element_OphTrOperationnote_ProcedureList::model()->find("event_id = ?", array($this->event->id));
 						foreach ($operations_perf->procedures as $procedure) {
 							echo "<strong>{$operations_perf->eye->name} {$procedure->term}</strong><br>";
 						}
@@ -66,7 +66,7 @@
 			</div>
 			<div class="surgeonList">
 				<?php
-					$surgeon_element = ElementSurgeon::model()->find("event_id = ?", array($this->event->id));
+					$surgeon_element = Element_OphTrOperationnote_Surgeon::model()->find("event_id = ?", array($this->event->id));
 					$surgeon_name = ($surgeon = User::model()->findByPk($surgeon_element->surgeon_id)) ? $surgeon->getFullNameAndTitle() : "Unknown";
 					$assistant_name = ($assistant = User::model()->findByPk($surgeon_element->assistant_id)) ? $assistant->getFullNameAndTitle() : "None";
 					$supervising_surg_name = ($supervising_surg = User::model()->findByPk($surgeon_element->supervising_surgeon_id)) ? $supervising_surg->getFullNameAndTitle() : "None";
@@ -96,7 +96,7 @@
 
 		<h2>Anaesthetic Details</h2>
 		<?php
-			$anaesthetic_element = ElementAnaesthetic::model()->find("event_id = ?", array($this->event->id));
+			$anaesthetic_element = Element_OphTrOperationnote_Anaesthetic::model()->find("event_id = ?", array($this->event->id));
 		?>
 		<div class="anaestheticDetails details">
 			<div class="detailRow inline">
@@ -159,7 +159,7 @@
 
 		<div class="detailRow leftAlign clearVal">
 			<?php
-				$postdrugs_element = ElementPostOpDrugs::model()->find("event_id = ?", array($this->event->id));
+				$postdrugs_element = Element_OphTrOperationnote_PostOpDrugs::model()->find("event_id = ?", array($this->event->id));
 			?>
 			<div class="label">
 				Per-op Drugs:
@@ -172,7 +172,7 @@
 		</div>
 		<div class="detailRow clearVal">
 			<?php
-				$comments_element = ElementComments::model()->find("event_id = ?", array($this->event->id));
+				$comments_element = Element_OphTrOperationnote_Comments::model()->find("event_id = ?", array($this->event->id));
 			?>
 			<div class="label">
 				Post-op Instructions

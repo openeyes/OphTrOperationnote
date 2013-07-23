@@ -38,7 +38,7 @@ class m130218_094538_new_proc_elements_oe2661 extends CDbMigration
 
 		$element = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'ElementBandageContactLens'));
 		$proc = Procedure::model()->find('term=? and snomed_code=?',array('Insertion of bandage contact lens','428497007'));
-		if (!ProcedureListOperationElement::model()->find('element_type_id=? and procedure_id=?',array($element->id,$proc->id))) {
+		if (!Yii::app()->db->createCommand()->select("id")->from("et_ophtroperationnote_procedure_element")->where("element_type_id=:element_type_id and procedure_id=:procedure_id",array(':element_type_id'=>$element->id,':procedure_id'=>$proc->id))->queryRow()) {
 			$this->insert('et_ophtroperationnote_procedure_element',array('element_type_id'=>$element->id,'procedure_id'=>$proc->id));
 		}
 

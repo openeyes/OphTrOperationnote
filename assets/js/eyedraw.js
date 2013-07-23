@@ -290,7 +290,7 @@ ED_Magic.prototype = {
 		if (meridian <0) {
 			meridian += 360;
 		}
-		$('#ElementCataract_meridian').val(meridian);
+		$('#Element_OphTrOperationnote_Cataract_meridian').val(meridian);
 	},
 
 	moveIncisionAndSidePorts : function(initial) {
@@ -320,7 +320,7 @@ ED_Magic.prototype = {
 			ed_drawing_edit_Cataract.modified = false;
 			this.followSurgeon = true;
 			this.incisionMoving = 0;
-			$('#ElementCataract_eyedraw').val(ed_drawing_edit_Cataract.save());
+			$('#Element_OphTrOperationnote_Cataract_eyedraw').val(ed_drawing_edit_Cataract.save());
 		} else {
 			setTimeout('magic.moveIncisionAndSidePorts(1);', this.timerSpeed);
 		}
@@ -381,7 +381,7 @@ ED_Magic.prototype = {
 					this.followSurgeon = true;
 					this.surgeonMoveTable = 0;
 					this.surgeonMoving = 0;
-					$('#ElementCataract_eyedraw2').val(ed_drawing_edit_Position.save());
+					$('#Element_OphTrOperationnote_Cataract_eyedraw2').val(ed_drawing_edit_Position.save());
 				}
 			} else {
 				setTimeout('magic.moveSurgeon(1);', this.timerSpeed);

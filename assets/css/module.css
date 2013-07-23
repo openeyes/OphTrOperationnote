@@ -19,47 +19,47 @@
 #event_content.watermarkBox { background-image: url(../img/watermark.png); background-position: -5px 0; background-repeat: repeat-y; border-color: #fd6892; }
 #event_content h3.withEventIcon { background:transparent url(../img/medium.png) center left no-repeat; }
 
-#event_OphTrOperationnote .ElementCataract .left .halfHeight .eventDetail { margin-left: 320px; }
-#event_OphTrOperationnote .ElementCataract .right .halfHeight .eventDetail { width: 110px !important; }
-#event_OphTrOperationnote .ElementBuckle .halfHeight .eventDetail { margin-left: 535px; }
-#event_OphTrOperationnote .ElementCataract .eventDetail .label { background: none !important; }
-#event_OphTrOperationnote .ElementBuckle .eventDetail .label { background: none !important; }
-#event_OphTrOperationnote .ElementVitrectomy .halfHeight { margin-left: 575px; }
+#event_OphTrOperationnote .Element_OphTrOperationnote_Cataract .left .halfHeight .eventDetail { margin-left: 320px; }
+#event_OphTrOperationnote .Element_OphTrOperationnote_Cataract .right .halfHeight .eventDetail { width: 110px !important; }
+#event_OphTrOperationnote .Element_OphTrOperationnote_Buckle .halfHeight .eventDetail { margin-left: 535px; }
+#event_OphTrOperationnote .Element_OphTrOperationnote_Cataract .eventDetail .label { background: none !important; }
+#event_OphTrOperationnote .Element_OphTrOperationnote_Buckle .eventDetail .label { background: none !important; }
+#event_OphTrOperationnote .Element_OphTrOperationnote_Vitrectomy .halfHeight { margin-left: 575px; }
 
 #ed_canvas_edit_Cataract { background-color: #fff; border: 1px solid #000; margin-left: 9px; }
 #ed_canvas_edit_Position { background-color: #DAE6F1; margin-left: 89px; margin-top: -115px; }
 #ed_canvas_edit_Buckle { background-color: #fff; border: 1px solid #000; margin-left: 9px; }
 #ed_canvas_view_Buckle { margin-top: -25px; }
 
-#div_ElementCataract_incision_site_id { margin-top: 150px; height: 20px; }
-#div_ElementCataract_length { height: 26px; }
-#div_ElementCataract_meridian { height: 26px; }
-#div_ElementCataract_incision_type_id { height: 26px; }
-#div_ElementCataract_vision_blue { padding-bottom: 7px !important; }
-#div_ElementCataract_iol_position_id .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
-#div_ElementCataract_Complications .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
-#div_ElementCataract_Complications ul.MultiSelectList { width: 185px; }
-#div_ElementCataract_Devices ul.MultiSelectList { width: 230px; }
-#div_ElementVitrectomy_comments { display: inline-block; }
+#div_Element_OphTrOperationnote_Cataract_incision_site_id { margin-top: 150px; height: 20px; }
+#div_Element_OphTrOperationnote_Cataract_length { height: 26px; }
+#div_Element_OphTrOperationnote_Cataract_meridian { height: 26px; }
+#div_Element_OphTrOperationnote_Cataract_incision_type_id { height: 26px; }
+#div_Element_OphTrOperationnote_Cataract_vision_blue { padding-bottom: 7px !important; }
+#div_Element_OphTrOperationnote_Cataract_iol_position_id .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
+#div_Element_OphTrOperationnote_Cataract_Complications .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
+#div_Element_OphTrOperationnote_Cataract_Complications ul.MultiSelectList { width: 185px; }
+#div_Element_OphTrOperationnote_Cataract_Devices ul.MultiSelectList { width: 230px; }
+#div_Element_OphTrOperationnote_Vitrectomy_comments { display: inline-block; }
 
-#div_ElementBuckle_drainage_type_id { margin-bottom: 10px; }
+#div_Element_OphTrOperationnote_Buckle_drainage_type_id { margin-bottom: 10px; }
 
 #ed_canvas_edit_Vitrectomy { background: #fff; border: 1px solid #000; margin-left: 10px; }
 #ed_canvas_view_Vitrectomy { margin-top: -26px; }
 
-#div_ElementSurgeon { padding-bottom: 28px !important; }
-#div_ElementSurgeon_supervising_surgeon_id > .label { font-size: 13px !important; }
+#div_Element_OphTrOperationnote_Surgeon { padding-bottom: 28px !important; }
+#div_Element_OphTrOperationnote_Surgeon_supervising_surgeon_id > .label { font-size: 13px !important; }
 
-div.ElementComments { background-color: #DAE6F1; }
-div.ElementComments > h4 { background-color: #fff; margin-bottom: 5px !important; padding-bottom: 5px !important; }
+div.Element_OphTrOperationnote_Comments { background-color: #DAE6F1; }
+div.Element_OphTrOperationnote_Comments > h4 { background-color: #fff; margin-bottom: 5px !important; padding-bottom: 5px !important; }
 
-div.ElementComments .half { width: 50%; float: left; }
+div.Element_OphTrOperationnote_Comments .half { width: 50%; float: left; }
 
-#ElementComments_postop_instructions { display: block; }
+#Element_OphTrOperationnote_Comments_postop_instructions { display: block; }
 
-#div_ElementPersonnel { padding-bottom: 25px !important; }
-#div_ElementPersonnel_operating_department_practitioner_id { padding-bottom: 28px !important; }
+#div_Element_OphTrOperationnote_Personnel { padding-bottom: 25px !important; }
+#div_Element_OphTrOperationnote_Personnel_operating_department_practitioner_id { padding-bottom: 28px !important; }
 
 input.widgetSlider { width: 300px !important; }
 
-#div_ElementCataract_predicted_refraction { right: 75px; }
+#div_Element_OphTrOperationnote_Cataract_predicted_refraction { right: 75px; }
