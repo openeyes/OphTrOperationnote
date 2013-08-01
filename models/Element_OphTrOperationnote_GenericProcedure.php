@@ -59,11 +59,11 @@ class Element_OphTrOperationnote_GenericProcedure extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, proc_id, comments', 'safe'),
-			array('proc_id, comments', 'required'),
+			array('event_id, proc_id, comments, element_index', 'safe'),
+			array('proc_id, comments, element_index', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, proc_id, comments', 'safe', 'on' => 'search'),
+			array('id, event_id, element_index, proc_id, comments', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -123,13 +123,5 @@ class Element_OphTrOperationnote_GenericProcedure extends BaseEventTypeElement
 	 */
 	public function setDefaultOptions()
 	{
-	}
-
-	public function getProcedure() {
-		if (!empty($_POST)) {
-			return Procedure::model()->findByPk($_POST[get_class($this)]['proc_id']);
-		} else {
-			return Procedure::model()->findByPk($this->proc_id);
-		}
 	}
 }

@@ -26,7 +26,13 @@
 	<?php if ($this->action->id == 'update' && !$element->event_id) {?>
 		<span class="missingtext">This element is missing and needs to be completed</span>
 	<?php }?>
-	<h4 class="elementTypeName"><?php echo $element->getProcedure()->term?></h4>
-	<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 60))?>
-	<input type="hidden" name="<?php echo get_class($element)?>[proc_id]" id="<?php echo get_class($element)?>_proc_id" value="<?php echo !empty($_POST) ? $_POST[get_class($element)]['proc_id'] : $element->proc_id?>" />
+	<h4 class="elementTypeName"><?php echo $element->procedure ? $element->procedure->term : 'No procedure'?></h4>
+	<div id="div_Element_OphTrOperationnote_GenericProcedure_comments" class="eventDetail">
+		<div class="label">Comments:</div>
+		<div class="data">
+			<?php echo CHtml::textArea(get_class($element).'[comments][]',$element->comments,array('rows'=>4,'cols'=>60))?>
+		</div>
+	</div>
+	<input type="hidden" name="<?php echo get_class($element)?>[proc_id][]" value="<?php echo $element->proc_id?>" />
+	<input type="hidden" name="<?php echo get_class($element)?>[_element_id][]" value="<?php echo $element->id?>" />
 </div>

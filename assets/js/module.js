@@ -61,6 +61,16 @@ function callbackAddProcedure(procedure_id) {
 function callbackRemoveProcedure(procedure_id) {
 	var procedures = '';
 
+	var hpid = $('input[type="hidden"][name="Element_OphTrOperationnote_GenericProcedure[proc_id][]"][value="'+procedure_id+'"]');
+
+	if (hpid.length >0) {
+		hpid.parent().slideToggle('fast',function() {
+			hpid.parent().remove();
+		});
+
+		return;
+	}
+
 	$('input[name="Procedures_procs[]"]').map(function() {
 		if (procedures.length >0) {
 			procedures += ',';

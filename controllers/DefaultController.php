@@ -60,17 +60,17 @@ class DefaultController extends BaseEventTypeController
 			$this->event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
 			$this->title = "Please select booking";
 			$this->event_tabs = array(
-					array(
-							'label' => 'Select a booking',
-							'active' => true,
-					),
+				array(
+					'label' => 'Select a booking',
+					'active' => true,
+				),
 			);
 			$cancel_url = ($this->episode) ? '/patient/episode/'.$this->episode->id : '/patient/episodes/'.$this->patient->id;
 			$this->event_actions = array(
-					EventAction::link('Cancel',
-							Yii::app()->createUrl($cancel_url),
-							array('colour' => 'red', 'level' => 'secondary')
-					)
+				EventAction::link('Cancel',
+					Yii::app()->createUrl($cancel_url),
+					array('colour' => 'red', 'level' => 'secondary')
+				)
 			);
 			$this->processJsVars();
 			$this->renderPartial('select_event',array(
@@ -122,19 +122,30 @@ class DefaultController extends BaseEventTypeController
 			$extra_elements = array();
 
 			$new_elements = array(array_shift($elements));
+			$generic_index = 0;
 
 			foreach ($proclist->selected_procedures as $procedure) {
 				$criteria = new CDbCriteria;
 				$criteria->compare('procedure_id',$procedure->id);
 				$criteria->order = 'display_order asc';
 
-				foreach (OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria) as $element) {
+				$procedureElements = OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria);
+
+				foreach ($procedureElements as $element) {
 					$element = new $element->element_type->class_name;
 
 					if (!in_array(get_class($element),$extra_elements)) {
 						$extra_elements[] = get_class($element);
 						$new_elements[] = $element;
 					}
+				}
+
+				if (count($procedureElements) == 0) {
+					$element = new Element_OphTrOperationnote_GenericProcedure;
+					$element->proc_id = $procedure->id;
+					$element->element_index = $generic_index++;
+					$extra_elements[] = "Element_OphTrOperationnote_GenericProcedure";
+					$new_elements[] = $element;
 				}
 			}
 
@@ -198,6 +209,7 @@ class DefaultController extends BaseEventTypeController
 				} else {
 					$index++;
 				}
+				while (isset($sorted_elements[$index])) $index++;
 				$sorted_elements[$index] = $element;
 			}
 			ksort($sorted_elements);
