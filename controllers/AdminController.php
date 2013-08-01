@@ -30,13 +30,13 @@ class AdminController extends ModuleAdminController
 			throw new Exception("Missing name");
 		}
 
-		if ($drug = PostopDrug::model()->find(array('order'=>'display_order desc'))) {
+		if ($drug = OphTrOperationnote_PostopDrug::model()->find(array('order'=>'display_order desc'))) {
 			$display_order = $drug->display_order+1;
 		} else {
 			$display_order = 1;
 		}
 
-		$drug = new PostopDrug;
+		$drug = new OphTrOperationnote_PostopDrug;
 		$drug->name = @$_POST['name'];
 		$drug->display_order = $display_order;
 
@@ -49,7 +49,7 @@ class AdminController extends ModuleAdminController
 		$specialty = Specialty::model()->find('code=?',array('OPH'));
 		foreach (Site::model()->findAll('institution_id=?',array(1)) as $site) {
 			foreach (Subspecialty::model()->findAll('specialty_id=?',array($specialty->id)) as $subspecialty) {
-				$ssd = new PostopSiteSubspecialtyDrug;
+				$ssd = new OphTrOperationnote_PostopSiteSubspecialtyDrug;
 				$ssd->site_id = $site->id;
 				$ssd->subspecialty_id = $subspecialty->id;
 				$ssd->drug_id = $drug->id;
@@ -64,7 +64,7 @@ class AdminController extends ModuleAdminController
 
 	public function actionUpdatePostOpDrug()
 	{
-		if (!$drug = PostopDrug::model()->findByPk(@$_POST['id'])) {
+		if (!$drug = OphTrOperationnote_PostopDrug::model()->findByPk(@$_POST['id'])) {
 			throw new Exception("Drug not found: ".@$_POST['id']);
 		}
 
@@ -79,7 +79,7 @@ class AdminController extends ModuleAdminController
 
 	public function actionDeletePostOpDrug($id)
 	{
-		if ($drug = PostopDrug::model()->findByPk($id)) {
+		if ($drug = OphTrOperationnote_PostopDrug::model()->findByPk($id)) {
 			$drug->deleted = 1;
 			if ($drug->save()) {
 				echo "1";
@@ -93,7 +93,7 @@ class AdminController extends ModuleAdminController
 	{
 		if (!empty($_POST['order'])) {
 			foreach ($_POST['order'] as $i => $id) {
-				if ($drug = PostopDrug::model()->findByPk($id)) {
+				if ($drug = OphTrOperationnote_PostopDrug::model()->findByPk($id)) {
 					$drug->display_order = $i+1;
 					if (!$drug->save()) {
 						throw new Exception("Unable to save drug: ".print_r($drug->getErrors(),true));

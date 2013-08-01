@@ -33,7 +33,7 @@ class OphTrOperationnote_API extends BaseAPI
 		$return = '';
 
 		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'ElementProcedureList')) {
+			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
 				foreach ($plist->procedures as $i => $procedure) {
 					if ($i) $return .= ', ';
 					$return .= $plist->eye->adjective.' '.$procedure->term;
@@ -49,7 +49,7 @@ class OphTrOperationnote_API extends BaseAPI
 		$return = '';
 
 		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'ElementProcedureList')) {
+			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
 				foreach ($plist->procedures as $i => $procedure) {
 					if ($i) $return .= ', ';
 					$return .= $plist->eye->adjective.' '.$procedure->snomed_term;
@@ -69,7 +69,7 @@ class OphTrOperationnote_API extends BaseAPI
 			$criteria->compare('episode_id',$episode->id);
 			$criteria->compare('event_type_id',$event_type->id);
 
-			return ElementCataract::model()
+			return Element_OphTrOperationnote_Cataract::model()
 				->with('event')
 				->find($criteria);
 		}

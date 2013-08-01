@@ -210,7 +210,7 @@ class ReportController extends BaseController
 				'role' => ($row['surgeon_id'] == $user->id ? 'Surgeon' : ($row['assistant_id'] == $user->id ? 'Assistant surgeon' : 'Supervising surgeon')),
 			);
 
-			foreach (ProcedureListProcedureAssignment::model()->findAll('procedurelist_id=?',array($row['pl_id'])) as $i => $pa) {
+			foreach (OphTrOperationnote_ProcedureListProcedureAssignment::model()->findAll('procedurelist_id=?',array($row['pl_id'])) as $i => $pa) {
 				$operations[count($operations)-1]['procedures'][] = array(
 					'eye' => $row['eye'],
 					'procedure' => $pa->procedure->term,
@@ -218,7 +218,7 @@ class ReportController extends BaseController
 			}
 
 			if ($row['cat_id']) {
-				foreach (CataractComplication::model()->findAll('cataract_id=?',array($row['cat_id'])) as $complication) {
+				foreach (OphTrOperationnote_CataractComplication::model()->findAll('cataract_id=?',array($row['cat_id'])) as $complication) {
 					$operations[count($operations)-1]['complications'][] = array('complication'=>$complication->complication->name);
 				}
 			}
