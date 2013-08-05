@@ -113,7 +113,9 @@ $(document).ready(function() {
 			'data': 'YII_CSRF_TOKEN='+YII_CSRF_TOKEN,
 			'success': function(html) {
 				if (html != "1") {
-					alert("Unable to delete drug, please contact support.");
+					new OpenEyes.Dialog.Alert({
+						content: "Unable to delete drug, please contact support."
+					}).open();
 				} else {
 					obj.parent().parent().remove();
 				}
@@ -139,9 +141,20 @@ function updateDrug(obj) {
 				'data': {"id": postopdrugs_editing_value, "name": value, "YII_CSRF_TOKEN": YII_CSRF_TOKEN},
 				'dataType': 'json',
 				'success': function(data) {
-					for (var i in data['errors']) {
-						alert(data['errors'][i]);
-					}
+
+					var errors = data['errors'];
+					var error;
+					(function alertMessage() {
+						setTimeout(function() {
+							if (error = data['errors'].shift()) {
+								new OpenEyes.Dialog.Alert({
+									content: error,
+									onClose: alertMessage
+								}).open();
+							}
+						});
+					}());
+
 					if (data['errors'].length == 0) {
 						p.html('<a class="drugItem" href="#" rel="'+postopdrugs_editing_value+'">'+value+'</a>');
 					} else {
@@ -162,9 +175,20 @@ function addNewDrug(obj, another) {
 		'data': {"name": obj.val(), 'YII_CSRF_TOKEN': YII_CSRF_TOKEN},
 		'dataType': 'json',
 		'success': function(data) {
-			for (var i in data['errors']) {
-				alert(data['errors'][i]);
-			}
+			var errors = data['errors'];
+			var error;
+			(function alertMessage() {
+				setTimeout(function() {
+					if (error = data['errors'].shift()) {
+						new OpenEyes.Dialog.Alert({
+							content: error,
+							onClose: alertMessage
+						}).open();
+					} else {
+						obj.select().focus();
+					}
+				});
+			}());
 			if (data['errors'].length == 0) {
 				var li = obj.parent().parent();
 				obj.parent().html('<a class="drugItem" href="#" rel="'+data['id']+'">'+obj.val()+'</a>');
@@ -173,8 +197,6 @@ function addNewDrug(obj, another) {
 				if (another) {
 					$('#et_add').click();
 				}
-			} else {
-				obj.select().focus();
 			}
 		}
 	});

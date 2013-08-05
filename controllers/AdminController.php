@@ -21,6 +21,8 @@ class AdminController extends ModuleAdminController
 {
 	public function actionViewPostOpDrugs()
 	{
+		Audit::add('admin','list',null,false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
+
 		$this->render('postopdrugs');
 	}
 
@@ -46,7 +48,7 @@ class AdminController extends ModuleAdminController
 		}
 
 		// TODO: this is a hack for the Orbis demo and should be removed when full site/subspecialty functionality has been implemented
-		$specialty = Specialty::model()->find('code=?',array('OPH'));
+		$specialty = Specialty::model()->find('code=?',array(130));
 		foreach (Site::model()->findAll('institution_id=?',array(1)) as $site) {
 			foreach (Subspecialty::model()->findAll('specialty_id=?',array($specialty->id)) as $subspecialty) {
 				$ssd = new OphTrOperationnote_PostopSiteSubspecialtyDrug;
@@ -58,6 +60,8 @@ class AdminController extends ModuleAdminController
 				}
 			}
 		}
+
+		Audit::add('admin','create',serialize($_POST),false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
 
 		echo json_encode(array('id'=>$drug->id,'errors'=>array()));
 	}
@@ -74,6 +78,8 @@ class AdminController extends ModuleAdminController
 			return;
 		}
 
+		Audit::add('admin','update',serialize($_POST),false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
+
 		echo json_encode(array('errors'=>array()));
 	}
 
@@ -82,6 +88,7 @@ class AdminController extends ModuleAdminController
 		if ($drug = OphTrOperationnote_PostopDrug::model()->findByPk($id)) {
 			$drug->deleted = 1;
 			if ($drug->save()) {
+				Audit::add('admin','delete',$id,false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
 				echo "1";
 				return;
 			}
