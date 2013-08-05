@@ -21,6 +21,8 @@ class AdminController extends ModuleAdminController
 {
 	public function actionViewPostOpDrugs()
 	{
+		Audit::add('admin','list',null,false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
+
 		$this->render('postopdrugs');
 	}
 
@@ -59,6 +61,8 @@ class AdminController extends ModuleAdminController
 			}
 		}
 
+		Audit::add('admin','create',serialize($_POST),false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
+
 		echo json_encode(array('id'=>$drug->id,'errors'=>array()));
 	}
 
@@ -74,6 +78,8 @@ class AdminController extends ModuleAdminController
 			return;
 		}
 
+		Audit::add('admin','update',serialize($_POST),false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
+
 		echo json_encode(array('errors'=>array()));
 	}
 
@@ -82,6 +88,7 @@ class AdminController extends ModuleAdminController
 		if ($drug = PostopDrug::model()->findByPk($id)) {
 			$drug->deleted = 1;
 			if ($drug->save()) {
+				Audit::add('admin','delete',$id,false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
 				echo "1";
 				return;
 			}
