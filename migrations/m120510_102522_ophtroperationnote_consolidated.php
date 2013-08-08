@@ -50,12 +50,12 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:event_type_id',array(':name'=>'Procedure list',':event_type_id'=>$event_type['id']))->queryRow();
 
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$to['id'],'display_order'=>1,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$la['id'],'display_order'=>2,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$lac['id'],'display_order'=>3,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$las['id'],'display_order'=>4,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$ga['id'],'display_order'=>5,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->update('et_ophtroperationnote_procedurelist',array('anaesthetic_type'=>5),'anaesthetic_type=4');
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$to['id'],'display_order'=>1));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$la['id'],'display_order'=>2));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$lac['id'],'display_order'=>3));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$las['id'],'display_order'=>4));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$ga['id'],'display_order'=>5));
+			$this->update('et_ophtroperationnote_procedurelist',array('anaesthetic_type'=>5),'anaesthetic_type=4');
 		$this->update('et_ophtroperationnote_procedurelist',array('anaesthetic_type'=>4),'anaesthetic_type=3');
 		$this->update('et_ophtroperationnote_procedurelist',array('anaesthetic_type'=>3),'anaesthetic_type=2');
 		$this->update('et_ophtroperationnote_procedurelist',array('anaesthetic_type'=>2),'anaesthetic_type=1');
@@ -455,8 +455,8 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementProcedureList'))->queryRow();
 
-		$this->insert('element_type_eye',array('element_type_id'=>$element_type['id'],'eye_id'=>2,'display_order'=>1,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_eye',array('element_type_id'=>$element_type['id'],'eye_id'=>1,'display_order'=>2,'created_user_id'=>1,'last_modified_user_id'=>1));
+		$this->insert('element_type_eye',array('element_type_id'=>$element_type['id'],'eye_id'=>2,'display_order'=>1));
+		$this->insert('element_type_eye',array('element_type_id'=>$element_type['id'],'eye_id'=>1,'display_order'=>2));
 			$this->addColumn('et_ophtroperationnote_cataract','vision_blue','tinyint(1) unsigned NOT NULL DEFAULT 0');
 
 		$this->createTable('et_ophtroperationnote_cataract_iol_position', array(
@@ -676,11 +676,11 @@ Aspiration of soft lens matter'");
 		$las = $this->dbConnection->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name',array(':name'=>'LAS'))->queryRow();
 		$ga = $this->dbConnection->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name',array(':name'=>'GA'))->queryRow();
 
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$to['id'],'display_order'=>1,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$la['id'],'display_order'=>2,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$lac['id'],'display_order'=>3,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$las['id'],'display_order'=>4,'created_user_id'=>1,'last_modified_user_id'=>1));
-		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$ga['id'],'display_order'=>5,'created_user_id'=>1,'last_modified_user_id'=>1));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$to['id'],'display_order'=>1));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$la['id'],'display_order'=>2));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$lac['id'],'display_order'=>3));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$las['id'],'display_order'=>4));
+		$this->insert('element_type_anaesthetic_type',array('element_type_id'=>$element_type['id'],'anaesthetic_type_id'=>$ga['id'],'display_order'=>5));
 			$this->createTable('et_ophtroperationnote_surgeon',array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
