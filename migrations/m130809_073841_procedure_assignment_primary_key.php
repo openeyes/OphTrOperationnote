@@ -12,6 +12,7 @@ class m130809_073841_procedure_assignment_primary_key extends CDbMigration
 
 		Yii::app()->db->createCommand("alter table et_ophtroperationnote_procedurelist_procedure_assignment drop primary key;")->query();
 		Yii::app()->db->createCommand("alter table et_ophtroperationnote_procedurelist_procedure_assignment add primary key (id);")->query();
+		Yii::app()->db->createCommand("alter table et_ophtroperationnote_procedurelist_procedure_assignment add key `procedurelist_procid_key` (`procedurelist_id`,`proc_id`)")->query();
 
 		$this->alterColumn('et_ophtroperationnote_procedurelist_procedure_assignment','id','int(10) unsigned NOT NULL AUTO_INCREMENT');
 	}
@@ -20,6 +21,7 @@ class m130809_073841_procedure_assignment_primary_key extends CDbMigration
 	{
 		$this->alterColumn('et_ophtroperationnote_procedurelist_procedure_assignment','id','int(10) unsigned NOT NULL');
 
+		$this->dropIndex('procedurelist_procid_key','et_ophtroperationnote_procedurelist_procedure_assignment');
 		Yii::app()->db->createCommand("alter table et_ophtroperationnote_procedurelist_procedure_assignment drop primary key;")->query();
 		Yii::app()->db->createCommand("alter table et_ophtroperationnote_procedurelist_procedure_assignment add primary key (procedurelist_id,proc_id)")->query();
 
