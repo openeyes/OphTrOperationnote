@@ -468,6 +468,10 @@ class m130722_115732_remove_unnecessary_element_tables extends CDbMigration
 				'et_ophtroperationnote_cot_last_modified_user_id_fk' => array('last_modified_user_id','user','id'),
 				'et_ophtroperationnote_cot_created_user_id_fk' => array('created_user_id','user','id'),
 			),
+			'et_ophtroperationnote_gauge' => array(
+				'et_ophtroperationnote_gauge_last_modified_user_id_fk' => array('last_modified_user_id','user','id'),
+				'et_ophtroperationnote_gauge_created_user_id_fk' => array('created_user_id','user','id'),
+			),
 		) as $table => $keys) {
 			$new_table = preg_replace('/^et_/','',$table);
 
