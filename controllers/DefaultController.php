@@ -47,7 +47,7 @@ class DefaultController extends BaseEventTypeController
 	{
 		$errors = array();
 
-		if (!$this->patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+		if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
 			throw new Exception("Patient not found: ".@$_GET['patient_id']);
 		}
 
@@ -132,12 +132,17 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
-	public function actionPrint($id)
-	{
-		return parent::actionPrint($id);
-	}
-
-	public function getDefaultElements($action, $event_type_id=false, $event=false)
+	/**
+	 * extends parent functionality to define elements for procedures
+	 *
+	 * @param string $action
+	 * @param null $event_type_id
+	 * @param null $event
+	 * @return array|BaseEventTypeElement[]
+	 *
+	 * @see parent::getDefaultElements($action, $event_type_id, $event)
+	 */
+	public function getDefaultElements($action, $event_type_id=null, $event=null)
 	{
 		$elements = parent::getDefaultElements($action, $event_type_id, $event);
 

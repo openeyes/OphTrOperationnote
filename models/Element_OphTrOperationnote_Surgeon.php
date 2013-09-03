@@ -135,6 +135,12 @@ class Element_OphTrOperationnote_Surgeon extends BaseEventTypeElement
 		}
 	}
 
+	/**
+	 * wrapper function for retrieving surgeon list
+	 *
+	 * @return User[]
+	 * @see User::getSurgeons()
+	 */
 	public function getSurgeons()
 	{
 		if (!$this->surgeonlist) {
