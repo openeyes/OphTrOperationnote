@@ -44,6 +44,15 @@ class OphTrOperationnote_API extends BaseAPI
 		return $return;
 	}
 
+	public function getLetterProceduresBookingEventID($patient)
+	{
+		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
+				return $plist->booking_event_id;
+			}
+		}
+	}
+
 	public function getLetterProceduresSNOMED($patient)
 	{
 		$return = '';
