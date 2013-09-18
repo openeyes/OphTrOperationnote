@@ -53,6 +53,15 @@ class OphTrOperationnote_API extends BaseAPI
 		}
 	}
 
+	public function GetLastEye($patient)
+	{
+		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
+				return $plist->eye_id;
+			}
+		}
+	}
+
 	public function getLetterProceduresSNOMED($patient)
 	{
 		$return = '';
