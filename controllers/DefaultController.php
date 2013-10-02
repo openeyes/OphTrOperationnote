@@ -176,7 +176,7 @@ class DefaultController extends BaseEventTypeController
 			);
 			$procedure_classes = array();
 			foreach ($procedure_list->procedure_assignments as $procedure_assignment) {
-				$procedure_classes[] = ProcedureListOperationElement::model()->find('procedure_id = ?', array($procedure_assignment->proc_id))->element_type->class_name;
+				//$procedure_classes[] = ProcedureListOperationElement::model()->find('procedure_id = ?', array($procedure_assignment->proc_id))->element_type->class_name;
 			}
 
 			// Resort procedure elements
