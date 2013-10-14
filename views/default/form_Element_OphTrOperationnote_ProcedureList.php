@@ -26,7 +26,7 @@
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
 	<?php if (ctype_digit(@$_GET['booking_event_id'])) {?>
-		<?php echo $form->hiddenField($element, 'booking_event_id', array('value'=>@$_GET['booking_event_id']))?>
+		<?php echo $form->hiddenInput($element, 'booking_event_id', $_GET['booking_event_id'])?>
 	<?php }?>
 	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->getSelectedEye() ? $element->getSelectedEye()->id : null))?>
 	<?php
