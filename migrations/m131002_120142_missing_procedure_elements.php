@@ -12,7 +12,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Argon laser trabeculoplasty"))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_al_trabeculoplasty', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -37,7 +37,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Focal laser photocoagulation"))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_fl_photocoagulation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -61,7 +61,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserDemarcation"))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Laser demarcation"))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_laser_demarcation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -85,7 +85,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserGonioplasty"))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Laser gonioplasty"))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_laser_gonio', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -109,7 +109,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserHyaloidotomy"))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Laser hyaloidotomy"))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_laser_hyal', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',				 
@@ -133,7 +133,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserIridoplasty"))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Laser iridoplasty"))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_laser_irid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -156,7 +156,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserChorioretinal"))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Laser to chorioretinal lesion"))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_laser_chor', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -178,7 +178,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserVitreolysis"))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Laser vitreolysis"))->queryRow();
 		
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 		
 		$this->createTable('et_ophtroperationnote_laser_vitr', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -200,7 +200,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementMacularGrid"))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Macular grid"))->queryRow();
 	 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 	 
 		$this->createTable('et_ophtroperationnote_macular_grid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -222,7 +222,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementSutureLysis"))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Suture lysis"))->queryRow();
 	
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 	
 		$this->createTable('et_ophtroperationnote_suture_lys', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -246,52 +246,52 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 
 		$this->dropTable('et_ophtroperationnote_suture_lys');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementSutureLysis"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_macular_grid');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementMacularGrid"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_laser_vitr');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserVitreolysis"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_laser_chor');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserChorioretinal"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_laser_irid');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserIridoplasty"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_laser_hyal');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserHyaloidotomy"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_laser_gonio');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserGonioplasty"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_laser_demarcation');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementLaserDemarcation"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_fl_photocoagulation');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementFocalLaserPhotocoagulation"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 
 		$this->dropTable('et_ophtroperationnote_al_trabeculoplasty');
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementArgonLaserTrabeculoplasty"))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 	}
 }
