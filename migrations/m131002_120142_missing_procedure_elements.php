@@ -12,7 +12,11 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Argon laser trabeculoplasty"))->queryRow();
 
-		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		if ($proc) {
+			$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		} else {
+			echo "**WARNING** 'Argon laser trabeculoplasty' not present in proc table, not linking to element type\n";
+		}
 
 		$this->createTable('et_ophtroperationnote_al_trabeculoplasty', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
