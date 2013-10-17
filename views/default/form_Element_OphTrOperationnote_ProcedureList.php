@@ -26,7 +26,7 @@
 	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
 	<?php if (ctype_digit(@$_GET['booking_event_id'])) {?>
-		<?php echo $form->hiddenField($element, 'booking_event_id', array('value'=>@$_GET['booking_event_id']))?>
+		<?php echo $form->hiddenInput($element, 'booking_event_id', $_GET['booking_event_id'])?>
 	<?php }?>
 	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->getSelectedEye() ? $element->getSelectedEye()->id : null))?>
 	<?php
@@ -36,7 +36,6 @@
 		'newRecord' => true,
 		'last' => true,
 		'hidden' => ($this->action->id == 'create' && $element->getSelectedEye() == null && !@$_POST['Element_OphTrOperationnote_ProcedureList']['eye_id']),
-		'short_version' => false,
 	));
 	?>
 </div>
