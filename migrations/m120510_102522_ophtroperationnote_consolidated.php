@@ -155,8 +155,8 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementVitrectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Vitrectomy'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Vitrectomy'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_membrane_peel', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -173,7 +173,7 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
         'CONSTRAINT `et_ophtroperationnote_mp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
         'CONSTRAINT `et_ophtroperationnote_mp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)'
 			),
-			'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
+			'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin'
 		);
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
@@ -181,8 +181,8 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMembranePeel'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Epiretinal dissection'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Epiretinal dissection'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_gas_type', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'name' => 'varchar(5) COLLATE utf8_bin NOT NULL',
@@ -237,13 +237,13 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTamponade'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Injection of gas'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Injection of gas'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTamponade'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Injection of silicone oil into vitreous'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Injection of silicone oil into vitreous'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_buckle_drainage_type', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'name' => 'varchar(16) COLLATE utf8_bin NOT NULL',
@@ -293,8 +293,8 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBuckle'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Scleral buckling'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_term=:snomed',array(':snomed'=>'Scleral buckling'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_gas_percentage',array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'value' => 'tinyint(1) unsigned NOT NULL DEFAULT 0',
@@ -439,10 +439,10 @@ class m120510_102522_ophtroperationnote_consolidated extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCataract'))->queryRow();
 
-		foreach (array('361191005','415089008','225703004','64854001','75170007','231752003','88234006','231751005','373416003','373415004','417709003','414470005','69724002','172542008','308694002') as $snomed_code) {
+		/*foreach (array('361191005','415089008','225703004','64854001','75170007','231752003','88234006','231751005','373416003','373415004','417709003','414470005','69724002','172542008','308694002') as $snomed_code) {
 			$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code=:snomed',array(':snomed'=>$snomed_code))->queryRow();
 			$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-		}
+		}*/
 			$this->alterColumn('et_ophtroperationnote_vitrectomy','gauge_id','int(10) unsigned NOT NULL');
 		$this->alterColumn('et_ophtroperationnote_tamponade','gas_type_id','int(10) unsigned NOT NULL');
 		$this->alterColumn('et_ophtroperationnote_buckle','drainage_type_id','int(10) unsigned NOT NULL');
@@ -895,8 +895,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystogram'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :snomed',array(':snomed'=>'56087001'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :snomed',array(':snomed'=>'56087001'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_3_snp', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -919,8 +919,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPunctoplasty'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'36'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'36'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_ant_orb_conj', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -943,8 +943,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorOrbitotomyConjunctivalApproach'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'24'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'24'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_ant_vity', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -967,8 +967,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorVitrectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'41'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'41'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_bleph_both_lids', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -991,8 +991,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharoplastyOfBothLids'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'13'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'13'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_bleph_lower_lid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1015,8 +1015,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharoplastyOfLowerLid'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'12'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'12'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_bleph_upper_lid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1039,8 +1039,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharoplastyOfUpperLid'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'11'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'11'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_brow_susp_afl', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1063,8 +1063,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBrowSuspensionWithFasciaLata'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'14'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'14'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_brow_susp_synth', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1087,8 +1087,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBrowSuspensionWithSyntheticMaterial'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'15'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'15'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_bx_exc_cnj', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1111,8 +1111,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfConjunctivaExcisional'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'33'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'33'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_bx_lid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1135,8 +1135,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfLidIncisional'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'8'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'8'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_capsulectomy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1159,8 +1159,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCapsulectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'47'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'47'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_corn_sut_removal', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1183,8 +1183,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfCornealSuture'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'40'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'40'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_corneal_suture', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1207,8 +1207,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSutureOfCornea'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'38'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'38'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_cryo_collin', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1231,8 +1231,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyWithCollinCryoprobe'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'16'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'16'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_cryo_nitro', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1255,8 +1255,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyWithLiquidNitrogen'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'17'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'17'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_dcr', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1279,8 +1279,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystorhinostomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'2'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'2'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_dcr_endo', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1303,8 +1303,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystorhinostomyEndonasal'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'3'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'3'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_decomp_3', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1327,8 +1327,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOrbit3Walls'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'22'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'22'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_ectr', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1351,8 +1351,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEctropionCorrection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'19'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'19'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_elctrlys', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1375,8 +1375,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementElectrolysisOfEyelash'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'34'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'34'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_ent', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1399,8 +1399,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEntropionCorrectionNoGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'18'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'18'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_enuc__impnlt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1423,8 +1423,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEnucleationAndImplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'28'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'28'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_evisc__ball', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1447,8 +1447,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEviscerationAndImplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'29'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'29'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_exent', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1471,8 +1471,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExenteration'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'30'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'30'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_fl_harvest', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1495,8 +1495,8 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFasciaLataHarvest'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'37'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'37'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_fornix_mmg', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -1519,9 +1519,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFornixReconstructionWithMucusMembraneGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'32'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ic', array(
+					$this->createTable('et_ophtroperationnote_ic', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1543,9 +1541,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIncisionAndCurettageOfCyst'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'35'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lat_orbitotomy', array(
+					$this->createTable('et_ophtroperationnote_lat_orbitotomy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1567,9 +1563,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralOrbitotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'26'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lid_recon__flaps', array(
+					$this->createTable('et_ophtroperationnote_lid_recon__flaps', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1591,9 +1585,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReconstructionOfLidLocalFlaps'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'9'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lid_recon__graft', array(
+					$this->createTable('et_ophtroperationnote_lid_recon__graft', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1615,9 +1607,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReconstructionOfLidWithGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'10'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lj_tube', array(
+					$this->createTable('et_ophtroperationnote_lj_tube', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1639,9 +1629,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLesterJonesTube'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'5'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ofi', array(
+					$this->createTable('et_ophtroperationnote_ofi', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1663,9 +1651,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfOrbitalFloorImplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'31'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orbital_biopsy', array(
+					$this->createTable('et_ophtroperationnote_orbital_biopsy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1687,9 +1673,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfOrbit'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'27'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orbital_fracture', array(
+					$this->createTable('et_ophtroperationnote_orbital_fracture', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1711,9 +1695,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOfOrbitalFracture'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'23'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_pt_ant_lev_excn', array(
+					$this->createTable('et_ophtroperationnote_pt_ant_lev_excn', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1735,9 +1717,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPtosisCorrectionAnteriorLevatorExcision'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'20'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_sp', array(
+					$this->createTable('et_ophtroperationnote_sp', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1759,9 +1739,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSyringeAndProbeNasolacrimalDuct'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'7'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_tars_lat', array(
+					$this->createTable('et_ophtroperationnote_tars_lat', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1783,9 +1761,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsorrhaphyLateral'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'21'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_adjustsuture', array(
+					$this->createTable('et_ophtroperationnote_adjustsuture', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1807,9 +1783,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealSutureAdjustment'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'73'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_amniotigrft', array(
+					$this->createTable('et_ophtroperationnote_amniotigrft', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1831,9 +1805,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAmnioticMembraneGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'54'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ant_capsulotomy', array(
+					$this->createTable('et_ophtroperationnote_ant_capsulotomy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1855,9 +1827,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorCapsulotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'48'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ant_lam_keratop', array(
+					$this->createTable('et_ophtroperationnote_ant_lam_keratop', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1879,9 +1849,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyAnteriorLamellar'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'92'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_astig_keratotom', array(
+					$this->createTable('et_ophtroperationnote_astig_keratotom', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1903,9 +1871,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAstigmaticKeratotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'56'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_bandage', array(
+					$this->createTable('et_ophtroperationnote_bandage', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1927,9 +1893,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBandageContactLens'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('term = :term and snomed_code = :snomed_code',array(':term'=>'Insertion of bandage contact lens',':snomed_code'=>'428497007'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_capsulotomypost', array(
+					$this->createTable('et_ophtroperationnote_capsulotomypost', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1951,9 +1915,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCapsulotomySurgical'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'61'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_closure_cornea', array(
+					$this->createTable('et_ophtroperationnote_closure_cornea', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1975,9 +1937,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealWoundSuture'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'76'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_compression_sut', array(
+					$this->createTable('et_ophtroperationnote_compression_sut', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -1999,9 +1959,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCompressionSutureOfGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'66'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_corndiath', array(
+					$this->createTable('et_ophtroperationnote_corndiath', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2023,9 +1981,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealVesselDiathermy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'75'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_corneal_biopsy', array(
+					$this->createTable('et_ophtroperationnote_corneal_biopsy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2047,9 +2003,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfCornea'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'59'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_corneal_fb', array(
+					$this->createTable('et_ophtroperationnote_corneal_fb', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2071,9 +2025,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfCornealForeignBody'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'82'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_corneal_graft', array(
+					$this->createTable('et_ophtroperationnote_corneal_graft', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2095,9 +2047,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyPenetrating'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'94'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_creatn_conjhood', array(
+					$this->createTable('et_ophtroperationnote_creatn_conjhood', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2119,9 +2069,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementConjunctivalFlap'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'67'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_crosslinking', array(
+					$this->createTable('et_ophtroperationnote_crosslinking', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2143,9 +2091,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCrosslinkingOfCornea'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'77'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_debride', array(
+					$this->createTable('et_ophtroperationnote_debride', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2167,9 +2113,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealDebridement'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'69'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_dmek', array(
+					$this->createTable('et_ophtroperationnote_dmek', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2191,9 +2135,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyPosteriorDSAEK'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'96'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_dsaek', array(
+					$this->createTable('et_ophtroperationnote_dsaek', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2215,9 +2157,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyPosteriorDMEK'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'95'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_dsaek_reposition', array(
+					$this->createTable('et_ophtroperationnote_dsaek_reposition', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2239,9 +2179,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDSAEKRepositioning'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'78'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ecce', array(
+					$this->createTable('et_ophtroperationnote_ecce', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2263,9 +2201,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExtracapsularCataractExtraction'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'79'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_edta_chelation', array(
+					$this->createTable('et_ophtroperationnote_edta_chelation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2287,9 +2223,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementChelationOfCornea'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'65'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_epikeratoplasty', array(
+					$this->createTable('et_ophtroperationnote_epikeratoplasty', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2311,9 +2245,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEpikeratoplasty'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'80'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_eua', array(
+					$this->createTable('et_ophtroperationnote_eua', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2335,9 +2267,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExaminationUnderAnaesthesia'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'81'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_excisconjlesion', array(
+					$this->createTable('et_ophtroperationnote_excisconjlesion', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2359,9 +2289,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLesionOfConjunctiva'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'68'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_glue', array(
+					$this->createTable('et_ophtroperationnote_glue', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2383,9 +2311,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealGlue'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'70'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_graft_tectonic', array(
+					$this->createTable('et_ophtroperationnote_graft_tectonic', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2407,9 +2333,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyTectonic'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'98'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_inj_eye', array(
+					$this->createTable('et_ophtroperationnote_inj_eye', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2431,9 +2355,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInjectionIntoEye'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'83'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_inlay_insert', array(
+					$this->createTable('et_ophtroperationnote_inlay_insert', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2455,9 +2377,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealInlayInsertion'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'71'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_inlay_removal', array(
+					$this->createTable('et_ophtroperationnote_inlay_removal', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2479,9 +2399,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealInlayRemoval'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'72'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_intrastromal', array(
+					$this->createTable('et_ophtroperationnote_intrastromal', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2503,9 +2421,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIntrastromalCornealInjection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'84'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_irrigatn_ac', array(
+					$this->createTable('et_ophtroperationnote_irrigatn_ac', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2527,9 +2443,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIrrigationOfAnteriorChamber'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'50'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_moria_alk', array(
+					$this->createTable('et_ophtroperationnote_moria_alk', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2551,9 +2465,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyAutomatedMoria'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'93'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_post_capsulotomy', array(
+					$this->createTable('et_ophtroperationnote_post_capsulotomy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2575,9 +2487,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPosteriorCapsulotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'49'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_pupiloplasty', array(
+					$this->createTable('et_ophtroperationnote_pupiloplasty', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2599,9 +2509,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIridoplastyOccluder'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'90'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_pupiloplasty2', array(
+					$this->createTable('et_ophtroperationnote_pupiloplasty2', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2623,9 +2531,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIridoplastySuture'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'91'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_removal_of_sutu', array(
+					$this->createTable('et_ophtroperationnote_removal_of_sutu', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2647,9 +2553,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCornealSutureRemoval'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'74'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_repair_iris_prolapse', array(
+					$this->createTable('et_ophtroperationnote_repair_iris_prolapse', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2671,9 +2575,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOfProlapsedIris'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'52'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_rotationlcorgft', array(
+					$this->createTable('et_ophtroperationnote_rotationlcorgft', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2695,9 +2597,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoplastyRotationAutograft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'97'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_surgical_pi', array(
+					$this->createTable('et_ophtroperationnote_surgical_pi', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2719,9 +2619,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSurgicalIridotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'53'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_yag_caps', array(
+					$this->createTable('et_ophtroperationnote_yag_caps', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2743,9 +2641,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCapsulotomyYAG'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'62'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_5fu', array(
+					$this->createTable('et_ophtroperationnote_5fu', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2767,9 +2663,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementApplicationOf5FU'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'138'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_alt', array(
+					$this->createTable('et_ophtroperationnote_alt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2791,9 +2685,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLaserTrabeculoplasty'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'129'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_beta_irradiation', array(
+					$this->createTable('et_ophtroperationnote_beta_irradiation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2815,9 +2707,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementApplicationOfBetaRadation'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'141'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_btxamuscle', array(
+					$this->createTable('et_ophtroperationnote_btxamuscle', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2839,9 +2729,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBotulinumInjectionEyeMuscle'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'150'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_conj_inject', array(
+					$this->createTable('et_ophtroperationnote_conj_inject', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2863,9 +2751,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSubconjunctivalInjection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'113'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_cryo', array(
+					$this->createTable('et_ophtroperationnote_cryo', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2887,9 +2773,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyToLesionOfRetina'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'146'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_cyclodiaclftrep', array(
+					$this->createTable('et_ophtroperationnote_cyclodiaclftrep', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2911,9 +2795,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCyclodialysisCleftRepair'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'120'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_cyclodiode', array(
+					$this->createTable('et_ophtroperationnote_cyclodiode', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2935,9 +2817,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLaserCoagulationCiliaryBody'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'127'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_donorsclera', array(
+					$this->createTable('et_ophtroperationnote_donorsclera', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2959,9 +2839,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementGraftToSclera'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'123'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_excbxpinguecula', array(
+					$this->createTable('et_ophtroperationnote_excbxpinguecula', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -2983,9 +2861,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPingueculumExcision'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'107'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_expteryconjaugf', array(
+					$this->createTable('et_ophtroperationnote_expteryconjaugf', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3007,9 +2883,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPterygiumExcisionConjAutogrft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'108'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_goniotomy', array(
+					$this->createTable('et_ophtroperationnote_goniotomy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3031,9 +2905,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementGoniotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'122'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_graft_to_sclera', array(
+					$this->createTable('et_ophtroperationnote_graft_to_sclera', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3055,9 +2927,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementScleralGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'112'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_insaqueousshunt', array(
+					$this->createTable('et_ophtroperationnote_insaqueousshunt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3079,9 +2949,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfAqueousShunt'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'124'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ir_recess', array(
+					$this->createTable('et_ophtroperationnote_ir_recess', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3103,9 +2971,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorRectusRecession'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'151'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ir_resect', array(
+					$this->createTable('et_ophtroperationnote_ir_resect', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3127,9 +2993,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorRectusResection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'152'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_iridoplasty', array(
+					$this->createTable('et_ophtroperationnote_iridoplasty', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3151,9 +3015,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIridoplasty'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'125'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_kpro', array(
+					$this->createTable('et_ophtroperationnote_kpro', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3175,9 +3037,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKeratoprosthesis'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'99'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lasekprk', array(
+					$this->createTable('et_ophtroperationnote_lasekprk', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3199,9 +3059,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLASEKPRK'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'100'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_laser_pi', array(
+					$this->createTable('et_ophtroperationnote_laser_pi', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3223,9 +3081,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLaserIridotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'128'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lasik_flap', array(
+					$this->createTable('et_ophtroperationnote_lasik_flap', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3247,9 +3103,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLASIKFlapReposition'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'102'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_limbal', array(
+					$this->createTable('et_ophtroperationnote_limbal', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3271,9 +3125,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLimbalCellTransplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'103'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lr_', array(
+					$this->createTable('et_ophtroperationnote_lr_', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3295,9 +3147,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralRectusRecession'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'153'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lr_2', array(
+					$this->createTable('et_ophtroperationnote_lr_2', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3319,9 +3169,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralRectusResection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'154'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_mmc', array(
+					$this->createTable('et_ophtroperationnote_mmc', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3343,9 +3191,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementApplicationOfMMC'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'139'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_mmg', array(
+					$this->createTable('et_ophtroperationnote_mmg', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3367,9 +3213,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMucousMembraneGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'104'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_mr_', array(
+					$this->createTable('et_ophtroperationnote_mr_', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3391,9 +3235,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMedialRectusRecession'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'155'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_needlingbleb', array(
+					$this->createTable('et_ophtroperationnote_needlingbleb', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3415,9 +3257,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementNeedlingOfBleb'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'130'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_occllacrpunctm', array(
+					$this->createTable('et_ophtroperationnote_occllacrpunctm', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3439,9 +3279,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOcclusionOfLacrimalPunctum'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'105'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_penetrating_inj', array(
+					$this->createTable('et_ophtroperationnote_penetrating_inj', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3463,9 +3301,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOfPenetratingInjury'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'111'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ptk', array(
+					$this->createTable('et_ophtroperationnote_ptk', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3487,9 +3323,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPTKLaserSuperficialKeratectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'109'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_reformation_ac', array(
+					$this->createTable('et_ophtroperationnote_reformation_ac', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3511,9 +3345,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReformationOfAC'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'110'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_revaqueousshunt', array(
+					$this->createTable('et_ophtroperationnote_revaqueousshunt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3535,9 +3367,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRevisionOfAqueousShunt'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'132'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_revision_ac', array(
+					$this->createTable('et_ophtroperationnote_revision_ac', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3559,9 +3389,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRevisionOfAnteriorChamber'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'131'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_revision_traby', array(
+					$this->createTable('et_ophtroperationnote_revision_traby', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3583,9 +3411,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRevisionOfTrabeculectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'134'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_superficial_k', array(
+					$this->createTable('et_ophtroperationnote_superficial_k', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3607,9 +3433,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperficialKeratectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'114'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_tattooing_corne', array(
+					$this->createTable('et_ophtroperationnote_tattooing_corne', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3631,9 +3455,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTattooingOfCornea'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'116'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_trabeculotomy', array(
+					$this->createTable('et_ophtroperationnote_trabeculotomy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3655,9 +3477,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTrabeculotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'140'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_traby', array(
+					$this->createTable('et_ophtroperationnote_traby', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3679,9 +3499,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTrabeculectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'137'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_adjustable', array(
+					$this->createTable('et_ophtroperationnote_adjustable', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3703,9 +3521,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAdjustableSuture'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'159'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_al_implnt', array(
+					$this->createTable('et_ophtroperationnote_al_implnt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3727,9 +3543,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAllogenicImplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'210'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_cryo2', array(
+					$this->createTable('et_ophtroperationnote_cryo2', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3751,9 +3565,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyRetinopexy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'165'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_delam', array(
+					$this->createTable('et_ophtroperationnote_delam', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3775,9 +3587,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDelamination'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'166'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_drain', array(
+					$this->createTable('et_ophtroperationnote_drain', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3799,9 +3609,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExternalDrainageOfSRF'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'167'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_excision_cathal_lesion', array(
+					$this->createTable('et_ophtroperationnote_excision_cathal_lesion', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3823,9 +3631,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLesionOfCanthus'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'195'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_excision_eyebrow_lesion', array(
+					$this->createTable('et_ophtroperationnote_excision_eyebrow_lesion', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3847,9 +3653,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLesionOfEyebrow'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'194'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_excision_of_lacrimal_gland', array(
+					$this->createTable('et_ophtroperationnote_excision_of_lacrimal_gland', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3871,9 +3675,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLacrimalGland'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'198'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_frag', array(
+					$this->createTable('et_ophtroperationnote_frag', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3895,9 +3697,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFragmatomeLensectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'170'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_gld_wt', array(
+					$this->createTable('et_ophtroperationnote_gld_wt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3919,9 +3719,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfGoldWeight'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'197'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_haradiito', array(
+					$this->createTable('et_ophtroperationnote_haradiito', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3943,9 +3741,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueHaradaIto'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'202'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ilm', array(
+					$this->createTable('et_ophtroperationnote_ilm', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3967,9 +3763,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInternalLimitingMembranePeel'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'172'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_intacs_', array(
+					$this->createTable('et_ophtroperationnote_intacs_', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -3991,9 +3785,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfIntacs'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'191'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_intravit', array(
+					$this->createTable('et_ophtroperationnote_intravit', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4015,9 +3807,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIntravitrealInjection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'174'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_io_faden', array(
+					$this->createTable('et_ophtroperationnote_io_faden', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4039,9 +3829,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorObliqueFaden'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'160'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_iofb', array(
+					$this->createTable('et_ophtroperationnote_iofb', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4063,9 +3851,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfIntraocularForeignBody'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'180'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_knapp', array(
+					$this->createTable('et_ophtroperationnote_knapp', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4087,9 +3873,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementKnappProcedure'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'161'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_laser', array(
+					$this->createTable('et_ophtroperationnote_laser', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4111,9 +3895,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLaserRetinopexy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'176'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lasik', array(
+					$this->createTable('et_ophtroperationnote_lasik', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4135,9 +3917,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLASIK'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'208'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_mr_2', array(
+					$this->createTable('et_ophtroperationnote_mr_2', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4159,9 +3939,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMedialRectusResection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'156'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_mr_vert_trans', array(
+					$this->createTable('et_ophtroperationnote_mr_vert_trans', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4183,9 +3961,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMedialRectusVerticalTransposition'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'162'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orb_implnt_removal', array(
+					$this->createTable('et_ophtroperationnote_orb_implnt_removal', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4207,9 +3983,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfOrbitalImplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'207'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orb_recn', array(
+					$this->createTable('et_ophtroperationnote_orb_recn', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4231,9 +4005,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReconstructionOfOrbit'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'193'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_pi', array(
+					$this->createTable('et_ophtroperationnote_pi', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4255,9 +4027,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPeripheralIridectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'175'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_prp', array(
+					$this->createTable('et_ophtroperationnote_prp', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4279,9 +4049,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPanretinalPhotocoagulation'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'177'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_removal_of_cnv', array(
+					$this->createTable('et_ophtroperationnote_removal_of_cnv', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4303,9 +4071,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSubretinalMembranectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'205'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_removal_of_gas', array(
+					$this->createTable('et_ophtroperationnote_removal_of_gas', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4327,9 +4093,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfGas'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'206'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_removal_of_intacs', array(
+					$this->createTable('et_ophtroperationnote_removal_of_intacs', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4351,9 +4115,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfIntacs'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'192'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_removal_tube', array(
+					$this->createTable('et_ophtroperationnote_removal_tube', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4375,9 +4137,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfTubeFromNasolacrimalDuct'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'199'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ret_biopsy', array(
+					$this->createTable('et_ophtroperationnote_ret_biopsy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4399,9 +4159,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfRetina'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'184'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_retinectomy', array(
+					$this->createTable('et_ophtroperationnote_retinectomy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4423,9 +4181,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRetinectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'185'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ro_buckle', array(
+					$this->createTable('et_ophtroperationnote_ro_buckle', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4447,9 +4203,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfBuckle'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'179'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_roo', array(
+					$this->createTable('et_ophtroperationnote_roo', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4471,9 +4225,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfOil'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'182'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_so_', array(
+					$this->createTable('et_ophtroperationnote_so_', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4495,9 +4247,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueRecession'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'163'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_so_tenotomy', array(
+					$this->createTable('et_ophtroperationnote_so_tenotomy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4519,9 +4269,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueTenotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'164'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_so_tuck', array(
+					$this->createTable('et_ophtroperationnote_so_tuck', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4543,9 +4291,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueTuck'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'190'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_sr_', array(
+					$this->createTable('et_ophtroperationnote_sr_', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4567,9 +4313,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorRectusRecession'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'157'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_sr_2', array(
+					$this->createTable('et_ophtroperationnote_sr_2', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4591,9 +4335,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorRectusResection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'158'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_vit_biopsy', array(
+					$this->createTable('et_ophtroperationnote_vit_biopsy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4615,9 +4357,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfVitreous'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'189'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_aur_cart', array(
+					$this->createTable('et_ophtroperationnote_aur_cart', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4639,9 +4379,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEarCartilageGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'212'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_brow_lift__direct', array(
+					$this->createTable('et_ophtroperationnote_brow_lift__direct', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4663,9 +4401,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBrowLiftDirect'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'231'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_brow_lift__indirect', array(
+					$this->createTable('et_ophtroperationnote_brow_lift__indirect', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4687,9 +4423,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBrowLiftInternal'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'232'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_canltmy', array(
+					$this->createTable('et_ophtroperationnote_canltmy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4711,9 +4445,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCalaniculotomyForCanaliculitis'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'241'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_chk_lft', array(
+					$this->createTable('et_ophtroperationnote_chk_lft', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4735,9 +4467,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCheekLift'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'246'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_corr_anmly', array(
+					$this->createTable('et_ophtroperationnote_corr_anmly', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4759,9 +4489,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCongenitalAnomalyCorrection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'247'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_dfg', array(
+					$this->createTable('et_ophtroperationnote_dfg', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4783,9 +4511,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDermisFatGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'211'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ectr_med', array(
+					$this->createTable('et_ophtroperationnote_ectr_med', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4807,9 +4533,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEctropionMedialOnlyCorrection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'249'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_enscpy', array(
+					$this->createTable('et_ophtroperationnote_enscpy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4831,9 +4555,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEndoscopy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'213'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ex_lid_lsn', array(
+					$this->createTable('et_ophtroperationnote_ex_lid_lsn', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4855,9 +4577,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLidLesionNoBiopsy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'252'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_exc_papilloma', array(
+					$this->createTable('et_ophtroperationnote_exc_papilloma', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4879,9 +4599,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfPapilloma'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'238'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_hpg', array(
+					$this->createTable('et_ophtroperationnote_hpg', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4903,9 +4621,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementHardpalateGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'214'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_inj_lid', array(
+					$this->createTable('et_ophtroperationnote_inj_lid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4927,9 +4643,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInjectionIntoEyelid'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'250'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lacrimal_gland__other', array(
+					$this->createTable('et_ophtroperationnote_lacrimal_gland__other', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4951,9 +4665,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOtherProcedureOnLacrimalGland'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'221'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lacrimal_gland_biopsy', array(
+					$this->createTable('et_ophtroperationnote_lacrimal_gland_biopsy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4975,9 +4687,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfLacrimalGland'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'220'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lacrimal_sac__excision', array(
+					$this->createTable('et_ophtroperationnote_lacrimal_sac__excision', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -4999,9 +4709,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExcisionOfLacrimalSac'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'223'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lat_cnthplst', array(
+					$this->createTable('et_ophtroperationnote_lat_cnthplst', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5023,9 +4731,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCanthoplastyLateral'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'243'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lat_cnthpxy', array(
+					$this->createTable('et_ophtroperationnote_lat_cnthpxy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5047,9 +4753,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCanthopexyLateral'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'242'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lee', array(
+					$this->createTable('et_ophtroperationnote_lee', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5071,9 +4775,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCanthoplastyMedialLee'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'245'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lid_low_ant', array(
+					$this->createTable('et_ophtroperationnote_lid_low_ant', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5095,9 +4797,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLidLoweringAnteriorApproach'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'225'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lid_low_post', array(
+					$this->createTable('et_ophtroperationnote_lid_low_post', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5119,9 +4819,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLidLoweringPosteriorApproach'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'226'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ll_elvtn', array(
+					$this->createTable('et_ophtroperationnote_ll_elvtn', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5143,9 +4841,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLowerLidElevationSpecifyGraftMaterial'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'253'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lsac_bx', array(
+					$this->createTable('et_ophtroperationnote_lsac_bx', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5167,9 +4863,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfLacrimalSac'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'222'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_med_cnthplsty', array(
+					$this->createTable('et_ophtroperationnote_med_cnthplsty', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5191,9 +4885,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCanthoplastyMedial'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'244'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_opn_eyelid', array(
+					$this->createTable('et_ophtroperationnote_opn_eyelid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5215,9 +4907,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOperationOnEyelid'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'239'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orb_ball_implnt', array(
+					$this->createTable('et_ophtroperationnote_orb_ball_implnt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5239,9 +4929,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfOrbitalImplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'237'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_pt_ant', array(
+					$this->createTable('et_ophtroperationnote_pt_ant', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5263,9 +4951,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPtosisCorrectionApoRepairAnteriorApproach'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'254'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_pt_post', array(
+					$this->createTable('et_ophtroperationnote_pt_post', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5287,9 +4973,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPtosisCorrectionApoRepairPosteriorApproach'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'255'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_punctal_occl', array(
+					$this->createTable('et_ophtroperationnote_punctal_occl', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5311,9 +4995,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPunctumClosure'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'256'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_rep_canaliculus', array(
+					$this->createTable('et_ophtroperationnote_rep_canaliculus', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5335,9 +5017,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOfCanaliculus'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'224'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_rmv_gld_wt', array(
+					$this->createTable('et_ophtroperationnote_rmv_gld_wt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5359,9 +5039,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfGoldWeight'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'257'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_scar_rvn', array(
+					$this->createTable('et_ophtroperationnote_scar_rvn', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5383,9 +5061,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRevisionOfScar'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'258'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_skin_crease_reformation', array(
+					$this->createTable('et_ophtroperationnote_skin_crease_reformation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5407,9 +5083,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReformationOfSkinCrease'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'227'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_snb', array(
+					$this->createTable('et_ophtroperationnote_snb', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5431,9 +5105,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSentinelNodeBiopsy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'216'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_split_skin', array(
+					$this->createTable('et_ophtroperationnote_split_skin', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5455,9 +5127,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSplitSkinGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'217'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_squint_op', array(
+					$this->createTable('et_ophtroperationnote_squint_op', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5479,9 +5149,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOperationForSquint'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'240'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_tars_med', array(
+					$this->createTable('et_ophtroperationnote_tars_med', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5503,9 +5171,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsorrhaphyMedialPillar'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'261'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_tars_permnt', array(
+					$this->createTable('et_ophtroperationnote_tars_permnt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5527,9 +5193,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsorrhaphyPermanent'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'259'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_tars_temp', array(
+					$this->createTable('et_ophtroperationnote_tars_temp', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5551,9 +5215,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsorrhaphyTemporary'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'260'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_telecnth_wire', array(
+					$this->createTable('et_ophtroperationnote_telecnth_wire', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5575,9 +5237,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTelecanthusCorrectionWithWire'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'234'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_absc_drng', array(
+					$this->createTable('et_ophtroperationnote_absc_drng', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5599,9 +5259,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDrainageOfEyelidAbscess'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'262'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ant_orb_ll', array(
+					$this->createTable('et_ophtroperationnote_ant_orb_ll', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5623,9 +5281,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorOrbitotomyLowerLidApproach'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'283'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ant_orb_ul', array(
+					$this->createTable('et_ophtroperationnote_ant_orb_ul', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5647,9 +5303,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementAnteriorOrbitotomyUpperLidApproach'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'284'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_blphmosis_canth', array(
+					$this->createTable('et_ophtroperationnote_blphmosis_canth', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5671,9 +5325,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharophimosisCanthalSurgery'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'265'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_botox_inj', array(
+					$this->createTable('et_ophtroperationnote_botox_inj', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5695,9 +5347,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBotulinumToxinInjectionToEyelid'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'266'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_bx_cnj', array(
+					$this->createTable('et_ophtroperationnote_bx_cnj', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5719,9 +5369,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfConjunctivaIncisional'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'263'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_bx_exc_ld', array(
+					$this->createTable('et_ophtroperationnote_bx_exc_ld', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5743,9 +5391,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfLidExcisional'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'264'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_canaliculodcr', array(
+					$this->createTable('et_ophtroperationnote_canaliculodcr', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5767,9 +5413,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystorhinostomyRetrotubes'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'269'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_dctmy', array(
+					$this->createTable('et_ophtroperationnote_dctmy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5791,9 +5435,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDacrocystectomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'268'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_deblk_ft', array(
+					$this->createTable('et_ophtroperationnote_deblk_ft', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5815,9 +5457,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOrbitalFatProlapseTransConjunctivalReduction'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'291'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_decmp_2_balanced', array(
+					$this->createTable('et_ophtroperationnote_decmp_2_balanced', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5839,9 +5479,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOrbit2WallsBalancedApproach'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'286'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_decmp_lat', array(
+					$this->createTable('et_ophtroperationnote_decmp_lat', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5863,9 +5501,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOrbitLateralWall'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'287'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_decmp_med_only', array(
+					$this->createTable('et_ophtroperationnote_decmp_med_only', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5887,9 +5523,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOrbitMedialWallForNeuropathy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'285'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_dfgsock', array(
+					$this->createTable('et_ophtroperationnote_dfgsock', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5911,9 +5545,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDermisFatGraftToSocket'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'293'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_drmlpm', array(
+					$this->createTable('et_ophtroperationnote_drmlpm', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5935,9 +5567,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDermolipomaExcisionMicroscope'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'288'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_endo_rev_dcr', array(
+					$this->createTable('et_ophtroperationnote_endo_rev_dcr', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5959,9 +5589,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEndonasalRevisionOfDCR'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'270'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ent_lower_lid', array(
+					$this->createTable('et_ophtroperationnote_ent_lower_lid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -5983,9 +5611,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEntropionCorrectionOfLowerEyelid'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'280'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ent_upper_lid', array(
+					$this->createTable('et_ophtroperationnote_ent_upper_lid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6007,9 +5633,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEntropionCorrectionOfUpperEyelid'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'281'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_enuc_no_implnt', array(
+					$this->createTable('et_ophtroperationnote_enuc_no_implnt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6031,9 +5655,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEnucleationNoImplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'294'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_evisc_no_ball', array(
+					$this->createTable('et_ophtroperationnote_evisc_no_ball', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6055,9 +5677,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementEviscerationNoImplant'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'295'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_frnx_recon', array(
+					$this->createTable('et_ophtroperationnote_frnx_recon', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6079,9 +5699,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementReconstructionOfEyeSocketWithMMG'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'297'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ftsg', array(
+					$this->createTable('et_ophtroperationnote_ftsg', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6103,9 +5721,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFullThicknessSkinGraft'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'274'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ir_faden', array(
+					$this->createTable('et_ophtroperationnote_ir_faden', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6127,9 +5743,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorRectusFaden'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'301'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_iv_steroid_injection', array(
+					$this->createTable('et_ophtroperationnote_iv_steroid_injection', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6151,9 +5765,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIntravenousSteroidInjection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'278'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lacintub', array(
+					$this->createTable('et_ophtroperationnote_lacintub', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6175,9 +5787,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLacrimalIntubation'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'271'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lr_faden', array(
+					$this->createTable('et_ophtroperationnote_lr_faden', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6199,9 +5809,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralRectusFaden'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'302'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_mld', array(
+					$this->createTable('et_ophtroperationnote_mld', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6223,9 +5831,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMouldingOfSocket'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'296'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_mmg2', array(
+					$this->createTable('et_ophtroperationnote_mmg2', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6247,9 +5853,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMMGToOcularSuface'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'282'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_mr_faden', array(
+					$this->createTable('et_ophtroperationnote_mr_faden', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6271,9 +5875,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementMedialRectusFaden'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'303'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_nasedosc', array(
+					$this->createTable('et_ophtroperationnote_nasedosc', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6295,9 +5897,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementNasendoscopy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'272'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orb_absc', array(
+					$this->createTable('et_ophtroperationnote_orb_absc', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6319,9 +5919,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDrainageOfOrbitalAbscess'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'290'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orb_explrn', array(
+					$this->createTable('et_ophtroperationnote_orb_explrn', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6343,9 +5941,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementExplorationOfOrbit'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'289'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orb_fb', array(
+					$this->createTable('et_ophtroperationnote_orb_fb', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6367,9 +5963,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfOrbitalForeignBody'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'292'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orbicularismsst', array(
+					$this->createTable('et_ophtroperationnote_orbicularismsst', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6391,9 +5985,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBlepharospasmOrbicularisMuscleStripping'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'267'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_rem_stnt', array(
+					$this->createTable('et_ophtroperationnote_rem_stnt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6415,9 +6007,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemovalOfStent'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'273'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_sckt_exp', array(
+					$this->createTable('et_ophtroperationnote_sckt_exp', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6439,9 +6029,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInsertionOfSocketExpander'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'300'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_so_disinsertion', array(
+					$this->createTable('et_ophtroperationnote_so_disinsertion', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6463,9 +6051,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueDisinsertion'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'306'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_so_faden', array(
+					$this->createTable('et_ophtroperationnote_so_faden', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6487,9 +6073,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueFaden'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'304'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_sr_faden', array(
+					$this->createTable('et_ophtroperationnote_sr_faden', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6511,9 +6095,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorRectusFaden'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'305'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_biopsy_iris', array(
+					$this->createTable('et_ophtroperationnote_biopsy_iris', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6535,9 +6117,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfIris'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'325'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_chor_biopsy', array(
+					$this->createTable('et_ophtroperationnote_chor_biopsy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6559,9 +6139,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfChoroid'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'321'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_cyclocryo', array(
+					$this->createTable('et_ophtroperationnote_cyclocryo', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6583,9 +6161,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCryotherapyOfCiliaryBody'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'329'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_fsak', array(
+					$this->createTable('et_ophtroperationnote_fsak', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6607,9 +6183,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementFemtosecondAstigmaticKeratotomy'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'310'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_inj_ac', array(
+					$this->createTable('et_ophtroperationnote_inj_ac', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6631,9 +6205,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInjectionOfAnteriorChamberOfEye'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'324'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_intralasik', array(
+					$this->createTable('et_ophtroperationnote_intralasik', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6655,9 +6227,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementIntraLASIKEyeSurgery'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'311'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_io_', array(
+					$this->createTable('et_ophtroperationnote_io_', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6679,9 +6249,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorObliqueDisinsertion'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'317'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_io_ant_trans', array(
+					$this->createTable('et_ophtroperationnote_io_ant_trans', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6703,9 +6271,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorObliqueAnteriorTransposition'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'316'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_ir_transposition', array(
+					$this->createTable('et_ophtroperationnote_ir_transposition', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6727,9 +6293,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementInferiorRectusHorizontalTransposition'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'315'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lr_vert_trans', array(
+					$this->createTable('et_ophtroperationnote_lr_vert_trans', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6751,9 +6315,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLateralRectusVerticalTransposition'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'307'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_onsdopticdecom', array(
+					$this->createTable('et_ophtroperationnote_onsdopticdecom', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6775,9 +6337,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDecompressionOfOpticNerve'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'314'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_periocular_steroid', array(
+					$this->createTable('et_ophtroperationnote_periocular_steroid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6799,9 +6359,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementPeriocularSteroidInjection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'327'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_plaque', array(
+					$this->createTable('et_ophtroperationnote_plaque', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6823,9 +6381,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRadioactivePlaque'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'328'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_retro_steroid', array(
+					$this->createTable('et_ophtroperationnote_retro_steroid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6847,9 +6403,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRetrobulbarSteroidInjection'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'326'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_so_ant_transposition', array(
+					$this->createTable('et_ophtroperationnote_so_ant_transposition', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6871,9 +6425,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorObliqueAnteriorTransposition'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'320'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_squint_opn', array(
+					$this->createTable('et_ophtroperationnote_squint_opn', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6895,9 +6447,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementCombinedOperationOnEyeMuscles'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'313'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_sr_transposition', array(
+					$this->createTable('et_ophtroperationnote_sr_transposition', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6919,9 +6469,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSuperiorRectusHorizontalTransposition'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'319'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_tempartrybiopsy', array(
+					$this->createTable('et_ophtroperationnote_tempartrybiopsy', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -6943,9 +6491,7 @@ Aspiration of soft lens matter'");
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementBiopsyOfTemporalArtery'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('id = :id',array(':id'=>'312'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
+					$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementSurgeon'))->queryRow();
 		$this->update('element_type',array('display_order'=>4),'id='.$element_type['id']);

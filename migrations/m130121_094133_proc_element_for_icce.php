@@ -27,9 +27,9 @@ class m130121_094133_proc_element_for_icce extends CDbMigration
 
 		$element_type = ElementType::model()->find('event_type_id=? and name=?',array($event_type->id,'ICCE'));
 
-		$proc = Procedure::model()->find('term=? and snomed_code=?',array('Intracapsular cataract extraction','260216002'));
+		/*$proc = Procedure::model()->find('term=? and snomed_code=?',array('Intracapsular cataract extraction','260216002'));
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc->id,'element_type_id'=>$element_type->id));
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc->id,'element_type_id'=>$element_type->id));*/
 	}
 
 	public function down()
@@ -40,9 +40,9 @@ class m130121_094133_proc_element_for_icce extends CDbMigration
 
 		$element_type = ElementType::model()->find('event_type_id=? and name=?',array($event_type->id,'ICCE'));
 
-		$proc = Procedure::model()->find('term=? and snomed_code=?',array('Intracapsular cataract extraction','260216002'));
+		/*$proc = Procedure::model()->find('term=? and snomed_code=?',array('Intracapsular cataract extraction','260216002'));
 
-		$this->delete('et_ophtroperationnote_procedure_element',"procedure_id = $proc->id and element_type_id = $element_type->id");
+		$this->delete('et_ophtroperationnote_procedure_element',"procedure_id = $proc->id and element_type_id = $element_type->id");*/
 
 		$this->delete('element_type',"id=$element_type->id");
 	}

@@ -9,8 +9,8 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOzurdex'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'419222003'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'419222003'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_ozurdex', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -35,8 +35,8 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRemAqueousShunt'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'440587008'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		/*$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'440587008'))->queryRow();
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 			$this->createTable('et_ophtroperationnote_rem_aqueous_shunt', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
@@ -61,9 +61,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementOrbitOther'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'172189002'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_orbit_other', array(
+					$this->createTable('et_ophtroperationnote_orbit_other', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -87,9 +85,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLidOther'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'118912008'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lid_other', array(
+					$this->createTable('et_ophtroperationnote_lid_other', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -113,9 +109,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRedoDCR'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'265281004'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_redo_dcr', array(
+					$this->createTable('et_ophtroperationnote_redo_dcr', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -139,9 +133,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementRepairOrbit'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'239385005'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_repair_orbit', array(
+					$this->createTable('et_ophtroperationnote_repair_orbit', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -165,9 +157,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementDrainSupra'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'231788008'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_drain_supra', array(
+					$this->createTable('et_ophtroperationnote_drain_supra', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -191,9 +181,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementTarsoconjDiamond'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'231603008'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_tarsoconj_diamond', array(
+					$this->createTable('et_ophtroperationnote_tarsoconj_diamond', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -217,9 +205,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementLatCanthSling'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'231590007'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_lat_canth_sling', array(
+					$this->createTable('et_ophtroperationnote_lat_canth_sling', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
@@ -243,9 +229,7 @@ class m120625_161647_add_new_procedures extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id = :event_type_id and class_name=:class_name',array(':event_type_id' => $event_type['id'], ':class_name'=>'ElementThreeSnip'))->queryRow();
 
-		$proc = $this->dbConnection->createCommand()->select('id')->from('proc')->where('snomed_code = :sc',array(':sc'=>'172311004'))->queryRow();
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
-			$this->createTable('et_ophtroperationnote_three_snip', array(
+					$this->createTable('et_ophtroperationnote_three_snip', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',

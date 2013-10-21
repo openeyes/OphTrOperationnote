@@ -20,7 +20,7 @@ class m130218_094538_new_proc_elements_oe2661 extends CDbMigration
 		$this->insert('element_type',array('event_type_id'=>$event_type->id,'name'=>'Optical coherence tomography','class_name'=>'ElementOpticalCoherenceTomography','display_order'=>20));
 		$this->insert('element_type',array('event_type_id'=>$event_type->id,'name'=>'Insertion of sustained release device into posterior segment of eye','class_name'=>'ElementInsertionSlowRelease','display_order'=>20));
 
-		$element = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'ElementRemovalOfEyelash'));
+		/*$element = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'ElementRemovalOfEyelash'));
 		$proc = Procedure::model()->find('term=? and snomed_code=?',array('Removal of eyelash','398072007'));
 		$this->insert('et_ophtroperationnote_procedure_element',array('element_type_id'=>$element->id,'procedure_id'=>$proc->id));
 
@@ -76,7 +76,7 @@ class m130218_094538_new_proc_elements_oe2661 extends CDbMigration
 
 		$element = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'ElementInsertionSlowRelease'));
 		$proc = Procedure::model()->find('term=? and snomed_code=?',array('Insertion of sustained release device into posterior segment of eye','428618008'));
-		$this->insert('et_ophtroperationnote_procedure_element',array('element_type_id'=>$element->id,'procedure_id'=>$proc->id));
+		$this->insert('et_ophtroperationnote_procedure_element',array('element_type_id'=>$element->id,'procedure_id'=>$proc->id));*/
 
 		$this->createTable('et_ophtroperationnote_removal_of_eyelash', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -319,7 +319,7 @@ class m130218_094538_new_proc_elements_oe2661 extends CDbMigration
 
 		$event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
 
-		$element = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'ElementRemovalOfEyelash'));
+		/* $element = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'ElementRemovalOfEyelash'));
 		$proc = Procedure::model()->find('term=? and snomed_code=?',array('Removal of eyelash','398072007'));
 		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id=$element->id");
 
@@ -373,7 +373,7 @@ class m130218_094538_new_proc_elements_oe2661 extends CDbMigration
 
 		$element = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'ElementInsertionSlowRelease'));
 		$proc = Procedure::model()->find('term=? and snomed_code=?',array('Insertion of sustained release device into posterior segment of eye','428618008'));
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id=$element->id");
+		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id=$element->id");*/
 
 		$this->delete('element_type',"event_type_id=$event_type->id and class_name='ElementRemovalOfEyelash'");
 		$this->delete('element_type',"event_type_id=$event_type->id and class_name='ElementRemovalOfForeignBodyFromConjunctiva'");

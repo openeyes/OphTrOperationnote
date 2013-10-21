@@ -24,10 +24,10 @@ class m130425_145858_trabectome_element extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_trbctm_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
 
-		$element_type = Yii::app()->db->createCommand()->select("id")->from("element_type")->where('event_type_id=:event_type_id and class_name=:class_name',array(':event_type_id'=>$event_type['id'],':class_name'=>'ElementTrabectome'))->queryRow();
+		/*$element_type = Yii::app()->db->createCommand()->select("id")->from("element_type")->where('event_type_id=:event_type_id and class_name=:class_name',array(':event_type_id'=>$event_type['id'],':class_name'=>'ElementTrabectome'))->queryRow();
 		$proc = Yii::app()->db->createCommand()->select("id")->from("proc")->where("snomed_term=:snomed_term",array(':snomed_term'=>'Trabectome'))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));*/
 	}
 
 	public function down()
@@ -36,7 +36,7 @@ class m130425_145858_trabectome_element extends CDbMigration
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('name=:name', array(':name'=>'Operation note'))->queryRow();
 		$element_type = Yii::app()->db->createCommand()->select("id")->from("element_type")->where('event_type_id=:event_type_id and class_name=:class_name',array(':event_type_id'=>$event_type['id'],':class_name'=>'ElementTrabectome'))->queryRow();
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id={$element_type['id']}");
+		//$this->delete('et_ophtroperationnote_procedure_element',"element_type_id={$element_type['id']}");
 		$this->delete('element_type',"id={$element_type['id']}");
 	}
 }

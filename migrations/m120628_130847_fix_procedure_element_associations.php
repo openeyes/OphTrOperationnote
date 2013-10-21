@@ -23,7 +23,7 @@ class m120628_130847_fix_procedure_element_associations extends CDbMigration
 
 		// Add missing mapping for Redo external DCR
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>335,'element_type_id'=>$element_type['id']));
+		//$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>335,'element_type_id'=>$element_type['id']));
 
 		// Add missing mapping for Other procedure on eyelid
 
@@ -46,15 +46,15 @@ class m120628_130847_fix_procedure_element_associations extends CDbMigration
 
 		$this->insert('element_type', array('name' => 'Other procedure on eyelid', 'class_name' => 'ElementOtherProcedureEyelid', 'event_type_id' => $event_type['id'], 'display_order' => 2, 'default' => 0));
 
-		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementOtherProcedureEyelid'))->queryRow();
+		//$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementOtherProcedureEyelid'))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>336,'element_type_id'=>$element_type['id']));
+		//$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>336,'element_type_id'=>$element_type['id']));
 
 		// Add missing mapping for Removal of aqueous shunt
 
-		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementRemAqueousShunt'))->queryRow();
+		//$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementRemAqueousShunt'))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>338,'element_type_id'=>$element_type['id']));
+		//$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>338,'element_type_id'=>$element_type['id']));
 	}
 
 	public function down()
@@ -80,21 +80,21 @@ class m120628_130847_fix_procedure_element_associations extends CDbMigration
 
 		// Remove mapping for Redo external DCR
 
-		$this->delete('et_ophtroperationnote_procedure_element','procedure_id=335 and element_type_id='.$element_type['id']);
+		//$this->delete('et_ophtroperationnote_procedure_element','procedure_id=335 and element_type_id='.$element_type['id']);
 
 		// Remove mapping for other procedure on eyelid
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementOtherProcedureEyelid'))->queryRow();
 
-		$this->delete('et_ophtroperationnote_procedure_element','procedure_id=336 and element_type_id='.$element_type['id']);
+		//$this->delete('et_ophtroperationnote_procedure_element','procedure_id=336 and element_type_id='.$element_type['id']);
 
 		$this->delete('element_type','id='.$element_type['id']);
 		$this->dropTable('et_ophtroperationnote_other_eyelid');
 
 		// Remove mapping for Removal of aqueous shunt
 
-		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementRemAqueousShunt'))->queryRow();
+		//$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and class_name=:className',array(':eventTypeId'=>$event_type['id'],':className'=>'ElementRemAqueousShunt'))->queryRow();
 
-		$this->delete('et_ophtroperationnote_procedure_element','procedure_id=338 and element_type_id='.$element_type['id']);
+		//$this->delete('et_ophtroperationnote_procedure_element','procedure_id=338 and element_type_id='.$element_type['id']);
 	}
 }
