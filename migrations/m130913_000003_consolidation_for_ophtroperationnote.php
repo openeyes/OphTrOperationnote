@@ -46,6 +46,10 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 
 		$this->insertOEElementType($element_types, $event_type_id);
 
+		$elementTypeIdForElementTypeEye = $this->getIdOfElementTypeByClassName('Element_OphTrOperationnote_ProcedureList');
+		$eye_ids = array(2 ,3, 1);
+		$this->insertOEElementTypeEye($eye_ids, $elementTypeIdForElementTypeEye);
+
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_anaesthetic` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
