@@ -50,6 +50,81 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 		$eye_ids = array(2 ,3, 1);
 		$this->insertOEElementTypeEye($eye_ids, $elementTypeIdForElementTypeEye);
 
+		//Anaesthetic tables
+		$anaestheticAgents = array(1,2,3,4,5,6);
+		$anaestheticComplications = array(1,2,3,4,5,6,7,8,9,10,11);
+		$anaestheticDelivery = array(1,2,3,4,5,6,7);
+		$anaestheticAnaesthetist = array(1,2,3,4,5);
+
+		$this->insertOEElementTypeAnaesteticTablesHelper('element_type_anaesthetic_agent' ,
+			'anaesthetic_agent_id', $anaestheticAgents, $elementTypeIdForElementTypeEye);
+		$this->insertOEElementTypeAnaesteticTablesHelper('element_type_anaesthetic_complication' ,
+			'anaesthetic_complication_id', $anaestheticComplications, $elementTypeIdForElementTypeEye);
+		$this->insertOEElementTypeAnaesteticTablesHelper('element_type_anaesthetic_delivery' ,
+			'anaesthetic_delivery_id', $anaestheticDelivery, $elementTypeIdForElementTypeEye);
+		$this->insertOEElementTypeAnaesteticTablesHelper('element_type_anaesthetist' ,
+			'anaesthetist_id', $anaestheticAnaesthetist, $elementTypeIdForElementTypeEye);
+
+		$anaestheticTypes = array(
+			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 1, 'display_order' => 1),
+			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 3, 'display_order' => 2),
+			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 2, 'display_order' => 3),
+			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 4, 'display_order' => 4),
+			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 5, 'display_order' => 5),
+		);
+		$this->insertOEGenericDynamicTable('element_type_anaesthetic_type', $anaestheticTypes);
+
+		//add setting_medatada dynamically
+		$settingMetadataArray = array(
+			array(
+				'element_type_id' => $this->getIdOfElementTypeByClassName("Element_OphTrOperationnote_Anaesthetic"),
+				'display_order'=> 1,
+				'field_type_id' => 1,
+				'key' => 'fife', 'name' => 'Fife', 'default_value' => ''),
+			array(
+				'element_type_id' => $this->getIdOfElementTypeByClassName("Element_OphTrOperationnote_Personnel"),
+				'display_order'=> 1,
+				'field_type_id' => 1,
+				'key' => 'fife', 'name' => 'Fife', 'default_value' => ''),
+			array(
+				'element_type_id' => $this->getIdOfElementTypeByClassName("Element_OphTrOperationnote_Preparation"),
+				'display_order'=> 1,
+				'field_type_id' => 1,
+				'key' => 'fife', 'name' => 'Fife', 'default_value' => ''),
+
+		);
+		$this->insertOEGenericDynamicTable('setting_metadata', $settingMetadataArray);
+
+		$procArray= array(
+			array(
+				'term' => "Posterior synechiolysis", 'short_format' => "Post syn lysis",'default_duration' => 10,
+				'snomed_code'=>"44958007",'snomed_term' => "Lysis of posterior adhesions of iris",'last_modified_user_id'=>1,
+				'unbooked' => 0
+			),
+			array(
+				'term' => "Anterior synechiolysis", 'short_format' => "Ant syn lysis",'default_duration' => 10,
+				'snomed_code'=>"55931003",'snomed_term' => "Lysis of anterior adhesions of iris",'last_modified_user_id'=>1,
+				'unbooked' => 0
+			),
+			array(
+				'term' => "Repair of eyelid laceration, full-thickness involving lid margin", 'short_format' => "Lid laceration full",
+				'default_duration' => 30,
+				'snomed_code'=>"361162007",'snomed_term' => "Repair of eyelid laceration, full-thickness involving lid margin",
+				'last_modified_user_id'=>1,	'unbooked' => 0
+			),
+			array(
+				'term' => "Repair of eyelid laceration, partial-thickness involving lid margin", 'short_format' => "Lid laceration partial",
+				'default_duration' => 30,
+				'snomed_code'=>"361157006",'snomed_term' => "Repair of eyelid laceration, partial-thickness involving lid margin",
+				'last_modified_user_id'=>1,	'unbooked' => 0
+			),
+			array(
+				'term' => "Biopsy of buccal mucosa", 'short_format' => "Buccal biopsy",'default_duration' => 20,
+				'snomed_code'=>"6818001",'snomed_term' => "Excision of buccal mucosa",
+				'last_modified_user_id'=>1,	'unbooked' => 0
+			),
+		);
+		$this->insertOEGenericDynamicTable('proc', $procArray);
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_anaesthetic` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -57,7 +132,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  `anaesthetic_type_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `anaesthetist_id` int(10) unsigned NOT NULL DEFAULT '4',
 			  `anaesthetic_delivery_id` int(10) unsigned NOT NULL DEFAULT '5',
-			  `anaesthetic_comment` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+			  `anaesthetic_comment` varchar(1024)  DEFAULT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -88,13 +163,13 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  `drainage_type_id` int(10) unsigned NOT NULL,
 			  `drain_haem` tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  `deep_suture` tinyint(1) unsigned NOT NULL DEFAULT '0',
-			  `eyedraw` varchar(4096) COLLATE utf8_bin NOT NULL,
+			  `eyedraw` varchar(4096)  NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 			  `created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `created_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
-			  `report` varchar(4096) COLLATE utf8_bin NOT NULL,
-			  `comments` varchar(1024) COLLATE utf8_bin NOT NULL,
+			  `report` varchar(4096)  NOT NULL,
+			  `comments` varchar(1024)  NOT NULL,
 			  PRIMARY KEY (`id`),
 			  KEY `et_ophtroperationnote_bu_drainage_type_id_fk` (`drainage_type_id`),
 			  KEY `et_ophtroperationnote_bu_last_modified_user_id_fk` (`last_modified_user_id`),
@@ -111,21 +186,21 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `event_id` int(10) unsigned NOT NULL,
 			  `incision_site_id` int(10) unsigned NOT NULL DEFAULT '1',
-			  `length` varchar(5) COLLATE utf8_bin NOT NULL DEFAULT '2.8',
-			  `meridian` varchar(5) COLLATE utf8_bin NOT NULL DEFAULT '180',
+			  `length` varchar(5)  NOT NULL DEFAULT '2.8',
+			  `meridian` varchar(5)  NOT NULL DEFAULT '180',
 			  `incision_type_id` int(10) unsigned NOT NULL DEFAULT '1',
-			  `eyedraw` text COLLATE utf8_bin NOT NULL,
-			  `report` varchar(4096) COLLATE utf8_bin NOT NULL DEFAULT 'Continuous Circular Capsulorrhexis\nHydrodissection\nPhakoemulsification of lens nucleus\nAspiration of soft lens matter\nViscoelastic removed',
+			  `eyedraw` text  NOT NULL,
+			  `report` varchar(4096)  NOT NULL DEFAULT 'Continuous Circular Capsulorrhexis\nHydrodissection\nPhakoemulsification of lens nucleus\nAspiration of soft lens matter\nViscoelastic removed',
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 			  `created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `created_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 			  `iol_position_id` int(10) unsigned DEFAULT '1',
-			  `complication_notes` varchar(4096) COLLATE utf8_bin DEFAULT NULL,
-			  `eyedraw2` varchar(4096) COLLATE utf8_bin NOT NULL,
-			  `iol_power` varchar(5) COLLATE utf8_bin NOT NULL,
+			  `complication_notes` varchar(4096)  DEFAULT NULL,
+			  `eyedraw2` varchar(4096)  NOT NULL,
+			  `iol_power` varchar(5)  NOT NULL,
 			  `iol_type_id` int(10) unsigned DEFAULT NULL,
-			  `report2` varchar(4096) COLLATE utf8_bin NOT NULL,
+			  `report2` varchar(4096)  NOT NULL,
 			  `predicted_refraction` decimal(4,2) NOT NULL DEFAULT '0.00',
 			  PRIMARY KEY (`id`),
 			  KEY `et_ophtroperationnote_ca_incision_site_id_fk` (`incision_site_id`),
@@ -148,8 +223,8 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 		$this->execute("CREATE TABLE `et_ophtroperationnote_comments` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `event_id` int(10) unsigned NOT NULL,
-			  `comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-			  `postop_instructions` varchar(4096) COLLATE utf8_bin NOT NULL,
+			  `comments` varchar(4096)  NOT NULL,
+			  `postop_instructions` varchar(4096)  NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 			  `created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
@@ -168,7 +243,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `event_id` int(10) unsigned NOT NULL,
 			  `proc_id` int(10) unsigned NOT NULL,
-			  `comments` varchar(4096) COLLATE utf8_bin NOT NULL,
+			  `comments` varchar(4096)  NOT NULL,
 			  `element_index` tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
@@ -191,12 +266,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  `event_id` int(10) unsigned NOT NULL,
 			  `membrane_blue` tinyint(1) unsigned NOT NULL DEFAULT '0',
 			  `brilliant_blue` tinyint(1) unsigned NOT NULL DEFAULT '0',
-			  `other_dye` varchar(255) COLLATE utf8_bin NOT NULL,
+			  `other_dye` varchar(255)  NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 			  `created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `created_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
-			  `comments` varchar(1024) COLLATE utf8_bin NOT NULL,
+			  `comments` varchar(1024)  NOT NULL,
 			  PRIMARY KEY (`id`),
 			  KEY `et_ophtroperationnote_mp_last_modified_user_id_fk` (`last_modified_user_id`),
 			  KEY `et_ophtroperationnote_mp_created_user_id_fk` (`created_user_id`),
@@ -361,8 +436,8 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 			  `created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `created_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
-			  `eyedraw` text COLLATE utf8_bin NOT NULL,
-			  `comments` varchar(1024) COLLATE utf8_bin NOT NULL,
+			  `eyedraw` text  NOT NULL,
+			  `comments` varchar(1024)  NOT NULL,
 			  PRIMARY KEY (`id`),
 			  KEY `et_ophtroperationnote_vitrectomy_event_id` (`event_id`),
 			  KEY `et_ophtroperationnote_vitrectomy_gauge_id` (`gauge_id`),
@@ -417,7 +492,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 
 		$this->execute("CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complications` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(64)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -428,12 +503,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_anaesthetic_ac_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_anaesthetic_ac_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_anaesthetic_ac_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_buckle_drainage_type` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(16) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(16)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -444,7 +519,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_bdt_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_bdt_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_bdt_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_complication` (
@@ -469,7 +544,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_complications` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(64)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -480,12 +555,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cc_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cc_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cc_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_incision_site` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(16) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(16)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -496,12 +571,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cis_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cis_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cis_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_incision_type` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(16) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(16)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -512,12 +587,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cit_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cit_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cit_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_iol_position` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(32) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(32)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -528,12 +603,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cip_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cip_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cip_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_iol_type` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(64) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(64)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -545,7 +620,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cot_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cot_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cot_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_operative_device` (
@@ -581,12 +656,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_gas_pc_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_gas_pc_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_gas_pc_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_gas_type` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(5) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(5)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -602,7 +677,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 
 		$this->execute("CREATE TABLE `ophtroperationnote_gas_volume` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `value` varchar(3) COLLATE utf8_bin NOT NULL,
+			  `value` varchar(3)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -613,12 +688,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_gas_vol_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_gas_vol_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_gas_vol_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_gauge` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `value` varchar(5) COLLATE utf8_bin NOT NULL,
+			  `value` varchar(5)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -629,12 +704,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_gauge_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_gauge_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_gauge_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_postop_drug` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+			  `name` varchar(255)  NOT NULL,
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 			  `created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
@@ -696,7 +771,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 
 		$this->execute("CREATE TABLE `ophtroperationnote_preparation_intraocular_solution` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+			  `name` varchar(128)  DEFAULT NULL,
 			  `display_order` tinyint(3) unsigned DEFAULT '0',
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -707,12 +782,12 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_pis_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_pis_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_pis_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_preparation_skin_preparation` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+			  `name` varchar(128)  DEFAULT NULL,
 			  `display_order` tinyint(3) unsigned DEFAULT '0',
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -723,7 +798,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_psp_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_psp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_psp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_procedure_element` (
@@ -744,7 +819,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_pe_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_pe_element_type_fk` FOREIGN KEY (`element_type_id`) REFERENCES `element_type` (`id`),
 			  CONSTRAINT `ophtroperationnote_pe_procedure_fk` FOREIGN KEY (`procedure_id`) REFERENCES `proc` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_procedurelist_procedure_assignment` (
@@ -773,7 +848,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `site_id` int(10) unsigned NOT NULL,
 			  `subspecialty_id` int(10) unsigned NOT NULL,
-			  `content` varchar(1024) COLLATE utf8_bin NOT NULL,
+			  `content` varchar(1024)  NOT NULL,
 			  `display_order` tinyint(3) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 			  `last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
