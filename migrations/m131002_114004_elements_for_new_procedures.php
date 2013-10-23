@@ -12,7 +12,7 @@ class m131002_114004_elements_for_new_procedures extends CDbMigration
 
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Cycloablation"))->queryRow();
 
-		$this->insert('et_ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
 
 		$this->createTable('et_ophtroperationnote_cycloablation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
@@ -40,7 +40,7 @@ class m131002_114004_elements_for_new_procedures extends CDbMigration
 
 		$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(":event_type_id"=>$event_type['id'],":class_name"=>"ElementCycloablation"))->queryRow();
 
-		$this->delete('et_ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
+		$this->delete('ophtroperationnote_procedure_element',"element_type_id = {$element_type['id']}");
 		$this->delete('element_type',"id = {$element_type['id']}");
 	}
 }

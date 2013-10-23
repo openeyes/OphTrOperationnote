@@ -241,7 +241,7 @@ $(document).ready(function() {
 	});
 });
 
-function callbackVerifyAddProcedure(proc_name,durations,short_version,callback) {
+function callbackVerifyAddProcedure(proc_name,durations,callback) {
 	var eye = $('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]:checked').val();
 
 	if (eye != 3) {
@@ -251,7 +251,7 @@ function callbackVerifyAddProcedure(proc_name,durations,short_version,callback) 
 
 	$.ajax({
 		'type': 'GET',
-		'url': baseUrl+'/OphTrOperationnote/Default/verifyprocedure?name='+proc_name+'&durations='+durations+'short_version='+short_version,
+		'url': baseUrl+'/OphTrOperationnote/Default/verifyprocedure?name='+proc_name+'&durations='+durations,
 		'success': function(result) {
 			if (result == 'yes') {
 				callback(true);

@@ -329,36 +329,13 @@ class DefaultController extends BaseEventTypeController
 
 	public function actionVerifyprocedure()
 	{
-		$list = Yii::app()->session['Procedures'];
-		$found = false;
-
-		if (!isset($_GET['short_version'])) {
-			$_GET['short_version'] = true;
-		}
-
 		if (!empty($_GET['name'])) {
-			if (!empty($list)) {
-				foreach ($list as $id => $procedure) {
-					if ($procedure['term'] == $_GET['name']) {
-						if ($this->procedure_requires_eye($id)) {
-							echo "no";
-						} else {
-							echo "yes";
-						}
-						return;
-					}
-				}
-			}
-
-			// if not in the session, check in the db
-			if (!$found) {
-				if ($procedure = Procedure::model()->find('term=:term',array(':term'=>$_GET['name']))) {
-					if ($this->procedure_requires_eye($procedure->id)) {
-						echo "no";
-					} else {
-						echo "yes";
-					}
-					return;
+			$proc = Procedure::model()->findByAttributes(array('term' => $_GET['name']));
+			if ($proc) {
+				if ($this->procedure_requires_eye($proc->id)) {
+					echo "no";
+				} else {
+					echo "yes";
 				}
 			}
 		} else {
