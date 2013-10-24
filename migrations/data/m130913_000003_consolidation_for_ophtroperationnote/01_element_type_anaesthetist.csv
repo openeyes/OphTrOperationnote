@@ -1,6 +1,6 @@
-id,element_type_id => ElementType.class_name,anaesthetist_id,display_order,last_modified_user_id,last_modified_date,created_user_id,created_date
-,Element_OphTrOperationnote_Anaesthetic,1,1,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-,Element_OphTrOperationnote_Anaesthetic,2,2,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-,Element_OphTrOperationnote_Anaesthetic,3,3,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-,Element_OphTrOperationnote_Anaesthetic,4,4,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-,Element_OphTrOperationnote_Anaesthetic,5,5,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
+element_type_id => ElementType.class_name,anaesthetist_id,display_order
+Element_OphTrOperationnote_Anaesthetic,1,1
+Element_OphTrOperationnote_Anaesthetic,2,2
+Element_OphTrOperationnote_Anaesthetic,3,3
+Element_OphTrOperationnote_Anaesthetic,4,4
+Element_OphTrOperationnote_Anaesthetic,5,5

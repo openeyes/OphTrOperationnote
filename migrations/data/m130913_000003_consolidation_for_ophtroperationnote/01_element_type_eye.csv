@@ -1,4 +1,4 @@
-id,element_type_id => ElementType.class_name,eye_id,display_order
-,Element_OphTrOperationnote_ProcedureList,2,1
-,Element_OphTrOperationnote_ProcedureList,1,3
-,Element_OphTrOperationnote_ProcedureList,3,2
+element_type_id => ElementType.class_name,eye_id,display_order
+Element_OphTrOperationnote_ProcedureList,2,1
+Element_OphTrOperationnote_ProcedureList,1,3
+Element_OphTrOperationnote_ProcedureList,3,2
