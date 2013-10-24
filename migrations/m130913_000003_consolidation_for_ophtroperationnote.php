@@ -19,16 +19,10 @@
 
 class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 {
-	public function up()
-	{
-		//disable foreign keys check
-		$this->execute("SET foreign_key_checks = 0");
+	private  $element_types ;
 
-		Yii::app()->cache->flush();
-
-		$event_type_id = $this->insertOEEventType( 'Operation note', 'OphTrOperationnote', 'Tr');
-
-		$element_types = array(
+	public function setData(){
+		$this->element_types = array(
 			'Element_OphTrOperationnote_ProcedureList' => array('name' => 'Procedure list'),
 			'Element_OphTrOperationnote_Vitrectomy' => array('name' => 'Vitrectomy'),
 			'Element_OphTrOperationnote_MembranePeel' => array('name' => 'Membrane peel'),
@@ -43,88 +37,18 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			'Element_OphTrOperationnote_Preparation' => array('name' => 'Preparation'),
 			'Element_OphTrOperationnote_GenericProcedure' => array('name' => 'Generic procedure')
 		);
+	}
 
-		$this->insertOEElementType($element_types, $event_type_id);
+	public function up()
+	{
+		$this->setData();
+		//disable foreign keys check
+		$this->execute("SET foreign_key_checks = 0");
 
-		$elementTypeIdForElementTypeEye = $this->getIdOfElementTypeByClassName('Element_OphTrOperationnote_ProcedureList');
-		$eye_ids = array(2 ,3, 1);
-		$this->insertOEElementTypeEye($eye_ids, $elementTypeIdForElementTypeEye);
+		Yii::app()->cache->flush();
 
-		//Anaesthetic tables
-		$anaestheticAgents = array(1,2,3,4,5,6);
-		$anaestheticComplications = array(1,2,3,4,5,6,7,8,9,10,11);
-		$anaestheticDelivery = array(1,2,3,4,5,6,7);
-		$anaestheticAnaesthetist = array(1,2,3,4,5);
-
-		$this->insertOEElementTypeAnaesteticTablesHelper('element_type_anaesthetic_agent' ,
-			'anaesthetic_agent_id', $anaestheticAgents, $elementTypeIdForElementTypeEye);
-		$this->insertOEElementTypeAnaesteticTablesHelper('element_type_anaesthetic_complication' ,
-			'anaesthetic_complication_id', $anaestheticComplications, $elementTypeIdForElementTypeEye);
-		$this->insertOEElementTypeAnaesteticTablesHelper('element_type_anaesthetic_delivery' ,
-			'anaesthetic_delivery_id', $anaestheticDelivery, $elementTypeIdForElementTypeEye);
-		$this->insertOEElementTypeAnaesteticTablesHelper('element_type_anaesthetist' ,
-			'anaesthetist_id', $anaestheticAnaesthetist, $elementTypeIdForElementTypeEye);
-
-		$anaestheticTypes = array(
-			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 1, 'display_order' => 1),
-			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 3, 'display_order' => 2),
-			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 2, 'display_order' => 3),
-			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 4, 'display_order' => 4),
-			array ('element_type_id' => $elementTypeIdForElementTypeEye,'anaesthetic_type_id' => 5, 'display_order' => 5),
-		);
-		$this->insertOEGenericDynamicTable('element_type_anaesthetic_type', $anaestheticTypes);
-
-		//add setting_medatada dynamically
-		$settingMetadataArray = array(
-			array(
-				'element_type_id' => $this->getIdOfElementTypeByClassName("Element_OphTrOperationnote_Anaesthetic"),
-				'display_order'=> 1,
-				'field_type_id' => 1,
-				'key' => 'fife', 'name' => 'Fife', 'default_value' => ''),
-			array(
-				'element_type_id' => $this->getIdOfElementTypeByClassName("Element_OphTrOperationnote_Personnel"),
-				'display_order'=> 1,
-				'field_type_id' => 1,
-				'key' => 'fife', 'name' => 'Fife', 'default_value' => ''),
-			array(
-				'element_type_id' => $this->getIdOfElementTypeByClassName("Element_OphTrOperationnote_Preparation"),
-				'display_order'=> 1,
-				'field_type_id' => 1,
-				'key' => 'fife', 'name' => 'Fife', 'default_value' => ''),
-
-		);
-		$this->insertOEGenericDynamicTable('setting_metadata', $settingMetadataArray);
-
-		$procArray= array(
-			array(
-				'term' => "Posterior synechiolysis", 'short_format' => "Post syn lysis",'default_duration' => 10,
-				'snomed_code'=>"44958007",'snomed_term' => "Lysis of posterior adhesions of iris",'last_modified_user_id'=>1,
-				'unbooked' => 0
-			),
-			array(
-				'term' => "Anterior synechiolysis", 'short_format' => "Ant syn lysis",'default_duration' => 10,
-				'snomed_code'=>"55931003",'snomed_term' => "Lysis of anterior adhesions of iris",'last_modified_user_id'=>1,
-				'unbooked' => 0
-			),
-			array(
-				'term' => "Repair of eyelid laceration, full-thickness involving lid margin", 'short_format' => "Lid laceration full",
-				'default_duration' => 30,
-				'snomed_code'=>"361162007",'snomed_term' => "Repair of eyelid laceration, full-thickness involving lid margin",
-				'last_modified_user_id'=>1,	'unbooked' => 0
-			),
-			array(
-				'term' => "Repair of eyelid laceration, partial-thickness involving lid margin", 'short_format' => "Lid laceration partial",
-				'default_duration' => 30,
-				'snomed_code'=>"361157006",'snomed_term' => "Repair of eyelid laceration, partial-thickness involving lid margin",
-				'last_modified_user_id'=>1,	'unbooked' => 0
-			),
-			array(
-				'term' => "Biopsy of buccal mucosa", 'short_format' => "Buccal biopsy",'default_duration' => 20,
-				'snomed_code'=>"6818001",'snomed_term' => "Excision of buccal mucosa",
-				'last_modified_user_id'=>1,	'unbooked' => 0
-			),
-		);
-		$this->insertOEGenericDynamicTable('proc', $procArray);
+		$event_type_id = $this->insertOEEventType( 'Operation note', 'OphTrOperationnote', 'Tr');
+		$this->insertOEElementType($this->element_types , $event_type_id);
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_anaesthetic` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -876,6 +800,8 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 
 	public function down()
 	{
+		$this->setData();
+
 		$this->execute("SET foreign_key_checks = 0");
 
 		$tables = array(
@@ -927,7 +853,48 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			->where('class_name=:class_name', array(':class_name' => 'OphTrOperationnote'))
 			->queryScalar();
 
-		// Delete the element types
+		//delete anaesthetic <-> element_type relations tables entries
+		$elementTypeId = $this->getIdOfElementTypeByClassName('Element_OphTrOperationnote_ProcedureList');
+
+		/*$this->deleteOEFromMultikeyTable('patient_shortcode', $this->patients_shortcodes($event_type_id) );
+		$this->deleteOEFromMultikeyTable('operative_device', $this->operativeDeviceArray );
+		$this->deleteOEFromMultikeyTable('proc', $this->procArray );
+		$this->deleteOEFromMultikeyTable('setting_metadata', $this->settingMetadataArray );
+		$this->deleteOEFromMultikeyTable('element_type_anaesthetic_type', $this->anaestheticTypes($elementTypeId ) );
+
+		$anaestheticAnaestheticAgentsDeleteArray = array();
+		foreach($this->anaestheticAgents as  $anaestheticAgent_id){
+			$anaestheticAnaestheticAgentsDeleteArray [] = array('anaesthetic_agent_id'=> $anaestheticAgent_id, 'element_type_id'=>$elementTypeId );
+		}
+		$this->deleteOEFromMultikeyTable('element_type_anaesthetic_agent', $anaestheticAnaestheticAgentsDeleteArray );
+
+		$anaestheticAnaestheticComplicationsDeleteArray = array();
+		foreach($this->anaestheticComplications as  $anaestheticComplication_id){
+			$anaestheticAnaestheticComplicationsDeleteArray [] = array('anaesthetic_complication_id'=> $anaestheticComplication_id, 'element_type_id'=>$elementTypeId );
+		}
+		$this->deleteOEFromMultikeyTable('element_type_anaesthetic_complication', $anaestheticAnaestheticComplicationsDeleteArray );
+
+		$anaestheticAnaestheticDeliveryDeleteArray = array();
+		foreach($this->anaestheticDelivery as  $anaestheticDelivery_id){
+			$anaestheticAnaestheticDeliveryDeleteArray[] = array('anaesthetic_delivery_id'=> $anaestheticDelivery_id, 'element_type_id'=>$elementTypeId );
+		}
+		$this->deleteOEFromMultikeyTable('element_type_anaesthetic_delivery', $anaestheticAnaestheticDeliveryDeleteArray);
+
+		//delete the element_type_anaesthetist entries
+		$anaestheticAnaesthetistDeleteArray = array();
+		foreach($this->anaestheticAnaesthetist as  $anaestheticAnaesthetist_id){
+			$anaestheticAnaesthetistDeleteArray[] = array('anaesthetist_id'=> $anaestheticAnaesthetist_id, 'element_type_id'=>$elementTypeId );
+		}
+		$this->deleteOEFromMultikeyTable('element_type_anaesthetist', $anaestheticAnaesthetistDeleteArray);
+
+		// Delete the element types eye
+		$eyIdDeleteArray = array();
+		foreach($this->eye_ids as  $eye_id){
+			$eyIdDeleteArray[] = array('eye_id'=> $eye_id, 'element_type_id'=>$elementTypeId );
+		}
+		$this->deleteOEFromMultikeyTable('element_type_eye', $eyIdDeleteArray);*/
+
+		// Delete the element types for this event type
 		$this->delete('element_type', 'event_type_id = ' . $event_type_id);
 
 		// Delete the event type

@@ -1,0 +1,6 @@
+id,term,short_format,default_duration,snomed_code,snomed_term,last_modified_user_id,last_modified_date,created_user_id,created_date,unbooked
+,"Posterior synechiolysis","Post syn lysis",10,"44958007","Lysis of posterior adhesions of iris",1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00",0
+,"Anterior synechiolysis","Ant syn lysis",10,"55931003","Lysis of anterior adhesions of iris",1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00",0
+,"Repair of eyelid laceration, full-thickness involving lid margin","Lid laceration full",30,"361162007","Repair of eyelid laceration, full-thickness involving lid margin",1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00",0
+,"Repair of eyelid laceration, partial-thickness involving lid margin","Lid laceration partial",30,"361157006","Repair of eyelid laceration, partial-thickness involving lid margin",1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00",0
+,"Biopsy of buccal mucosa","Buccal biopsy",20,"6818001","Excision of buccal mucosa",1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00",0
