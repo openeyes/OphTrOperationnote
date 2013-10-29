@@ -17,14 +17,14 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 /* line 2, ../sass/components/_event.scss */
-.event.operation-note {
+.event.ophtroperationnote {
   border-color: #fd6892;
 }
 /* line 4, ../sass/components/_event.scss */
-.event.operation-note .event-content {
-  background-image: url('../img/new/watermark.png?1379408064');
+.event.ophtroperationnote .event-content {
+  background-image: url('../img/new/watermark.png?1382521236');
 }
 /* line 7, ../sass/components/_event.scss */
-.event.operation-note .event-title {
-  background-image: url('../img/new/medium.png?1379343097');
+.event.ophtroperationnote .event-title {
+  background-image: url('../img/new/medium.png?1382521229');
 }
