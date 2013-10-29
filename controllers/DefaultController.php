@@ -72,11 +72,12 @@ class DefaultController extends BaseEventTypeController
 					array('colour' => 'red', 'level' => 'secondary')
 				)
 			);
+			$this->moduleStateCssClass = 'edit';
 			$this->processJsVars();
-			$this->renderPartial('select_event',array(
+			$this->render('select_event',array(
 				'errors' => $errors,
 				'bookings' => $bookings,
-			), false, true);
+			));
 		}
 	}
 
@@ -249,6 +250,8 @@ class DefaultController extends BaseEventTypeController
 				false, true
 			);
 		}
+
+
 
 		if (count($procedureSpecificElements) == 0) {
 			$element = new Element_OphTrOperationnote_GenericProcedure;
