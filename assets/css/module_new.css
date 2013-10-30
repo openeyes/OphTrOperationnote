@@ -26,5 +26,75 @@
 }
 /* line 7, ../sass/components/_event.scss */
 .event.ophtroperationnote .event-title {
-  background-image: url('../img/new/medium.png?1382521229');
+  background-image: url('../img/new/medium.png?1382093883');
+}
+
+/* line 1, ../sass/components/_eyedraw.scss */
+#ed_canvas_edit_Cataract {
+  background-color: #fff;
+  border: 1px solid #000;
+  margin-top: 1em;
+}
+
+/* line 7, ../sass/components/_eyedraw.scss */
+#ed_canvas_edit_Position {
+  background-color: #DAE6F1;
+  border: 0;
+  margin-left: 80px;
+}
+
+/* line 13, ../sass/components/_eyedraw.scss */
+#ed_canvas_edit_Buckle {
+  background-color: #fff;
+  border: 1px solid #000;
+}
+
+/* line 21, ../sass/components/_eyedraw.scss */
+.Element_OphTrOperationnote_Vitrectomy .ed_toolbar,
+.Element_OphTrOperationnote_Buckle .ed_toolbar,
+.Element_OphTrOperationnote_Cataract .ed_toolbar {
+  margin: 0;
+}
+
+/* line 90, ../../../../../sass/new/openeyes/_mixins.scss */
+.row.cataract .column.fixed {
+  width: 322px;
+}
+
+@media only screen and (min-width: 768px) {
+  /* line 100, ../../../../../sass/new/openeyes/_mixins.scss */
+  .row.cataract .column.fluid {
+    width: -moz-calc(100% - 322px);
+    width: -o-calc(100% - 322px);
+    width: -webkit-calc(100% - 322px);
+    width: calc(100% - 322px);
+  }
+}
+/* line 90, ../../../../../sass/new/openeyes/_mixins.scss */
+.row.buckle .column.fixed {
+  width: 322px;
+}
+
+@media only screen and (min-width: 768px) {
+  /* line 100, ../../../../../sass/new/openeyes/_mixins.scss */
+  .row.buckle .column.fluid {
+    width: -moz-calc(100% - 322px);
+    width: -o-calc(100% - 322px);
+    width: -webkit-calc(100% - 322px);
+    width: calc(100% - 322px);
+  }
+}
+/* line 90, ../../../../../sass/new/openeyes/_mixins.scss */
+.row.vitrectomy .column.fixed {
+  width: 322px;
+}
+
+@media only screen and (min-width: 768px) {
+  /* line 100, ../../../../../sass/new/openeyes/_mixins.scss */
+  .row.vitrectomy .column.fluid {
+    width: -moz-calc(100% - 322px);
+    width: -o-calc(100% - 322px);
+    width: -webkit-calc(100% - 322px);
+    width: calc(100% - 322px);
+  }
 }

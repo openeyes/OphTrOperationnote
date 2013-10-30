@@ -1,0 +1,7 @@
+$cataract-fixed-column-width: 322px;
+$buckle-fixed-column-width: 322px;
+$vitrectomy-fixed-column-width: 322px;
+
+@include grid-fixed-fluid(".cataract", $cataract-fixed-column-width);
+@include grid-fixed-fluid(".buckle", $buckle-fixed-column-width);
+@include grid-fixed-fluid(".vitrectomy", $vitrectomy-fixed-column-width);
