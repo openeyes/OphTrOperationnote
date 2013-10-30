@@ -21,79 +21,77 @@ class AdminController extends ModuleAdminController
 {
 	public function actionViewPostOpDrugs()
 	{
-		Audit::add('admin','list',null,false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
+		Audit::add('admin','list',null,false,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_PostopDrug'));
 
 		$this->render('postopdrugs');
 	}
 
-	public function actionCreatePostOpDrug()
+	public function actionAddPostOpDrug()
 	{
-		if (empty($_POST['name'])) {
-			throw new Exception("Missing name");
-		}
-
-		if ($drug = OphTrOperationnote_PostopDrug::model()->find(array('order'=>'display_order desc'))) {
-			$display_order = $drug->display_order+1;
-		} else {
-			$display_order = 1;
-		}
-
 		$drug = new OphTrOperationnote_PostopDrug;
-		$drug->name = @$_POST['name'];
-		$drug->display_order = $display_order;
 
-		if (!$drug->save()) {
-			echo json_encode(array('errors'=>$drug->getErrors()));
-			return;
-		}
+		if (!empty($_POST)) {
+			$drug->attributes = $_POST['OphTrOperationnote_PostopDrug'];
 
-		// TODO: this is a hack for the Orbis demo and should be removed when full site/subspecialty functionality has been implemented
-		$specialty = Specialty::model()->find('code=?',array(130));
-		foreach (Site::model()->findAll('institution_id=?',array(1)) as $site) {
-			foreach (Subspecialty::model()->findAll('specialty_id=?',array($specialty->id)) as $subspecialty) {
-				$ssd = new OphTrOperationnote_PostopSiteSubspecialtyDrug;
-				$ssd->site_id = $site->id;
-				$ssd->subspecialty_id = $subspecialty->id;
-				$ssd->drug_id = $drug->id;
-				if (!$ssd->save()) {
-					echo json_encode(array('errors'=>$ssd->getErrors()));
+			if (!$drug->validate()) {
+				$errors = $drug->getErrors();
+			} else {
+				if (!$drug->save()) {
+					throw new Exception("Unable to save drug: ".print_r($drug->getErrors(),true));
 				}
+				Audit::add('admin-OphTrOperationnote_PostopDrug','add',serialize($_POST));
+				$this->redirect('/OphTrOperationnote/admin/viewPostOpDrugs');
 			}
 		}
 
-		Audit::add('admin','create',serialize($_POST),false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
-
-		echo json_encode(array('id'=>$drug->id,'errors'=>array()));
+		$this->render('/admin/addpostopdrug',array(
+			'drug' => $drug,
+			'errors' => @$errors,
+		));
 	}
 
-	public function actionUpdatePostOpDrug()
+	public function actionEditPostOpDrug($id)
 	{
-		if (!$drug = OphTrOperationnote_PostopDrug::model()->findByPk(@$_POST['id'])) {
-			throw new Exception("Drug not found: ".@$_POST['id']);
+		if (!$drug = OphTrOperationnote_PostopDrug::model()->findByPk($id)) {
+			throw new Exception("Drug not found: $id");
 		}
 
-		$drug->name = @$_POST['name'];
-		if (!$drug->save()) {
-			echo json_encode(array('errors'=>$drug->getErrors()));
-			return;
+		if (!empty($_POST)) {
+			$drug->attributes = $_POST['OphTrOperationnote_PostopDrug'];
+
+			if (!$drug->validate()) {
+				$errors = $drug->getErrors();
+			} else {
+				if (!$drug->save()) {
+					throw new Exception("Unable to save drug: ".print_r($drug->getErrors(),true));
+				}
+
+				Audit::add('admin-OphTrOperationnote_PostopDrug','edit',serialize(array_merge(array('id'=>$id),$_POST)));
+
+				$this->redirect('/OphTrOperationnote/admin/viewPostOpDrugs');
+			}
+		} else {
+			Audit::add('admin-OphTrOperationnote_PostopDrug','view',$id);
 		}
 
-		Audit::add('admin','update',serialize($_POST),false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
+    $this->render('/admin/editpostopdrug',array(
+      'drug' => $drug,
+      'errors' => @$errors,
+    ));
+  }
 
-		echo json_encode(array('errors'=>array()));
-	}
-
-	public function actionDeletePostOpDrug($id)
+	public function actionDeletePostOpDrugs()
 	{
-		if ($drug = OphTrOperationnote_PostopDrug::model()->findByPk($id)) {
+		$result = 1;
+		foreach (OphTrOperationnote_PostopDrug::model()->findAllByPk(@$_POST['drugs']) as $drug) {
 			$drug->deleted = 1;
-			if ($drug->save()) {
-				Audit::add('admin','delete',$id,false,array('module'=>'OphTrOperationnote','model'=>'PostopDrug'));
-				echo "1";
-				return;
+			if (!$drug->save()) {
+				$result = 0;
+			} else {
+				Audit::add('admin','delete',$drug->id,false,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_PostopDrug'));
 			}
 		}
-		echo "0";
+		echo $result;
 	}
 
 	public function actionSortPostOpDrugs()
