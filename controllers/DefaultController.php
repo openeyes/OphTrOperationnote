@@ -27,6 +27,22 @@ class DefaultController extends BaseEventTypeController
 		return parent::beforeAction($action);
 	}
 
+	/**
+	 * set flash message for patient allergies
+	 *
+	 * @param Patient $patient
+	 */
+	protected function showAllergyWarning($patient)
+	{
+		if ($patient->no_allergies_date) {
+			Yii::app()->user->setFlash('info.prescription_allergy', $patient->getAllergiesString());
+		}
+		else {
+			Yii::app()->user->setFlash('warning.prescription_allergy', $patient->getAllergiesString());
+		}
+	}
+
+
 	public function actionCreate()
 	{
 		$errors = array();
@@ -34,6 +50,8 @@ class DefaultController extends BaseEventTypeController
 		if (!$this->patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
 			throw new Exception("Patient not found: ".@$_GET['patient_id']);
 		}
+
+		$this->showAllergyWarning($this->patient);
 
 		if (!empty($_POST)) {
 			if (preg_match('/^booking([0-9]+)$/',@$_POST['SelectBooking'],$m)) {
@@ -84,6 +102,13 @@ class DefaultController extends BaseEventTypeController
 	public function actionUpdate($id)
 	{
 		$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
+
+		if (!$event = Event::model()->findByPk($id)) {
+			throw new CHttpException(403, 'Invalid event id.');
+		}
+
+		$this->showAllergyWarning($event->episode->patient);
+
 		parent::actionUpdate($id);
 	}
 
