@@ -1,3 +1,4 @@
+/** Phasing */
 /**
  * OpenEyes
  *
@@ -15,51 +16,85 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
+/* line 2, ../sass/components/_event.scss */
+.event.ophtroperationnote {
+  border-color: #fd6892;
+}
+/* line 4, ../sass/components/_event.scss */
+.event.ophtroperationnote .event-content {
+  background-image: url('../img/new/watermark.png?1382093883');
+}
+/* line 7, ../sass/components/_event.scss */
+.event.ophtroperationnote .event-title {
+  background-image: url('../img/new/medium.png?1382093883');
+}
 
-#event_content.watermarkBox { background-image: url(../img/watermark.png); background-position: -5px 0; background-repeat: repeat-y; border-color: #fd6892; }
-#event_content h3.withEventIcon { background:transparent url(../img/medium.png) center left no-repeat; }
+/* line 1, ../sass/components/_eyedraw.scss */
+#ed_canvas_edit_Cataract {
+  background-color: #fff;
+  border: 1px solid #000;
+  margin-top: 1em;
+}
 
-#event_OphTrOperationnote .Element_OphTrOperationnote_Cataract .left .halfHeight .eventDetail { margin-left: 320px; }
-#event_OphTrOperationnote .Element_OphTrOperationnote_Cataract .right .halfHeight .eventDetail { width: 110px !important; }
-#event_OphTrOperationnote .Element_OphTrOperationnote_Buckle .halfHeight .eventDetail { margin-left: 535px; }
-#event_OphTrOperationnote .Element_OphTrOperationnote_Cataract .eventDetail .label { background: none !important; }
-#event_OphTrOperationnote .Element_OphTrOperationnote_Buckle .eventDetail .label { background: none !important; }
-#event_OphTrOperationnote .Element_OphTrOperationnote_Vitrectomy .halfHeight { margin-left: 575px; }
+/* line 7, ../sass/components/_eyedraw.scss */
+#ed_canvas_edit_Position {
+  background-color: #DAE6F1;
+  border: 0;
+  margin-left: 80px;
+}
 
-#ed_canvas_edit_Cataract { background-color: #fff; border: 1px solid #000; margin-left: 9px; }
-#ed_canvas_edit_Position { background-color: #DAE6F1; margin-left: 89px; margin-top: -115px; }
-#ed_canvas_edit_Buckle { background-color: #fff; border: 1px solid #000; margin-left: 9px; }
-#ed_canvas_view_Buckle { margin-top: -25px; }
+/* line 13, ../sass/components/_eyedraw.scss */
+#ed_canvas_edit_Buckle {
+  background-color: #fff;
+  border: 1px solid #000;
+}
 
-#div_Element_OphTrOperationnote_Cataract_incision_site_id { margin-top: 150px; height: 20px; }
-#div_Element_OphTrOperationnote_Cataract_length { height: 26px; }
-#div_Element_OphTrOperationnote_Cataract_meridian { height: 26px; }
-#div_Element_OphTrOperationnote_Cataract_incision_type_id { height: 26px; }
-#div_Element_OphTrOperationnote_Cataract_vision_blue { padding-bottom: 7px !important; }
-#div_Element_OphTrOperationnote_Cataract_iol_position_id .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
-#div_Element_OphTrOperationnote_Cataract_Complications .label { float: none !important; display: block !important; font-size:15px !important; padding-bottom: 4px !important; }
-#div_Element_OphTrOperationnote_Cataract_Complications ul.MultiSelectList { width: 185px; }
-#div_Element_OphTrOperationnote_Cataract_Devices ul.MultiSelectList { width: 230px; }
-#div_Element_OphTrOperationnote_Vitrectomy_comments { display: inline-block; }
+/* line 21, ../sass/components/_eyedraw.scss */
+.Element_OphTrOperationnote_Vitrectomy .ed_toolbar,
+.Element_OphTrOperationnote_Buckle .ed_toolbar,
+.Element_OphTrOperationnote_Cataract .ed_toolbar {
+  margin: 0;
+}
 
-#div_Element_OphTrOperationnote_Buckle_drainage_type_id { margin-bottom: 10px; }
+/* line 90, ../../../../../sass/new/openeyes/_mixins.scss */
+.row.cataract .column.fixed {
+  width: 322px;
+}
 
-#ed_canvas_edit_Vitrectomy { background: #fff; border: 1px solid #000; margin-left: 10px; }
-#ed_canvas_view_Vitrectomy { margin-top: -26px; }
+@media only screen and (min-width: 768px) {
+  /* line 100, ../../../../../sass/new/openeyes/_mixins.scss */
+  .row.cataract .column.fluid {
+    width: -moz-calc(100% - 322px);
+    width: -o-calc(100% - 322px);
+    width: -webkit-calc(100% - 322px);
+    width: calc(100% - 322px);
+  }
+}
+/* line 90, ../../../../../sass/new/openeyes/_mixins.scss */
+.row.buckle .column.fixed {
+  width: 322px;
+}
 
-#div_Element_OphTrOperationnote_Surgeon { padding-bottom: 28px !important; }
-#div_Element_OphTrOperationnote_Surgeon_supervising_surgeon_id > .label { font-size: 13px !important; }
+@media only screen and (min-width: 768px) {
+  /* line 100, ../../../../../sass/new/openeyes/_mixins.scss */
+  .row.buckle .column.fluid {
+    width: -moz-calc(100% - 322px);
+    width: -o-calc(100% - 322px);
+    width: -webkit-calc(100% - 322px);
+    width: calc(100% - 322px);
+  }
+}
+/* line 90, ../../../../../sass/new/openeyes/_mixins.scss */
+.row.vitrectomy .column.fixed {
+  width: 322px;
+}
 
-div.Element_OphTrOperationnote_Comments { background-color: #DAE6F1; }
-div.Element_OphTrOperationnote_Comments > h4 { background-color: #fff; margin-bottom: 5px !important; padding-bottom: 5px !important; }
-
-div.Element_OphTrOperationnote_Comments .half { width: 50%; float: left; }
-
-#Element_OphTrOperationnote_Comments_postop_instructions { display: block; }
-
-#div_Element_OphTrOperationnote_Personnel { padding-bottom: 25px !important; }
-#div_Element_OphTrOperationnote_Personnel_operating_department_practitioner_id { padding-bottom: 28px !important; }
-
-input.widgetSlider { width: 300px !important; }
-
-#div_Element_OphTrOperationnote_Cataract_predicted_refraction { right: 75px; }
+@media only screen and (min-width: 768px) {
+  /* line 100, ../../../../../sass/new/openeyes/_mixins.scss */
+  .row.vitrectomy .column.fluid {
+    width: -moz-calc(100% - 322px);
+    width: -o-calc(100% - 322px);
+    width: -webkit-calc(100% - 322px);
+    width: calc(100% - 322px);
+  }
+}
