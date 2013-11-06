@@ -56,7 +56,7 @@
 
 						<fieldset class="row field-row">
 							<legend class="large-2 column">Select:</legend>
-							<div class="large-5 column end">
+							<div class="large-6 column end">
 								<?php foreach ($bookings as $booking) {?>
 									<label class="highlight booking">
 										<span class="row">
