@@ -1,4 +1,3 @@
-<?php /* DEPRECATED */ ?>
 <?php
 /**
  * OpenEyes
@@ -19,17 +18,30 @@
  */
 ?>
 
-<div class="element <?php echo $element->elementType->class_name?> clearfix"
+<?php
+$layoutColumns = array(
+	'label' => 4,
+	'field' => 8
+);?>
+
+<section class="element <?php echo $element->elementType->class_name?> clearfix"
 	data-element-type-id="<?php echo $element->elementType->id ?>"
 	data-element-type-class="<?php echo $element->elementType->class_name ?>"
 	data-element-type-name="<?php echo $element->elementType->name ?>"
 	data-element-display-order="<?php echo $element->elementType->display_order ?>">
-	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
-	<div class="half">
-		<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 40))?>
+	<header class="element-header">
+		<h3 class="element-title"><?php  echo $element->elementType->name; ?></h3>
+	</header>
+
+	<div class="element-fields">
+		<div class="row">
+			<div class="large-6 column">
+				<?php echo $form->textArea($element, 'comments',array(),false,array(),$layoutColumns)?>
+			</div>
+			<div class="large-6 column">
+				<?php echo $form->dropDownTextSelection($element, 'postop_instructions', $element->postop_instructions_list,array(),$layoutColumns)?>
+				<?php echo $form->textArea($element, 'postop_instructions',array(),false,array(),$layoutColumns)?>
+			</div>
 	</div>
-	<div class="half">
-		<?php echo $form->dropDownTextSelection($element, 'postop_instructions', $element->postop_instructions_list)?>
-		<?php echo $form->textArea($element, 'postop_instructions', array('rows' => 4, 'cols' => 40))?>
-	</div>
-</div>
+
+</section>

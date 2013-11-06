@@ -1,4 +1,3 @@
-<?php /* DEPRECATED */ ?>
 <?php
 /**
  * OpenEyes
@@ -19,27 +18,31 @@
  */
 ?>
 
-<div class="element <?php echo $element->elementType->class_name?>"
+<section class="element <?php echo $element->elementType->class_name?>"
 	data-element-type-id="<?php echo $element->elementType->id ?>"
 	data-element-type-class="<?php echo $element->elementType->class_name ?>"
 	data-element-type-name="<?php echo $element->elementType->name ?>"
 	data-element-display-order="<?php echo $element->elementType->display_order ?>">
-	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
+	<header class="element-header">
+		<h3 class="element-title"><?php  echo $element->elementType->name; ?></h3>
+	</header>
 
-	<?php echo $form->dropDownListRow(
-		$element,
-		array(
-			'surgeon_id',
-			'assistant_id',
-		),
-		array(
-			CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),
-			CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),
-		),
-		array(
-			array('empty'=>'- Please select -'),
-			array('empty'=>'- None -'),
-		)
-	)?>
-	<?php echo $form->dropDownList($element, 'supervising_surgeon_id', CHtml::listData($element->surgeons, 'id', 'ReversedFullName'), array('empty' => '- None -'))?>
-</div>
+	<div class="element-fields">
+		<?php echo $form->dropDownListRow(
+			$element,
+			array(
+				'surgeon_id',
+				'assistant_id',
+			),
+			array(
+				CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),
+				CHtml::listData($element->surgeons, 'id', 'ReversedFullName'),
+			),
+			array(
+				array('empty'=>'- Please select -'),
+				array('empty'=>'- None -'),
+			)
+		)?>
+		<?php echo $form->dropDownList($element, 'supervising_surgeon_id', CHtml::listData($element->surgeons, 'id', 'ReversedFullName'), array('empty' => '- None -'))?>
+	</div>
+</section>

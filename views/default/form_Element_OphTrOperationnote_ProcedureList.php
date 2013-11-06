@@ -1,4 +1,3 @@
-<?php /* DEPRECATED */ ?>
 <?php
 /**
  * OpenEyes
@@ -19,17 +18,21 @@
  */
 ?>
 
-<div class="element <?php echo $element->elementType->class_name?>"
+<section class="element <?php echo $element->elementType->class_name?>"
 	data-element-type-id="<?php echo $element->elementType->id ?>"
 	data-element-type-class="<?php echo $element->elementType->class_name ?>"
 	data-element-type-name="<?php echo $element->elementType->name ?>"
 	data-element-display-order="<?php echo $element->elementType->display_order ?>">
-	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
+	<header class="element-header">
+		<h3 class="element-title"><?php  echo $element->elementType->name; ?></h3>
+	</header>
+
+	<div class="element-fields">
 	<?php if (ctype_digit(@$_GET['booking_event_id'])) {?>
 		<?php echo $form->hiddenInput($element, 'booking_event_id', $_GET['booking_event_id'])?>
 	<?php }?>
-	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->getSelectedEye() ? $element->getSelectedEye()->id : null))?>
+	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->getSelectedEye() ? $element->getSelectedEye()->id : null), null, null, null ,null,null,array('label'=>2,'field'=>10))?>
 	<?php
 	$form->widget('application.widgets.ProcedureSelection',array(
 		'element' => $element,
@@ -39,4 +42,5 @@
 		'hidden' => ($this->action->id == 'create' && $element->getSelectedEye() == null && !@$_POST['Element_OphTrOperationnote_ProcedureList']['eye_id']),
 	));
 	?>
-</div>
+	</div>
+</section>

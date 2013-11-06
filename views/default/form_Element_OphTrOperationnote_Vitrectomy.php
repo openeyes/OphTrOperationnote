@@ -1,4 +1,3 @@
-<?php /* DEPRECATED */ ?>
 <?php
 /**
  * OpenEyes
@@ -19,42 +18,53 @@
  */
 ?>
 
-<div class="element <?php echo $element->elementType->class_name?> ondemand<?php if (@$ondemand) {?> hidden<?php }?><?php if ($this->action->id == 'update' && !$element->event_id) {?> missing<?php }?>"
-	data-element-type-id="<?php echo $element->elementType->id ?>"
-	data-element-type-class="<?php echo $element->elementType->class_name ?>"
-	data-element-type-name="<?php echo $element->elementType->name ?>"
-	data-element-display-order="<?php echo $element->elementType->display_order ?>">
+<section class="element <?php echo $element->elementType->class_name?> on-demand<?php if (@$ondemand) {?> hidden<?php }?><?php if ($this->action->id == 'update' && !$element->event_id) {?> missing<?php }?>"
+		 data-element-type-id="<?php echo $element->elementType->id ?>"
+		 data-element-type-class="<?php echo $element->elementType->class_name ?>"
+		 data-element-type-name="<?php echo $element->elementType->name ?>"
+		 data-element-display-order="<?php echo $element->elementType->display_order ?>">
 	<?php if ($this->action->id == 'update' && !$element->event_id) {?>
-		<span class="missingtext">This element is missing and needs to be completed</span>
+		<div class="alert-box alert with-icon">This element is missing and needs to be completed</div>
 	<?php }?>
-	<h4 class="elementTypeName"><?php echo $element->elementType->name ?></h4>
 
-	<div class="splitElement clearfix" style="background-color: #DAE6F1;">
-		<div class="left" style="width:45%;">
-			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-				'doodleToolBarArray' => array(
-					0 => array('RRD','UTear','RoundHole','Dialysis','GRT','MacularHole','StarFold','AntPVR','Cryo','LaserCircle'),
-				),
-				'onReadyCommandArray' => array(
-					array('addDoodle', array('Fundus')),
-					array('deselectDoodles', array()),
-				),
-				'side'=>$element->getSelectedEye()->getShortName(),
-				'mode'=>'edit',
-				'width'=>300,
-				'height'=>300,
-				'model'=>$element,
-				'attribute'=>'eyedraw',
-				'offsetX' => 10,
-				'offsetY' => 10,
-			));
-			?>
-		</div>
-		<div class="right" style="width: 55%">
-			<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(OphTrOperationnote_VitrectomyGauge::model()->findAll(),'id','value'),array('empty'=>'- Please select -'))?>
-			<?php echo $form->radioBoolean($element, 'pvd_induced')?>
-			<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 55))?>
+	<header class="element-header">
+		<h3 class="element-title"><?php  echo $element->elementType->name; ?></h3>
+	</header>
+
+	<?php
+	$layoutColumns=$form->layoutColumns;
+	$form->layoutColumns=array('label'=>3,'field'=>9);
+	?>
+	<div class="element-fields">
+		<div class="row vitrectomy">
+			<div class="fixed column">
+				<?php
+				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+						'doodleToolBarArray' => array(
+							0 => array('RRD','UTear','RoundHole','Dialysis','GRT','MacularHole','StarFold','AntPVR','Cryo','LaserCircle'),
+						),
+						'onReadyCommandArray' => array(
+							array('addDoodle', array('Fundus')),
+							array('deselectDoodles', array()),
+						),
+						'side'=>$element->getSelectedEye()->getShortName(),
+						'mode'=>'edit',
+						'width'=>300,
+						'height'=>300,
+						'model'=>$element,
+						'attribute'=>'eyedraw',
+						'offsetX' => 10,
+						'offsetY' => 10,
+					));
+				?>
+			</div>
+			<div class="fluid column">
+				<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(OphTrOperationnote_VitrectomyGauge::model()->findAll(),'id','value'),array('empty'=>'- Please select -'))?>
+				<?php echo $form->radioBoolean($element, 'pvd_induced',array())?>
+				<?php echo $form->textArea($element, 'comments', array('rows' => 4))?>
+			</div>
 		</div>
 	</div>
-</div>
+</section>
+
+<?php $form->layoutColumns=$layoutColumns;?>
