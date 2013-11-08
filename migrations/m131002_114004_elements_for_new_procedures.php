@@ -12,12 +12,16 @@ class m131002_114004_elements_for_new_procedures extends CDbMigration
 
 		$proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => "Cycloablation"))->queryRow();
 
-		$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		if ($proc) {
+			$this->insert('ophtroperationnote_procedure_element',array('procedure_id'=>$proc['id'],'element_type_id'=>$element_type['id']));
+		} else {
+			echo "**WARNING** 'Cycloablation' not present in proc table, not linking to element type\n";
+		}
 
 		$this->createTable('et_ophtroperationnote_cycloablation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',

@@ -19,7 +19,84 @@
 
 class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 {
-	private  $element_types ;
+	private  $element_types;
+
+	public function up()
+	{
+		if (!$this->consolidate(
+			array(
+				"m120510_102522_ophtroperationnote_consolidated",
+				"m120517_095948_fix_procedurelist_table_foreign_key",
+				"m120530_130251_fields_for_fife",
+				"m120531_134618_renumber_opnote_element_display_orders",
+				"m120531_134910_personnel_element",
+				"m120611_065502_additional_cataract_procedure_mapping",
+				"m120612_095034_buckle_element_remove_report_field",
+				"m120612_103357_add_report_field_to_buckle_and_cataract_elements",
+				"m120619_092949_fix_surgeon_foreign_key",
+				"m120620_092148_cataract_defaults",
+				"m120620_092825_anaesthetic_given_by_default",
+				"m120620_094821_revised_iol_type_list",
+				"m120620_100817_adjust_cataract_default_details_text",
+				"m120621_093839_change_title_of_postop_drugs_element",
+				"m120621_094721_new_devices_for_cataract_element",
+				"m120625_161647_add_new_procedures",
+				"m120627_072411_add_private_iol_types",
+				"m120627_075208_fix_double_associated_cataract_procedure",
+				"m120628_130847_fix_procedure_element_associations",
+				"m120629_130712_fife_preparation_element",
+				"m120704_100346_change_new_procedures_to_longname",
+				"m120705_094249_fix_missing_procedure_element_assignment",
+				"m120706_115557_fix_dupe_procedure_element_row",
+				"m120706_133551_increase_length_of_cataract_eyedraw_field",
+				"m120709_093130_iol_type_id_should_be_nullable",
+				"m120709_093714_add_new_cataract_complications",
+				"m120710_062419_new_vr_fields",
+				"m120711_141118_default_cataract_field_values",
+				"m120719_143700_separate_postop_drug_table",
+				"m120809_134618_renumber_more_opnote_element_display_orders",
+				"m120810_130413_add_limbal_relaxing_incision_procedure_element",
+				"m120816_094302_change_fife_differences_to_use_settings_rather_than_a_config_value",
+				"m120917_142345_add_both_to_element_table_eye_for_procedurelist_element",
+				"m120919_065814_make_tamponade_volume_field_nullable",
+				"m120919_082005_add_new_percentage_values_to_gas_percentage_field",
+				"m121030_093559_add_missing_procedure_element_mappings",
+				"m121227_095138_soft_deletion_of_postop_drugs",
+				"m130116_100158_fluorescein_procedure_element",
+				"m130116_101710_fluorescein_element_table",
+				"m130116_102441_fix_fluorescein_default",
+				"m130121_094133_proc_element_for_icce",
+				"m130218_094538_new_proc_elements_oe2661",
+				"m130218_125200_new_proc_elements_shouldnt_be_default",
+				"m130225_101706_opnote_link_to_booking_event",
+				"m130311_133429_dont_require_iol_fields_if_no_iol",
+				"m130318_113609_display_order_field_on_postop_drugs",
+				"m130403_142345_event_id_indexes",
+				"m130425_145858_trabectome_element",
+				"m130604_103443_patient_shortcodes",
+				"m130624_110551_predicted_refraction",
+				"m130809_073841_procedure_assignment_primary_key"
+			))
+		) {
+			$this->createTables();
+		}
+	}
+
+	public function down()
+	{
+		echo "You cannot migrate down past a consolidation migration\n";
+		return false;
+	}
+
+	public function safeUp()
+	{
+		$this->up();
+	}
+
+	public function safeDown()
+	{
+		$this->down();
+	}
 
 	public function setData(){
 		$this->element_types = array(
@@ -39,7 +116,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 		);
 	}
 
-	public function up()
+	protected function createTables()
 	{
 		$this->setData();
 		//disable foreign keys check
@@ -798,8 +875,4 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 
 	}
 
-	public function down()
-	{
-		echo "Down method not supported on consolidation";
-	}
 }

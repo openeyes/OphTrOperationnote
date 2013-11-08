@@ -1,4 +1,4 @@
-id,name,display_order,last_modified_user_id,last_modified_date,created_user_id,created_date
-1,"Tisept",0,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-2,"Betadine",0,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-3,"Other (please specify)",0,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
+id,name,display_order
+1,"Tisept",0
+2,"Betadine",0
+3,"Other (please specify)",0

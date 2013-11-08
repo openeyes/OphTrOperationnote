@@ -1,18 +1,18 @@
-id,name,display_order,last_modified_user_id,last_modified_date,created_user_id,created_date
-1,"Choroidal haem",10,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-2,"Corneal odema",20,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-3,"Decentered IOL",30,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-4,"Dropped nucleus",40,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-5,"IOL exchange",50,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-6,"IOL into vitreous",60,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-7,"Iris prolapse",70,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-8,"Iris trauma",80,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-9,"Op cancelled",90,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-10,"Other IOL problem",100,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-11,"PC rupture",110,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-12,"Vitreous loss",120,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-13,"Wound burn",130,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-14,"Zonular dialysis",140,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-15,"Zonular rupture",150,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-16,"Anterior Capsular tear",5,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
-17,"Hyphaema",45,1,"1900-01-01 00:00:00",1,"1900-01-01 00:00:00"
+id,name,display_order
+1,"Choroidal haem",10
+2,"Corneal odema",20
+3,"Decentered IOL",30
+4,"Dropped nucleus",40
+5,"IOL exchange",50
+6,"IOL into vitreous",60
+7,"Iris prolapse",70
+8,"Iris trauma",80
+9,"Op cancelled",90
+10,"Other IOL problem",100
+11,"PC rupture",110
+12,"Vitreous loss",120
+13,"Wound burn",130
+14,"Zonular dialysis",140
+15,"Zonular rupture",150
+16,"Anterior Capsular tear",5
+17,"Hyphaema",45
