@@ -25,13 +25,13 @@ function callbackAddProcedure(procedure_id) {
 		'success': function(html) {
 			if (html.length >0) {
 				if (html.match(/must-select-eye/)) {
-					$('div.procedureItem').map(function(e) {
+					$('.procedureItem').map(function(e) {
 						var r = new RegExp('<input type="hidden" value="'+procedure_id+'" name="Procedures');
 						if ($(this).html().match(r)) {
 							$(this).remove();
 						}
 					});
-					if ($('div.procedureItem').length == 0) {
+					if ($('.procedureItem').length == 0) {
 						$('#procedureList').hide();
 					}
 					new OpenEyes.Dialog.Alert({
@@ -42,11 +42,11 @@ function callbackAddProcedure(procedure_id) {
 					if (m) {
 						m[1] = m[1].replace(/ .*$/,'');
 
-						if (m[1] == 'Element_OphTrOperationnote_GenericProcedure' || $('div.'+m[1]).length <1) {
-							$('div.Element_OphTrOperationnote_Anaesthetic').before(html);
-							$('div.'+m[1]).attr('style','display: none;');
-							$('div.'+m[1]).removeClass('hidden');
-							$('div.'+m[1]).slideToggle('fast');
+						if (m[1] == 'Element_OphTrOperationnote_GenericProcedure' || $('.'+m[1]).length <1) {
+							$('.Element_OphTrOperationnote_Anaesthetic').before(html);
+							$('.'+m[1]).attr('style','display: none;');
+							$('.'+m[1]).removeClass('hidden');
+							$('.'+m[1]).slideToggle('fast');
 						}
 					}
 				}
@@ -87,8 +87,8 @@ function callbackRemoveProcedure(procedure_id) {
 		'dataType': 'json',
 		'success': function(data) {
 			$.each(data, function(key, val) {
-				$('div.'+val).slideToggle('fast',function() {
-					$('div.'+val).remove();
+				$('.'+val).slideToggle('fast',function() {
+					$('.'+val).remove();
 				});
 			});
 		}
@@ -144,7 +144,7 @@ $(document).ready(function() {
 
 	var last_Element_OphTrOperationnote_ProcedureList_eye_id = null;
 
-	$('div[data-element-type-class="Element_OphTrOperationnote_ProcedureList"]').undelegate('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]','change').delegate('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]','change',function() {
+	$('[data-element-type-class="Element_OphTrOperationnote_ProcedureList"]').undelegate('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]','change').delegate('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]','change',function() {
 		var element = $(this);
 
 		if ($(this).val() == 3) {
@@ -206,18 +206,18 @@ $(document).ready(function() {
 				$('#typeProcedure').slideToggle('fast');
 			}
 
-			changeEye();	
+			changeEye();
 			last_Element_OphTrOperationnote_ProcedureList_eye_id = $(this).val();
 
 			return true;
 		}
 	});
 
-	$('div[data-element-type-class="Element_OphTrOperationnote_Anaesthetic"]').undelegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetic_type_id\]"]','click').delegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetic_type_id\]"]','click',function(e) {
+	$('[data-element-type-class="Element_OphTrOperationnote_Anaesthetic"]').undelegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetic_type_id\]"]','click').delegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetic_type_id\]"]','click',function(e) {
 		anaestheticSlide.handleEvent($(this));
 	});
 
-	$('div[data-element-type-class="Element_OphTrOperationnote_Cataract"]').undelegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetist_id\]"]','click').delegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetist_id\]"]','click',function(e) {
+	$('[data-element-type-class="Element_OphTrOperationnote_Cataract"]').undelegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetist_id\]"]','click').delegate('input[name="Element_OphTrOperationnote_Anaesthetic\[anaesthetist_id\]"]','click',function(e) {
 		anaestheticGivenBySlide.handleEvent($(this));
 	});
 
@@ -241,7 +241,7 @@ $(document).ready(function() {
 	});
 });
 
-function callbackVerifyAddProcedure(proc_name,durations,short_version,callback) {
+function callbackVerifyAddProcedure(proc_name,durations,callback) {
 	var eye = $('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]:checked').val();
 
 	if (eye != 3) {
@@ -251,7 +251,7 @@ function callbackVerifyAddProcedure(proc_name,durations,short_version,callback) 
 
 	$.ajax({
 		'type': 'GET',
-		'url': baseUrl+'/OphTrOperationnote/Default/verifyprocedure?name='+proc_name+'&durations='+durations+'short_version='+short_version,
+		'url': baseUrl+'/OphTrOperationnote/Default/verifyprocedure?name='+proc_name+'&durations='+durations,
 		'success': function(result) {
 			if (result == 'yes') {
 				callback(true);

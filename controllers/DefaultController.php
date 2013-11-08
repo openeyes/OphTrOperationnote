@@ -27,6 +27,22 @@ class DefaultController extends BaseEventTypeController
 		return parent::beforeAction($action);
 	}
 
+	/**
+	 * set flash message for patient allergies
+	 *
+	 * @param Patient $patient
+	 */
+	protected function showAllergyWarning($patient)
+	{
+		if ($patient->no_allergies_date) {
+			Yii::app()->user->setFlash('info.prescription_allergy', $patient->getAllergiesString());
+		}
+		else {
+			Yii::app()->user->setFlash('warning.prescription_allergy', $patient->getAllergiesString());
+		}
+	}
+
+
 	public function actionCreate()
 	{
 		$errors = array();
@@ -34,6 +50,8 @@ class DefaultController extends BaseEventTypeController
 		if (!$this->patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
 			throw new Exception("Patient not found: ".@$_GET['patient_id']);
 		}
+
+		$this->showAllergyWarning($this->patient);
 
 		if (!empty($_POST)) {
 			if (preg_match('/^booking([0-9]+)$/',@$_POST['SelectBooking'],$m)) {
@@ -72,17 +90,25 @@ class DefaultController extends BaseEventTypeController
 					array('colour' => 'red', 'level' => 'secondary')
 				)
 			);
+			$this->moduleStateCssClass = 'edit';
 			$this->processJsVars();
-			$this->renderPartial('select_event',array(
+			$this->render('select_event',array(
 				'errors' => $errors,
 				'bookings' => $bookings,
-			), false, true);
+			));
 		}
 	}
 
 	public function actionUpdate($id)
 	{
 		$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
+
+		if (!$event = Event::model()->findByPk($id)) {
+			throw new CHttpException(403, 'Invalid event id.');
+		}
+
+		$this->showAllergyWarning($event->episode->patient);
+
 		parent::actionUpdate($id);
 	}
 
@@ -250,6 +276,8 @@ class DefaultController extends BaseEventTypeController
 			);
 		}
 
+
+
 		if (count($procedureSpecificElements) == 0) {
 			$element = new Element_OphTrOperationnote_GenericProcedure;
 			$element->proc_id = $proc->id;
@@ -329,36 +357,13 @@ class DefaultController extends BaseEventTypeController
 
 	public function actionVerifyprocedure()
 	{
-		$list = Yii::app()->session['Procedures'];
-		$found = false;
-
-		if (!isset($_GET['short_version'])) {
-			$_GET['short_version'] = true;
-		}
-
 		if (!empty($_GET['name'])) {
-			if (!empty($list)) {
-				foreach ($list as $id => $procedure) {
-					if ($procedure['term'] == $_GET['name']) {
-						if ($this->procedure_requires_eye($id)) {
-							echo "no";
-						} else {
-							echo "yes";
-						}
-						return;
-					}
-				}
-			}
-
-			// if not in the session, check in the db
-			if (!$found) {
-				if ($procedure = Procedure::model()->find('term=:term',array(':term'=>$_GET['name']))) {
-					if ($this->procedure_requires_eye($procedure->id)) {
-						echo "no";
-					} else {
-						echo "yes";
-					}
-					return;
+			$proc = Procedure::model()->findByAttributes(array('term' => $_GET['name']));
+			if ($proc) {
+				if ($this->procedure_requires_eye($proc->id)) {
+					echo "no";
+				} else {
+					echo "yes";
 				}
 			}
 		} else {

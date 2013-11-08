@@ -78,7 +78,7 @@ class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
 			array('incision_site_id, length, meridian, incision_type_id, iol_position_id, eyedraw, report, eyedraw2', 'required'),
 			array('length', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9](\.[0-9])?$/', 'message' => 'Length must be 0 - 9.9 in increments of 0.1'),
 			array('meridian', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^[0-9]{1,3}(\.[0-9])?$/', 'min' => 000, 'max' => 360, 'message' => 'Meridian must be 000.5 - 360.0 degrees'),
-			array('predicted_refraction', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^\-?[0-9]{1,2}(\.[0-9]{2})?$/', 'min' => -30, 'max' => 30, 'message' => 'Predicted refraction must be between -30.00 and 30.00'),
+			array('predicted_refraction', 'numerical', 'integerOnly' => false, 'numberPattern' => '/^\-?[0-9]{1,2}(\.[0-9]{1,2})?$/', 'min' => -30, 'max' => 30, 'message' => 'Predicted refraction must be between -30.00 and 30.00'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			//array('id, event_id, incision_site_id, length, meridian, incision_type_id, eyedraw, report, wound_burn, iris_trauma, zonular_dialysis, pc_rupture, decentered_iol, iol_exchange, dropped_nucleus, op_cancelled, corneal_odema, iris_prolapse, zonular_rupture, vitreous_loss, iol_into_vitreous, other_iol_problem, choroidal_haem', 'on' => 'search'),
@@ -237,6 +237,8 @@ class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
 
 	public function getSelectedEye()
 	{
+		$eye = new Eye;
+
 		if (Yii::app()->getController()->getAction()->id == 'create') {
 			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
 			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
@@ -246,17 +248,21 @@ class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
 					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
-						return $booking->operation->eye;
+						$eye = $booking->operation->eye;
 					}
 				}
 			}
 		}
 
 		if (isset($_GET['eye'])) {
-			return Eye::model()->findByPk($_GET['eye']);
+			$eye = Eye::model()->findByPk($_GET['eye']);
 		}
 
-		return new Eye;
+		if ($eye->name == 'Both') {
+			$eye = Eye::model()->find('name=?',array('Right'));
+		}
+
+		return $eye;
 	}
 
 	public function getEye()
@@ -332,7 +338,7 @@ class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
 			if (!$this->iol_power) {
 				$this->addError('Cataract','IOL power cannot be blank');
 			} elseif (!preg_match('/^\-?[0-9]{1,3}(\.[0-9])?$/',$this->iol_power)) {
-				$this->addError('Cataract','IOL power must be a number with an optional single decimal place');
+				$this->addError('Cataract','IOL power must be a number with an optional single decimal place between -999.9 and 999.9');
 			}
 		}
 

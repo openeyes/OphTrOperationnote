@@ -1,0 +1,24 @@
+#ed_canvas_edit_Cataract {
+	background-color: #fff;
+	border: 1px solid #000;
+	margin-top: 1em;
+}
+
+#ed_canvas_edit_Position {
+	background-color: #DAE6F1;
+	border: 0;
+	margin-left: 80px;
+}
+
+#ed_canvas_edit_Buckle {
+	background-color: #fff;
+	border: 1px solid #000;
+}
+
+.Element_OphTrOperationnote_Vitrectomy,
+.Element_OphTrOperationnote_Buckle,
+.Element_OphTrOperationnote_Cataract {
+	.ed_toolbar {
+		margin: 0;
+	}
+}

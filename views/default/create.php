@@ -17,35 +17,28 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-<?php $this->header() ?>
+<?php $this->beginContent('//patient/event_container'); ?>
 
-<h3 class="withEventIcon"><?php echo $this->event_type->name ?></h3>
+	<h2 class="event-title"><?php echo $this->event_type->name ?></h2>
 
-<div id="event_<?php echo $this->module->name?>">
+	<?php $this->renderPartial('//base/_messages'); ?>
+
 	<?php
 		$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-			'id'=>'clinical-create',
+			'id'=>'opnote-create',
 			'enableAjaxValidation'=>false,
-			'htmlOptions' => array('class'=>'sliding'),
-			'focus'=>'#procedure_id'
+			'focus'=>'#procedure_id',
+			'layoutColumns'=>array('label'=>2,'field'=>10),
 		));
 
 		// Event actions
-		$this->event_actions[] = EventAction::button('Save', 'save', array('colour' => 'green'));
-		$this->renderPartial('//patient/event_actions');
+		$this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'secondary'), array('class' => 'button small', 'form'=>'opnote-create'));
 	?>
 
 		<?php $this->displayErrors($errors)?>
+		<?php $this->renderDefaultElements($this->action->id, $form); ?>
+		<?php $this->renderOptionalElements($this->action->id, $form); ?>
+		<?php $this->displayErrors($errors, true)?>
 
-		<div class="elements">
-			<?php $this->renderDefaultElements($this->action->id, $form); ?>
-			<?php $this->renderOptionalElements($this->action->id, $form); ?>
-		</div>
-
-		<?php $this->displayErrors($errors)?>
-
-		<div class="cleartall"></div>
 	<?php $this->endWidget(); ?>
-</div>
-
-<?php $this->footer() ?>
+<?php $this->endContent() ;?>
