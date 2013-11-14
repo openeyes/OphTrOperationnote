@@ -1,11 +1,9 @@
 .event {
-	&.ophtroperationnote {
-		border-color: #fd6892;
-		.event-content {
-			background-image: image-url("watermark.png");
-		}
-		.event-title {
-			background-image: image-url("medium.png");
-		}
+	border-color: #fd6892;
+	.event-content {
+		background-image: image-url("watermark.png");
+	}
+	.event-title {
+		background-image: image-url("medium.png");
 	}
 }
