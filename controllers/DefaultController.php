@@ -87,7 +87,7 @@ class DefaultController extends BaseEventTypeController
 			$this->event_actions = array(
 				EventAction::link('Cancel',
 					Yii::app()->createUrl($cancel_url),
-					array('level' => 'cancel')
+					null, array('class' => 'button small warning')
 				)
 			);
 			$this->moduleStateCssClass = 'edit';
