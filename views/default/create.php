@@ -32,7 +32,7 @@
 		));
 
 		// Event actions
-		$this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'secondary'), array('class' => 'button small', 'form'=>'opnote-create'));
+		$this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form'=>'opnote-create'));
 	?>
 
 		<?php $this->displayErrors($errors)?>
