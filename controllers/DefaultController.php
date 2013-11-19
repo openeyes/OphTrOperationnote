@@ -19,6 +19,12 @@
 
 class DefaultController extends BaseEventTypeController
 {
+	static protected $action_types = array(
+		'loadElementByProcedure' => self::ACTION_TYPE_FORM,
+		'getElementsToDelete' => self::ACTION_TYPE_FORM,
+		'verifyProcedure' => self::ACTION_TYPE_FORM,
+	);
+
 	/* @var Element_OphTrOperationbooking_Operation operation that this note is for when creating */
 	protected $booking_operation;
 	/* @var boolean - indicates if this note is for an unbooked procedure or not when creating */
