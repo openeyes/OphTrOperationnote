@@ -64,7 +64,7 @@
 												<input type="radio" value="booking<?php echo $booking->operation->event_id?>" name="SelectBooking" />
 											</span>
 											<span class="large-1 column">
-												<img src="<?php echo Yii::app()->createUrl($assetpath.'img/small.png')?>" alt="op" width="19" height="19" />
+												<img src="<?php echo Yii::app()->createUrl($assetpath.'img/small.png')?>" alt="op" style="height:15px" />
 											</span>
 											<span class="large-3 column">
 												<?php echo $booking->operation->booking->session->NHSDate('date')?>
