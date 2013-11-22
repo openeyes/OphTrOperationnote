@@ -84,11 +84,11 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			$ooo_migration = $this->getDbConnection()->createCommand()
 				->select('version')
 				->from('tbl_migration')
-				->where('version = :version', array(':version', 'm130722_115732_remove_unnecessary_element_tables'))
+				->where('version = :version', array(':version' => 'm130722_115732_remove_unnecessary_element_tables'))
 				->queryColumn();
 			if($ooo_migration) {
 				$this->getDbConnection()->createCommand()
-					->delete('tbl_migration', array('version = :version', array(':version', 'm130722_115732_remove_unnecessary_element_tables')));
+					->delete('tbl_migration', array('version = :version', array(':version' => 'm130722_115732_remove_unnecessary_element_tables')));
 			} else {
 				$this->m130722_115732_remove_unnecessary_element_tables();
 			}
