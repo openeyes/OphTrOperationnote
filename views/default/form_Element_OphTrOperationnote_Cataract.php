@@ -61,7 +61,7 @@
 								'sidePortController'
 							),
 							'idSuffix' => 'Cataract',
-							'side' => $element->getSelectedEye()->getShortName(),
+							'side' => $this->selectedEyeForEyedraw->shortName,
 							'mode' => 'edit',
 							'width' => 300,
 							'height' => 300,
@@ -83,7 +83,7 @@
 									'Cataract' => array('Surgeon' => array('PhakoIncision' => array('parameters' => array('rotation')))),
 								),
 								'idSuffix' => 'Position',
-								'side' => $element->getSelectedEye()->getShortName(),
+								'side' => $this->selectedEyeForEyedraw->shortName,
 								'mode' => 'edit',
 								'width' => 140,
 								'height' => 140,

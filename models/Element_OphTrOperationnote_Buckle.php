@@ -129,28 +129,4 @@ class Element_OphTrOperationnote_Buckle extends BaseEventTypeElement
 	{
 		return Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
 	}
-
-	public function getSelectedEye()
-	{
-		if (Yii::app()->getController()->getAction()->id == 'create') {
-			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
-			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
-			}
-
-			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
-						return $booking->operation->eye;
-					}
-				}
-			}
-		}
-
-		if (isset($_GET['eye'])) {
-			return Eye::model()->findByPk($_GET['eye']);
-		}
-
-		return new Eye;
-	}
 }
