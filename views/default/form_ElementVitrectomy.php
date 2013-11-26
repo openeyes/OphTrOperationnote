@@ -39,7 +39,7 @@
 					array('addDoodle', array('Fundus')),
 					array('deselectDoodles', array()),
 				),
-				'side'=>$element->getSelectedEye()->getShortName(),
+				'side'=>$this->selectedEyeForEyedraw->shortName,
 				'mode'=>'edit',
 				'width'=>300,
 				'height'=>300,

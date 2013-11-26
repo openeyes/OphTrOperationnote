@@ -41,7 +41,7 @@
 					array('deselectDoodles', array()),
 				),
 				'idSuffix'=>'Buckle',
-				'side'=>$element->getSelectedEye()->getShortName(),
+				'side'=>$this->selectedEyeForEyedraw->shortName,
 				'mode'=>'edit',
 				'width'=>300,
 				'height'=>300,

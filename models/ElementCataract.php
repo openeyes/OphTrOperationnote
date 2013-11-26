@@ -151,7 +151,7 @@ class ElementCataract extends BaseEventTypeElement
 	 */
 	public function setDefaultOptions()
 	{
-		if ($this->getSelectedEye()->id == 1) {
+		if (Yii::app()->controller->selectedEyeForEyedraw->id == 1) {
 			$this->meridian = 0;
 		}
 	}
@@ -233,36 +233,6 @@ class ElementCataract extends BaseEventTypeElement
 		}
 
 		return parent::afterSave();
-	}
-
-	public function getSelectedEye()
-	{
-		$eye = new Eye;
-
-		if (Yii::app()->getController()->getAction()->id == 'create') {
-			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
-			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
-			}
-
-			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
-						$eye = $booking->operation->eye;
-					}
-				}
-			}
-		}
-
-		if (isset($_GET['eye'])) {
-			$eye = Eye::model()->findByPk($_GET['eye']);
-		}
-
-		if ($eye->name == 'Both') {
-			$eye = Eye::model()->find('name=?',array('Right'));
-		}
-
-		return $eye;
 	}
 
 	public function getEye()

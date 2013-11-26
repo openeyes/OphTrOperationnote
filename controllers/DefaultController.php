@@ -387,4 +387,36 @@ class DefaultController extends BaseEventTypeController
 
 		return false;
 	}
+
+	public function getSelectedEyeForEyedraw()
+	{
+		$eye = new Eye;
+
+		if (!empty($_POST['ElementProcedureList']['eye_id'])) {
+			$eye = Eye::model()->findByPk($_POST['ElementProcedureList']['eye_id']);
+		} else if ($this->event) {
+			$eye = ElementProcedureList::model()->find('event_id=?',array($this->event->id))->eye;
+		} else if (!empty($_GET['eye'])) {
+			$eye = Eye::model()->findByPk($_GET['eye']);
+		} else if ($this->action->id == 'create') {
+			// Get the procedure list and eye from the most recent booking for the episode of the current user's subspecialty
+			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
+			}
+
+			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
+						$eye = $booking->operation->eye;
+					}
+				}
+			}
+		}
+
+		if ($eye->name == 'Both') {
+			$eye = Eye::model()->find('name=?',array('Right'));
+		}
+
+		return $eye;
+	}
 }
