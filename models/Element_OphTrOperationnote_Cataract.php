@@ -151,7 +151,7 @@ class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
 	 */
 	public function setDefaultOptions()
 	{
-		if ($this->getSelectedEye()->id == 1) {
+		if (Yii::app()->controller->selectedEyeForEyedraw->id == 1) {
 			$this->meridian = 0;
 		}
 	}
