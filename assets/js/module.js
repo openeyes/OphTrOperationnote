@@ -34,7 +34,7 @@ function callbackAddProcedure(procedure_id) {
 					if ($('.procedureItem').length == 0) {
 						$('#procedureList').hide();
 					}
-					new OpenEyes.Dialog.Alert({
+					new OpenEyes.UI.Dialog.Alert({
 						content: "You must select either the right or the left eye to add this procedure."
 					}).open();
 				} else {
@@ -167,11 +167,11 @@ $(document).ready(function() {
 						if (result != 'yes') {
 							$('#Element_OphTrOperationnote_ProcedureList_eye_id_'+last_Element_OphTrOperationnote_ProcedureList_eye_id).attr('checked','checked');
 							if (parseInt(result.split("\n").length) == 1) {
-								new OpenEyes.Dialog.Alert({
+								new OpenEyes.UI.Dialog.Alert({
 								  content: "The following procedure requires a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
 								}).open();
 							} else {
-								new OpenEyes.Dialog.Alert({
+								new OpenEyes.UI.Dialog.Alert({
 								  content: "The following procedures require a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
 								}).open();
 							}
@@ -256,7 +256,7 @@ function callbackVerifyAddProcedure(proc_name,durations,callback) {
 			if (result == 'yes') {
 				callback(true);
 			} else {
-				new OpenEyes.Dialog.Alert({
+				new OpenEyes.UI.Dialog.Alert({
 				  content: "You must select either the right or the left eye before adding this procedure."
 				}).open();
 				callback(false);
