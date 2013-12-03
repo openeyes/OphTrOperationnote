@@ -4,6 +4,13 @@ class m131129_153827_correct_element_type_attributes extends CDbMigration
 {
 	public function up()
 	{
+		$opnote = Yii::app()->db->createCommand()->select("id")->from("event_type")
+			->where("class_name = :class_name",array(":class_name" => "OphTrOperationnote"))->queryRow();
+
+		$proclist = Yii::app()->db->createCommand()->select("id")->from("element_type")
+			->where("event_type_id = :event_type_id and class_name = :proc_list_cls",
+				array(":event_type_id"=>$opnote['id'],":proc_list_cls" => "Element_OphTrOperationnote_ProcedureList"))->queryRow();
+
 		foreach (array(
 			'Element_OphTrOperationnote_Vitrectomy',
 			'Element_OphTrOperationnote_MembranePeel',
@@ -14,7 +21,7 @@ class m131129_153827_correct_element_type_attributes extends CDbMigration
 			'Element_OphTrOperationnote_Personnel'
 			) as $class_name) {
 			# not default elements
-			$this->update('element_type', array('default' => false), 'class_name = :cname', array(':cname' => $class_name));
+			$this->update('element_type', array('default' => false, 'parent_element_type_id' => $proclist['id']), 'class_name = :cname', array(':cname' => $class_name));
 		}
 
 		foreach (array(
@@ -42,7 +49,7 @@ class m131129_153827_correct_element_type_attributes extends CDbMigration
 			 'Element_OphTrOperationnote_Personnel'
 			 ) as $class_name) {
 			# reset back to default
-			$this->update('element_type', array('default' => true), 'class_name = :cname', array(':cname' => $class_name));
+			$this->update('element_type', array('default' => true, 'parent_element_type_id' => null), 'class_name = :cname', array(':cname' => $class_name));
 		}
 
 		foreach (array(

@@ -190,7 +190,6 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
-
 	public function actionView($id)
 	{
 		//TODO: stick this in jsvars?
@@ -237,7 +236,6 @@ class DefaultController extends BaseEventTypeController
 			$kls = get_class($element);
 			error_log($kls);
 			if ($kls == "Element_OphTrOperationnote_ProcedureList") {
-				error_log('matched');
 				$proc_list = $element;
 			}
 			if (isset($elements_by_class[$kls])) {
@@ -248,11 +246,9 @@ class DefaultController extends BaseEventTypeController
 			}
 		}
 
-		error_log(get_class($proc_list));
 		if ($proc_list === null) {
 			return $elements;
 		}
-		error_log('something');
 
 		// construct list of procedure element types in the right order
 		$procedure_classes = array();
@@ -270,15 +266,17 @@ class DefaultController extends BaseEventTypeController
 			}
 			else {
 				$keep = array();
-				foreach ($elements_by_class['Element_OphTrOperationnote_GenericProcedure'] as $el) {
-					if ($el->proc_id == $procedure->id) {
-						$procedure_classes[] = $el;
+				if (isset($elements_by_class['Element_OphTrOperationnote_GenericProcedure'])) {
+					foreach ($elements_by_class['Element_OphTrOperationnote_GenericProcedure'] as $el) {
+						if ($el->proc_id == $procedure->id) {
+							$procedure_classes[] = $el;
+						}
+						else {
+							$keep[] = $el;
+						}
 					}
-					else {
-						$keep[] = $el;
-					}
+					$elements_by_class['Element_OphTrOperationnote_GenericProcedure'] = $keep;
 				}
-				$elements_by_class['Element_OphTrOperationnote_GenericProcedure'] = $keep;
 			}
 		}
 		$sorted = array();
@@ -442,8 +440,6 @@ class DefaultController extends BaseEventTypeController
 				false, true
 			);
 		}
-
-
 
 		if (count($procedureSpecificElements) == 0) {
 			$element = new Element_OphTrOperationnote_GenericProcedure;
