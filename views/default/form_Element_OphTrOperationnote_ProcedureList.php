@@ -32,14 +32,14 @@
 	<?php if (ctype_digit(@$_GET['booking_event_id'])) {?>
 		<?php echo $form->hiddenInput($element, 'booking_event_id', $_GET['booking_event_id'])?>
 	<?php }?>
-	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->getSelectedEye() ? $element->getSelectedEye()->id : null), null, null, null ,null,null,array('label'=>2,'field'=>10))?>
+	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->eye() ? $element->eye()->id : null), null, null, null ,null,null,array('label'=>2,'field'=>10))?>
 	<?php
 	$form->widget('application.widgets.ProcedureSelection',array(
 		'element' => $element,
-		'selected_procedures' => $element->selected_procedures,
+		'selected_procedures' => $element->procedures,
 		'newRecord' => true,
 		'last' => true,
-		'hidden' => ($this->action->id == 'create' && $element->getSelectedEye() == null && !@$_POST['Element_OphTrOperationnote_ProcedureList']['eye_id']),
+		'hidden' => ($this->action->id == 'create' && $element->eye == null && !@$_POST['Element_OphTrOperationnote_ProcedureList']['eye_id']),
 	));
 	?>
 	</div>

@@ -184,6 +184,7 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 		return parent::beforeValidate();
 	}
 
+	/*
 	public function getSelected_procedures()
 	{
 		if (Yii::app()->getController()->getAction()->id == 'create') {
@@ -212,6 +213,7 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 			return $eye;
 		}
 	}
+	*/
 
 	public function getFormOptions($table)
 	{

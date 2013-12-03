@@ -91,6 +91,23 @@ class DefaultController extends BaseEventTypeController
 		return $elements;
 	}
 
+	protected function setElementDefaultOptions($element, $action)
+	{
+		if ($action == 'create' && $this->booking_operation
+			&& get_class($element) == 'Element_OphTrOperationnote_ProcedureList') {
+
+			$procedures = array();
+
+			$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
+			foreach ($api->getProceduresForOperation($this->booking_operation->event_id) as $proc) {
+				$procedures[] = $proc;
+			}
+			$element->procedures = $procedures;
+			$element->eye = $api->getEyeForOperation($this->booking_operation->event_id);
+		}
+	}
+
+
 	/**
 	 * Edit actions common initialisation
 	 */

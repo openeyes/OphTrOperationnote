@@ -18,7 +18,7 @@
  */
 ?>
 
-<section class="element">
+<section class="sub-element">
 	<div class="element-data">
 		<div class="row data-row">
 			<div class="large-12 column">

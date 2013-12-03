@@ -36,7 +36,7 @@ $layoutColumns = array(
 	<?php }?>
 
 	<header class="element-header">
-		<h3 class="element-title"><?php echo $element->procedure ? $element->procedure->term : 'No procedure'?></h3>
+		<h3 class="element-title"><?php echo $element->getElementTypeName() ?></h3>
 	</header>
 
 	<div class="element-fields" id="div_Element_OphTrOperationnote_GenericProcedure_comments">

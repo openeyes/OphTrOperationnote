@@ -18,7 +18,7 @@
  */
 ?>
 
-<section class="element element-data">
+<section class="sub-element element-data">
 	<h3 class="data-title"><?php echo $element->elementType->name ?></h3>
 
 	<div class="element-data">
@@ -141,9 +141,7 @@
 			</div>
 		</div>
 	</div>
-</section>
 
-<section class="element element-data">
 	<div class="row data-row">
 		<div class="large-4 column">
 			<h3 class="data-title">Cataract report</h3>
