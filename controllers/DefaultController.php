@@ -19,6 +19,11 @@
 
 class DefaultController extends BaseEventTypeController
 {
+	/* @var Element_OphTrOperationbooking_Operation operation that this note is for when creating */
+	protected $booking_operation;
+	/* @var boolean - indicates if this note is for an unbooked procedure or not when creating */
+	protected $unbooked = false;
+
 	protected function beforeAction($action)
 	{
 		$this->assetPath = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.'.$this->getModule()->name.'.assets'), false, -1, YII_DEBUG);
@@ -28,54 +33,141 @@ class DefaultController extends BaseEventTypeController
 	}
 
 	/**
-	 * set flash message for patient allergies
-	 *
-	 * @param Patient $patient
+	 * Set flash message for patient allergies
 	 */
-	protected function showAllergyWarning($patient)
+	protected function showAllergyWarning()
 	{
-		if ($patient->no_allergies_date) {
-			Yii::app()->user->setFlash('info.prescription_allergy', $patient->getAllergiesString());
+		if ($this->patient->no_allergies_date) {
+			Yii::app()->user->setFlash('info.prescription_allergy', $this->patient->getAllergiesString());
 		}
 		else {
-			Yii::app()->user->setFlash('warning.prescription_allergy', $patient->getAllergiesString());
+			Yii::app()->user->setFlash('warning.prescription_allergy', $this->patient->getAllergiesString());
 		}
 	}
 
+	protected function getEventElements()
+	{
+		if ($this->event) {
+			$elements = $this->event->getElements();
+			//TODO: check for missing elements for procedures
+		}
+		else {
+			$elements = $this->event_type->getDefaultElements();
+			if ($this->booking_operation) {
+				// need to add procedure elements for the booking operation
+				$generic_index = 0;
 
+				$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
+				$extra_elements = array();
+				$new_elements = array(array_shift($elements));
+
+				foreach ($api->getProceduresForOperation($this->booking_operation->event_id) as $proc) {
+					$criteria = new CDbCriteria;
+					$criteria->compare('procedure_id',$proc->id);
+					$criteria->order = 'display_order asc';
+
+					$procedure_elements = OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria);
+
+					foreach ($procedure_elements as $element) {
+						$kls = $element->element_type->class_name;
+
+						if (!in_array($kls,$extra_elements)) {
+							$extra_elements[] = $kls;
+							$new_elements[] = new $kls;
+						}
+					}
+
+					if (count($procedure_elements) == 0) {
+						// no specific element for procedure, use generic
+						$element = new Element_OphTrOperationnote_GenericProcedure;
+						$element->proc_id = $proc->id;
+						$element->element_index = $generic_index++;
+						$extra_elements[] = "Element_OphTrOperationnote_GenericProcedure";
+						$new_elements[] = $element;
+					}
+				}
+			}
+		}
+		return $elements;
+	}
+
+	/**
+	 * Edit actions common initialisation
+	 */
+	protected function initEdit()
+	{
+		$this->showAllergyWarning();
+		$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
+		$this->moduleStateCssClass = 'edit';
+	}
+
+	/**
+	 * Set up the controller properties for booking relationship
+	 *
+	 * @throws Exception
+	 */
+	protected function initActionCreate()
+
+	{
+		parent::initActionCreate();
+
+		if (isset($_GET['booking_event_id'])) {
+			if (!$api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+				throw new Exception('invalid request for booking event');
+			}
+			if (!$this->booking_operation = $api->getOperationForEvent($_GET['booking_event_id'])) {
+				throw new Exception('booking event not found');
+			}
+		}
+		elseif (isset($_GET['unbooked'])) {
+			$this->unbooked = true;
+		}
+
+		$this->initEdit();
+	}
+
+	/**
+	 * Call the core edit action initialisation
+	 *
+	 * (non-phpdoc)
+	 * @see parent::initActionUpdate()
+	 */
+	protected function initActionUpdate()
+	{
+		parent::initActionUpdate();
+		$this->initEdit();
+	}
+
+	/**
+	 * Handle the selection of a booking for creating an op note
+	 *
+	 * (non-phpdoc)
+	 * @see parent::actionCreate()
+	 */
 	public function actionCreate()
 	{
 		$errors = array();
 
-		if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-			throw new Exception("Patient not found: ".@$_GET['patient_id']);
-		}
-
-		$this->showAllergyWarning($this->patient);
-
 		if (!empty($_POST)) {
 			if (preg_match('/^booking([0-9]+)$/',@$_POST['SelectBooking'],$m)) {
-				return $this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id='.$m[1]));
+				$this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id='.$m[1]));
 			} elseif (@$_POST['SelectBooking'] == 'emergency') {
-				return $this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&booking_event_id=emergency'));
+				$this->redirect(array('/OphTrOperationnote/Default/create?patient_id='.$this->patient->id.'&unbooked=1'));
 			}
 
 			$errors = array('Operation' => array('Please select a booked operation'));
 		}
 
-		if (isset($_GET['booking_event_id']) || @$_GET['unbooked']) {
-			$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
+		if ($this->booking_operation || $this->unbooked) {
 			parent::actionCreate();
 		} else {
+			// set up form for selecting a booking for the Op note
 			$bookings = array();
 
 			if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-				if ($episode = $this->patient->getEpisodeForCurrentSubspecialty()) {
-					$bookings = $api->getOpenBookingsForEpisode($episode->id);
-				}
+				$bookings = $api->getOpenBookingsForEpisode($this->episode->id);
 			}
 
-			$this->event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
 			$this->title = "Please select booking";
 			$this->event_tabs = array(
 				array(
@@ -90,8 +182,7 @@ class DefaultController extends BaseEventTypeController
 					null, array('class' => 'button small warning')
 				)
 			);
-			$this->moduleStateCssClass = 'edit';
-			$this->processJsVars();
+
 			$this->render('select_event',array(
 				'errors' => $errors,
 				'bookings' => $bookings,
@@ -99,21 +190,10 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
-	public function actionUpdate($id)
-	{
-		$this->jsVars['eyedraw_iol_classes'] = Yii::app()->params['eyedraw_iol_classes'];
-
-		if (!$event = Event::model()->findByPk($id)) {
-			throw new CHttpException(403, 'Invalid event id.');
-		}
-
-		$this->showAllergyWarning($event->episode->patient);
-
-		parent::actionUpdate($id);
-	}
 
 	public function actionView($id)
 	{
+		//TODO: stick this in jsvars?
 		$cs = Yii::app()->getClientScript();
 		$cs->registerScript('scr_opnote_view', "opnote_print_url = '" . Yii::app()->createUrl('OphTrOperationnote/Default/print/'.$id) . "';\nmodule_css_path = '" . $this->assetPath . "/css';", CClientScript::POS_READY);
 		parent::actionView($id);
@@ -132,6 +212,88 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
+	/**
+	 * suppress default behaviour
+	 *
+	 * @return array
+	 */
+	public function getOptionalElements()
+	{
+		return array();
+	}
+
+	/**
+	 *
+	 */
+	public function getElements()
+	{
+		$elements = parent::getElements();
+		// sort the procedure elements based on the selection order in the procedurelist element
+		$proc_list = null;
+
+		$elements_by_class = array();
+
+		foreach ($elements as $element) {
+			$kls = get_class($element);
+			error_log($kls);
+			if ($kls == "Element_OphTrOperationnote_ProcedureList") {
+				error_log('matched');
+				$proc_list = $element;
+			}
+			if (isset($elements_by_class[$kls])) {
+				$elements_by_class[$kls][] = $element;
+			}
+			else {
+				$elements_by_class[get_class($element)] = array($element);
+			}
+		}
+
+		error_log(get_class($proc_list));
+		if ($proc_list === null) {
+			return $elements;
+		}
+		error_log('something');
+
+		// construct list of procedure element types in the right order
+		$procedure_classes = array();
+		foreach ($proc_list->procedures as $procedure) {
+			error_log($procedure->term);
+			$criteria = new CDbCriteria;
+			$criteria->compare('procedure_id',$procedure->id);
+			$criteria->order = 'display_order asc';
+
+			if ($proc_els = OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria)) {
+				foreach ($proc_els as $proc_el) {
+					$kls = $proc_el->element_type->class_name;
+					$procedure_classes[] = shift($elements_by_class[$kls]);
+				}
+			}
+			else {
+				$keep = array();
+				foreach ($elements_by_class['Element_OphTrOperationnote_GenericProcedure'] as $el) {
+					if ($el->proc_id == $procedure->id) {
+						$procedure_classes[] = $el;
+					}
+					else {
+						$keep[] = $el;
+					}
+				}
+				$elements_by_class['Element_OphTrOperationnote_GenericProcedure'] = $keep;
+			}
+		}
+		$sorted = array();
+		$procs_found = false;
+		foreach ($elements as $el) {
+			if (count($elements_by_class[get_class($el)])) {
+				$sorted[] = $el;
+			}
+			elseif (!$procs_found) {
+				$sorted = array_merge($sorted, $procedure_classes);
+				$procs_found = true;
+			}
+		}
+		return $sorted;
+	}
 	/**
 	 * extends parent functionality to define elements for procedures
 	 *
