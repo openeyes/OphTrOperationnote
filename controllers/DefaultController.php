@@ -298,6 +298,7 @@ class DefaultController extends BaseEventTypeController
 		return array();
 	}
 
+
 	/**
 	 * Ajax action to load the required elements for a procedure
 	 *
