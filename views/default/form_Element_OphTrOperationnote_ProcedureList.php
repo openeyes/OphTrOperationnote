@@ -29,7 +29,6 @@
 	</header>
 
 	<div class="element-fields">
-
 	<?php echo $form->hiddenInput($element, 'booking_event_id')?>
 	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->eye() ? $element->eye()->id : null), null, null, null ,null,null,array('label'=>2,'field'=>10))?>
 	<?php
