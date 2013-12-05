@@ -29,9 +29,8 @@
 	</header>
 
 	<div class="element-fields">
-	<?php if (ctype_digit(@$_GET['booking_event_id'])) {?>
-		<?php echo $form->hiddenInput($element, 'booking_event_id', $_GET['booking_event_id'])?>
-	<?php }?>
+
+	<?php echo $form->hiddenInput($element, 'booking_event_id')?>
 	<?php echo $form->radioButtons($element, 'eye_id', 'eye', ($element->eye() ? $element->eye()->id : null), null, null, null ,null,null,array('label'=>2,'field'=>10))?>
 	<?php
 	$form->widget('application.widgets.ProcedureSelection',array(

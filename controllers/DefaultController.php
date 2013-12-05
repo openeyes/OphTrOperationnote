@@ -111,6 +111,7 @@ class DefaultController extends BaseEventTypeController
 			}
 			$element->procedures = $procedures;
 			$element->eye = $api->getEyeForOperation($this->booking_operation->event_id);
+			$element->booking_event_id = $this->booking_operation->event_id;
 		}
 	}
 
@@ -466,6 +467,7 @@ class DefaultController extends BaseEventTypeController
 	/**
 	 * Works out the eye that should be used for an eyedraw
 	 *
+	 * @FIXME: This should be a property on the element, or a variable passed to render.
 	 * @return Eye
 	 * @throws SystemException
 	 */
@@ -500,4 +502,31 @@ class DefaultController extends BaseEventTypeController
 
 		return $eye;
 	}
+
+	/**
+	 * @param Element_OphTrOperationnote_ProcedureList $element
+	 * @param $data
+	 * @param $index
+	 */
+	protected function setComplexAttributes_Element_OphTrOperationnote_ProcedureList($element, $data, $index)
+	{
+		$procs = array();
+		if (isset($data['Procedures_procs'])) {
+			foreach ($data['Procedures_procs'] as $proc_id) {
+				$procs[] = Procedure::model()->findByPk($proc_id);
+			}
+		}
+		$element->procedures = $procs;
+	}
+
+	/**
+	 * @param Element_OphTrOperationnote_ProcedureList $element
+	 * @param array $data
+	 * @param integer $index
+	 */
+	protected function saveComplexAttributes_Element_OphTrOperationnote_ProcedureList($element, $data, $index)
+	{
+		$element->updateProcedures(isset($data['Procedures_procs']) ? $data['Procedures_procs'] : array());
+	}
+
 }
