@@ -48,7 +48,7 @@ class DefaultController extends BaseEventTypeController
 	protected function getEventElements()
 	{
 		if ($this->event) {
-			$elements = $this->event->getElements();
+			return $this->event->getElements();
 			//TODO: check for missing elements for procedures
 		}
 		else {
@@ -86,9 +86,12 @@ class DefaultController extends BaseEventTypeController
 						$new_elements[] = $element;
 					}
 				}
+				return array_merge($new_elements, $elements);
+			}
+			else {
+				return $elements;
 			}
 		}
-		return $elements;
 	}
 
 	protected function setElementDefaultOptions($element, $action)
@@ -319,6 +322,7 @@ class DefaultController extends BaseEventTypeController
 	 *
 	 * @see parent::getDefaultElements($action, $event_type_id, $event)
 	 */
+	/*
 	public function getDefaultElements($action, $event_type_id=null, $event=null)
 	{
 		$elements = parent::getDefaultElements($action, $event_type_id, $event);
@@ -361,6 +365,7 @@ class DefaultController extends BaseEventTypeController
 		}
 
 		/* If an opnote was saved with a procedure in the procedure list but the associated element wasn't saved, include it here */
+		/*
 		if ($action == 'update' && empty($_POST)) {
 			$extra_elements = array();
 			$new_elements = array(array_shift($elements));
@@ -426,6 +431,7 @@ class DefaultController extends BaseEventTypeController
 
 		return $elements;
 	}
+	*/
 
 	public function actionLoadElementByProcedure()
 	{
@@ -442,8 +448,9 @@ class DefaultController extends BaseEventTypeController
 
 			$element = new $class_name;
 
+			// FIXME: define a property on the element to indicate that specific eye is required
 			if (in_array($class_name,array('Element_OphTrOperationnote_Cataract','Element_OphTrOperationnote_Vitrectomy','Element_OphTrOperationnote_Buckle'))) {
-				if (!in_array(@$_GET['eye'],array(1,2))) {
+				if (!in_array(@$_GET['eye'],array(Eye::LEFT,Eye::RIGHT))) {
 					echo "must-select-eye";
 					return;
 				}

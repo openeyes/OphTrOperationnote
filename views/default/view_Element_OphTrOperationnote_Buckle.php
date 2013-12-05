@@ -18,7 +18,7 @@
  */
 ?>
 
-<section class="element">
+<section class="sub-element">
 
 	<h3 class="element-title highlight"><?php echo $element->elementType->name ?></h3>
 

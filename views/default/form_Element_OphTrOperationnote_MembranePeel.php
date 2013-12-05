@@ -18,7 +18,7 @@
  */
 ?>
 
-<section class="element <?php echo $element->elementType->class_name?> on-demand<?php if (@$ondemand) {?> hidden<?php }?><?php if ($this->action->id == 'update' && !$element->event_id) {?> missing<?php }?>"
+<section class="sub-element <?php echo $element->elementType->class_name?> on-demand<?php if (@$ondemand) {?> hidden<?php }?><?php if ($this->action->id == 'update' && !$element->event_id) {?> missing<?php }?>"
 	data-element-type-id="<?php echo $element->elementType->id ?>"
 	data-element-type-class="<?php echo $element->elementType->class_name ?>"
 	data-element-type-name="<?php echo $element->elementType->name ?>"
