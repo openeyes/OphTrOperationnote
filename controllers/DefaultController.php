@@ -26,9 +26,7 @@ class DefaultController extends BaseEventTypeController
 
 	protected function beforeAction($action)
 	{
-		$this->assetPath = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.'.$this->getModule()->name.'.assets'), false, -1, YII_DEBUG);
 		Yii::app()->clientScript->registerScriptFile($this->assetPath.'/js/eyedraw.js');
-
 		return parent::beforeAction($action);
 	}
 
@@ -45,35 +43,40 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
+	/**
+	 * Creates the procedure elements for the procedures selected in the procedure list element
+	 *
+	 * @return array|BaseEventTypeElement[]
+	 */
 	protected function getEventElements()
 	{
 		if ($this->event) {
 			return $this->event->getElements();
 			//TODO: check for missing elements for procedures
+
 		}
 		else {
 			$elements = $this->event_type->getDefaultElements();
+			//FIXME: the procedures are set on the elements, so we should use that property to define the elements
 			if ($this->booking_operation) {
 				// need to add procedure elements for the booking operation
-				$generic_index = 0;
 
 				$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
 				$extra_elements = array();
-				$new_elements = array(array_shift($elements));
 
 				foreach ($api->getProceduresForOperation($this->booking_operation->event_id) as $proc) {
 					$criteria = new CDbCriteria;
 					$criteria->compare('procedure_id',$proc->id);
 					$criteria->order = 'display_order asc';
 
-					$procedure_elements = OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria);
+					$procedure_elements = $this->getProcedureSpecificElements($proc->id);
 
 					foreach ($procedure_elements as $element) {
 						$kls = $element->element_type->class_name;
-
+						// only have one of any given procedure element
 						if (!in_array($kls,$extra_elements)) {
 							$extra_elements[] = $kls;
-							$new_elements[] = new $kls;
+							$elements[] = new $kls;
 						}
 					}
 
@@ -81,19 +84,20 @@ class DefaultController extends BaseEventTypeController
 						// no specific element for procedure, use generic
 						$element = new Element_OphTrOperationnote_GenericProcedure;
 						$element->proc_id = $proc->id;
-						$element->element_index = $generic_index++;
-						$extra_elements[] = "Element_OphTrOperationnote_GenericProcedure";
-						$new_elements[] = $element;
+						$elements[] = $element;
 					}
 				}
-				return array_merge($new_elements, $elements);
 			}
-			else {
-				return $elements;
-			}
+			return $elements;
 		}
 	}
 
+	/**
+	 * For new notes for a specific operation, initialise procedure list with relevant procedures
+	 *
+	 * @param BaseEventTypeElement $element
+	 * @param string $action
+	 */
 	protected function setElementDefaultOptions($element, $action)
 	{
 		if ($action == 'create' && $this->booking_operation
@@ -210,14 +214,12 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
-	public function actionView($id)
-	{
-		//TODO: stick this in jsvars?
-		$cs = Yii::app()->getClientScript();
-		$cs->registerScript('scr_opnote_view', "opnote_print_url = '" . Yii::app()->createUrl('OphTrOperationnote/Default/print/'.$id) . "';\nmodule_css_path = '" . $this->assetPath . "/css';", CClientScript::POS_READY);
-		parent::actionView($id);
-	}
-
+	/**
+	 * Ensures that any attached operation booking status is updated after the op note is removed
+	 *
+	 * @param $id
+	 * @return bool|void
+	 */
 	public function actionDelete($id)
 	{
 		$proclist = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($id));
@@ -242,197 +244,10 @@ class DefaultController extends BaseEventTypeController
 	}
 
 	/**
+	 * Ajax action to load the required elements for a procedure
 	 *
+	 * @throws SystemException
 	 */
-	public function getElements()
-	{
-		$elements = parent::getElements();
-		// sort the procedure elements based on the selection order in the procedurelist element
-		$proc_list = null;
-
-		$elements_by_class = array();
-
-		foreach ($elements as $element) {
-			$kls = get_class($element);
-			error_log($kls);
-			if ($kls == "Element_OphTrOperationnote_ProcedureList") {
-				$proc_list = $element;
-			}
-			if (isset($elements_by_class[$kls])) {
-				$elements_by_class[$kls][] = $element;
-			}
-			else {
-				$elements_by_class[get_class($element)] = array($element);
-			}
-		}
-
-		if ($proc_list === null) {
-			return $elements;
-		}
-
-		// construct list of procedure element types in the right order
-		$procedure_classes = array();
-		foreach ($proc_list->procedures as $procedure) {
-			error_log($procedure->term);
-			$criteria = new CDbCriteria;
-			$criteria->compare('procedure_id',$procedure->id);
-			$criteria->order = 'display_order asc';
-
-			if ($proc_els = OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria)) {
-				foreach ($proc_els as $proc_el) {
-					$kls = $proc_el->element_type->class_name;
-					$procedure_classes[] = shift($elements_by_class[$kls]);
-				}
-			}
-			else {
-				$keep = array();
-				if (isset($elements_by_class['Element_OphTrOperationnote_GenericProcedure'])) {
-					foreach ($elements_by_class['Element_OphTrOperationnote_GenericProcedure'] as $el) {
-						if ($el->proc_id == $procedure->id) {
-							$procedure_classes[] = $el;
-						}
-						else {
-							$keep[] = $el;
-						}
-					}
-					$elements_by_class['Element_OphTrOperationnote_GenericProcedure'] = $keep;
-				}
-			}
-		}
-		$sorted = array();
-		$procs_found = false;
-		foreach ($elements as $el) {
-			if (count($elements_by_class[get_class($el)])) {
-				$sorted[] = $el;
-			}
-			elseif (!$procs_found) {
-				$sorted = array_merge($sorted, $procedure_classes);
-				$procs_found = true;
-			}
-		}
-		return $sorted;
-	}
-	/**
-	 * extends parent functionality to define elements for procedures
-	 *
-	 * @param string $action
-	 * @param null $event_type_id
-	 * @param null $event
-	 * @return array|BaseEventTypeElement[]
-	 *
-	 * @see parent::getDefaultElements($action, $event_type_id, $event)
-	 */
-	/*
-	public function getDefaultElements($action, $event_type_id=null, $event=null)
-	{
-		$elements = parent::getDefaultElements($action, $event_type_id, $event);
-
-		// If we're loading the create form and there are procedures pulled from the booking which map to elements
-		// then we need to include them in the form
-		if ($action == 'create' && empty($_POST)) {
-			$proclist = new Element_OphTrOperationnote_ProcedureList;
-			$extra_elements = array();
-
-			$new_elements = array(array_shift($elements));
-			$generic_index = 0;
-
-			foreach ($proclist->selected_procedures as $procedure) {
-				$criteria = new CDbCriteria;
-				$criteria->compare('procedure_id',$procedure->id);
-				$criteria->order = 'display_order asc';
-
-				$procedureElements = OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria);
-
-				foreach ($procedureElements as $element) {
-					$element = new $element->element_type->class_name;
-
-					if (!in_array(get_class($element),$extra_elements)) {
-						$extra_elements[] = get_class($element);
-						$new_elements[] = $element;
-					}
-				}
-
-				if (count($procedureElements) == 0) {
-					$element = new Element_OphTrOperationnote_GenericProcedure;
-					$element->proc_id = $procedure->id;
-					$element->element_index = $generic_index++;
-					$extra_elements[] = "Element_OphTrOperationnote_GenericProcedure";
-					$new_elements[] = $element;
-				}
-			}
-
-			$elements = array_merge($new_elements, $elements);
-		}
-
-		/* If an opnote was saved with a procedure in the procedure list but the associated element wasn't saved, include it here */
-		/*
-		if ($action == 'update' && empty($_POST)) {
-			$extra_elements = array();
-			$new_elements = array(array_shift($elements));
-
-			foreach (Element_OphTrOperationnote_ProcedureList::model()->find('event_id = :event_id',array(':event_id' => $this->event->id))->selected_procedures as $procedure) {
-				$criteria = new CDbCriteria;
-				$criteria->compare('procedure_id',$procedure->id);
-				$criteria->order = 'display_order asc';
-
-				foreach (OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria) as $element) {
-					$class = $element->element_type->class_name;
-					$element = new $element->element_type->class_name;
-
-					if (!$class::model()->find('event_id=?',array($this->event->id))) {
-						$extra_elements[] = get_class($element);
-						$new_elements[] = $element;
-					}
-				}
-			}
-
-			$elements = array_merge($new_elements, $elements);
-		}
-
-		// Procedure list elements need to be shown in the order they were selected, not the default sort order from the element_type
-		// TODO: This probably needs replacing with a some better code
-
-		// Get correct order for procedure elements
-		if ($this->event) {
-			$procedure_list = Element_OphTrOperationnote_ProcedureList::model()->find(
-					'event_id = :event_id',
-					array(':event_id' => $this->event->id)
-			);
-			$procedure_classes = array();
-			foreach ($procedure_list->procedure_assignments as $procedure_assignment) {
-				if ($pl_element = OphTrOperationnote_ProcedureListOperationElement::model()->find('procedure_id = ?', array($procedure_assignment->proc_id))) {
-					$procedure_classes[] = $pl_element->element_type->class_name;
-				} else {
-					$procedure_classes[] = 'Element_OphTrOperationnote_GenericProcedure';
-				}
-			}
-
-			// Resort procedure elements
-			// This code assumes that the elements are grouped into three distinct blocks, with the procedures in the middle
-			$sorted_elements = array();
-			$index = 0;
-			$section = 'top';
-			foreach ($elements as $element) {
-				if (in_array(get_class($element), $procedure_classes)) {
-					$section = 'procedure';
-					$index = 1000 + array_search(get_class($element), $procedure_classes);
-				} elseif ($section == 'procedure') {
-					$section = 'bottom';
-					$index = 2000;
-				} else {
-					$index++;
-				}
-				while (isset($sorted_elements[$index])) $index++;
-				$sorted_elements[$index] = $element;
-			}
-			ksort($sorted_elements);
-			$elements = $sorted_elements;
-		}
-
-		return $elements;
-	}
-	*/
-
 	public function actionLoadElementByProcedure()
 	{
 		if (!$proc = Procedure::model()->findByPk((integer) @$_GET['procedure_id'])) {
@@ -479,6 +294,11 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
+	/**
+	 * Ajax function that works out what elements are no longer needed when a procedure has been removed.
+	 *
+	 * @throws SystemException
+	 */
 	public function actionGetElementsToDelete()
 	{
 		if (!$proc = Procedure::model()->findByPk((integer) @$_POST['procedure_id'])) {
@@ -498,6 +318,11 @@ class DefaultController extends BaseEventTypeController
 		die(json_encode($elements));
 	}
 
+	/**
+	 *
+	 * @param $procedure_id
+	 * @return OphTrOperationnote_ProcedureListOperationElement[]
+	 */
 	public function getProcedureSpecificElements($procedure_id)
 	{
 		$criteria = new CDbCriteria;
@@ -507,46 +332,88 @@ class DefaultController extends BaseEventTypeController
 		return OphTrOperationnote_ProcedureListOperationElement::model()->findAll($criteria);
 	}
 
-	public function getAllProcedureElements($action)
+	/**
+	 * Renders procedure specific elements - wrapper for rendering child elements of the procedure list element
+	 *
+	 * @param $action
+	 * @param BaseCActiveBaseEventTypeCActiveForm $form
+	 * @param array $data
+	 */
+	public function renderAllProcedureElements($action, $form=null, $data=null)
 	{
-		$elements = $this->getDefaultElements($action);
-		$current_procedure_elements = array();
-
-		foreach ($elements as $element) {
-			if (get_class($element) == 'Element_OphTrOperationnote_GenericProcedure') {
-				$current_procedure_elements[] = $element;
+		foreach ($this->open_elements as $el) {
+			if (get_class($el) == 'Element_OphTrOperationnote_ProcedureList') {
+				$this->renderChildOpenElements($el, $action, $form, $data);
 			}
-			else {
-				$element_type = ElementType::model()->find('class_name = ?', array(get_class($element)));
-				$procedure_elements = OphTrOperationnote_ProcedureListOperationElement::model()->find('element_type_id = ?', array($element_type->id));
-				if ($procedure_elements) {
-					$current_procedure_elements[] = $element;
+		}
+	}
+
+	/**
+	 * Overrides for procedure list to render the elements in the order they are selected
+	 *
+	 * @param BaseEventTypeElement $parent_element
+	 * @param string $action
+	 * @param BaseCActiveBaseEventTypeCActiveForm $form
+	 * @param array $data
+	 * @throws Exception
+	 *
+	 * (non-phpdoc)
+	 * @see parent::renderChildOpenElements($parent_element, $action, $form, $data)
+	 */
+	public function renderChildOpenElements($parent_element, $action, $form=null, $data=null)
+	{
+
+		if (get_class($parent_element) == 'Element_OphTrOperationnote_ProcedureList') {
+			// index the child elements
+			$by_cls = array();
+			$by_proc_id = array();
+			$children = $this->getChildElements($parent_element->getElementType());
+
+			foreach ($children as $child) {
+				$cls = get_class($child);
+				if ($child->hasAttribute('proc_id')) {
+					$by_proc_id[$child->proc_id] = $child;
+				}
+				else {
+					if (isset($by_cls[$cls])) {
+						$by_cls[$cls][] = $child;
+					} else {
+						$by_cls[$cls] = array($child);
+					}
 				}
 			}
-		}
 
-		return $current_procedure_elements;
-	}
-
-	public function renderAllProcedureElements($action, $form=false, $data=false)
-	{
-		$elements = $this->getAllProcedureElements($action);
-		$count = count($elements);
-		$i = 0;
-		$last = false;
-		foreach ($elements as $element) {
-			if ($count == ($i + 1)) {
-				$last = true;
+			// generate correctly ordered list of elements based on procedure order
+			$elements = array();
+			foreach ($parent_element->procedures as $proc) {
+				if (isset($by_proc_id[$proc->id])) {
+					$elements[] = $by_proc_id[$proc->id];
+				}
+				else {
+					$procedure_elements = $this->getProcedureSpecificElements($proc->id);
+					foreach ($procedure_elements as $proc_el) {
+						if (isset($by_cls[$proc_el->element_type->class_name])) {
+							if ($el = array_shift($by_cls[$proc_el->element_type->class_name])) {
+								$elements[] = $el;
+							}
+						}
+					}
+				}
 			}
-			$this->renderPartial(
-				$action . '_' . $element->{$action.'_view'},
-				array('element' => $element, 'data' => $data, 'form' => $form, 'last' => $last),
-				false, false
-			);
-			$i++;
+
+			foreach ($elements as $el) {
+				$this->renderElement($el, $action, $form, $data);
+			}
 		}
+		else {
+			parent::renderChildOpenElements($parent_element, $action, $form, $data);
+		}
+
 	}
 
+	/**
+	 * Ajax method for checking whether a procedure requires the eye to be set
+	 */
 	public function actionVerifyprocedure()
 	{
 		if (!empty($_GET['name'])) {
@@ -577,10 +444,15 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
-	// returns true if the passed procedure id requires the selection of 'left' or 'right' eye
+	/**
+	 * returns true if the passed procedure id requires the selection of 'left' or 'right' eye
+	 *
+	 * @param $procedure_id
+	 * @return boolean
+	 */
 	public function procedure_requires_eye($procedure_id)
 	{
-		foreach (OphTrOperationnote_ProcedureListOperationElement::model()->findAll('procedure_id=?',array($procedure_id)) as $plpa) {
+		foreach ($this->getProcedureSpecificElements($procedure_id) as $plpa) {
 			$element_type = ElementType::model()->findByPk($plpa->element_type_id);
 
 			if (in_array($element_type->class_name,array('Element_OphTrOperationnote_Cataract','Element_OphTrOperationnote_Buckle','Element_OphTrOperationnote_Vitrectomy'))) {
@@ -591,6 +463,12 @@ class DefaultController extends BaseEventTypeController
 		return false;
 	}
 
+	/**
+	 * Works out the eye that should be used for an eyedraw
+	 *
+	 * @return Eye
+	 * @throws SystemException
+	 */
 	public function getSelectedEyeForEyedraw()
 	{
 		$eye = new Eye;

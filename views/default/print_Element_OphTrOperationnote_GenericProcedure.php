@@ -18,7 +18,7 @@
  */
 ?>
 <h3><?php echo $element->getElementTypeName() ?></h3>
-<div class="procedureContainer clearfix<?php echo ($last) ? ' last' : ''; ?>">
+<div class="procedureContainer clearfix">
 	<div class="detailRow clearVal">
 		<div class="label">
 			Comment

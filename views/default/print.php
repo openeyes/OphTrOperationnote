@@ -91,7 +91,7 @@
 
 		<h2>Operation Details</h2>
 		<div class="operationDetails details">
-			<?php $this->renderPartial('print_OperationDetails') ?>
+			<?php $this->renderAllProcedureElements($this->action->id); ?>
 		</div>
 
 		<h2>Anaesthetic Details</h2>
