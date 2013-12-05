@@ -18,40 +18,56 @@
  */
 ?>
 
-<section class="sub-element">
-
-	<h3 class="element-title highlight"><?php echo $element->elementType->name ?></h3>
+<section class="sub-element element-data">
+	<h3 class="data-title"><?php echo $element->elementType->name ?></h3>
 
 	<div class="element-data">
-
 		<?php if ($element->membrane_blue) {?>
-			<div class="data-row">
-				<div class="data-value">
+			<div class="row data-row">
+				<div class="large-2 column">
+					<div class="data-value">
 					<?php echo CHtml::encode($element->getAttributeLabel('membrane_blue'))?>
+					</div>
 				</div>
 			</div>
 		<?php }?>
 
 		<?php if ($element->brilliant_blue) {?>
-			<div class="data-row">
-				<div class="data-value">
+			<div class="row data-row">
+				<div class="large-2 column">
+					<div class="data-value">
 					<?php echo CHtml::encode($element->getAttributeLabel('brilliant_blue'))?>
+					</div>
 				</div>
 			</div>
 		<?php }?>
 
 		<?php if ($element->other_dye) {?>
-			<div class="data-row">
-				<div class="data-value">
-					<?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>: <?php echo CHtml::encode($element->other_dye)?>
+			<div class="row data-row">
+				<div class="large-2 column">
+					<div class="data-label">
+					<?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>:
+					</div>
+				</div>
+				<div class="large-10 column">
+					<div class="data-value">
+					<?php echo CHtml::encode($element->other_dye)?>
+					</div>
 				</div>
 			</div>
 		<?php }?>
 
 		<?php if ($element->comments) {?>
-			<div class="data-row">
-				<div class="data-value">
-					<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>: <?php echo CHtml::encode($element->comments)?>
+			<div class="row data-row">
+				<div class="large-1 column">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:
+					</div>
+				</div>
+				<div class="large-10 column">
+					<div class="data-value">
+						<?php echo CHtml::encode($element->comments)?>
+					</div>
 				</div>
 			</div>
 		<?php }?>

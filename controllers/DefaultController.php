@@ -70,6 +70,7 @@ class DefaultController extends BaseEventTypeController
 	{
 		if ($this->event) {
 			return $this->event->getElements();
+			//TODO: check for missing elements for procedures
 		}
 		else {
 			$elements = $this->event_type->getDefaultElements();
