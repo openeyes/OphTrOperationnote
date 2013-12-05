@@ -71,12 +71,14 @@ class DefaultController extends BaseEventTypeController
 		if ($this->event) {
 			return $this->event->getElements();
 			//TODO: check for missing elements for procedures
+
 		}
 		else {
 			$elements = $this->event_type->getDefaultElements();
 			if ($procedures = $this->getBookingProcedures()) {
 				// need to add procedure elements for the booking operation
 				$extra_elements = array();
+
 
 				foreach ($procedures as $proc) {
 					$procedure_elements = $this->getProcedureSpecificElements($proc->id);
@@ -146,6 +148,12 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
+	/**
+	 * For new notes for a specific operation, initialise procedure list with relevant procedures
+	 *
+	 * @param BaseEventTypeElement $element
+	 * @param string $action
+	 */
 	protected function setElementDefaultOptions($element, $action)
 	{
 		if ($action == 'create' && $this->booking_operation
@@ -315,7 +323,6 @@ class DefaultController extends BaseEventTypeController
 	{
 		return array();
 	}
-
 
 	/**
 	 * Ajax action to load the required elements for a procedure
