@@ -46,28 +46,21 @@ class DefaultController extends BaseEventTypeController
 	/**
 	 * Creates the procedure elements for the procedures selected in the procedure list element
 	 *
-	 * @return array|BaseEventTypeElement[]
+	 * @return BaseEventTypeElement[]
 	 */
 	protected function getEventElements()
 	{
 		if ($this->event) {
 			return $this->event->getElements();
-			//TODO: check for missing elements for procedures
-
 		}
 		else {
 			$elements = $this->event_type->getDefaultElements();
-			//FIXME: the procedures are set on the elements, so we should use that property to define the elements
 			if ($this->booking_operation) {
 				// need to add procedure elements for the booking operation
-
 				$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
 				$extra_elements = array();
 
 				foreach ($api->getProceduresForOperation($this->booking_operation->event_id) as $proc) {
-					$criteria = new CDbCriteria;
-					$criteria->compare('procedure_id',$proc->id);
-					$criteria->order = 'display_order asc';
 
 					$procedure_elements = $this->getProcedureSpecificElements($proc->id);
 
