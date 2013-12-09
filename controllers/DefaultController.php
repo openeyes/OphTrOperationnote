@@ -23,6 +23,24 @@ class DefaultController extends BaseEventTypeController
 	protected $booking_operation;
 	/* @var boolean - indicates if this note is for an unbooked procedure or not when creating */
 	protected $unbooked = false;
+	/* @var Proc[] - cache of bookings for the booking operation */
+	protected $booking_procedures;
+
+	/**
+	 * returns list of procudures for the booking operation set on the controller
+	 *
+	 * @return Proc[]
+	 */
+	protected function getBookingProcedures()
+	{
+		if ($this->booking_operation) {
+			if (!$this->booking_procedures) {
+				$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
+				$this->booking_procedures = $api->getProceduresForOperation($this->booking_operation->event_id);
+			}
+			return $this->booking_procedures;
+		}
+	}
 
 	protected function beforeAction($action)
 	{
@@ -55,15 +73,12 @@ class DefaultController extends BaseEventTypeController
 		}
 		else {
 			$elements = $this->event_type->getDefaultElements();
-			if ($this->booking_operation) {
+			if ($procedures = $this->getBookingProcedures()) {
 				// need to add procedure elements for the booking operation
-				$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
 				$extra_elements = array();
 
-				foreach ($api->getProceduresForOperation($this->booking_operation->event_id) as $proc) {
-
+				foreach ($procedures as $proc) {
 					$procedure_elements = $this->getProcedureSpecificElements($proc->id);
-
 					foreach ($procedure_elements as $element) {
 						$kls = $element->element_type->class_name;
 						// only have one of any given procedure element
@@ -88,21 +103,15 @@ class DefaultController extends BaseEventTypeController
 	/**
 	 * For new notes for a specific operation, initialise procedure list with relevant procedures
 	 *
-	 * @param BaseEventTypeElement $element
+	 * @param Element_OphTrOperationnote_ProcedureList $element
 	 * @param string $action
 	 */
-	protected function setElementDefaultOptions($element, $action)
+	protected function setElementDefaultOptions_Element_OphTrOperationnote_ProcedureList($element, $action)
 	{
-		if ($action == 'create' && $this->booking_operation
-			&& get_class($element) == 'Element_OphTrOperationnote_ProcedureList') {
-
-			$procedures = array();
+		if ($action == 'create' && $procedures = $this->getBookingProcedures()) {
+			$element->procedures = $procedures;
 
 			$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
-			foreach ($api->getProceduresForOperation($this->booking_operation->event_id) as $proc) {
-				$procedures[] = $proc;
-			}
-			$element->procedures = $procedures;
 			$element->eye = $api->getEyeForOperation($this->booking_operation->event_id);
 			$element->booking_event_id = $this->booking_operation->event_id;
 		}
@@ -228,7 +237,7 @@ class DefaultController extends BaseEventTypeController
 	}
 
 	/**
-	 * suppress default behaviour
+	 * Suppress default behaviour - optional elements are managed through the procedure selection
 	 *
 	 * @return array
 	 */
