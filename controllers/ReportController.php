@@ -92,7 +92,7 @@ class ReportController extends BaseController
 			->join("patient p","ep.patient_id = p.id")
 			->leftJoin("et_ophtroperationnote_cataract_complication comp","comp.cataract_id = c.id")
 			->leftJoin("et_ophtroperationnote_cataract_complication pc","pc.cataract_id = c.id and pc.complication_id = 11")
-			->where("e.deleted = 0 and ep.deleted = 0 $where")
+			->where("pl.deleted = 0 and c.deleted = 0 and e.deleted = 0 and s.deleted = 0 and ep.deleted = 0 and f.deleted = 0 and p.deleted = 0 and (comp.id is null or comp.deleted = 0) and (pc.id is null or pc.deleted = 0) $where")
 			->queryAll() as $row) {
 
 			$data['cataracts']++;
@@ -140,7 +140,7 @@ class ReportController extends BaseController
 			->join("patient p","ep.patient_id = p.id")
 			->leftJoin("et_ophtroperationnote_cataract_complication comp","comp.cataract_id = c.id")
 			->leftJoin("et_ophtroperationnote_cataract_complication pc","pc.cataract_id = c.id and pc.complication_id = 11")
-			->where("e.deleted = 0 and ep.deleted = 0")
+			->where("pl.deleted = 0 and c.deleted = 0 and e.deleted = 0 and s.deleted = 0 and ep.deleted = 0 and f.deleted = 0 and p.deleted = 0 and (comp.id is null or comp.deleted = 0) and (pc.id is null or pc.deleted = 0)")
 			->queryAll() as $i => $row) {
 
 			$row['pc_id'] and $data['pc_rupture_average']['number']++;
@@ -196,7 +196,7 @@ class ReportController extends BaseController
 			->join('eye','pl.eye_id = eye.id')
 			->join('et_ophtroperationnote_surgeon s','s.event_id = e.id')
 			->leftJoin('et_ophtroperationnote_cataract cat','cat.event_id = e.id')
-			->where("e.deleted = 0 and ep.deleted = 0 $where")
+			->where("p.deleted = 0 and c.deleted = 0 and ep.deleted = 0 and e.deleted = 0 and pl.deleted = 0 and s.deleted = 0 and (cat.id is null or cat.deleted = 0) $where")
 			->order('e.created_date asc')
 			->queryAll() as $row) {
 
