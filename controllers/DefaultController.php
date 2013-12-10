@@ -117,7 +117,23 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
+	protected function setElementDefaultOptions_Element_OphTrOperationnote_Anaesthetic($element, $action)
+	{
+		if ($action == 'create') {
+			if ($this->booking_operation) {
+				$element->anaesthetic_type_id = $this->booking_operation->anaesthetic_type_id;
+			}
+			else {
+				$key = $this->patient->isChild() ? 'ophtroperationnote_default_anaesthetic_child' : 'ophtroperationnote_default_anaesthetic';
 
+				if (isset(Yii::app()->params[$key])) {
+					if ($at = AnaestheticType::model()->find('code=?',array(Yii::app()->params[$key]))) {
+						$this->anaesthetic_type_id = $at->id;
+					}
+				}
+			}
+		}
+	}
 	/**
 	 * Edit actions common initialisation
 	 */
@@ -530,5 +546,75 @@ class DefaultController extends BaseEventTypeController
 	{
 		$element->updateProcedures(isset($data['Procedures_procs']) ? $data['Procedures_procs'] : array());
 	}
+
+	/**
+	 * Update the anaesthetic agents and complications
+	 *
+	 * @param $element
+	 * @param $data
+	 * @param $index
+	 */
+	protected function saveComplexAttributes_Element_OphTrOperationnote_Anaesthetic($element, $data, $index)
+	{
+		$element->updateAnaestheticAgents(isset($data['AnaestheticAgent']) ? $data['AnaestheticAgent'] : array());
+		$element->updateComplications(isset($data['OphTrOperationnote_AnaestheticComplications']) ? $data['OphTrOperationnote_AnaestheticComplications'] : array());
+	}
+
+	/**
+	 * Return the anaesthetic agent list
+	 *
+	 * @param Element_OphTrOperationnote_Anaesthetic $element
+	 * @return array
+	 */
+	public function getAnaesthetic_agent_list($element)
+	{
+		$agents = $this->getAnaestheticAgentsBySiteAndSubspecialty();
+		$list = CHtml::listData($agents,'id','name');
+		$curr_list = CHtml::listData($element->anaesthetic_agents, 'id', 'name');
+		if ($missing = array_diff($curr_list, $list)) {
+			foreach ($missing as $id => $name) {
+				$list[$id] =  $name;
+			}
+		}
+		return $list;
+	}
+
+	/**
+	 * Get the ids of the default anaesthetic agents for the current site and subspecialty
+	 * @return array
+	 */
+	public function getAnaesthetic_agent_defaults()
+	{
+		$ids = array();
+		foreach ($this->getAnaestheticAgentsBySiteAndSubspecialty('siteSubspecialtyAssignmentDefaults') as $anaesthetic_agent) {
+			$ids[] = $anaesthetic_agent->id;
+		}
+		return $ids;
+	}
+
+	/**
+	 * Retrieve AnaestheticAgent instances relevant to the current site and subspecialty. The relation flag indicates
+	 * whether we are retrieve the full list of defaults.
+	 *
+	 * @param string $relation
+	 * @return array
+	 */
+	protected function getAnaestheticAgentsBySiteAndSubspecialty($relation = 'siteSubspecialtyAssignments')
+	{
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('site_id = :siteId and subspecialty_id = :subspecialtyId');
+		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
+		$criteria->params[':subspecialtyId'] = $this->firm->getSubspecialtyID();
+		$criteria->order = 'name';
+
+		return AnaestheticAgent::model()
+				->with(array(
+						$relation => array(
+							'joinType' => 'JOIN',
+						),
+					))
+				->findAll($criteria);
+	}
+
 
 }

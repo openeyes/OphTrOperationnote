@@ -20,10 +20,14 @@
 /**
  * This is the model class for table "et_ophtroperationnote_anaesthetic_anaesthetic_agent".
  *
- * The followings are the available columns in table 'et_ophtroperationnote_anaesthetic_anaesthetic_agent':
+ * The followings are the available columns in table 'ophtroperationnote_anaesthetic_anaesthetic_agent':
  * @property string $id
  * @property integer $anaesthetic_agent_id
+ * @property integer $et_ophtroperationnote_anaesthetic_id
  *
+ * The followings are the available model relations:
+ * @property AnaestheticAgent $anaesthetic_agent
+ * @property Element_OphTrOperationnote_Anaesthetic $anaesthetic_element
  */
 class OphTrOperationnote_OperationAnaestheticAgent extends BaseEventTypeElement
 {
@@ -68,6 +72,8 @@ class OphTrOperationnote_OperationAnaestheticAgent extends BaseEventTypeElement
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'anaesthetic_agent' => array(self::BELONGS_TO, 'AnaestheticAgent', 'anaesthetic_agent_id'),
+			'anaesthetic_element' => array(self::BELONGS_TO, 'Element_OphTrOperationnote_Anaesthetic', 'et_ophtroperationnote_anaesthetic_id'),
 		);
 	}
 
