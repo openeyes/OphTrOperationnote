@@ -165,7 +165,7 @@
 				<?php }?>
 			</div>
 		</div>
-		<div class="large-4 column">
+		<div class="large-3 column left">
 			<h3 class="data-title">Cataract complications</h3>
 			<div class="data-value highlight">
 				<?php if (!$element->complications && !$element->complication_notes) {?>

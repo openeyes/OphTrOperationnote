@@ -18,17 +18,16 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "ophtroperationnote_cataract_complication".
  *
- * The followings are the available columns in table 'element_operation':
+ * The followings are the available columns in table 'ophtroperationnote_cataract_complication':
  * @property string $id
- * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
+ * @property integer $cataract_id
+ * @property integer $complication_id
  *
  * The followings are the available model relations:
- * @property Event $event
+ * @property Element_OphTrOperationnote_Cataract $cataract
+ * @property Element_OphTrOperationnote_CataractComplications $complication
  */
 class OphTrOperationnote_CataractComplication extends BaseEventTypeElement
 {

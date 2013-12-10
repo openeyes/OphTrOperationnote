@@ -143,7 +143,7 @@ class DefaultController extends BaseEventTypeController
 			}
 		}
 	}
-	
+
 	/**
 	 * Edit actions common initialisation
 	 */
@@ -560,7 +560,7 @@ class DefaultController extends BaseEventTypeController
 	/**
 	 * Update the anaesthetic agents and complications
 	 *
-	 * @param $element
+	 * @param Element_OphTrOperationnote_Anaesthetic $element
 	 * @param $data
 	 * @param $index
 	 */
@@ -569,6 +569,46 @@ class DefaultController extends BaseEventTypeController
 		$element->updateAnaestheticAgents(isset($data['AnaestheticAgent']) ? $data['AnaestheticAgent'] : array());
 		$element->updateComplications(isset($data['OphTrOperationnote_AnaestheticComplications']) ? $data['OphTrOperationnote_AnaestheticComplications'] : array());
 	}
+
+	/**
+	 * Set complications and operative devices for validation
+	 *
+	 * @param $element
+	 * @param $data
+	 * @param $index
+	 */
+	protected function setComplexAttributes_Element_OphTrOperationnote_Cataract($element, $data, $index)
+	{
+		$complications = array();
+		if (isset($data['OphTrOperationnote_CataractComplications'])) {
+			foreach ($data['OphTrOperationnote_CataractComplications'] as $c_id) {
+				$complications[] = OphTrOperationnote_CataractComplications::model()->findByPk($c_id);
+			}
+		}
+		$element->complications = $complications;
+
+		$devices = array();
+		if (isset($data['OphTrOperationnote_CataractOperativeDevices'])) {
+			foreach ($data['OphTrOperationnote_CataractOperativeDevices'] as $oa_id) {
+				$devices[] = OphTrOperationnote_CataractComplications::model()->findByPk($oa_id);
+			}
+		}
+		$element->operative_devices = $devices;
+	}
+
+	/**
+	 * Update the complications and the operative devices
+	 *
+	 * @param Element_OphTrOperationnote_Cataract $element
+	 * @param $data
+	 * @param $index
+	 */
+	protected function saveComplexAttributes_Element_OphTrOperationnote_Cataract($element, $data, $index)
+	{
+		$element->updateComplications(isset($data['OphTrOperationnote_CataractComplications']) ? $data['OphTrOperationnote_CataractComplications'] : array());
+		$element->updateOperativeDevices(isset($data['OphTrOperationnote_CataractOperativeDevices']) ? $data['OphTrOperationnote_CataractOperativeDevices'] : array());
+	}
+
 
 	/**
 	 * Return the anaesthetic agent list
@@ -618,13 +658,73 @@ class DefaultController extends BaseEventTypeController
 		$criteria->order = 'name';
 
 		return AnaestheticAgent::model()
-				->with(array(
-						$relation => array(
-							'joinType' => 'JOIN',
-						),
-					))
-				->findAll($criteria);
+			->with(array(
+					$relation => array(
+						'joinType' => 'JOIN',
+					),
+				))
+			->findAll($criteria);
 	}
 
+	/**
+	 * Return the list of possible operative devices for the given element
+	 *
+	 * @param Element_OphTrOperationnote_Cataract $element
+	 * @return array
+	 */
+	public function getOperativeDeviceList($element)
+	{
+		$devices = $this->getOperativeDevicesBySiteAndSubspecialty();
+		$list = CHtml::listData($devices,'id','name');
+		$curr_list = CHtml::listData($element->operative_devices, 'id', 'name');
+		if ($missing = array_diff($curr_list, $list)) {
+			foreach ($missing as $id => $name) {
+				$list[$id] =  $name;
+			}
+		}
+		return $list;
+	}
 
+	/**
+	 * Get the ids of the default anaesthetic agents for the current site and subspecialty
+	 * @return array
+	 */
+	public function getOperativeDeviceDefaults()
+	{
+		$ids = array();
+		foreach ($this->getOperativeDevicesBySiteAndSubspecialty(true) as $operative_device) {
+			$ids[] = $operative_device->id;
+		}
+		return $ids;
+	}
+
+	/**
+	 * Retrieve OperativeDevice instances relevant to the current site and subspecialty. The default flag indicates
+	 * whether we are retrieve the full list of defaults.
+	 *
+	 * @param bool $default
+	 * @return OperativeDevice[]
+	 */
+	protected function getOperativeDevicesBySiteAndSubspecialty($default = false)
+	{
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
+		$criteria->params[':subspecialtyId'] = $this->firm->getSubspecialtyID();
+		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
+
+		if ($default) {
+			$criteria->addCondition('siteSubspecialtyAssignments.default = :one');
+			$criteria->params[':one'] = 1;
+		}
+
+		$criteria->order = 'name asc';
+
+		return OperativeDevice::model()
+			->with(array(
+					'siteSubspecialtyAssignments' => array(
+						'joinType' => 'JOIN',
+					),
+				))
+			->findAll($criteria);
+	}
 }
