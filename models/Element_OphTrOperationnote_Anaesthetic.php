@@ -46,6 +46,7 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 {
 	public $service;
 	public $surgeonlist;
+	public $witness_enabled = false;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -170,7 +171,7 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 	 */
 	public function getWitness_hidden()
 	{
-		return ($this->anaesthetist_id != 3);
+		return (!$this->witness_enabled && ($this->anaesthetist_id != 3));
 	}
 
 	/**
@@ -268,11 +269,16 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 		return $this->surgeonlist;
 	}
 
+	/**
+	 * Validate the witness field if it's turned on
+	 *
+	 * @return bool
+	 */
 	public function beforeValidate()
 	{
-		if (Yii::app()->params['fife']) {
-			if (@$_POST['Element_OphTrOperationnote_Anaesthetic']['anaesthetist_id'] == 3) {
-				if (!@$_POST['Element_OphTrOperationnote_Anaesthetic']['anaesthetic_witness_id']) {
+		if ($this->witness_enabled) {
+			if ($this->anaesthetist_id == 3) {
+				if (!$this->anaesthetic_witness_id) {
 					$this->addError('anaesthetic_witness_id','Please select a witness');
 				}
 			}

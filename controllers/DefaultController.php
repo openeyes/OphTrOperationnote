@@ -117,8 +117,17 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
+	/**
+	 * Determine if the witness field is required, and set various defaults from the patient and related booking
+	 *
+	 * @param Element_OphTrOperationnote_Anaesthetic $element
+	 * @param string $action
+	 */
 	protected function setElementDefaultOptions_Element_OphTrOperationnote_Anaesthetic($element, $action)
 	{
+		if (Yii::app()->params['fife']) {
+			$element->witness_required = true;
+		}
 		if ($action == 'create') {
 			if ($this->booking_operation) {
 				$element->anaesthetic_type_id = $this->booking_operation->anaesthetic_type_id;
@@ -134,6 +143,7 @@ class DefaultController extends BaseEventTypeController
 			}
 		}
 	}
+	
 	/**
 	 * Edit actions common initialisation
 	 */
