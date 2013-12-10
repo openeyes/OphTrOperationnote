@@ -18,15 +18,15 @@
  */
 ?>
 
-<section class="sub-element element-data">
-	<h3 class="data-title"><?php echo $element->getElementTypeName() ?></h3>
+<section class="sub-element">
+	<header class="sub-element-header">
+		<h3 class="sub-element-title"><?php echo $element->getElementTypeName() ?></h3>
+	</header>
 
-	<div class="element-data">
+	<div class="sub-element-data">
 		<div class="row data-row">
 			<div class="large-12 column">
-				<h4 class="data-title"><?php echo $element->getElementTypeName() ?></h4>
-				<div class="data-value<?php if (!$element->procedure) {?> none<?php }?>">
-					<?php echo Yii::app()->format->Ntext($element->comments)?>
+				<?php echo Yii::app()->format->Ntext($element->comments)?>
 			</div>
 		</div>
 	</div>

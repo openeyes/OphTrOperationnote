@@ -18,11 +18,13 @@
  */
 ?>
 
-<section class="sub-element element-data">
-	<h3 class="data-title"><?php echo $element->elementType->name ?></h3>
+<section class="sub-element">
+	<header class="sub-element-header">
+		<h3 class="sub-element-title"><?php echo $element->elementType->name ?></h3>
+	</header>
 
-	<div class="element-data">
-		<div class="row">
+	<div class="sub-element-data">
+		<div class="row highlight-container">
 			<div class="large-6 column data-value highlight">
 				<div class="row data-row">
 					<div class="large-4 column">

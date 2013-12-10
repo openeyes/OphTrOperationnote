@@ -207,6 +207,7 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 		return $this->getAnaestheticAgentsBySiteAndSubspecialty();
 	}
 
+	// TODO: the anaesthetic agent list should be managed by the controller if it is dependent on controller state
 	public function getAnaestheticAgentsBySiteAndSubspecialty($relation = 'siteSubspecialtyAssignments')
 	{
 		$criteria = new CDbCriteria;
