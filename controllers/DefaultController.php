@@ -196,6 +196,7 @@ class DefaultController extends BaseEventTypeController
 			$element->operative_devices = $this->getOperativeDevicesBySiteAndSubspecialty(true);
 		}
 	}
+
 	/**
 	 * Edit actions common initialisation
 	 */
@@ -212,7 +213,6 @@ class DefaultController extends BaseEventTypeController
 	 * @throws Exception
 	 */
 	protected function initActionCreate()
-
 	{
 		parent::initActionCreate();
 
@@ -845,5 +845,4 @@ class DefaultController extends BaseEventTypeController
 				))
 			->findAll($criteria);
 	}
-
 }
