@@ -70,7 +70,9 @@ class Element_OphTrOperationnote_PostOpDrugs extends BaseEventTypeElement
 		// class name for the relations automatically generated below.
 		return array(
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'drugs' => array(self::HAS_MANY, 'OphTrOperationnote_OperationDrug', 'ophtroperationnote_postop_drugs_id'),
+			'drug_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_OperationDrug', 'ophtroperationnote_postop_drugs_id'),
+			'drugs' => array(self::HAS_MANY, 'OphTrOperationnote_PostopDrug', 'drug_id',
+				'through' => 'drug_assignments'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 		);
@@ -106,13 +108,6 @@ class Element_OphTrOperationnote_PostOpDrugs extends BaseEventTypeElement
 	}
 
 	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
-	}
-
-	/**
 	 * Need to delete associated records
 	 * @see CActiveRecord::beforeDelete()
 	 */
@@ -122,84 +117,33 @@ class Element_OphTrOperationnote_PostOpDrugs extends BaseEventTypeElement
 		return parent::beforeDelete();
 	}
 
-	protected function beforeSave()
+	public function updateDrugs($drug_ids)
 	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-		$existing_drug_ids = array();
-
+		$curr_by_id = array();
 		foreach (OphTrOperationnote_OperationDrug::model()->findAll('ophtroperationnote_postop_drugs_id = :drugsId', array(':drugsId' => $this->id)) as $od) {
-			$existing_drug_ids[] = $od->drug_id;
+			$curr_by_id[$od->drug_id] = $od;
 		}
 
-		if (isset($_POST['Drug'])) {
-			foreach ($_POST['Drug'] as $id) {
-				if (!in_array($id,$existing_drug_ids)) {
-					$drug = new OphTrOperationnote_OperationDrug;
-					$drug->ophtroperationnote_postop_drugs_id = $this->id;
-					$drug->drug_id = $id;
-
-					if (!$drug->save()) {
-						throw new Exception('Unable to save drug: '.print_r($drug->getErrors(),true));
-					}
+		foreach ($drug_ids as $d_id) {
+			if (!isset($curr_by_id[$d_id])) {
+				$da = new OphTrOperationnote_OperationDrug();
+				$da->ophtroperationnote_postop_drugs_id = $this->id;
+				$da->drug_id = $d_id;
+				if (!$da->save()) {
+					throw new Exception('Unable to save drug assignment: '.print_r($da->getErrors(),true));
 				}
+			}
+			else {
+				unset($curr_by_id[$d_id]);
 			}
 		}
 
-		foreach ($existing_drug_ids as $id) {
-			if (!isset($_POST['Drug']) || !in_array($id,$_POST['Drug'])) {
-				$od = OphTrOperationnote_OperationDrug::model()->find('ophtroperationnote_postop_drugs_id = :drugsId and drug_id = :drugId',array(':drugsId' => $this->id, ':drugId' => $id));
-				if (!$od->delete()) {
-					throw new Exception('Unable to delete drug: '.print_r($od->getErrors(),true));
-				}
+		foreach ($curr_by_id as $curr) {
+			if (!$curr->delete) {
+				throw new Exception('Unable to delete drug assignment: '.print_r($curr->getErrors(),true));
 			}
 		}
 
-		return parent::afterSave();
 	}
 
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
-	}
-
-	public function getDrug_list()
-	{
-		return $this->getDrugsBySiteAndSubspecialty();
-	}
-
-	public function getDrugsBySiteAndSubspecialty($default=false)
-	{
-		$criteria = new CDbCriteria;
-		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
-		$criteria->params[':subspecialtyId'] = Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty_id;
-		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
-
-		if ($default) {
-			$criteria->addCondition('siteSubspecialtyAssignments.default = :one');
-			$criteria->params[':one'] = 1;
-		}
-
-		$criteria->order = 'name asc';
-
-		return CHtml::listData(OphTrOperationnote_PostopDrug::model()
-			->with(array(
-				'siteSubspecialtyAssignments' => array(
-					'joinType' => 'JOIN',
-				),
-			))
-			->findAll($criteria),'id','name');
-	}
-
-	public function getDrug_defaults()
-	{
-		$ids = array();
-		foreach ($this->getDrugsBySiteAndSubspecialty(true) as $id => $drug) {
-			$ids[] = $id;
-		}
-		return $ids;
-	}
 }

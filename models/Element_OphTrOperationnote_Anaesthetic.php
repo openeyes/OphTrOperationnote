@@ -230,12 +230,12 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 		$curr_by_id = array();
 
 		foreach ($this->anaesthetic_complication_assignments as $ca) {
-			$curr_by_id[$ca->complication_id] = $ca;
+			$curr_by_id[$ca->anaesthetic_complication_id] = $ca;
 		}
 
 		foreach ($complication_ids as $c_id) {
 			if (!isset($curr_by_id[$c_id])) {
-				$ca = new OphTrOperationnote_CataractComplication();
+				$ca = new OphTrOperationnote_AnaestheticComplication();
 				$ca->et_ophtroperationnote_anaesthetic_id = $this->id;
 				$ca->anaesthetic_complication_id = $c_id;
 

@@ -141,9 +141,35 @@ class DefaultController extends BaseEventTypeController
 					}
 				}
 			}
+			$element->anaesthetic_agents = $this->getAnaestheticAgentsBySiteAndSubspecialty('siteSubspecialtyAssignmentDefaults');
 		}
 	}
 
+	/**
+	 * Set the default drugs from site and subspecialty
+	 *
+	 * @param Element_OphTrOperationnote_PostOpDrugs $element
+	 * @param string $action
+	 */
+	protected function setElementDefaultOptions_Element_OphTrOperationnote_PostOpDrugs($element, $action)
+	{
+		if ($action == 'create') {
+			$element->drugs = $this->getPostOpDrugsBySiteAndSubspecialty(true);
+		}
+	}
+
+	/**
+	 * Set the default operative devices from the site and subspecialty
+	 *
+	 * @param Element_OphTrOperationnote_Cataract $element
+	 * @param $action
+	 */
+	protected function setElementDefaultOptions_Element_OphTrOperationnote_Cataract($element, $action)
+	{
+		if ($action == 'create') {
+			$element->operative_devices = $this->getOperativeDevicesBySiteAndSubspecialty(true);
+		}
+	}
 	/**
 	 * Edit actions common initialisation
 	 */
@@ -609,6 +635,36 @@ class DefaultController extends BaseEventTypeController
 		$element->updateOperativeDevices(isset($data['OphTrOperationnote_CataractOperativeDevices']) ? $data['OphTrOperationnote_CataractOperativeDevices'] : array());
 	}
 
+	/**
+	 * Set the drugs for the element
+	 *
+	 * @param Element_OphTrOperationnote_PostOpDrugs $element
+	 * @param $data
+	 * @param $index
+	 */
+	protected function setComplexAttributes_Element_OphTrOperationnote_PostOpDrugs($element, $data, $index)
+	{
+		$drugs = array();
+		if (isset($data['Drug'])) {
+			foreach ($data['Drug'] as $d_id) {
+				$drugs[] = OphTrOperationnote_PostopDrug::model()->findByPk($d_id);
+			}
+		}
+		$element->drugs = $drugs;
+	}
+
+	/**
+	 * Update the drug assignments
+	 *
+	 * @param Element_OphTrOperationnote_PostOpDrugs $element
+	 * @param $data
+	 * @param $index
+	 */
+	protected function saveComplexAttributes_Element_OphTrOperationnote_PostOpDrugs($element, $data, $index)
+	{
+		$element->updateDrugs(isset($data['Drug']) ? $data['Drug'] : array());
+
+	}
 
 	/**
 	 * Return the anaesthetic agent list
@@ -627,19 +683,6 @@ class DefaultController extends BaseEventTypeController
 			}
 		}
 		return $list;
-	}
-
-	/**
-	 * Get the ids of the default anaesthetic agents for the current site and subspecialty
-	 * @return array
-	 */
-	public function getAnaesthetic_agent_defaults()
-	{
-		$ids = array();
-		foreach ($this->getAnaestheticAgentsBySiteAndSubspecialty('siteSubspecialtyAssignmentDefaults') as $anaesthetic_agent) {
-			$ids[] = $anaesthetic_agent->id;
-		}
-		return $ids;
 	}
 
 	/**
@@ -687,6 +730,7 @@ class DefaultController extends BaseEventTypeController
 
 	/**
 	 * Get the ids of the default anaesthetic agents for the current site and subspecialty
+	 *
 	 * @return array
 	 */
 	public function getOperativeDeviceDefaults()
@@ -727,4 +771,53 @@ class DefaultController extends BaseEventTypeController
 				))
 			->findAll($criteria);
 	}
+
+	/**
+	 * Get the drug options for the element for the controller state
+	 *
+	 * @param Element_OphTrOperationnote_PostOpDrugs $element
+	 * @return array
+	 */
+	public function getPostOpDrugList($element)
+	{
+		$drugs = $this->getPostOpDrugsBySiteAndSubspecialty();
+		$list = CHtml::listData($drugs,'id','name');
+		$curr_list = CHtml::listData($element->drugs, 'id', 'name');
+		if ($missing = array_diff($curr_list, $list)) {
+			foreach ($missing as $id => $name) {
+				$list[$id] =  $name;
+			}
+		}
+		return $list;
+	}
+
+	/**
+	 * Return the post op drugs for the current site and subspecialty
+	 *
+	 * @param bool $default
+	 * @return OphTrOperationnote_PostopDrug[]
+	 */
+	protected function getPostOpDrugsBySiteAndSubspecialty($default=false)
+	{
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
+		$criteria->params[':subspecialtyId'] = $this->firm->getSubspecialtyID();
+		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
+
+		if ($default) {
+			$criteria->addCondition('siteSubspecialtyAssignments.default = :one');
+			$criteria->params[':one'] = 1;
+		}
+
+		$criteria->order = 'name asc';
+
+		return OphTrOperationnote_PostopDrug::model()
+			->with(array(
+					'siteSubspecialtyAssignments' => array(
+						'joinType' => 'JOIN',
+					),
+				))
+			->findAll($criteria);
+	}
+
 }
