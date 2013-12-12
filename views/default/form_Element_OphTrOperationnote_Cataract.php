@@ -99,17 +99,17 @@
 			<div class="fluid column">
 				<div class="row">
 					<div class="large-12 column">
-						<?php echo $form->dropDownList($element, 'incision_site_id', CHtml::listData(OphTrOperationnote_IncisionSite::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -','textAttribute'=>'data-value'))?>
+						<?php echo $form->dropDownList($element, 'incision_site_id', CHtml::listData(OphTrOperationnote_IncisionSite::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -','textAttribute'=>'data-value'),false,array('field'=>4))?>
 						<?php echo $form->textField($element, 'length', array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
 						<?php echo $form->textField($element, 'meridian', array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
-						<?php echo $form->dropDownList($element, 'incision_type_id', CHtml::listData(OphTrOperationnote_IncisionType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -','textAttribute'=>'data-value'))?>
+						<?php echo $form->dropDownList($element, 'incision_type_id', CHtml::listData(OphTrOperationnote_IncisionType::model()->findAll(), 'id', 'name'),array('empty'=>'- Please select -','textAttribute'=>'data-value'),false,array('field'=>4))?>
 						<?php echo $form->textArea($element, 'report',array(),false,array('rows'=>6))?>
-						<?php echo $form->dropDownList($element, 'iol_type_id', array(CHtml::listData($element->OphTrOperationnote_IOLTypes_NHS,'id','name'),CHtml::listData($element->OphTrOperationnote_IOLTypes_Private,'id','name')),array('empty'=>'- Please select -','divided'=>true),$element->iol_hidden)?>
+						<?php echo $form->dropDownList($element, 'iol_type_id', array(CHtml::listData($element->OphTrOperationnote_IOLTypes_NHS,'id','name'),CHtml::listData($element->OphTrOperationnote_IOLTypes_Private,'id','name')),array('empty'=>'- Please select -','divided'=>true),$element->iol_hidden,array('field'=>4))?>
 						<?php echo $form->textField($element, 'predicted_refraction',array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
 						<?php echo $form->textField($element, 'iol_power', array('hide' => $element->iol_hidden),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
-						<?php echo $form->dropDownList($element, 'iol_position_id', CHtml::listData(OphTrOperationnote_IOLPosition::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'),$element->iol_hidden)?>
-						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractOperativeDevices', 'operative_devices', 'operative_device_id', $element->operative_device_list, $element->operative_device_defaults, array('empty' => '- Devices -', 'label' => 'Devices'))?>
-						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractComplications', 'complications', 'complication_id', CHtml::listData(OphTrOperationnote_CataractComplications::model()->findAll(array('order'=>'display_order asc')), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'))?>
+						<?php echo $form->dropDownList($element, 'iol_position_id', CHtml::listData(OphTrOperationnote_IOLPosition::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'),$element->iol_hidden,array('field'=>4))?>
+						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractOperativeDevices', 'operative_devices', 'operative_device_id', $element->operative_device_list, $element->operative_device_defaults, array('empty' => '- Devices -', 'label' => 'Devices'),false,false,null,false,false,array('field'=>4))?>
+						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractComplications', 'complications', 'complication_id', CHtml::listData(OphTrOperationnote_CataractComplications::model()->findAll(array('order'=>'display_order asc')), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'),false,false,null,false,false,array('field'=>4))?>
 						<?php echo $form->textArea($element, 'complication_notes',array(),false,array('rows'=>6))?>
 					</div>
 				</div>
