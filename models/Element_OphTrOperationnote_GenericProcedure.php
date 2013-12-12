@@ -124,4 +124,19 @@ class Element_OphTrOperationnote_GenericProcedure extends BaseEventTypeElement
 	public function setDefaultOptions()
 	{
 	}
+
+	/**
+	 * Name is defined by the procedure assigned to this element
+	 *
+	 * @return string
+	 */
+	public function getElementTypeName()
+	{
+		if ($this->procedure) {
+			return $this->procedure->term;
+		}
+		else {
+			return 'No Procedure';
+		}
+	}
 }

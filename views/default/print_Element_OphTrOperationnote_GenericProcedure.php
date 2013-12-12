@@ -17,7 +17,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-<h3><?php echo $element->elementType->name ?></h3>
+<h3><?php echo $element->getElementTypeName() ?></h3>
 <div class="procedureContainer clearfix<?php echo ($last) ? ' last' : ''; ?>">
 	<div class="detailRow clearVal">
 		<div class="label">
