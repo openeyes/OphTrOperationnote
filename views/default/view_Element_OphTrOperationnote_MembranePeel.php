@@ -18,28 +18,43 @@
  */
 ?>
 
-<h4><?php echo $element->elementType->name ?></h4>
 
-<?php if ($element->membrane_blue) {?>
-	<div class="eventHighlight">
-		<h4><?php echo CHtml::encode($element->getAttributeLabel('membrane_blue'))?></h4>
-	</div>
-<?php }?>
+<section class="element">
 
-<?php if ($element->brilliant_blue) {?>
-	<div class="eventHighlight">
-		<h4><?php echo CHtml::encode($element->getAttributeLabel('brilliant_blue'))?></h4>
-	</div>
-<?php }?>
+	<h3 class="element-title highlight"><?php echo $element->elementType->name ?></h3>
 
-<?php if ($element->other_dye) {?>
-	<div class="eventHighlight">
-		<h4><?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>: <?php echo CHtml::encode($element->other_dye)?></h4>
-	</div>
-<?php }?>
+	<div class="element-data">
 
-<?php if ($element->comments) {?>
-	<div class="eventHighlight">
-		<h4><?php echo CHtml::encode($element->getAttributeLabel('comments'))?>: <?php echo CHtml::encode($element->comments)?></h4>
+		<?php if ($element->membrane_blue) {?>
+			<div class="data-row">
+				<div class="data-value">
+					<?php echo CHtml::encode($element->getAttributeLabel('membrane_blue'))?>
+				</div>
+			</div>
+		<?php }?>
+
+		<?php if ($element->brilliant_blue) {?>
+			<div class="data-row">
+				<div class="data-value">
+					<?php echo CHtml::encode($element->getAttributeLabel('brilliant_blue'))?>
+				</div>
+			</div>
+		<?php }?>
+
+		<?php if ($element->other_dye) {?>
+			<div class="data-row">
+				<div class="data-value">
+					<?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>: <?php echo CHtml::encode($element->other_dye)?>
+				</div>
+			</div>
+		<?php }?>
+
+		<?php if ($element->comments) {?>
+			<div class="data-row">
+				<div class="data-value">
+					<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>: <?php echo CHtml::encode($element->comments)?>
+				</div>
+			</div>
+		<?php }?>
 	</div>
-<?php }?>
+</section>
