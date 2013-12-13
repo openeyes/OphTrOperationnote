@@ -36,30 +36,30 @@
 	$form->layoutColumns=array('label'=>3,'field'=>9);
 	?>
 	<div class="element-fields">
-		<div class="row vitrectomy">
+		<div class="row eyedraw-row vitrectomy">
 			<div class="fixed column">
 				<?php
 				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'doodleToolBarArray' => array(
-							0 => array('RRD','UTear','RoundHole','Dialysis','GRT','MacularHole','StarFold','AntPVR','Cryo','LaserCircle'),
-						),
-						'onReadyCommandArray' => array(
-							array('addDoodle', array('Fundus')),
-							array('deselectDoodles', array()),
-						),
-						'side'=>$this->selectedEyeForEyedraw->shortName,
-						'mode'=>'edit',
-						'width'=>300,
-						'height'=>300,
-						'model'=>$element,
-						'attribute'=>'eyedraw',
-						'offsetX' => 10,
-						'offsetY' => 10,
-					));
+					'doodleToolBarArray' => array(
+						0 => array('RRD','UTear','RoundHole','Dialysis','GRT','MacularHole','StarFold','AntPVR','Cryo','LaserCircle'),
+					),
+					'onReadyCommandArray' => array(
+						array('addDoodle', array('Fundus')),
+						array('deselectDoodles', array()),
+					),
+					'side'=>$this->selectedEyeForEyedraw->shortName,
+					'mode'=>'edit',
+					'width'=>300,
+					'height'=>300,
+					'model'=>$element,
+					'attribute'=>'eyedraw',
+					'offsetX' => 10,
+					'offsetY' => 10,
+				));
 				?>
 			</div>
 			<div class="fluid column">
-				<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(OphTrOperationnote_VitrectomyGauge::model()->findAll(),'id','value'),array('empty'=>'- Please select -'))?>
+				<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(OphTrOperationnote_VitrectomyGauge::model()->findAll(),'id','value'),array('empty'=>'- Please select -'),false,array('field'=>3))?>
 				<?php echo $form->radioBoolean($element, 'pvd_induced',array())?>
 				<?php echo $form->textArea($element, 'comments', array('rows' => 4))?>
 			</div>
