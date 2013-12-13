@@ -907,7 +907,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'proc_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'element_index' => 'tinyint(1) unsigned NOT NULL DEFAULT 0',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
