@@ -113,19 +113,19 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 
 	public function setData(){
 		$this->element_types = array(
-			'Element_OphTrOperationnote_ProcedureList' => array('name' => 'Procedure list', 'default' => 1),
-			'Element_OphTrOperationnote_Vitrectomy' => array('name' => 'Vitrectomy', 'default' => 0),
-			'Element_OphTrOperationnote_MembranePeel' => array('name' => 'Membrane peel', 'default' => 0),
-			'Element_OphTrOperationnote_Tamponade' => array('name' => 'Tamponade', 'default' => 0),
-			'Element_OphTrOperationnote_Buckle' => array('name' => 'Buckle', 'default' => 0),
-			'Element_OphTrOperationnote_Cataract' => array('name' => 'Cataract', 'default' => 0),
-			'Element_OphTrOperationnote_Anaesthetic' => array('name' => 'Anaesthetic', 'default' => 1),
-			'Element_OphTrOperationnote_Surgeon' => array('name' => 'Surgeon', 'default' => 1),
-			'Element_OphTrOperationnote_PostOpDrugs' => array('name' => 'Per-operative drugs', 'default' => 1),
-			'Element_OphTrOperationnote_Comments' => array('name' => 'Comments', 'default' => 1),
-			'Element_OphTrOperationnote_Personnel' => array('name' => 'Personnel', 'default' => 1),
-			'Element_OphTrOperationnote_Preparation' => array('name' => 'Preparation', 'default' => 1),
-			'Element_OphTrOperationnote_GenericProcedure' => array('name' => 'Generic procedure', 'default' => 0)
+			'Element_OphTrOperationnote_ProcedureList' => array('name' => 'Procedure list', 'display_order' => 10, 'default' => 1),
+			'Element_OphTrOperationnote_Preparation' => array('name' => 'Preparation', 'display_order' => 15, 'default' => 1),
+			'Element_OphTrOperationnote_GenericProcedure' => array('name' => 'Generic procedure', 'display_order' => 20, 'default' => 0),
+			'Element_OphTrOperationnote_Cataract' => array('name' => 'Cataract', 'display_order' => 20, 'default' => 0),
+			'Element_OphTrOperationnote_Buckle' => array('name' => 'Buckle', 'display_order' => 20, 'default' => 0),
+			'Element_OphTrOperationnote_Tamponade' => array('name' => 'Tamponade', 'display_order' => 20, 'default' => 0),
+			'Element_OphTrOperationnote_MembranePeel' => array('name' => 'Membrane peel', 'display_order' => 20, 'default' => 0),
+			'Element_OphTrOperationnote_Vitrectomy' => array('name' => 'Vitrectomy', 'display_order' => 20, 'default' => 0),
+			'Element_OphTrOperationnote_Anaesthetic' => array('name' => 'Anaesthetic', 'display_order' => 30, 'default' => 1),
+			'Element_OphTrOperationnote_Surgeon' => array('name' => 'Surgeon', 'display_order' => 40, 'default' => 1),
+			'Element_OphTrOperationnote_Personnel' => array('name' => 'Personnel', 'display_order' => 45, 'default' => 1),
+			'Element_OphTrOperationnote_PostOpDrugs' => array('name' => 'Per-operative drugs', 'display_order' => 50, 'default' => 1),
+			'Element_OphTrOperationnote_Comments' => array('name' => 'Comments', 'display_order' => 60, 'default' => 1),
 		);
 	}
 
