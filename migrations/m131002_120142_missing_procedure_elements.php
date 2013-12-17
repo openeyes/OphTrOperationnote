@@ -21,7 +21,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_al_trabeculoplasty', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -50,7 +50,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_fl_photocoagulation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -78,7 +78,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_laser_demarcation', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -106,7 +106,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_laser_gonio', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -134,7 +134,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_laser_hyal', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',				 
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -162,7 +162,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_laser_irid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',				 'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
@@ -189,7 +189,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_laser_chor', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',				 'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',				 'PRIMARY KEY (`id`)',
@@ -215,7 +215,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_laser_vitr', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',				 'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',				 'PRIMARY KEY (`id`)',
@@ -241,7 +241,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_macular_grid', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',				 'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',				 'PRIMARY KEY (`id`)',
@@ -267,7 +267,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 		$this->createTable('et_ophtroperationnote_suture_lys', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'comments' => 'varchar(4096) COLLATE utf8_bin NOT NULL',
+				'comments' => 'varchar(4096) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',				 'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',				 'PRIMARY KEY (`id`)',

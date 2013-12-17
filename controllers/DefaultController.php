@@ -326,10 +326,15 @@ class DefaultController extends BaseEventTypeController
 		$current_procedure_elements = array();
 
 		foreach ($elements as $element) {
-			$element_type = ElementType::model()->find('class_name = ?', array(get_class($element)));
-			$procedure_elements = OphTrOperationnote_ProcedureListOperationElement::model()->find('element_type_id = ?', array($element_type->id));
-			if ($procedure_elements) {
+			if (get_class($element) == 'Element_OphTrOperationnote_GenericProcedure') {
 				$current_procedure_elements[] = $element;
+			}
+			else {
+				$element_type = ElementType::model()->find('class_name = ?', array(get_class($element)));
+				$procedure_elements = OphTrOperationnote_ProcedureListOperationElement::model()->find('element_type_id = ?', array($element_type->id));
+				if ($procedure_elements) {
+					$current_procedure_elements[] = $element;
+				}
 			}
 		}
 
