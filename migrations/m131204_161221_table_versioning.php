@@ -5,37 +5,6 @@ class m131204_161221_table_versioning extends CDbMigration
 	public function up()
 	{
 		$this->execute("
-CREATE TABLE `et_ophtroperationnote_al_trabeculoplasty_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_altraby_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_altraby_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_altraby_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_altraby_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_altraby_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_altraby_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_al_trabeculoplasty_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_al_trabeculoplasty_version');
-
-		$this->createIndex('et_ophtroperationnote_al_trabeculoplasty_aid_fk','et_ophtroperationnote_al_trabeculoplasty_version','id');
-		$this->addForeignKey('et_ophtroperationnote_al_trabeculoplasty_aid_fk','et_ophtroperationnote_al_trabeculoplasty_version','id','et_ophtroperationnote_al_trabeculoplasty','id');
-
-		$this->addColumn('et_ophtroperationnote_al_trabeculoplasty_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_al_trabeculoplasty_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_al_trabeculoplasty_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_al_trabeculoplasty_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
 CREATE TABLE `et_ophtroperationnote_anaesthetic_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	`event_id` int(10) unsigned NOT NULL,
@@ -201,68 +170,6 @@ CREATE TABLE `et_ophtroperationnote_comments_version` (
 		$this->alterColumn('et_ophtroperationnote_comments_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
 
 		$this->execute("
-CREATE TABLE `et_ophtroperationnote_cycloablation_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_cyclob_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_cyclob_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_cyclob_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_cyclob_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_cyclob_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_cyclob_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_cycloablation_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_cycloablation_version');
-
-		$this->createIndex('et_ophtroperationnote_cycloablation_aid_fk','et_ophtroperationnote_cycloablation_version','id');
-		$this->addForeignKey('et_ophtroperationnote_cycloablation_aid_fk','et_ophtroperationnote_cycloablation_version','id','et_ophtroperationnote_cycloablation','id');
-
-		$this->addColumn('et_ophtroperationnote_cycloablation_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_cycloablation_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_cycloablation_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_cycloablation_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_fl_photocoagulation_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_flphoto_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_flphoto_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_flphoto_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_flphoto_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_flphoto_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_flphoto_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_fl_photocoagulation_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_fl_photocoagulation_version');
-
-		$this->createIndex('et_ophtroperationnote_fl_photocoagulation_aid_fk','et_ophtroperationnote_fl_photocoagulation_version','id');
-		$this->addForeignKey('et_ophtroperationnote_fl_photocoagulation_aid_fk','et_ophtroperationnote_fl_photocoagulation_version','id','et_ophtroperationnote_fl_photocoagulation','id');
-
-		$this->addColumn('et_ophtroperationnote_fl_photocoagulation_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_fl_photocoagulation_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_fl_photocoagulation_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_fl_photocoagulation_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
 CREATE TABLE `et_ophtroperationnote_genericprocedure_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	`event_id` int(10) unsigned NOT NULL,
@@ -296,223 +203,6 @@ CREATE TABLE `et_ophtroperationnote_genericprocedure_version` (
 		$this->addColumn('et_ophtroperationnote_genericprocedure_version','version_id','int(10) unsigned NOT NULL');
 		$this->addPrimaryKey('version_id','et_ophtroperationnote_genericprocedure_version','version_id');
 		$this->alterColumn('et_ophtroperationnote_genericprocedure_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_laser_chor_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_laserchor_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_laserchor_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_laserchor_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserchor_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserchor_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserchor_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_laser_chor_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_laser_chor_version');
-
-		$this->createIndex('et_ophtroperationnote_laser_chor_aid_fk','et_ophtroperationnote_laser_chor_version','id');
-		$this->addForeignKey('et_ophtroperationnote_laser_chor_aid_fk','et_ophtroperationnote_laser_chor_version','id','et_ophtroperationnote_laser_chor','id');
-
-		$this->addColumn('et_ophtroperationnote_laser_chor_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_laser_chor_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_laser_chor_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_laser_chor_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_laser_demarcation_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_laserdemar_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_laserdemar_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_laserdemar_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserdemar_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserdemar_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserdemar_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_laser_demarcation_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_laser_demarcation_version');
-
-		$this->createIndex('et_ophtroperationnote_laser_demarcation_aid_fk','et_ophtroperationnote_laser_demarcation_version','id');
-		$this->addForeignKey('et_ophtroperationnote_laser_demarcation_aid_fk','et_ophtroperationnote_laser_demarcation_version','id','et_ophtroperationnote_laser_demarcation','id');
-
-		$this->addColumn('et_ophtroperationnote_laser_demarcation_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_laser_demarcation_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_laser_demarcation_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_laser_demarcation_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_laser_gonio_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_lasergoni_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_lasergoni_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_lasergoni_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_lasergoni_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_lasergoni_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_lasergoni_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_laser_gonio_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_laser_gonio_version');
-
-		$this->createIndex('et_ophtroperationnote_laser_gonio_aid_fk','et_ophtroperationnote_laser_gonio_version','id');
-		$this->addForeignKey('et_ophtroperationnote_laser_gonio_aid_fk','et_ophtroperationnote_laser_gonio_version','id','et_ophtroperationnote_laser_gonio','id');
-
-		$this->addColumn('et_ophtroperationnote_laser_gonio_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_laser_gonio_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_laser_gonio_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_laser_gonio_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_laser_hyal_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_laserhyal_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_laserhyal_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_laserhyal_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserhyal_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserhyal_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laserhyal_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_laser_hyal_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_laser_hyal_version');
-
-		$this->createIndex('et_ophtroperationnote_laser_hyal_aid_fk','et_ophtroperationnote_laser_hyal_version','id');
-		$this->addForeignKey('et_ophtroperationnote_laser_hyal_aid_fk','et_ophtroperationnote_laser_hyal_version','id','et_ophtroperationnote_laser_hyal','id');
-
-		$this->addColumn('et_ophtroperationnote_laser_hyal_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_laser_hyal_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_laser_hyal_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_laser_hyal_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_laser_irid_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_laseririd_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_laseririd_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_laseririd_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laseririd_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laseririd_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laseririd_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_laser_irid_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_laser_irid_version');
-
-		$this->createIndex('et_ophtroperationnote_laser_irid_aid_fk','et_ophtroperationnote_laser_irid_version','id');
-		$this->addForeignKey('et_ophtroperationnote_laser_irid_aid_fk','et_ophtroperationnote_laser_irid_version','id','et_ophtroperationnote_laser_irid','id');
-
-		$this->addColumn('et_ophtroperationnote_laser_irid_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_laser_irid_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_laser_irid_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_laser_irid_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_laser_vitr_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_laservitr_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_laservitr_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_laservitr_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laservitr_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laservitr_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_laservitr_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_laser_vitr_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_laser_vitr_version');
-
-		$this->createIndex('et_ophtroperationnote_laser_vitr_aid_fk','et_ophtroperationnote_laser_vitr_version','id');
-		$this->addForeignKey('et_ophtroperationnote_laser_vitr_aid_fk','et_ophtroperationnote_laser_vitr_version','id','et_ophtroperationnote_laser_vitr','id');
-
-		$this->addColumn('et_ophtroperationnote_laser_vitr_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_laser_vitr_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_laser_vitr_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_laser_vitr_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_macular_grid_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_macugrid_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_macugrid_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_macugrid_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_macugrid_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_macugrid_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_macugrid_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_macular_grid_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_macular_grid_version');
-
-		$this->createIndex('et_ophtroperationnote_macular_grid_aid_fk','et_ophtroperationnote_macular_grid_version','id');
-		$this->addForeignKey('et_ophtroperationnote_macular_grid_aid_fk','et_ophtroperationnote_macular_grid_version','id','et_ophtroperationnote_macular_grid','id');
-
-		$this->addColumn('et_ophtroperationnote_macular_grid_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_macular_grid_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_macular_grid_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_macular_grid_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
 
 		$this->execute("
 CREATE TABLE `et_ophtroperationnote_membrane_peel_version` (
@@ -731,37 +421,6 @@ CREATE TABLE `et_ophtroperationnote_surgeon_version` (
 		$this->addColumn('et_ophtroperationnote_surgeon_version','version_id','int(10) unsigned NOT NULL');
 		$this->addPrimaryKey('version_id','et_ophtroperationnote_surgeon_version','version_id');
 		$this->alterColumn('et_ophtroperationnote_surgeon_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
-
-		$this->execute("
-CREATE TABLE `et_ophtroperationnote_suture_lys_version` (
-	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`created_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
-	PRIMARY KEY (`id`),
-	KEY `acv_et_ophtroperationnote_suturely_lmui_fk` (`last_modified_user_id`),
-	KEY `acv_et_ophtroperationnote_suturely_cui_fk` (`created_user_id`),
-	KEY `acv_et_ophtroperationnote_suturely_ev_fk` (`event_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_suturely_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_suturely_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_suturely_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
-		");
-
-		$this->alterColumn('et_ophtroperationnote_suture_lys_version','id','int(10) unsigned NOT NULL');
-		$this->dropPrimaryKey('id','et_ophtroperationnote_suture_lys_version');
-
-		$this->createIndex('et_ophtroperationnote_suture_lys_aid_fk','et_ophtroperationnote_suture_lys_version','id');
-		$this->addForeignKey('et_ophtroperationnote_suture_lys_aid_fk','et_ophtroperationnote_suture_lys_version','id','et_ophtroperationnote_suture_lys','id');
-
-		$this->addColumn('et_ophtroperationnote_suture_lys_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
-
-		$this->addColumn('et_ophtroperationnote_suture_lys_version','version_id','int(10) unsigned NOT NULL');
-		$this->addPrimaryKey('version_id','et_ophtroperationnote_suture_lys_version','version_id');
-		$this->alterColumn('et_ophtroperationnote_suture_lys_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
 
 		$this->execute("
 CREATE TABLE `et_ophtroperationnote_tamponade_version` (
@@ -1553,8 +1212,6 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 		$this->addPrimaryKey('version_id','ophtroperationnote_site_subspecialty_postop_instructions_version','version_id');
 		$this->alterColumn('ophtroperationnote_site_subspecialty_postop_instructions_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
 
-		$this->addColumn('et_ophtroperationnote_al_trabeculoplasty','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_al_trabeculoplasty_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_anaesthetic','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_anaesthetic_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_buckle','deleted','tinyint(1) unsigned not null');
@@ -1563,26 +1220,8 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 		$this->addColumn('et_ophtroperationnote_cataract_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_comments','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_comments_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_cycloablation','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_cycloablation_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_fl_photocoagulation','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_fl_photocoagulation_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_genericprocedure','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_genericprocedure_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_chor','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_chor_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_demarcation','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_demarcation_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_gonio','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_gonio_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_hyal','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_hyal_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_irid','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_irid_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_vitr','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_laser_vitr_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_macular_grid','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_macular_grid_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_membrane_peel','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_membrane_peel_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_personnel','deleted','tinyint(1) unsigned not null');
@@ -1595,8 +1234,6 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 		$this->addColumn('et_ophtroperationnote_procedurelist_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_surgeon','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_surgeon_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_suture_lys','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_suture_lys_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_tamponade','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_tamponade_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('et_ophtroperationnote_vitrectomy','deleted','tinyint(1) unsigned not null');
@@ -1650,28 +1287,17 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 
 	public function down()
 	{
-		$this->dropColumn('et_ophtroperationnote_al_trabeculoplasty','deleted');
 		$this->dropColumn('et_ophtroperationnote_anaesthetic','deleted');
 		$this->dropColumn('et_ophtroperationnote_buckle','deleted');
 		$this->dropColumn('et_ophtroperationnote_cataract','deleted');
 		$this->dropColumn('et_ophtroperationnote_comments','deleted');
-		$this->dropColumn('et_ophtroperationnote_cycloablation','deleted');
-		$this->dropColumn('et_ophtroperationnote_fl_photocoagulation','deleted');
 		$this->dropColumn('et_ophtroperationnote_genericprocedure','deleted');
-		$this->dropColumn('et_ophtroperationnote_laser_chor','deleted');
-		$this->dropColumn('et_ophtroperationnote_laser_demarcation','deleted');
-		$this->dropColumn('et_ophtroperationnote_laser_gonio','deleted');
-		$this->dropColumn('et_ophtroperationnote_laser_hyal','deleted');
-		$this->dropColumn('et_ophtroperationnote_laser_irid','deleted');
-		$this->dropColumn('et_ophtroperationnote_laser_vitr','deleted');
-		$this->dropColumn('et_ophtroperationnote_macular_grid','deleted');
 		$this->dropColumn('et_ophtroperationnote_membrane_peel','deleted');
 		$this->dropColumn('et_ophtroperationnote_personnel','deleted');
 		$this->dropColumn('et_ophtroperationnote_postop_drugs','deleted');
 		$this->dropColumn('et_ophtroperationnote_preparation','deleted');
 		$this->dropColumn('et_ophtroperationnote_procedurelist','deleted');
 		$this->dropColumn('et_ophtroperationnote_surgeon','deleted');
-		$this->dropColumn('et_ophtroperationnote_suture_lys','deleted');
 		$this->dropColumn('et_ophtroperationnote_tamponade','deleted');
 		$this->dropColumn('et_ophtroperationnote_vitrectomy','deleted');
 
@@ -1698,28 +1324,17 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 		$this->dropColumn('ophtroperationnote_procedurelist_procedure_assignment','deleted');
 		$this->dropColumn('ophtroperationnote_site_subspecialty_postop_instructions','deleted');
 
-		$this->dropTable('et_ophtroperationnote_al_trabeculoplasty_version');
 		$this->dropTable('et_ophtroperationnote_anaesthetic_version');
 		$this->dropTable('et_ophtroperationnote_buckle_version');
 		$this->dropTable('et_ophtroperationnote_cataract_version');
 		$this->dropTable('et_ophtroperationnote_comments_version');
-		$this->dropTable('et_ophtroperationnote_cycloablation_version');
-		$this->dropTable('et_ophtroperationnote_fl_photocoagulation_version');
 		$this->dropTable('et_ophtroperationnote_genericprocedure_version');
-		$this->dropTable('et_ophtroperationnote_laser_chor_version');
-		$this->dropTable('et_ophtroperationnote_laser_demarcation_version');
-		$this->dropTable('et_ophtroperationnote_laser_gonio_version');
-		$this->dropTable('et_ophtroperationnote_laser_hyal_version');
-		$this->dropTable('et_ophtroperationnote_laser_irid_version');
-		$this->dropTable('et_ophtroperationnote_laser_vitr_version');
-		$this->dropTable('et_ophtroperationnote_macular_grid_version');
 		$this->dropTable('et_ophtroperationnote_membrane_peel_version');
 		$this->dropTable('et_ophtroperationnote_personnel_version');
 		$this->dropTable('et_ophtroperationnote_postop_drugs_version');
 		$this->dropTable('et_ophtroperationnote_preparation_version');
 		$this->dropTable('et_ophtroperationnote_procedurelist_version');
 		$this->dropTable('et_ophtroperationnote_surgeon_version');
-		$this->dropTable('et_ophtroperationnote_suture_lys_version');
 		$this->dropTable('et_ophtroperationnote_tamponade_version');
 		$this->dropTable('et_ophtroperationnote_vitrectomy_version');
 		$this->dropTable('ophtroperationnote_anaesthetic_anaesthetic_agent_version');
