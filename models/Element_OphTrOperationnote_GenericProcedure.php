@@ -60,7 +60,7 @@ class Element_OphTrOperationnote_GenericProcedure extends BaseEventTypeElement
 		// will receive user inputs.
 		return array(
 			array('event_id, proc_id, comments, element_index', 'safe'),
-			array('proc_id, comments, element_index', 'required'),
+			array('proc_id, element_index', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, element_index, proc_id, comments', 'safe', 'on' => 'search'),
