@@ -20,7 +20,7 @@ class m131128_125218_remove_old_junk extends CDbMigration
 			'et_ophtroperationnote_suture_lys' => 'ElementSutureLysis') as $table => $element) {
 
 			$element_type = Yii::app()->db->createCommand()->select('id')->from("element_type")->where("event_type_id=:event_type_id and class_name=:class_name",array(':event_type_id'=>$opnote['id'],':class_name'=>$element))->queryRow();
-			$pe = Yii::app()->db->createCommand()->select("*")->from("et_ophtroperationnote_procedure_element")->where("element_type_id=:element_type_id",array(':element_type_id'=>$element_type['id']))->queryRow();
+			$pe = Yii::app()->db->createCommand()->select("*")->from("ophtroperationnote_procedure_element")->where("element_type_id=:element_type_id",array(':element_type_id'=>$element_type['id']))->queryRow();
 
 			foreach (Yii::app()->db->createCommand()->select("*")->from($table)->order('id asc')->queryAll() as $row) {
 				$this->insert('et_ophtroperationnote_genericprocedure',array(
@@ -35,7 +35,7 @@ class m131128_125218_remove_old_junk extends CDbMigration
 			}
 
 			if ($pe['id']) {
-				$this->delete('et_ophtroperationnote_procedure_element',"id={$pe['id']}");
+				$this->delete('ophtroperationnote_procedure_element',"id={$pe['id']}");
 			}
 			$this->delete('element_type',"id={$element_type['id']}");
 			$this->dropTable($table);
