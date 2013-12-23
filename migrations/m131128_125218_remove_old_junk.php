@@ -44,5 +44,7 @@ class m131128_125218_remove_old_junk extends CDbMigration
 
 	public function down()
 	{
+		return false;
 	}
+
 }
