@@ -66,10 +66,34 @@
 				</div>
 				<div class="row data-row">
 					<div class="large-4 column">
+						<div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_type_id'))?>:</div>
+					</div>
+					<div class="large-8 column">
+						<div class="data-value"><?php echo $element->iol_type ? $element->iol_type->name : 'None'?></div>
+					</div>
+				</div>
+				<div class="row data-row">
+					<div class="large-4 column">
+						<div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?>:</div>
+					</div>
+					<div class="large-8 column">
+						<div class="data-value"><?php echo CHtml::encode($element->iol_power)?></div>
+					</div>
+				</div>
+				<div class="row data-row">
+					<div class="large-4 column">
 						<div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:</div>
 					</div>
 					<div class="large-8 column">
 						<div class="data-value"><?php echo CHtml::encode($element->predicted_refraction)?></div>
+					</div>
+				</div>
+				<div class="row data-row">
+					<div class="large-4 column">
+						<div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_position_id'))?>:</div>
+					</div>
+					<div class="large-8 column">
+						<div class="data-value"><?php echo CHtml::encode($element->iol_position->name)?></div>
 					</div>
 				</div>
 				<?php if ($element->getSetting('fife')) {?>
