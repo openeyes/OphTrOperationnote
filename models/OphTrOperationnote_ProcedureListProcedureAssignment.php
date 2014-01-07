@@ -22,7 +22,8 @@
  *
  * The followings are the available columns in table 'et_ophtroperationnote_procedurelist_procedure_assignment':
  * @property integer $id
- * @property integer $event_id
+ * @property integer $procedurelist_id
+ * @property integer $proc_id
  *
  * The followings are the available model relations:
  * @property Event $event

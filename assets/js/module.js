@@ -43,10 +43,10 @@ function callbackAddProcedure(procedure_id) {
 						m[1] = m[1].replace(/ .*$/,'');
 
 						if (m[1] == 'Element_OphTrOperationnote_GenericProcedure' || $('.'+m[1]).length <1) {
-							$('.Element_OphTrOperationnote_Anaesthetic').before(html);
-							$('.'+m[1]).attr('style','display: none;');
-							$('.'+m[1]).removeClass('hidden');
-							$('.'+m[1]).slideToggle('fast');
+							$('.Element_OphTrOperationnote_ProcedureList .sub-elements').append(html);
+							$('.'+m[1]+':last').attr('style','display: none;');
+                            $('.'+m[1]+':last').removeClass('hidden');
+							$('.'+m[1]+':last').slideToggle('fast');
 						}
 					}
 				}

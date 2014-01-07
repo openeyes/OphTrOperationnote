@@ -69,7 +69,7 @@ class OphTrOperationnote_AnaestheticComplication extends BaseEventTypeElement
 		// class name for the relations automatically generated below.
 		return array(
 			'cataract' => array(self::HAS_ONE, 'Element_OphTrOperationnote_Cataract', 'cataract_id'),
-			'complication' => array(self::HAS_ONE, 'OphTrOperationnote_CataractComplications', 'complication_id'),
+			'complication' => array(self::HAS_ONE, 'OphTrOperationnote_CataractComplications', 'anaesthetic_complication_id'),
 		);
 	}
 

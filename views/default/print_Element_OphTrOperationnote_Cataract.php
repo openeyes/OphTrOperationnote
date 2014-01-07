@@ -19,7 +19,7 @@
 ?>
 
 <h3><?php echo $element->elementType->name ?></h3>
-<div class="procedureContainer clearfix<?php echo ($last) ? ' last' : ''; ?>">
+<div class="procedureContainer clearfix">
 	<div class="rightHalf">
 		<div class="detailRow grouped">
 			<div class="clearfix">

@@ -37,7 +37,8 @@
  * @property AnaestheticType $anaesthetic_type
  * @property Anaesthetist $anaesthetist
  * @property AnaestheticDelivery $anaesthetic_delivery
- * @property OphTrOperationnote_OperationAnaestheticAgent[] $anaesthetic_agents
+ * @property OphTrOperationnote_OperationAnaestheticAgent[] $anaesthetic_agent_assignments
+ * @property AnaestheticAgent[] $anaesthetic_agents
  * @property OphTrOperationnote_AnaestheticComplication[] $anaesthetic_complications
  * @property User $witness
  */
@@ -45,6 +46,7 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 {
 	public $service;
 	public $surgeonlist;
+	public $witness_enabled = false;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -95,8 +97,12 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 			'anaesthetic_type' => array(self::BELONGS_TO, 'AnaestheticType', 'anaesthetic_type_id'),
 			'anaesthetist' => array(self::BELONGS_TO, 'Anaesthetist', 'anaesthetist_id'),
 			'anaesthetic_delivery' => array(self::BELONGS_TO, 'AnaestheticDelivery', 'anaesthetic_delivery_id'),
-			'anaesthetic_agents' => array(self::HAS_MANY, 'OphTrOperationnote_OperationAnaestheticAgent', 'et_ophtroperationnote_anaesthetic_id'),
-			'anaesthetic_complications' => array(self::HAS_MANY, 'OphTrOperationnote_AnaestheticComplication', 'et_ophtroperationnote_anaesthetic_id'),
+			'anaesthetic_agent_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_OperationAnaestheticAgent', 'et_ophtroperationnote_anaesthetic_id'),
+			'anaesthetic_agents' => array(self::HAS_MANY, 'AnaestheticAgent', 'anaesthetic_agent_id',
+				'through' => 'anaesthetic_agent_assignments'),
+			'anaesthetic_complication_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_AnaestheticComplication', 'et_ophtroperationnote_anaesthetic_id'),
+			'anaesthetic_complications' => array(self::HAS_MANY, 'OphTrOperationnote_AnaestheticComplications', 'anaesthetic_complication_id',
+				'through' => 'anaesthetic_complication_assignments'),
 			'witness' => array(self::BELONGS_TO, 'User', 'anaesthetic_witness_id'),
 		);
 	}
@@ -146,91 +152,26 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 	public function setDefaultOptions()
 	{
 		$this->anaesthetic_type_id = 1;
-
-		if (Yii::app()->getController()->getAction()->id == 'create') {
-			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
-			}
-
-			if (($episode = $patient->getEpisodeForCurrentSubspecialty()) &&
-				($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) &&
-				($booking = $api->getMostRecentBookingForEpisode($patient, $episode))) {
-				$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
-			} else {
-				$key = $patient->isChild() ? 'ophtroperationnote_default_anaesthetic_child' : 'ophtroperationnote_default_anaesthetic';
-
-				if (isset(Yii::app()->params[$key])) {
-					if ($at = AnaestheticType::model()->find('code=?',array(Yii::app()->params[$key]))) {
-						$this->anaesthetic_type_id = $at->id;
-					}
-				}
-			}
-		}
 	}
 
+	/**
+	 * Should not display other anaesthetic details if the anaesthetic type is general
+	 *
+	 * @return bool
+	 */
 	public function getHidden()
 	{
-		if (Yii::app()->getController()->getAction()->id == 'create') {
-			if (empty($_POST)) {
-				return ($this->anaesthetic_type_id == 5);
-			} else {
-				return (@$_POST['Element_OphTrOperationnote_Anaesthetic']['anaesthetic_type_id'] == 5);
-			}
-		} else {
-			if (empty($_POST)) {
-				if ($this->event_id) {
-					$anaesthetic_element = Element_OphTrOperationnote_Anaesthetic::model()->find('event_id=?',array($this->event_id));
-					return ($anaesthetic_element->anaesthetic_type_id == 5);
-				}
-			}
-
-			return (@$_POST['Element_OphTrOperationnote_Anaesthetic']['anaesthetic_type_id'] == 5);
-		}
+		return ($this->anaesthetic_type_id == 5);
 	}
 
+	/**
+	 * Don't need a witness for anaesthetic unless it is administered by a nurse
+	 *
+	 * @return bool
+	 */
 	public function getWitness_hidden()
 	{
-		if (Yii::app()->getController()->getAction()->id == 'create') {
-			return (@$_POST['Element_OphTrOperationnote_Anaesthetic']['anaesthetist_id'] != 3);
-		} else {
-			if (empty($_POST)) {
-				$anaesthetic_element = Element_OphTrOperationnote_Anaesthetic::model()->find('event_id=?',array($this->event_id));
-				return ($anaesthetic_element->anaesthetist_id != 3);
-			}
-
-			return (@$_POST['Element_OphTrOperationnote_Anaesthetic']['anaesthetist_id'] != 3);
-		}
-	}
-
-	public function getAnaesthetic_agent_list()
-	{
-		return $this->getAnaestheticAgentsBySiteAndSubspecialty();
-	}
-
-	public function getAnaestheticAgentsBySiteAndSubspecialty($relation = 'siteSubspecialtyAssignments')
-	{
-		$criteria = new CDbCriteria;
-		$criteria->addCondition('site_id = :siteId and subspecialty_id = :subspecialtyId');
-		$criteria->params[':siteId'] = Yii::app()->session['selected_site_id'];
-		$criteria->params[':subspecialtyId'] = Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty_id;
-		$criteria->order = 'name';
-
-		return CHtml::listData(AnaestheticAgent::model()
-			->with(array(
-				$relation => array(
-					'joinType' => 'JOIN',
-				),
-			))
-			->findAll($criteria),'id','name');
-	}
-
-	public function getAnaesthetic_agent_defaults()
-	{
-		$ids = array();
-		foreach ($this->getAnaestheticAgentsBySiteAndSubspecialty('siteSubspecialtyAssignmentDefaults') as $id => $anaesthetic_agent) {
-			$ids[] = $id;
-		}
-		return $ids;
+		return (!$this->witness_enabled && ($this->anaesthetist_id != 3));
 	}
 
 	/**
@@ -244,73 +185,77 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 		return parent::beforeDelete();
 	}
 
-	protected function afterSave()
+	/**
+	 * Update the Anaesthetic Agents associated with the element
+	 *
+	 * @param $agent_ids
+	 * @throws Exception
+	 */
+	public function updateAnaestheticAgents($agent_ids)
 	{
-		$existing_agent_ids = array();
-
-		foreach (OphTrOperationnote_OperationAnaestheticAgent::model()->findAll('et_ophtroperationnote_anaesthetic_id = :anaestheticId', array(':anaestheticId' => $this->id)) as $oaa) {
-			$existing_agent_ids[] = $oaa->anaesthetic_agent_id;
+		$curr_by_id = array();
+		foreach ($this->anaesthetic_agent_assignments as $aa) {
+			$curr_by_id[$aa->anaesthetic_agent_id] = $aa;
 		}
 
-		if (isset($_POST['AnaestheticAgent'])) {
-			foreach ($_POST['AnaestheticAgent'] as $id) {
-				if (!in_array($id,$existing_agent_ids)) {
-					$anaesthetic_agent = new OphTrOperationnote_OperationAnaestheticAgent;
-					$anaesthetic_agent->et_ophtroperationnote_anaesthetic_id = $this->id;
-					$anaesthetic_agent->anaesthetic_agent_id = $id;
+		foreach ($agent_ids as $aa_id) {
+			if (!isset($curr_by_id[$aa_id])) {
+				$aa = new OphTrOperationnote_OperationAnaestheticAgent();
+				$aa->et_ophtroperationnote_anaesthetic_id = $this->id;
+				$aa->anaesthetic_agent_id = $aa_id;
 
-					if (!$anaesthetic_agent->save()) {
-						throw new Exception('Unable to save anaesthetic_agent: '.print_r($anaesthetic_agent->getErrors(),true));
-					}
+				if (!$aa->save()) {
+					throw new Exception('Unable to save anaesthetic agent assignment: '.print_r($aa->getErrors(),true));
 				}
 			}
-		}
-
-		foreach ($existing_agent_ids as $id) {
-			if (!isset($_POST['AnaestheticAgent']) || !in_array($id,$_POST['AnaestheticAgent'])) {
-				$oaa = OphTrOperationnote_OperationAnaestheticAgent::model()->find('et_ophtroperationnote_anaesthetic_id = :anaestheticId and anaesthetic_agent_id = :anaestheticAgentId',array(':anaestheticId' => $this->id, ':anaestheticAgentId' => $id));
-				if (!$oaa->delete()) {
-					throw new Exception('Unable to delete anaesthetic agent: '.print_r($oaa->getErrors(),true));
-				}
+			else {
+				unset($curr_by_id[$aa_id]);
 			}
 		}
-
-		$existing_complication_ids = array();
-
-		foreach (OphTrOperationnote_AnaestheticComplication::model()->findAll('et_ophtroperationnote_anaesthetic_id = :anaestheticId', array(':anaestheticId' => $this->id)) as $ac) {
-			$existing_complication_ids[] = $ac->anaesthetic_complication_id;
-		}
-
-		if (isset($_POST['OphTrOperationnote_AnaestheticComplications'])) {
-			foreach ($_POST['OphTrOperationnote_AnaestheticComplications'] as $id) {
-				if (!in_array($id,$existing_complication_ids)) {
-					$anaesthetic_complication = new OphTrOperationnote_AnaestheticComplication;
-					$anaesthetic_complication->et_ophtroperationnote_anaesthetic_id = $this->id;
-					$anaesthetic_complication->anaesthetic_complication_id = $id;
-
-					if (!$anaesthetic_complication->save()) {
-						throw new Exception('Unable to save anaesthetic_complication: '.print_r($anaesthetic_complication->getErrors(),true));
-					}
-				}
+		foreach ($curr_by_id as $aa) {
+			if (!$aa->delete()) {
+				throw new Exception('Unable to delete anaesthetic agent assignment: '.print_r($aa->getErrors(), true));
 			}
 		}
-
-		foreach ($existing_complication_ids as $id) {
-			if (!isset($_POST['OphTrOperationnote_AnaestheticComplications']) || !in_array($id,$_POST['OphTrOperationnote_AnaestheticComplications'])) {
-				$ac = OphTrOperationnote_AnaestheticComplication::model()->find('et_ophtroperationnote_anaesthetic_id = :anaestheticId and anaesthetic_complication_id = :anaestheticComplicationId',array(':anaestheticId' => $this->id, ':anaestheticComplicationId' => $id));
-				if (!$ac->delete()) {
-					throw new Exception('Unable to delete anaesthetic complication: '.print_r($ac->getErrors(),true));
-				}
-			}
-		}
-
-		return parent::afterSave();
 	}
 
-	public function getAnaesthetic_complication_list()
+	/**
+	 * Update the complications assigned to this element
+	 *
+	 * @param integer[] $complication_ids
+	 * @throws Exception
+	 */
+	public function updateComplications($complication_ids)
 	{
+		$curr_by_id = array();
+
+		foreach ($this->anaesthetic_complication_assignments as $ca) {
+			$curr_by_id[$ca->anaesthetic_complication_id] = $ca;
+		}
+
+		foreach ($complication_ids as $c_id) {
+			if (!isset($curr_by_id[$c_id])) {
+				$ca = new OphTrOperationnote_AnaestheticComplication();
+				$ca->et_ophtroperationnote_anaesthetic_id = $this->id;
+				$ca->anaesthetic_complication_id = $c_id;
+
+				if (!$ca->save()) {
+					throw new Exception('Unable to save complication assignment: '.print_r($ca->getErrors(),true));
+				}
+			}
+			else {
+				unset($curr_by_id[$c_id]);
+			}
+		}
+
+		foreach ($curr_by_id as $ca) {
+			if (!$ca->delete()) {
+				throw new Exception('Unable to delete complication assignment: '.print_r($ca->getErrors(), true));
+			}
+		}
 	}
 
+	// TODO: This should use the standard surgeons method
 	public function getSurgeons()
 	{
 		if (!$this->surgeonlist) {
@@ -324,11 +269,16 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 		return $this->surgeonlist;
 	}
 
+	/**
+	 * Validate the witness field if it's turned on
+	 *
+	 * @return bool
+	 */
 	public function beforeValidate()
 	{
-		if (Yii::app()->params['fife']) {
-			if (@$_POST['Element_OphTrOperationnote_Anaesthetic']['anaesthetist_id'] == 3) {
-				if (!@$_POST['Element_OphTrOperationnote_Anaesthetic']['anaesthetic_witness_id']) {
+		if ($this->witness_enabled) {
+			if ($this->anaesthetist_id == 3) {
+				if (!$this->anaesthetic_witness_id) {
 					$this->addError('anaesthetic_witness_id','Please select a witness');
 				}
 			}
@@ -336,4 +286,5 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 
 		return parent::beforeValidate();
 	}
+
 }

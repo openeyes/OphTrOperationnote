@@ -18,11 +18,13 @@
  */
 ?>
 
-<section class="element element-data">
-	<h3 class="data-title"><?php echo $element->elementType->name ?></h3>
+<section class="sub-element">
+	<header class="sub-element-header">
+		<h3 class="sub-element-title"><?php echo $element->elementType->name ?></h3>
+	</header>
 
-	<div class="element-data">
-		<div class="row">
+	<div class="sub-element-data">
+		<div class="row highlight-container">
 			<div class="large-6 column data-value highlight">
 				<div class="row data-row">
 					<div class="large-4 column">
@@ -141,9 +143,7 @@
 			</div>
 		</div>
 	</div>
-</section>
 
-<section class="element element-data">
 	<div class="row data-row">
 		<div class="large-4 column">
 			<h3 class="data-title">Cataract report</h3>
@@ -165,7 +165,7 @@
 				<?php }?>
 			</div>
 		</div>
-		<div class="large-4 column">
+		<div class="large-3 column left">
 			<h3 class="data-title">Cataract complications</h3>
 			<div class="data-value highlight">
 				<?php if (!$element->complications && !$element->complication_notes) {?>

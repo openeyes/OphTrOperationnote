@@ -24,15 +24,13 @@ $this->moduleNameCssClass.=" highlight-fields";
 
 <?php
 	// Event actions
-	if ($this->canPrint()) {
+	if ($this->checkPrintAccess()) {
 		$this->event_actions[] = EventAction::button('Print', 'print',null,array('class'=>'small button'));
 	}
 ?>
 
 <input type="hidden" id="moduleCSSPath" value="<?php echo $this->assetPath?>/css" />
 
-<?php $this->renderDefaultElements($this->action->id); ?>
-<?php $this->renderOptionalElements($this->action->id); ?>
-
+<?php $this->renderOpenElements($this->action->id); ?>
 
 <?php $this->endContent() ;?>
