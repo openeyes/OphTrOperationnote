@@ -4,7 +4,7 @@ class m131128_125218_remove_old_junk extends CDbMigration
 {
 	public function up()
 	{
-		$opnote = Yii::app()->db->createCommand()->select("*")->from("event_type")->where("class_name = :class_name",array(":class_name" => "OphTrOperationnote"))->queryRow();
+		$opnote = $this->dbConnection->createCommand()->select("*")->from("event_type")->where("class_name = :class_name",array(":class_name" => "OphTrOperationnote"))->queryRow();
 
 		foreach (array(
 			'et_ophtroperationnote_al_trabeculoplasty' => 'ElementArgonLaserTrabeculoplasty',
@@ -19,10 +19,10 @@ class m131128_125218_remove_old_junk extends CDbMigration
 			'et_ophtroperationnote_macular_grid' => 'ElementMacularGrid',
 			'et_ophtroperationnote_suture_lys' => 'ElementSutureLysis') as $table => $element) {
 
-			$element_type = Yii::app()->db->createCommand()->select('id')->from("element_type")->where("event_type_id=:event_type_id and class_name=:class_name",array(':event_type_id'=>$opnote['id'],':class_name'=>$element))->queryRow();
-			$pe = Yii::app()->db->createCommand()->select("*")->from("ophtroperationnote_procedure_element")->where("element_type_id=:element_type_id",array(':element_type_id'=>$element_type['id']))->queryRow();
+			$element_type = $this->dbConnection->createCommand()->select('id')->from("element_type")->where("event_type_id=:event_type_id and class_name=:class_name",array(':event_type_id'=>$opnote['id'],':class_name'=>$element))->queryRow();
+			$pe = $this->dbConnection->createCommand()->select("*")->from("ophtroperationnote_procedure_element")->where("element_type_id=:element_type_id",array(':element_type_id'=>$element_type['id']))->queryRow();
 
-			foreach (Yii::app()->db->createCommand()->select("*")->from($table)->order('id asc')->queryAll() as $row) {
+			foreach ($this->dbConnection->createCommand()->select("*")->from($table)->order('id asc')->queryAll() as $row) {
 				$this->insert('et_ophtroperationnote_genericprocedure',array(
 						'event_id' => $row['event_id'],
 						'proc_id' => $pe['procedure_id'],
@@ -253,7 +253,7 @@ CREATE TABLE `et_ophtroperationnote_suture_lys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 		");
 
-		$event_type = Yii::app()->db->createCommand()->select("*")->from("event_type")->where("class_name = :class_name",array(":class_name" => "OphTrOperationnote"))->queryRow();
+		$event_type = $this->dbConnection->createCommand()->select("*")->from("event_type")->where("class_name = :class_name",array(":class_name" => "OphTrOperationnote"))->queryRow();
 
 		foreach (array(
 			'et_ophtroperationnote_al_trabeculoplasty' => array(
@@ -301,7 +301,7 @@ CREATE TABLE `et_ophtroperationnote_suture_lys` (
 				'proc' => 'Suture lysis',
 			)) as $table => $data) {
 
-			if ($proc = Yii::app()->db->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => $data['proc']))->queryRow()) {
+			if ($proc = $this->dbConnection->createCommand()->select("*")->from("proc")->where("term = :term",array(":term" => $data['proc']))->queryRow()) {
 				$this->insert('element_type',array(
 					'name' => $data['proc'],
 					'class_name' => $data['class'],
@@ -310,14 +310,14 @@ CREATE TABLE `et_ophtroperationnote_suture_lys` (
 					'default' => 0,
 				));
 
-				$element_type = Yii::app()->db->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(':event_type_id' => $event_type['id'],':class_name' => $data['class']))->queryRow();
+				$element_type = $this->dbConnection->createCommand()->select("*")->from("element_type")->where("event_type_id = :event_type_id and class_name = :class_name",array(':event_type_id' => $event_type['id'],':class_name' => $data['class']))->queryRow();
 
 				$this->insert('ophtroperationnote_procedure_element',array(
 					'procedure_id' => $proc['id'],
 					'element_type_id' => $element_type['id'],
 				));
 					
-				foreach (Yii::app()->db->createCommand()->select("*")->from("et_ophtroperationnote_genericprocedure")->where("proc_id = :proc_id",array(":proc_id" => $proc['id']))->order("id asc")->queryAll() as $row) {
+				foreach ($this->dbConnection->createCommand()->select("*")->from("et_ophtroperationnote_genericprocedure")->where("proc_id = :proc_id",array(":proc_id" => $proc['id']))->order("id asc")->queryAll() as $row) {
 					$id = $row['id'];
 
 					unset($row['id']);

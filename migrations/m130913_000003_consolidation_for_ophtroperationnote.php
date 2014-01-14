@@ -893,7 +893,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 	 */
 	protected function m130722_115732_remove_unnecessary_element_tables()
 	{
-		$opnote = Yii::app()->db->createCommand()->select("*")->from("event_type")->where("class_name=:class_name",array(':class_name'=>'OphTrOperationnote'))->queryRow();
+		$opnote = $this->dbConnection->createCommand()->select("*")->from("event_type")->where("class_name=:class_name",array(':class_name'=>'OphTrOperationnote'))->queryRow();
 
 		$this->insert('element_type',array(
 				'class_name' => 'Element_OphTrOperationnote_GenericProcedure',
@@ -1211,10 +1211,10 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 					 'et_ophtroperationnote_vit_biopsy' => 'ElementBiopsyOfVitreous',
 					 'et_ophtroperationnote_yag_caps' => 'ElementCapsulotomyYAG',
 				 ) as $table => $element) {
-			$element_type = Yii::app()->db->createCommand()->select('id')->from("element_type")->where("event_type_id=:event_type_id and class_name=:class_name",array(':event_type_id'=>$opnote['id'],':class_name'=>$element))->queryRow();
-			$pe = Yii::app()->db->createCommand()->select("*")->from("et_ophtroperationnote_procedure_element")->where("element_type_id=:element_type_id",array(':element_type_id'=>$element_type['id']))->queryRow();
+			$element_type = $this->dbConnection->createCommand()->select('id')->from("element_type")->where("event_type_id=:event_type_id and class_name=:class_name",array(':event_type_id'=>$opnote['id'],':class_name'=>$element))->queryRow();
+			$pe = $this->dbConnection->createCommand()->select("*")->from("et_ophtroperationnote_procedure_element")->where("element_type_id=:element_type_id",array(':element_type_id'=>$element_type['id']))->queryRow();
 
-			foreach (Yii::app()->db->createCommand()->select("*")->from($table)->order('id asc')->queryAll() as $row) {
+			foreach ($this->dbConnection->createCommand()->select("*")->from($table)->order('id asc')->queryAll() as $row) {
 				$this->insert('et_ophtroperationnote_genericprocedure',array(
 						'event_id' => $row['event_id'],
 						'proc_id' => $pe['procedure_id'],

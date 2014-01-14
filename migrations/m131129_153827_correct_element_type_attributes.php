@@ -4,10 +4,10 @@ class m131129_153827_correct_element_type_attributes extends CDbMigration
 {
 	public function up()
 	{
-		$opnote = Yii::app()->db->createCommand()->select("id")->from("event_type")
+		$opnote = $this->dbConnection->createCommand()->select("id")->from("event_type")
 			->where("class_name = :class_name",array(":class_name" => "OphTrOperationnote"))->queryRow();
 
-		$proclist = Yii::app()->db->createCommand()->select("id")->from("element_type")
+		$proclist = $this->dbConnection->createCommand()->select("id")->from("element_type")
 			->where("event_type_id = :event_type_id and class_name = :proc_list_cls",
 				array(":event_type_id"=>$opnote['id'],":proc_list_cls" => "Element_OphTrOperationnote_ProcedureList"))->queryRow();
 
