@@ -18,9 +18,11 @@
  */
 ?>
 
-<section class="element">
+<section class="sub-element">
 
-	<h3 class="element-title highlight"><?php echo $element->elementType->name ?></h3>
+	<header class="sub-element-header">
+		<h3 class="sub-element-title"><?php echo $element->elementType->name ?></h3>
+	</header>
 
 	<div class="element-data">
 		<div class="row">

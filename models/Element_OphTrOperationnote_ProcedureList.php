@@ -23,9 +23,13 @@
  * The followings are the available columns in table 'et_ophtroperationnote_procedurelist':
  * @property string $id
  * @property integer $event_id
+ * @property integer $eye_id
+ * @property integer $booking_event_id
  *
  * The followings are the available model relations:
  * @property Event $event
+ * @property Eye $eye
+ * @property Procedure[] $procedures
  */
 class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 {
@@ -57,7 +61,7 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 		// will receive user inputs.
 		return array(
 			array('event_id, eye_id, booking_event_id', 'safe'),
-			array('eye_id', 'required'),
+			array('eye_id, procedures', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, eye_id', 'safe', 'on' => 'search'),
@@ -77,7 +81,6 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'anaesthetic_type' => array(self::BELONGS_TO, 'AnaestheticType', 'anaesthetic_type_id'),
 			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 			'procedures' => array(self::MANY_MANY, 'Procedure', 'ophtroperationnote_procedurelist_procedure_assignment(procedurelist_id, proc_id)', 'order' => 'display_order ASC'),
 			'procedure_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_ProcedureListProcedureAssignment', 'procedurelist_id', 'order' => 'display_order ASC'),
@@ -117,56 +120,64 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 		));
 	}
 
-	protected function afterSave()
-	{
-		if (!empty($_POST['Procedures_procs'])) {
+	/**
+	 * Update the procedures for this element with the given ids
+	 *
+	 * @param $procedure_ids
+	 * @throws Exception
+	 */
+	public function updateProcedures($procedure_ids) {
+		$current_procedures = array();
+		foreach ($this->procedure_assignments as $pa) {
+			$current_procedures[$pa->proc_id] = $pa;
+		}
 
-			$existing_procedure_assignments = array();
-			foreach (OphTrOperationnote_ProcedureListProcedureAssignment::model()->findAll('procedurelist_id = :id', array(':id' => $this->id)) as $procedure_assignment) {
-				$existing_procedure_assignments[$procedure_assignment->proc_id] = $procedure_assignment;
-			}
-
-			$current_display_order = 1;
-			foreach ($_POST['Procedures_procs'] as $procedure_id) {
-				if (isset($existing_procedure_assignments[$procedure_id])) {
-					$procedure_assignment = $existing_procedure_assignments[$procedure_id];
-					if ($procedure_assignment->display_order != $current_display_order) {
-						// Updated display order of existing assignment
-						$procedure_assignment->display_order = $current_display_order;
-						if (!$procedure_assignment->save()) {
-							throw new Exception('Unable to save procedure assignment');
-						}
-					}
-				} else {
-					// Create new assignment
-					$procedure_assignment = new OphTrOperationnote_ProcedureListProcedureAssignment;
-					$procedure_assignment->procedurelist_id = $this->id;
-					$procedure_assignment->proc_id = $procedure_id;
-					$procedure_assignment->display_order = $current_display_order;
+		foreach ($procedure_ids as $i => $proc_id) {
+			$display_order = $i+1;
+			if (isset($current_procedures[$proc_id])) {
+				$procedure_assignment = $current_procedures[$proc_id];
+				if ($procedure_assignment->display_order != $display_order) {
+					$procedure_assignment->display_order = $display_order;
 					if (!$procedure_assignment->save()) {
 						throw new Exception('Unable to save procedure assignment');
 					}
 				}
-				$current_display_order++;
+				unset($current_procedures[$proc_id]);
 			}
-
-			foreach ($existing_procedure_assignments as $procedure_id => $procedure_assignment) {
-				if (!in_array($procedure_id, $_POST['Procedures_procs'])) {
-					// Delete removed procedure
-					if (!$procedure_assignment->delete()) {
-						throw new Exception('Unable to delete procedure assignment: '.print_r($pa->getErrors(),true));
-					}
+			else {
+				$procedure_assignment = new OphTrOperationnote_ProcedureListProcedureAssignment;
+				$procedure_assignment->procedurelist_id = $this->id;
+				$procedure_assignment->proc_id = $proc_id;
+				$procedure_assignment->display_order = $display_order;
+				if (!$procedure_assignment->save()) {
+					throw new Exception('Unable to save procedure assignment');
 				}
 			}
 		}
 
-		$this->event->episode->episode_status_id = 4;
-
-		if (!$this->event->episode->save()) {
-			throw new Exception('Unable to change episode status for episode '.$this->event->episode->id);
+		// delete remaining current procedures
+		foreach ($current_procedures as $pa) {
+			if (!$pa->delete()) {
+				throw new Exception('Unable to delete procedure assignment: '.print_r($pa->getErrors(),true));
+			}
 		}
+	}
 
-		if (Yii::app()->getController() && Yii::app()->getController()->getAction()->id == 'create') {
+	/**
+	 * For new records, set the episode status and (if relevant) the operation status
+	 *
+	 * @FIXME: abstraction of the episode and operation statuses
+	 * @throws Exception
+	 */
+	protected function afterSave()
+	{
+		if ($this->getIsNewRecord()) {
+			$this->event->episode->episode_status_id = 4;
+
+			if (!$this->event->episode->save()) {
+				throw new Exception('Unable to change episode status for episode '.$this->event->episode->id);
+			}
+
 			if ($this->booking_event_id && $api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
 				$api->setOperationStatus($this->booking_event_id, 'Completed');
 			}
@@ -175,44 +186,13 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 		return parent::afterSave();
 	}
 
-	protected function beforeValidate()
-	{
-		if (!empty($_POST) && (!isset($_POST['Procedures_procs']) || empty($_POST['Procedures_procs']))) {
-			$this->addError('no_field', 'At least one procedure must be entered');
-		}
-
-		return parent::beforeValidate();
-	}
-
-	public function getSelected_procedures()
-	{
-		if (Yii::app()->getController()->getAction()->id == 'create') {
-			if (ctype_digit($_GET['booking_event_id']) && $api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-				return $api->getProceduresForOperation($_GET['booking_event_id']);
-			}
-			return array();
-		}
-
-		if (Yii::app()->getController()->getAction()->id == 'update') {
-			return $this->procedures;
-		}
-	}
-
-	public function getSelectedEye()
-	{
-		if (ctype_digit(@$_GET['booking_event_id']) && $api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-			$eye = $api->getEyeForOperation($_GET['booking_event_id']);
-
-			$firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
-
-			if ($eye->name == 'Both' && !in_array($firm->serviceSubspecialtyAssignment->subspecialty_id,array(2,14))) {
-				return Eye::model()->find('name=?',array('Right'));
-			}
-
-			return $eye;
-		}
-	}
-
+	/**
+	 * Customises eye options for this element
+	 *
+	 * @FIXME: Shouldn't be touching the session stuff here if we can help it. Can we operate of the episode firm?
+	 * @param $table
+	 * @return array
+	 */
 	public function getFormOptions($table)
 	{
 		if ($table == 'eye') {

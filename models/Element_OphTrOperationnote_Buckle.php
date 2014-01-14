@@ -118,13 +118,6 @@ class Element_OphTrOperationnote_Buckle extends BaseEventTypeElement
 			));
 	}
 
-	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
-	}
-
 	public function getEye()
 	{
 		return Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($this->event_id))->eye;

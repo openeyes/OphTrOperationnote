@@ -18,11 +18,13 @@
  */
 ?>
 
-<section class="element element-data">
-	<h3 class="data-title"><?php echo $element->elementType->name ?></h3>
+<section class="sub-element">
+	<header class="sub-element-header">
+		<h3 class="sub-element-title"><?php echo $element->elementType->name ?></h3>
+	</header>
 
-	<div class="element-data">
-		<div class="row">
+	<div class="sub-element-data">
+		<div class="row highlight-container">
 			<div class="large-6 column data-value highlight">
 				<div class="row data-row">
 					<div class="large-4 column">
@@ -66,10 +68,34 @@
 				</div>
 				<div class="row data-row">
 					<div class="large-4 column">
+						<div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_type_id'))?>:</div>
+					</div>
+					<div class="large-8 column">
+						<div class="data-value"><?php echo $element->iol_type ? $element->iol_type->name : 'None'?></div>
+					</div>
+				</div>
+				<div class="row data-row">
+					<div class="large-4 column">
+						<div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?>:</div>
+					</div>
+					<div class="large-8 column">
+						<div class="data-value"><?php echo CHtml::encode($element->iol_power)?></div>
+					</div>
+				</div>
+				<div class="row data-row">
+					<div class="large-4 column">
 						<div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:</div>
 					</div>
 					<div class="large-8 column">
 						<div class="data-value"><?php echo CHtml::encode($element->predicted_refraction)?></div>
+					</div>
+				</div>
+				<div class="row data-row">
+					<div class="large-4 column">
+						<div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_position_id'))?>:</div>
+					</div>
+					<div class="large-8 column">
+						<div class="data-value"><?php echo CHtml::encode($element->iol_position->name)?></div>
 					</div>
 				</div>
 				<?php if ($element->getSetting('fife')) {?>
@@ -117,9 +143,7 @@
 			</div>
 		</div>
 	</div>
-</section>
 
-<section class="element element-data">
 	<div class="row data-row">
 		<div class="large-4 column">
 			<h3 class="data-title">Cataract report</h3>
@@ -141,7 +165,7 @@
 				<?php }?>
 			</div>
 		</div>
-		<div class="large-4 column">
+		<div class="large-3 column left">
 			<h3 class="data-title">Cataract complications</h3>
 			<div class="data-value highlight">
 				<?php if (!$element->complications && !$element->complication_notes) {?>

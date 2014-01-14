@@ -21,7 +21,7 @@
 <section class="element">
 	<div class="element-data">
 		<div class="row data-row">
-			<div class="large-2 column">
+			<div class="large-3 column">
 				<h4 class="data-title"><?php echo $element->elementType->name?></h4>
 				<div class="data-value <?php if (!$element->drugs) {?> none<?php }?>">
 					<?php if (!$element->drugs) {?>

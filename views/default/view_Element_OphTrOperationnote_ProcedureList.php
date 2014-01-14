@@ -25,5 +25,8 @@
 			<li><?php echo $element->eye->adjective?> <?php echo $procedure->term?></li>
 		<?php }?>
 	</ul>
+	<div class="sub-elements">
+		<?php $this->renderChildOpenElements($element, 'view', $form, $data)?>
+	</div>
 </section>
 

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * OpenEyes
  *
@@ -21,11 +22,20 @@
 }
 /* line 19, ../sass/components/_event.scss */
 .event .event-content {
-  background-image: url('../img/watermark.png?1385733427');
+  background-image: url('../img/watermark.png?1385044411');
 }
 /* line 22, ../sass/components/_event.scss */
 .event .event-title {
-  background-image: url('../img/medium.png?1383822786');
+  background-image: url('../img/medium.png?1384769122');
+}
+
+/* line 28, ../sass/components/_event.scss */
+.view .sub-element-header {
+  margin-bottom: 0.5em;
+}
+/* line 32, ../sass/components/_event.scss */
+.view .data-value.highlight {
+  margin-left: 0.5em;
 }
 
 /* line 17, ../sass/components/_eyedraw.scss */

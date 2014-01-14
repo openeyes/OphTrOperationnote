@@ -23,3 +23,14 @@
 		background-image: image-url("medium.png");
 	}
 }
+
+.view {
+  & .sub-element-header {
+    margin-bottom: 0.5em;
+  }
+  .data-value {
+    &.highlight {
+      margin-left: 0.5em;
+    }
+  }
+}

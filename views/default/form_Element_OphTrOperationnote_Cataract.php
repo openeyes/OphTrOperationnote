@@ -18,7 +18,7 @@
  */
 ?>
 
-<section class="element <?php echo $element->elementType->class_name?> on-demand<?php if (@$ondemand) {?> hidden<?php }?><?php if ($this->action->id == 'update' && !$element->event_id) {?> missing<?php }?>"
+<section class="sub-element <?php echo $element->elementType->class_name?> on-demand<?php if (@$ondemand) {?> hidden<?php }?><?php if ($this->action->id == 'update' && !$element->event_id) {?> missing<?php }?>"
 		 data-element-type-id="<?php echo $element->elementType->id ?>"
 		 data-element-type-class="<?php echo $element->elementType->class_name ?>"
 		 data-element-type-name="<?php echo $element->elementType->name ?>"
@@ -108,8 +108,8 @@
 						<?php echo $form->textField($element, 'predicted_refraction',array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
 						<?php echo $form->textField($element, 'iol_power', array('hide' => $element->iol_hidden),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
 						<?php echo $form->dropDownList($element, 'iol_position_id', CHtml::listData(OphTrOperationnote_IOLPosition::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'),$element->iol_hidden,array('field'=>4))?>
-						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractOperativeDevices', 'operative_devices', 'operative_device_id', $element->operative_device_list, $element->operative_device_defaults, array('empty' => '- Devices -', 'label' => 'Devices'),false,false,null,false,false,array('field'=>4))?>
-						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractComplications', 'complications', 'complication_id', CHtml::listData(OphTrOperationnote_CataractComplications::model()->findAll(array('order'=>'display_order asc')), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'),false,false,null,false,false,array('field'=>4))?>
+						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractOperativeDevices', 'operative_devices', 'id', $this->getOperativeDeviceList($element), $this->getOperativeDeviceDefaults(), array('empty' => '- Devices -', 'label' => 'Devices'),false,false,null,false,false,array('field'=>4))?>
+						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractComplications', 'complications', 'id', CHtml::listData(OphTrOperationnote_CataractComplications::model()->findAll(array('order'=>'display_order asc')), 'id', 'name'), null, array('empty' => '- Complications -', 'label' => 'Complications'),false,false,null,false,false,array('field'=>4))?>
 						<?php echo $form->textArea($element, 'complication_notes',array(),false,array('rows'=>6))?>
 					</div>
 				</div>
