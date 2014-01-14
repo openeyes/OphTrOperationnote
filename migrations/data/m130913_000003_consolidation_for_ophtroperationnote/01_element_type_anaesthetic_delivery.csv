@@ -1,4 +1,4 @@
-element_type_id => ElementType.class_name,anaesthetic_delivery_id,display_order
+element_type_id => element_type.class_name,anaesthetic_delivery_id,display_order
 Element_OphTrOperationnote_Anaesthetic,1,1
 Element_OphTrOperationnote_Anaesthetic,2,2
 Element_OphTrOperationnote_Anaesthetic,3,3
