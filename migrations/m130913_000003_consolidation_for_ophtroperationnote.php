@@ -168,7 +168,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_ana_anaesthetist_id_fk` FOREIGN KEY (`anaesthetist_id`) REFERENCES `anaesthetist` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_ana_type_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_ana_type_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_buckle` (
@@ -193,7 +193,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_bu_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_bu_drainage_type_id_fk` FOREIGN KEY (`drainage_type_id`) REFERENCES `ophtroperationnote_buckle_drainage_type` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_bu_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_cataract` (
@@ -231,7 +231,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_ca_incision_site_id_fk` FOREIGN KEY (`incision_site_id`) REFERENCES `ophtroperationnote_cataract_incision_site` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_ca_incision_type_id_fk` FOREIGN KEY (`incision_type_id`) REFERENCES `ophtroperationnote_cataract_incision_type` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_ca_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_comments` (
@@ -250,7 +250,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_comments_eid_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_comments_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_comments_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_genericprocedure` (
@@ -272,7 +272,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_genericprocedure_proc_id_fk` FOREIGN KEY (`proc_id`) REFERENCES `proc` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_genericprocedure_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_genericprocedure_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_membrane_peel` (
@@ -293,7 +293,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_membrane_peel_eid_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_mp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_mp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_personnel` (
@@ -322,7 +322,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_p_operating_department_practitioner_id_fk` FOREIGN KEY (`operating_department_practitioner_id`) REFERENCES `contact` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_p_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_p_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_postop_drugs` (
@@ -339,7 +339,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_postop_drugs_eid_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_postop_drugs_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_postop_drugs_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_preparation` (
@@ -365,7 +365,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_preparation_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_preparation_skin_preparation_id_fk` FOREIGN KEY (`skin_preparation_id`) REFERENCES `ophtroperationnote_preparation_skin_preparation` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_preparation_intraocular_solution_id_fk` FOREIGN KEY (`intraocular_solution_id`) REFERENCES `ophtroperationnote_preparation_intraocular_solution` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_procedurelist` (
@@ -389,7 +389,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_procedurelist_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_procedurelist_eye_id_fk` FOREIGN KEY (`eye_id`) REFERENCES `eye` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_procedurelist_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_surgeon` (
@@ -412,7 +412,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_sur_surgeon_id_fk` FOREIGN KEY (`surgeon_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_sur_type_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_sur_type_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_tamponade` (
@@ -438,7 +438,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_tp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_tp_gas_type_id_fk` FOREIGN KEY (`gas_type_id`) REFERENCES `ophtroperationnote_gas_type` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_tp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `et_ophtroperationnote_vitrectomy` (
@@ -461,7 +461,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `et_ophtroperationnote_vitrectomy_gauge_fk` FOREIGN KEY (`gauge_id`) REFERENCES `ophtroperationnote_gauge` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_vit_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `et_ophtroperationnote_vit_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_agent` (
@@ -481,7 +481,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_paa_anaesthetic_agent_id_fk` FOREIGN KEY (`anaesthetic_agent_id`) REFERENCES `anaesthetic_agent` (`id`),
 			  CONSTRAINT `ophtroperationnote_paa_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_paa_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complication` (
@@ -501,7 +501,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_anaesthetic_ac_anaesthetic_id_fk` FOREIGN KEY (`et_ophtroperationnote_anaesthetic_id`) REFERENCES `et_ophtroperationnote_anaesthetic` (`id`),
 			  CONSTRAINT `ophtroperationnote_pac_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_pac_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complications` (
@@ -517,7 +517,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_anaesthetic_ac_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_anaesthetic_ac_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_anaesthetic_ac_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_buckle_drainage_type` (
@@ -533,7 +533,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_bdt_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_bdt_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_bdt_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_complication` (
@@ -553,7 +553,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_cc2_cataract_id_fk` FOREIGN KEY (`cataract_id`) REFERENCES `et_ophtroperationnote_cataract` (`id`),
 			  CONSTRAINT `ophtroperationnote_cc2_complication_id_fk` FOREIGN KEY (`complication_id`) REFERENCES `ophtroperationnote_cataract_complications` (`id`),
 			  CONSTRAINT `ophtroperationnote_cc2_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_complications` (
@@ -569,7 +569,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cc_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cc_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cc_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_incision_site` (
@@ -585,7 +585,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cis_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cis_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cis_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_incision_type` (
@@ -601,7 +601,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cit_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cit_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cit_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_iol_position` (
@@ -617,7 +617,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cip_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cip_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cip_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_iol_type` (
@@ -634,7 +634,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_cot_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_cot_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_cot_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_cataract_operative_device` (
@@ -654,7 +654,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_ccd_cataract_id_fk` FOREIGN KEY (`cataract_id`) REFERENCES `et_ophtroperationnote_cataract` (`id`),
 			  CONSTRAINT `ophtroperationnote_ccd_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_ccd_operative_device_id_fk` FOREIGN KEY (`operative_device_id`) REFERENCES `operative_device` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_gas_percentage` (
@@ -670,7 +670,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_gas_pc_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_gas_pc_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_gas_pc_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_gas_type` (
@@ -686,7 +686,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_gas_type_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_gas_type_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_gas_type_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_gas_volume` (
@@ -702,7 +702,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_gas_vol_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_gas_vol_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_gas_vol_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_gauge` (
@@ -718,7 +718,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_gauge_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_gauge_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_gauge_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_postop_drug` (
@@ -735,7 +735,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_postop_drug_c_u_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_postop_drug_c_u_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_postop_drug_l_m_u_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_postop_drugs_drug` (
@@ -755,7 +755,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_pdd_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_pdd_drug_id_fk` FOREIGN KEY (`drug_id`) REFERENCES `ophtroperationnote_postop_drug` (`id`),
 			  CONSTRAINT `ophtroperationnote_pdd_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_postop_site_subspecialty_drug` (
@@ -780,7 +780,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_postop_site_subspecialty_drug_l_m_u_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_postop_site_subspecialty_drug_site_id_fk` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`),
 			  CONSTRAINT `ophtroperationnote_postop_site_subspecialty_drug_s_id_fk` FOREIGN KEY (`subspecialty_id`) REFERENCES `subspecialty` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_preparation_intraocular_solution` (
@@ -796,7 +796,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_pis_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_pis_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_pis_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_preparation_skin_preparation` (
@@ -812,7 +812,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  KEY `ophtroperationnote_psp_created_user_id_fk` (`created_user_id`),
 			  CONSTRAINT `ophtroperationnote_psp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_psp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_procedure_element` (
@@ -833,7 +833,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_pe_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_pe_element_type_fk` FOREIGN KEY (`element_type_id`) REFERENCES `element_type` (`id`),
 			  CONSTRAINT `ophtroperationnote_pe_procedure_fk` FOREIGN KEY (`procedure_id`) REFERENCES `proc` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_procedurelist_procedure_assignment` (
@@ -855,7 +855,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_plpa_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_plpa_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_procedurelist_procedure_assignment_ibfk_1` FOREIGN KEY (`proc_id`) REFERENCES `proc` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->execute("CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions` (
@@ -877,7 +877,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 			  CONSTRAINT `ophtroperationnote_sspi_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 			  CONSTRAINT `ophtroperationnote_sspi_site_id_fk` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`),
 			  CONSTRAINT `ophtroperationnote_sspi_subspecialty_id_fk` FOREIGN KEY (`subspecialty_id`) REFERENCES `subspecialty` (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$migrations_path = dirname(__FILE__);
@@ -922,7 +922,7 @@ class m130913_000003_consolidation_for_ophtroperationnote extends OEMigration
 				'CONSTRAINT `et_ophtroperationnote_genericprocedure_proc_id_fk` FOREIGN KEY (`proc_id`) REFERENCES `proc` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_genericprocedure_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_genericprocedure_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		foreach (array(
 					 'et_ophtroperationnote_3_snp' => 'ElementPunctoplasty',

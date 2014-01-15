@@ -32,7 +32,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_altraby_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_altraby_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_altraby_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Focal laser photocoagulation','class_name'=>'ElementFocalLaserPhotocoagulation','display_order'=>20,'default'=>0));
 
@@ -60,7 +60,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_flphoto_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_flphoto_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_flphoto_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Laser demarcation','class_name'=>'ElementLaserDemarcation','display_order'=>20,'default'=>0));
 
@@ -88,7 +88,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_laserdemar_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laserdemar_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laserdemar_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Laser gonioplasty','class_name'=>'ElementLaserGonioplasty','display_order'=>20,'default'=>0));
 
@@ -116,7 +116,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_lasergoni_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_lasergoni_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_lasergoni_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Laser hyaloidotomy','class_name'=>'ElementLaserHyaloidotomy','display_order'=>20,'default'=>0));
 
@@ -144,7 +144,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_laserhyal_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laserhyal_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laserhyal_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Laser iridoplasty','class_name'=>'ElementLaserIridoplasty','display_order'=>20,'default'=>0));
 
@@ -171,7 +171,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_laseririd_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laseririd_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laseririd_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Laser to chorioretinal lesion','class_name'=>'ElementLaserChorioretinal','display_order'=>20,'default'=>0));
 
@@ -197,7 +197,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_laserchor_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laserchor_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laserchor_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Laser vitreolysis','class_name'=>'ElementLaserVitreolysis','display_order'=>20,'default'=>0));
 	
@@ -223,7 +223,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_laservitr_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laservitr_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_laservitr_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Macular grid','class_name'=>'ElementMacularGrid','display_order'=>20,'default'=>0));
  
@@ -249,7 +249,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_macugrid_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_macugrid_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_macugrid_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('element_type',array('event_type_id'=>$event_type['id'],'name'=>'Suture lysis','class_name'=>'ElementSutureLysis','display_order'=>20,'default'=>0));
 
@@ -275,7 +275,7 @@ class m131002_120142_missing_procedure_elements extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_suturely_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_suturely_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_suturely_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 	}
 
 	public function down()

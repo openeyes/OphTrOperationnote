@@ -33,7 +33,7 @@ class m131002_114004_elements_for_new_procedures extends CDbMigration
 				'CONSTRAINT `et_ophtroperationnote_cyclob_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_cyclob_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophtroperationnote_cyclob_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
+			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 	}
 
 	public function down()
