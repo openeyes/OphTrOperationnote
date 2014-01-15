@@ -11,7 +11,7 @@ CREATE TABLE `et_ophtroperationnote_anaesthetic_version` (
 	`anaesthetic_type_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`anaesthetist_id` int(10) unsigned NOT NULL DEFAULT '4',
 	`anaesthetic_delivery_id` int(10) unsigned NOT NULL DEFAULT '5',
-	`anaesthetic_comment` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+	`anaesthetic_comment` varchar(1024) DEFAULT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -33,7 +33,7 @@ CREATE TABLE `et_ophtroperationnote_anaesthetic_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_ana_anaesthetist_id_fk` FOREIGN KEY (`anaesthetist_id`) REFERENCES `anaesthetist` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_ana_type_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_ana_type_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_anaesthetic_version','id','int(10) unsigned NOT NULL');
@@ -55,13 +55,13 @@ CREATE TABLE `et_ophtroperationnote_buckle_version` (
 	`drainage_type_id` int(10) unsigned NOT NULL,
 	`drain_haem` tinyint(1) unsigned NOT NULL DEFAULT '0',
 	`deep_suture` tinyint(1) unsigned NOT NULL DEFAULT '0',
-	`eyedraw` varchar(4096) COLLATE utf8_bin NOT NULL,
+	`eyedraw` varchar(4096) NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`created_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
-	`report` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`comments` varchar(1024) COLLATE utf8_bin NOT NULL,
+	`report` varchar(4096) NOT NULL,
+	`comments` varchar(1024) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `acv_et_ophtroperationnote_bu_drainage_type_id_fk` (`drainage_type_id`),
 	KEY `acv_et_ophtroperationnote_bu_last_modified_user_id_fk` (`last_modified_user_id`),
@@ -71,7 +71,7 @@ CREATE TABLE `et_ophtroperationnote_buckle_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_bu_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_bu_drainage_type_id_fk` FOREIGN KEY (`drainage_type_id`) REFERENCES `ophtroperationnote_buckle_drainage_type` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_bu_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_buckle_version','id','int(10) unsigned NOT NULL');
@@ -91,21 +91,21 @@ CREATE TABLE `et_ophtroperationnote_cataract_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	`event_id` int(10) unsigned NOT NULL,
 	`incision_site_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`length` varchar(5) COLLATE utf8_bin NOT NULL DEFAULT '2.8',
-	`meridian` varchar(5) COLLATE utf8_bin NOT NULL DEFAULT '180',
+	`length` varchar(5) NOT NULL DEFAULT '2.8',
+	`meridian` varchar(5) NOT NULL DEFAULT '180',
 	`incision_type_id` int(10) unsigned NOT NULL DEFAULT '1',
-	`eyedraw` text COLLATE utf8_bin NOT NULL,
-	`report` varchar(4096) COLLATE utf8_bin NOT NULL DEFAULT 'Continuous Circular Capsulorrhexis\nHydrodissection\nPhakoemulsification of lens nucleus\nAspiration of soft lens matter\nViscoelastic removed',
+	`eyedraw` text NOT NULL,
+	`report` varchar(4096) NOT NULL DEFAULT 'Continuous Circular Capsulorrhexis\nHydrodissection\nPhakoemulsification of lens nucleus\nAspiration of soft lens matter\nViscoelastic removed',
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`created_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 	`iol_position_id` int(10) unsigned DEFAULT '1',
-	`complication_notes` varchar(4096) COLLATE utf8_bin DEFAULT NULL,
-	`eyedraw2` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`iol_power` varchar(5) COLLATE utf8_bin NOT NULL,
+	`complication_notes` varchar(4096) DEFAULT NULL,
+	`eyedraw2` varchar(4096) NOT NULL,
+	`iol_power` varchar(5) NOT NULL,
 	`iol_type_id` int(10) unsigned DEFAULT NULL,
-	`report2` varchar(4096) COLLATE utf8_bin NOT NULL,
+	`report2` varchar(4096) NOT NULL,
 	`predicted_refraction` decimal(4,2) NOT NULL DEFAULT '0.00',
 	PRIMARY KEY (`id`),
 	KEY `acv_et_ophtroperationnote_ca_incision_site_id_fk` (`incision_site_id`),
@@ -122,7 +122,7 @@ CREATE TABLE `et_ophtroperationnote_cataract_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_ca_incision_site_id_fk` FOREIGN KEY (`incision_site_id`) REFERENCES `ophtroperationnote_cataract_incision_site` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_ca_incision_type_id_fk` FOREIGN KEY (`incision_type_id`) REFERENCES `ophtroperationnote_cataract_incision_type` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_ca_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_cataract_version','id','int(10) unsigned NOT NULL');
@@ -141,8 +141,8 @@ CREATE TABLE `et_ophtroperationnote_cataract_version` (
 CREATE TABLE `et_ophtroperationnote_comments_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	`event_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
-	`postop_instructions` varchar(4096) COLLATE utf8_bin NOT NULL,
+	`comments` varchar(4096) NOT NULL,
+	`postop_instructions` varchar(4096) NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
@@ -154,7 +154,7 @@ CREATE TABLE `et_ophtroperationnote_comments_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_comments_eid_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_comments_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_comments_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_comments_version','id','int(10) unsigned NOT NULL');
@@ -174,7 +174,7 @@ CREATE TABLE `et_ophtroperationnote_genericprocedure_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	`event_id` int(10) unsigned NOT NULL,
 	`proc_id` int(10) unsigned NOT NULL,
-	`comments` varchar(4096) COLLATE utf8_bin NOT NULL,
+	`comments` varchar(4096) NOT NULL,
 	`element_index` tinyint(1) unsigned NOT NULL DEFAULT '0',
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
@@ -189,7 +189,7 @@ CREATE TABLE `et_ophtroperationnote_genericprocedure_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_genericprocedure_proc_id_fk` FOREIGN KEY (`proc_id`) REFERENCES `proc` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_genericprocedure_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_genericprocedure_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_genericprocedure_version','id','int(10) unsigned NOT NULL');
@@ -210,12 +210,12 @@ CREATE TABLE `et_ophtroperationnote_membrane_peel_version` (
 	`event_id` int(10) unsigned NOT NULL,
 	`membrane_blue` tinyint(1) unsigned NOT NULL DEFAULT '0',
 	`brilliant_blue` tinyint(1) unsigned NOT NULL DEFAULT '0',
-	`other_dye` varchar(255) COLLATE utf8_bin NOT NULL,
+	`other_dye` varchar(255) NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`created_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
-	`comments` varchar(1024) COLLATE utf8_bin NOT NULL,
+	`comments` varchar(1024) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `acv_et_ophtroperationnote_mp_last_modified_user_id_fk` (`last_modified_user_id`),
 	KEY `acv_et_ophtroperationnote_mp_created_user_id_fk` (`created_user_id`),
@@ -223,7 +223,7 @@ CREATE TABLE `et_ophtroperationnote_membrane_peel_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_membrane_peel_eid_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_mp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_mp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_membrane_peel_version','id','int(10) unsigned NOT NULL');
@@ -265,7 +265,7 @@ CREATE TABLE `et_ophtroperationnote_personnel_version` (
 	CONSTRAINT `acv_phtroperationnote_p_operating_department_practitioner_id_fk` FOREIGN KEY (`operating_department_practitioner_id`) REFERENCES `contact` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_p_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_p_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_personnel_version','id','int(10) unsigned NOT NULL');
@@ -295,7 +295,7 @@ CREATE TABLE `et_ophtroperationnote_postop_drugs_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_postop_drugs_eid_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_postop_drugs_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_postop_drugs_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_postop_drugs_version','id','int(10) unsigned NOT NULL');
@@ -334,7 +334,7 @@ CREATE TABLE `et_ophtroperationnote_preparation_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_preparation_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_preparation_skin_preparation_id_fk` FOREIGN KEY (`skin_preparation_id`) REFERENCES `ophtroperationnote_preparation_skin_preparation` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_preparation_intraocular_solution_id_fk` FOREIGN KEY (`intraocular_solution_id`) REFERENCES `ophtroperationnote_preparation_intraocular_solution` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_preparation_version','id','int(10) unsigned NOT NULL');
@@ -371,7 +371,7 @@ CREATE TABLE `et_ophtroperationnote_procedurelist_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_procedurelist_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_procedurelist_eye_id_fk` FOREIGN KEY (`eye_id`) REFERENCES `eye` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_procedurelist_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_procedurelist_version','id','int(10) unsigned NOT NULL');
@@ -407,7 +407,7 @@ CREATE TABLE `et_ophtroperationnote_surgeon_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_sur_surgeon_id_fk` FOREIGN KEY (`surgeon_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_sur_type_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_sur_type_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_surgeon_version','id','int(10) unsigned NOT NULL');
@@ -446,7 +446,7 @@ CREATE TABLE `et_ophtroperationnote_tamponade_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_tp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_tp_gas_type_id_fk` FOREIGN KEY (`gas_type_id`) REFERENCES `ophtroperationnote_gas_type` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_tp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_tamponade_version','id','int(10) unsigned NOT NULL');
@@ -471,8 +471,8 @@ CREATE TABLE `et_ophtroperationnote_vitrectomy_version` (
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`created_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
-	`eyedraw` text COLLATE utf8_bin NOT NULL,
-	`comments` varchar(1024) COLLATE utf8_bin NOT NULL,
+	`eyedraw` text NOT NULL,
+	`comments` varchar(1024) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `acv_et_ophtroperationnote_vitrectomy_event_id` (`event_id`),
 	KEY `acv_et_ophtroperationnote_vitrectomy_gauge_id` (`gauge_id`),
@@ -482,7 +482,7 @@ CREATE TABLE `et_ophtroperationnote_vitrectomy_version` (
 	CONSTRAINT `acv_et_ophtroperationnote_vitrectomy_gauge_fk` FOREIGN KEY (`gauge_id`) REFERENCES `ophtroperationnote_gauge` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_vit_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_vit_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophtroperationnote_vitrectomy_version','id','int(10) unsigned NOT NULL');
@@ -515,7 +515,7 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_agent_version` (
 	CONSTRAINT `acv_ophtroperationnote_paa_anaesthetic_agent_id_fk` FOREIGN KEY (`anaesthetic_agent_id`) REFERENCES `anaesthetic_agent` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_paa_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_paa_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_anaesthetic_anaesthetic_agent_version','id','int(10) unsigned NOT NULL');
@@ -548,7 +548,7 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complication_version` (
 	CONSTRAINT `acv_ophtroperationnote_anaesthetic_ac_anaesthetic_id_fk` FOREIGN KEY (`et_ophtroperationnote_anaesthetic_id`) REFERENCES `et_ophtroperationnote_anaesthetic` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pac_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pac_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_anaesthetic_anaesthetic_complication_version','id','int(10) unsigned NOT NULL');
@@ -566,7 +566,7 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complication_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complications_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(64) COLLATE utf8_bin NOT NULL,
+	`name` varchar(64) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -577,7 +577,7 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complications_version` 
 	KEY `acv_ophtroperationnote_anaesthetic_ac_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_anaesthetic_ac_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_anaesthetic_ac_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_anaesthetic_anaesthetic_complications_version','id','int(10) unsigned NOT NULL');
@@ -595,7 +595,7 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complications_version` 
 		$this->execute("
 CREATE TABLE `ophtroperationnote_buckle_drainage_type_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(16) COLLATE utf8_bin NOT NULL,
+	`name` varchar(16) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -606,7 +606,7 @@ CREATE TABLE `ophtroperationnote_buckle_drainage_type_version` (
 	KEY `acv_ophtroperationnote_bdt_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_bdt_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_bdt_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_buckle_drainage_type_version','id','int(10) unsigned NOT NULL');
@@ -639,7 +639,7 @@ CREATE TABLE `ophtroperationnote_cataract_complication_version` (
 	CONSTRAINT `acv_ophtroperationnote_cc2_cataract_id_fk` FOREIGN KEY (`cataract_id`) REFERENCES `et_ophtroperationnote_cataract` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cc2_complication_id_fk` FOREIGN KEY (`complication_id`) REFERENCES `ophtroperationnote_cataract_complications` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cc2_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_cataract_complication_version','id','int(10) unsigned NOT NULL');
@@ -657,7 +657,7 @@ CREATE TABLE `ophtroperationnote_cataract_complication_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_cataract_complications_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(64) COLLATE utf8_bin NOT NULL,
+	`name` varchar(64) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -668,7 +668,7 @@ CREATE TABLE `ophtroperationnote_cataract_complications_version` (
 	KEY `acv_ophtroperationnote_cc_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_cc_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cc_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_cataract_complications_version','id','int(10) unsigned NOT NULL');
@@ -686,7 +686,7 @@ CREATE TABLE `ophtroperationnote_cataract_complications_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_cataract_incision_site_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(16) COLLATE utf8_bin NOT NULL,
+	`name` varchar(16) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -697,7 +697,7 @@ CREATE TABLE `ophtroperationnote_cataract_incision_site_version` (
 	KEY `acv_ophtroperationnote_cis_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_cis_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cis_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_cataract_incision_site_version','id','int(10) unsigned NOT NULL');
@@ -715,7 +715,7 @@ CREATE TABLE `ophtroperationnote_cataract_incision_site_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_cataract_incision_type_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(16) COLLATE utf8_bin NOT NULL,
+	`name` varchar(16) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -726,7 +726,7 @@ CREATE TABLE `ophtroperationnote_cataract_incision_type_version` (
 	KEY `acv_ophtroperationnote_cit_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_cit_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cit_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_cataract_incision_type_version','id','int(10) unsigned NOT NULL');
@@ -744,7 +744,7 @@ CREATE TABLE `ophtroperationnote_cataract_incision_type_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_cataract_iol_position_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(32) COLLATE utf8_bin NOT NULL,
+	`name` varchar(32) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -755,7 +755,7 @@ CREATE TABLE `ophtroperationnote_cataract_iol_position_version` (
 	KEY `acv_ophtroperationnote_cip_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_cip_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cip_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_cataract_iol_position_version','id','int(10) unsigned NOT NULL');
@@ -773,7 +773,7 @@ CREATE TABLE `ophtroperationnote_cataract_iol_position_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_cataract_iol_type_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(64) COLLATE utf8_bin NOT NULL,
+	`name` varchar(64) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL DEFAULT '1',
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -785,7 +785,7 @@ CREATE TABLE `ophtroperationnote_cataract_iol_type_version` (
 	KEY `acv_ophtroperationnote_cot_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_cot_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cot_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_cataract_iol_type_version','id','int(10) unsigned NOT NULL');
@@ -818,7 +818,7 @@ CREATE TABLE `ophtroperationnote_cataract_operative_device_version` (
 	CONSTRAINT `acv_ophtroperationnote_ccd_cataract_id_fk` FOREIGN KEY (`cataract_id`) REFERENCES `et_ophtroperationnote_cataract` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_ccd_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_ccd_operative_device_id_fk` FOREIGN KEY (`operative_device_id`) REFERENCES `operative_device` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_cataract_operative_device_version','id','int(10) unsigned NOT NULL');
@@ -847,7 +847,7 @@ CREATE TABLE `ophtroperationnote_gas_percentage_version` (
 	KEY `acv_ophtroperationnote_gas_pc_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_gas_pc_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_gas_pc_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_gas_percentage_version','id','int(10) unsigned NOT NULL');
@@ -865,7 +865,7 @@ CREATE TABLE `ophtroperationnote_gas_percentage_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_gas_type_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(5) COLLATE utf8_bin NOT NULL,
+	`name` varchar(5) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -876,7 +876,7 @@ CREATE TABLE `ophtroperationnote_gas_type_version` (
 	KEY `acv_ophtroperationnote_gas_type_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_gas_type_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_gas_type_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_gas_type_version','id','int(10) unsigned NOT NULL');
@@ -894,7 +894,7 @@ CREATE TABLE `ophtroperationnote_gas_type_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_gas_volume_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`value` varchar(3) COLLATE utf8_bin NOT NULL,
+	`value` varchar(3) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -905,7 +905,7 @@ CREATE TABLE `ophtroperationnote_gas_volume_version` (
 	KEY `acv_ophtroperationnote_gas_vol_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_gas_vol_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_gas_vol_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_gas_volume_version','id','int(10) unsigned NOT NULL');
@@ -923,7 +923,7 @@ CREATE TABLE `ophtroperationnote_gas_volume_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_gauge_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`value` varchar(5) COLLATE utf8_bin NOT NULL,
+	`value` varchar(5) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -934,7 +934,7 @@ CREATE TABLE `ophtroperationnote_gauge_version` (
 	KEY `acv_ophtroperationnote_gauge_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_gauge_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_gauge_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_gauge_version','id','int(10) unsigned NOT NULL');
@@ -952,7 +952,7 @@ CREATE TABLE `ophtroperationnote_gauge_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_postop_drug_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(255) COLLATE utf8_bin NOT NULL,
+	`name` varchar(255) NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
 	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
@@ -964,7 +964,7 @@ CREATE TABLE `ophtroperationnote_postop_drug_version` (
 	KEY `acv_ophtroperationnote_postop_drug_c_u_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_postop_drug_c_u_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_postop_drug_l_m_u_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_postop_drug_version','id','int(10) unsigned NOT NULL');
@@ -997,7 +997,7 @@ CREATE TABLE `ophtroperationnote_postop_drugs_drug_version` (
 	CONSTRAINT `acv_ophtroperationnote_pdd_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pdd_drug_id_fk` FOREIGN KEY (`drug_id`) REFERENCES `ophtroperationnote_postop_drug` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pdd_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_postop_drugs_drug_version','id','int(10) unsigned NOT NULL');
@@ -1035,7 +1035,7 @@ CREATE TABLE `ophtroperationnote_postop_site_subspecialty_drug_version` (
 	CONSTRAINT `acv_ophtroperationnote_postop_site_subspecialty_drug_l_m_u_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_postop_site_subspecialty_drug_site_id_fk` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_postop_site_subspecialty_drug_s_id_fk` FOREIGN KEY (`subspecialty_id`) REFERENCES `subspecialty` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_postop_site_subspecialty_drug_version','id','int(10) unsigned NOT NULL');
@@ -1053,7 +1053,7 @@ CREATE TABLE `ophtroperationnote_postop_site_subspecialty_drug_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_preparation_intraocular_solution_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+	`name` varchar(128) DEFAULT NULL,
 	`display_order` tinyint(3) unsigned DEFAULT '0',
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -1064,7 +1064,7 @@ CREATE TABLE `ophtroperationnote_preparation_intraocular_solution_version` (
 	KEY `acv_ophtroperationnote_pis_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_pis_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pis_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_preparation_intraocular_solution_version','id','int(10) unsigned NOT NULL');
@@ -1082,7 +1082,7 @@ CREATE TABLE `ophtroperationnote_preparation_intraocular_solution_version` (
 		$this->execute("
 CREATE TABLE `ophtroperationnote_preparation_skin_preparation_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+	`name` varchar(128) DEFAULT NULL,
 	`display_order` tinyint(3) unsigned DEFAULT '0',
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -1093,7 +1093,7 @@ CREATE TABLE `ophtroperationnote_preparation_skin_preparation_version` (
 	KEY `acv_ophtroperationnote_psp_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_psp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_psp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_preparation_skin_preparation_version','id','int(10) unsigned NOT NULL');
@@ -1127,7 +1127,7 @@ CREATE TABLE `ophtroperationnote_procedure_element_version` (
 	CONSTRAINT `acv_ophtroperationnote_pe_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pe_element_type_fk` FOREIGN KEY (`element_type_id`) REFERENCES `element_type` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pe_procedure_fk` FOREIGN KEY (`procedure_id`) REFERENCES `proc` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_procedure_element_version','id','int(10) unsigned NOT NULL');
@@ -1162,7 +1162,7 @@ CREATE TABLE `ophtroperationnote_procedurelist_procedure_assignment_version` (
 	CONSTRAINT `acv_ophtroperationnote_plpa_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_plpa_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_procedurelist_procedure_assignment_ibfk_1` FOREIGN KEY (`proc_id`) REFERENCES `proc` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_procedurelist_procedure_assignment_version','id','int(10) unsigned NOT NULL');
@@ -1182,7 +1182,7 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	`site_id` int(10) unsigned NOT NULL,
 	`subspecialty_id` int(10) unsigned NOT NULL,
-	`content` varchar(1024) COLLATE utf8_bin NOT NULL,
+	`content` varchar(1024) NOT NULL,
 	`display_order` tinyint(3) unsigned NOT NULL DEFAULT '1',
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1900-01-01 00:00:00',
@@ -1197,7 +1197,7 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 	CONSTRAINT `acv_ophtroperationnote_sspi_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_sspi_site_id_fk` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_sspi_subspecialty_id_fk` FOREIGN KEY (`subspecialty_id`) REFERENCES `subspecialty` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophtroperationnote_site_subspecialty_postop_instructions_version','id','int(10) unsigned NOT NULL');
