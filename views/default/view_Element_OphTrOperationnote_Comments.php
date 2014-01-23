@@ -31,4 +31,12 @@
 			</div>
 		</div>
 	</div>
+	<div class="element-data">
+		<div class="row data-row">
+			<div class="large-4 column">
+				<h4 class="data-title">Site</h4>
+				<div class="data-value<?php if (!$site = $this->findBookingSite()) {?> none<?php }?>"><?php echo $site ? $site->name : 'N/A (Emergency)'?></div>
+			</div>
+		</div>
+	</div>
 </section>
