@@ -446,6 +446,6 @@ class DefaultController extends BaseEventTypeController
 			}
 		}
 
-		return 'N/A (Emergency)';
+		return null;
 	}
 }
