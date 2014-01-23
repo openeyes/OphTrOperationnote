@@ -18,13 +18,9 @@
  */
 ?>
 
-
 <section class="element">
-
 	<h3 class="element-title highlight"><?php echo $element->elementType->name ?></h3>
-
 	<div class="element-data">
-
 		<?php if ($element->membrane_blue) {?>
 			<div class="data-row">
 				<div class="data-value">

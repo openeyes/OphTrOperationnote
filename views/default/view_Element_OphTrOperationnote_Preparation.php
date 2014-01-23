@@ -20,7 +20,6 @@
 
 <?php if ($element->getSetting('fife')) {?>
 	<h4><?php echo $element->elementType->name ?></h4>
-
 	<div class="colsX clearfix">
 		<div class="colStack">
 			<h4><?php echo CHtml::encode($element->getAttributeLabel('spo2'))?></h4>

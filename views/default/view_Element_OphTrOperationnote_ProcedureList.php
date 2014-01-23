@@ -26,4 +26,3 @@
 		<?php }?>
 	</ul>
 </section>
-
