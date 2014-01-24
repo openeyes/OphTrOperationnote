@@ -33,6 +33,12 @@ $this->moduleNameCssClass.=" highlight-fields";
 
 <input type="hidden" id="moduleCSSPath" value="<?php echo $this->assetPath?>/css" />
 
+<?php if ($this->event->delete_pending) {?>
+	<div class="alert-box alert with-icon">
+		This event is pending deletion and has been locked.
+	</div>
+<?php }?>
+
 <?php $this->renderDefaultElements($this->action->id); ?>
 <?php $this->renderOptionalElements($this->action->id); ?>
 
