@@ -3,6 +3,12 @@ Release History
 
 This document is intended to summarise the changes made for each release. It should be noted that this document was only introduced with version 1.4, and therefore doesn't cover earlier releases.
 
+1.5.2
+-----
++ Support event locking and delete reason/request
++ Show site (location) from booking in opnote view
++ Show side in operation list when creating opnote
+
 1.5.1
 -----
 + Added the name of the site of the related booking to the view mode
