@@ -30,7 +30,7 @@
  * @property Procedure $procedure
  * @property ElementType $element_type
  */
-class OphTrOperationnote_ProcedureListOperationElement extends BaseEventTypeElement
+class OphTrOperationnote_ProcedureListOperationElement extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.

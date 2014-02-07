@@ -26,7 +26,7 @@
  * @property integer $display_order
  *
  */
-class OphTrOperationnote_CataractComplications extends BaseEventTypeElement
+class OphTrOperationnote_CataractComplications extends BaseActiveRecordVersionedSoftDelete
 {
 	/**
 	 * Returns the static model of the specified AR class.

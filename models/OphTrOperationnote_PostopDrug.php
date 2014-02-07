@@ -24,7 +24,7 @@
  * @property integer $id
  * @property string $name
  */
-class OphTrOperationnote_PostopDrug extends BaseEventTypeElement
+class OphTrOperationnote_PostopDrug extends BaseActiveRecordVersionedSoftDelete
 {
 	/**
 	 * Returns the static model of the specified AR class.

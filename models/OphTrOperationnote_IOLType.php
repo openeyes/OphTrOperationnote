@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class OphTrOperationnote_IOLType extends BaseEventTypeElement
+class OphTrOperationnote_IOLType extends BaseActiveRecordVersionedSoftDelete
 {
 	/**
 	 * Returns the static model of the specified AR class.

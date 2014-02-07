@@ -24,7 +24,7 @@
  * @property string $id
  * @property varchar $name
  */
-class OphTrOperationnote_PreparationIntraocularSolution extends BaseEventTypeElement
+class OphTrOperationnote_PreparationIntraocularSolution extends BaseActiveRecordVersionedSoftDelete
 {
 	/**
 	 * Returns the static model of the specified AR class.

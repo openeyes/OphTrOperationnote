@@ -28,7 +28,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class OphTrOperationnote_ProcedureListProcedureAssignment extends BaseEventTypeElement
+class OphTrOperationnote_ProcedureListProcedureAssignment extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.

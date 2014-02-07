@@ -29,7 +29,7 @@
  * @property AnaestheticAgent $anaesthetic_agent
  * @property Element_OphTrOperationnote_Anaesthetic $anaesthetic_element
  */
-class OphTrOperationnote_OperationAnaestheticAgent extends BaseEventTypeElement
+class OphTrOperationnote_OperationAnaestheticAgent extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.

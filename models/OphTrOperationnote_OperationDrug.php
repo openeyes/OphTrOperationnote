@@ -25,7 +25,7 @@
  * @property integer $et_ophtroperationnote_postop_drugs_id
  * @property integer $drug_id
  */
-class OphTrOperationnote_OperationDrug extends BaseEventTypeElement
+class OphTrOperationnote_OperationDrug extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.
