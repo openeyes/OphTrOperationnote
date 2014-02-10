@@ -29,4 +29,3 @@
 		<?php $this->renderChildOpenElements($element, 'view', $form, $data)?>
 	</div>
 </section>
-
