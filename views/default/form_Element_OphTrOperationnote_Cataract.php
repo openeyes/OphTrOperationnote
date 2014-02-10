@@ -26,8 +26,8 @@
 	<?php if ($this->action->id == 'update' && !$element->event_id) {?>
 		<div class="alert-box alert">This element is missing and needs to be completed</div>
 	<?php }?>
-	<header class="element-header">
-		<h3 class="element-title"><?php  echo $element->elementType->name; ?></h3>
+	<header class="sub-element-header">
+		<h4 class="sub-element-title"><?php  echo $element->elementType->name; ?></h4>
 	</header>
 
 	<?php
