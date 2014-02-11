@@ -146,7 +146,7 @@ class DefaultController extends BaseEventTypeController
 
 				if (isset(Yii::app()->params[$key])) {
 					if ($at = AnaestheticType::model()->find('code=?',array(Yii::app()->params[$key]))) {
-						$this->anaesthetic_type_id = $at->id;
+						$element->anaesthetic_type_id = $at->id;
 					}
 				}
 			}
