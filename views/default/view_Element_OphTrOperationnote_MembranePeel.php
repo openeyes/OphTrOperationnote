@@ -20,7 +20,6 @@
 
 <section class="sub-element element-data">
 	<h3 class="data-title"><?php echo $element->elementType->name ?></h3>
-
 	<div class="element-data">
 		<?php if ($element->membrane_blue) {?>
 			<div class="row data-row">

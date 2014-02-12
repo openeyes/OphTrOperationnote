@@ -147,14 +147,6 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 	}
 
 	/**
-	* Set default values for forms on create
-	*/
-	public function setDefaultOptions()
-	{
-		$this->anaesthetic_type_id = 1;
-	}
-
-	/**
 	 * Should not display other anaesthetic details if the anaesthetic type is general
 	 *
 	 * @return bool
