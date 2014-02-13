@@ -40,7 +40,6 @@ CREATE TABLE `et_ophtroperationnote_anaesthetic_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_anaesthetic_version');
 
 		$this->createIndex('et_ophtroperationnote_anaesthetic_aid_fk','et_ophtroperationnote_anaesthetic_version','id');
-		$this->addForeignKey('et_ophtroperationnote_anaesthetic_aid_fk','et_ophtroperationnote_anaesthetic_version','id','et_ophtroperationnote_anaesthetic','id');
 
 		$this->addColumn('et_ophtroperationnote_anaesthetic_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -78,7 +77,6 @@ CREATE TABLE `et_ophtroperationnote_buckle_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_buckle_version');
 
 		$this->createIndex('et_ophtroperationnote_buckle_aid_fk','et_ophtroperationnote_buckle_version','id');
-		$this->addForeignKey('et_ophtroperationnote_buckle_aid_fk','et_ophtroperationnote_buckle_version','id','et_ophtroperationnote_buckle','id');
 
 		$this->addColumn('et_ophtroperationnote_buckle_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -129,7 +127,6 @@ CREATE TABLE `et_ophtroperationnote_cataract_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_cataract_version');
 
 		$this->createIndex('et_ophtroperationnote_cataract_aid_fk','et_ophtroperationnote_cataract_version','id');
-		$this->addForeignKey('et_ophtroperationnote_cataract_aid_fk','et_ophtroperationnote_cataract_version','id','et_ophtroperationnote_cataract','id');
 
 		$this->addColumn('et_ophtroperationnote_cataract_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -161,7 +158,6 @@ CREATE TABLE `et_ophtroperationnote_comments_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_comments_version');
 
 		$this->createIndex('et_ophtroperationnote_comments_aid_fk','et_ophtroperationnote_comments_version','id');
-		$this->addForeignKey('et_ophtroperationnote_comments_aid_fk','et_ophtroperationnote_comments_version','id','et_ophtroperationnote_comments','id');
 
 		$this->addColumn('et_ophtroperationnote_comments_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -196,7 +192,6 @@ CREATE TABLE `et_ophtroperationnote_genericprocedure_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_genericprocedure_version');
 
 		$this->createIndex('et_ophtroperationnote_genericprocedure_aid_fk','et_ophtroperationnote_genericprocedure_version','id');
-		$this->addForeignKey('et_ophtroperationnote_genericprocedure_aid_fk','et_ophtroperationnote_genericprocedure_version','id','et_ophtroperationnote_genericprocedure','id');
 
 		$this->addColumn('et_ophtroperationnote_genericprocedure_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -230,7 +225,6 @@ CREATE TABLE `et_ophtroperationnote_membrane_peel_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_membrane_peel_version');
 
 		$this->createIndex('et_ophtroperationnote_membrane_peel_aid_fk','et_ophtroperationnote_membrane_peel_version','id');
-		$this->addForeignKey('et_ophtroperationnote_membrane_peel_aid_fk','et_ophtroperationnote_membrane_peel_version','id','et_ophtroperationnote_membrane_peel','id');
 
 		$this->addColumn('et_ophtroperationnote_membrane_peel_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -272,7 +266,6 @@ CREATE TABLE `et_ophtroperationnote_personnel_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_personnel_version');
 
 		$this->createIndex('et_ophtroperationnote_personnel_aid_fk','et_ophtroperationnote_personnel_version','id');
-		$this->addForeignKey('et_ophtroperationnote_personnel_aid_fk','et_ophtroperationnote_personnel_version','id','et_ophtroperationnote_personnel','id');
 
 		$this->addColumn('et_ophtroperationnote_personnel_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -302,7 +295,6 @@ CREATE TABLE `et_ophtroperationnote_postop_drugs_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_postop_drugs_version');
 
 		$this->createIndex('et_ophtroperationnote_postop_drugs_aid_fk','et_ophtroperationnote_postop_drugs_version','id');
-		$this->addForeignKey('et_ophtroperationnote_postop_drugs_aid_fk','et_ophtroperationnote_postop_drugs_version','id','et_ophtroperationnote_postop_drugs','id');
 
 		$this->addColumn('et_ophtroperationnote_postop_drugs_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -341,7 +333,6 @@ CREATE TABLE `et_ophtroperationnote_preparation_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_preparation_version');
 
 		$this->createIndex('et_ophtroperationnote_preparation_aid_fk','et_ophtroperationnote_preparation_version','id');
-		$this->addForeignKey('et_ophtroperationnote_preparation_aid_fk','et_ophtroperationnote_preparation_version','id','et_ophtroperationnote_preparation','id');
 
 		$this->addColumn('et_ophtroperationnote_preparation_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -378,7 +369,6 @@ CREATE TABLE `et_ophtroperationnote_procedurelist_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_procedurelist_version');
 
 		$this->createIndex('et_ophtroperationnote_procedurelist_aid_fk','et_ophtroperationnote_procedurelist_version','id');
-		$this->addForeignKey('et_ophtroperationnote_procedurelist_aid_fk','et_ophtroperationnote_procedurelist_version','id','et_ophtroperationnote_procedurelist','id');
 
 		$this->addColumn('et_ophtroperationnote_procedurelist_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -414,7 +404,6 @@ CREATE TABLE `et_ophtroperationnote_surgeon_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_surgeon_version');
 
 		$this->createIndex('et_ophtroperationnote_surgeon_aid_fk','et_ophtroperationnote_surgeon_version','id');
-		$this->addForeignKey('et_ophtroperationnote_surgeon_aid_fk','et_ophtroperationnote_surgeon_version','id','et_ophtroperationnote_surgeon','id');
 
 		$this->addColumn('et_ophtroperationnote_surgeon_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -453,7 +442,6 @@ CREATE TABLE `et_ophtroperationnote_tamponade_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_tamponade_version');
 
 		$this->createIndex('et_ophtroperationnote_tamponade_aid_fk','et_ophtroperationnote_tamponade_version','id');
-		$this->addForeignKey('et_ophtroperationnote_tamponade_aid_fk','et_ophtroperationnote_tamponade_version','id','et_ophtroperationnote_tamponade','id');
 
 		$this->addColumn('et_ophtroperationnote_tamponade_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -489,7 +477,6 @@ CREATE TABLE `et_ophtroperationnote_vitrectomy_version` (
 		$this->dropPrimaryKey('id','et_ophtroperationnote_vitrectomy_version');
 
 		$this->createIndex('et_ophtroperationnote_vitrectomy_aid_fk','et_ophtroperationnote_vitrectomy_version','id');
-		$this->addForeignKey('et_ophtroperationnote_vitrectomy_aid_fk','et_ophtroperationnote_vitrectomy_version','id','et_ophtroperationnote_vitrectomy','id');
 
 		$this->addColumn('et_ophtroperationnote_vitrectomy_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -522,7 +509,6 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_agent_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_anaesthetic_anaesthetic_agent_version');
 
 		$this->createIndex('ophtroperationnote_anaesthetic_anaesthetic_agent_aid_fk','ophtroperationnote_anaesthetic_anaesthetic_agent_version','id');
-		$this->addForeignKey('ophtroperationnote_anaesthetic_anaesthetic_agent_aid_fk','ophtroperationnote_anaesthetic_anaesthetic_agent_version','id','ophtroperationnote_anaesthetic_anaesthetic_agent','id');
 
 		$this->addColumn('ophtroperationnote_anaesthetic_anaesthetic_agent_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -555,7 +541,6 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complication_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_anaesthetic_anaesthetic_complication_version');
 
 		$this->createIndex('ophtroperationnote_anaesthetic_anaesthetic_complication_aid_fk','ophtroperationnote_anaesthetic_anaesthetic_complication_version','id');
-		$this->addForeignKey('ophtroperationnote_anaesthetic_anaesthetic_complication_aid_fk','ophtroperationnote_anaesthetic_anaesthetic_complication_version','id','ophtroperationnote_anaesthetic_anaesthetic_complication','id');
 
 		$this->addColumn('ophtroperationnote_anaesthetic_anaesthetic_complication_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -646,7 +631,6 @@ CREATE TABLE `ophtroperationnote_cataract_complication_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_cataract_complication_version');
 
 		$this->createIndex('ophtroperationnote_cataract_complication_aid_fk','ophtroperationnote_cataract_complication_version','id');
-		$this->addForeignKey('ophtroperationnote_cataract_complication_aid_fk','ophtroperationnote_cataract_complication_version','id','ophtroperationnote_cataract_complication','id');
 
 		$this->addColumn('ophtroperationnote_cataract_complication_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -825,7 +809,6 @@ CREATE TABLE `ophtroperationnote_cataract_operative_device_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_cataract_operative_device_version');
 
 		$this->createIndex('ophtroperationnote_cataract_operative_device_aid_fk','ophtroperationnote_cataract_operative_device_version','id');
-		$this->addForeignKey('ophtroperationnote_cataract_operative_device_aid_fk','ophtroperationnote_cataract_operative_device_version','id','ophtroperationnote_cataract_operative_device','id');
 
 		$this->addColumn('ophtroperationnote_cataract_operative_device_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -854,7 +837,6 @@ CREATE TABLE `ophtroperationnote_gas_percentage_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_gas_percentage_version');
 
 		$this->createIndex('ophtroperationnote_gas_percentage_aid_fk','ophtroperationnote_gas_percentage_version','id');
-		$this->addForeignKey('ophtroperationnote_gas_percentage_aid_fk','ophtroperationnote_gas_percentage_version','id','ophtroperationnote_gas_percentage','id');
 
 		$this->addColumn('ophtroperationnote_gas_percentage_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -1004,7 +986,6 @@ CREATE TABLE `ophtroperationnote_postop_drugs_drug_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_postop_drugs_drug_version');
 
 		$this->createIndex('ophtroperationnote_postop_drugs_drug_aid_fk','ophtroperationnote_postop_drugs_drug_version','id');
-		$this->addForeignKey('ophtroperationnote_postop_drugs_drug_aid_fk','ophtroperationnote_postop_drugs_drug_version','id','ophtroperationnote_postop_drugs_drug','id');
 
 		$this->addColumn('ophtroperationnote_postop_drugs_drug_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -1042,7 +1023,6 @@ CREATE TABLE `ophtroperationnote_postop_site_subspecialty_drug_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_postop_site_subspecialty_drug_version');
 
 		$this->createIndex('ophtroperationnote_postop_site_subspecialty_drug_aid_fk','ophtroperationnote_postop_site_subspecialty_drug_version','id');
-		$this->addForeignKey('ophtroperationnote_postop_site_subspecialty_drug_aid_fk','ophtroperationnote_postop_site_subspecialty_drug_version','id','ophtroperationnote_postop_site_subspecialty_drug','id');
 
 		$this->addColumn('ophtroperationnote_postop_site_subspecialty_drug_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -1134,7 +1114,6 @@ CREATE TABLE `ophtroperationnote_procedure_element_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_procedure_element_version');
 
 		$this->createIndex('ophtroperationnote_procedure_element_aid_fk','ophtroperationnote_procedure_element_version','id');
-		$this->addForeignKey('ophtroperationnote_procedure_element_aid_fk','ophtroperationnote_procedure_element_version','id','ophtroperationnote_procedure_element','id');
 
 		$this->addColumn('ophtroperationnote_procedure_element_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -1169,7 +1148,6 @@ CREATE TABLE `ophtroperationnote_procedurelist_procedure_assignment_version` (
 		$this->dropPrimaryKey('id','ophtroperationnote_procedurelist_procedure_assignment_version');
 
 		$this->createIndex('ophtroperationnote_procedurelist_procedure_assignment_aid_fk','ophtroperationnote_procedurelist_procedure_assignment_version','id');
-		$this->addForeignKey('ophtroperationnote_procedurelist_procedure_assignment_aid_fk','ophtroperationnote_procedurelist_procedure_assignment_version','id','ophtroperationnote_procedurelist_procedure_assignment','id');
 
 		$this->addColumn('ophtroperationnote_procedurelist_procedure_assignment_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -1204,7 +1182,6 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 		$this->dropPrimaryKey('id','ophtroperationnote_site_subspecialty_postop_instructions_version');
 
 		$this->createIndex('ophtroperationnote_site_subspecialty_postop_instructions_aid_fk','ophtroperationnote_site_subspecialty_postop_instructions_version','id');
-		$this->addForeignKey('ophtroperationnote_site_subspecialty_postop_instructions_aid_fk','ophtroperationnote_site_subspecialty_postop_instructions_version','id','ophtroperationnote_site_subspecialty_postop_instructions','id');
 
 		$this->addColumn('ophtroperationnote_site_subspecialty_postop_instructions_version','version_date',"datetime not null default '1900-01-01 00:00:00'");
 
@@ -1212,43 +1189,10 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 		$this->addPrimaryKey('version_id','ophtroperationnote_site_subspecialty_postop_instructions_version','version_id');
 		$this->alterColumn('ophtroperationnote_site_subspecialty_postop_instructions_version','version_id','int(10) unsigned NOT NULL AUTO_INCREMENT');
 
-		$this->addColumn('et_ophtroperationnote_anaesthetic','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_anaesthetic_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_buckle','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_buckle_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_cataract','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_cataract_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_comments','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_comments_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_genericprocedure','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_genericprocedure_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_membrane_peel','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_membrane_peel_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_personnel','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_personnel_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_postop_drugs','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_postop_drugs_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_preparation','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_preparation_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_procedurelist','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_procedurelist_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_surgeon','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_surgeon_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_tamponade','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_tamponade_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_vitrectomy','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('et_ophtroperationnote_vitrectomy_version','deleted','tinyint(1) unsigned not null');
-
-		$this->addColumn('ophtroperationnote_anaesthetic_anaesthetic_agent','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_anaesthetic_anaesthetic_agent_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_anaesthetic_anaesthetic_complication','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_anaesthetic_anaesthetic_complication_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_anaesthetic_anaesthetic_complications','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_anaesthetic_anaesthetic_complications_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_buckle_drainage_type','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_buckle_drainage_type_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_cataract_complication','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_cataract_complication_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_cataract_complications','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_cataract_complications_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_cataract_incision_site','deleted','tinyint(1) unsigned not null');
@@ -1259,70 +1203,32 @@ CREATE TABLE `ophtroperationnote_site_subspecialty_postop_instructions_version` 
 		$this->addColumn('ophtroperationnote_cataract_iol_position_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_cataract_iol_type','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_cataract_iol_type_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_cataract_operative_device','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_cataract_operative_device_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_gas_percentage','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_gas_percentage_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_gas_type','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_gas_type_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_gas_volume','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_gas_volume_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_gauge','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_gauge_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_postop_drugs_drug','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_postop_drugs_drug_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_postop_site_subspecialty_drug','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_postop_site_subspecialty_drug_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_preparation_intraocular_solution','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_preparation_intraocular_solution_version','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_preparation_skin_preparation','deleted','tinyint(1) unsigned not null');
 		$this->addColumn('ophtroperationnote_preparation_skin_preparation_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_procedure_element','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_procedure_element_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_procedurelist_procedure_assignment','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_procedurelist_procedure_assignment_version','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_site_subspecialty_postop_instructions','deleted','tinyint(1) unsigned not null');
-		$this->addColumn('ophtroperationnote_site_subspecialty_postop_instructions_version','deleted','tinyint(1) unsigned not null');
 	}
 
 	public function down()
 	{
-		$this->dropColumn('et_ophtroperationnote_anaesthetic','deleted');
-		$this->dropColumn('et_ophtroperationnote_buckle','deleted');
-		$this->dropColumn('et_ophtroperationnote_cataract','deleted');
-		$this->dropColumn('et_ophtroperationnote_comments','deleted');
-		$this->dropColumn('et_ophtroperationnote_genericprocedure','deleted');
-		$this->dropColumn('et_ophtroperationnote_membrane_peel','deleted');
-		$this->dropColumn('et_ophtroperationnote_personnel','deleted');
-		$this->dropColumn('et_ophtroperationnote_postop_drugs','deleted');
-		$this->dropColumn('et_ophtroperationnote_preparation','deleted');
-		$this->dropColumn('et_ophtroperationnote_procedurelist','deleted');
-		$this->dropColumn('et_ophtroperationnote_surgeon','deleted');
-		$this->dropColumn('et_ophtroperationnote_tamponade','deleted');
-		$this->dropColumn('et_ophtroperationnote_vitrectomy','deleted');
-
-		$this->dropColumn('ophtroperationnote_anaesthetic_anaesthetic_agent','deleted');
-		$this->dropColumn('ophtroperationnote_anaesthetic_anaesthetic_complication','deleted');
 		$this->dropColumn('ophtroperationnote_anaesthetic_anaesthetic_complications','deleted');
 		$this->dropColumn('ophtroperationnote_buckle_drainage_type','deleted');
-		$this->dropColumn('ophtroperationnote_cataract_complication','deleted');
 		$this->dropColumn('ophtroperationnote_cataract_complications','deleted');
 		$this->dropColumn('ophtroperationnote_cataract_incision_site','deleted');
 		$this->dropColumn('ophtroperationnote_cataract_incision_type','deleted');
 		$this->dropColumn('ophtroperationnote_cataract_iol_position','deleted');
 		$this->dropColumn('ophtroperationnote_cataract_iol_type','deleted');
-		$this->dropColumn('ophtroperationnote_cataract_operative_device','deleted');
-		$this->dropColumn('ophtroperationnote_gas_percentage','deleted');
 		$this->dropColumn('ophtroperationnote_gas_type','deleted');
 		$this->dropColumn('ophtroperationnote_gas_volume','deleted');
 		$this->dropColumn('ophtroperationnote_gauge','deleted');
-		$this->dropColumn('ophtroperationnote_postop_drugs_drug','deleted');
-		$this->dropColumn('ophtroperationnote_postop_site_subspecialty_drug','deleted');
 		$this->dropColumn('ophtroperationnote_preparation_intraocular_solution','deleted');
 		$this->dropColumn('ophtroperationnote_preparation_skin_preparation','deleted');
-		$this->dropColumn('ophtroperationnote_procedure_element','deleted');
-		$this->dropColumn('ophtroperationnote_procedurelist_procedure_assignment','deleted');
-		$this->dropColumn('ophtroperationnote_site_subspecialty_postop_instructions','deleted');
 
 		$this->dropTable('et_ophtroperationnote_anaesthetic_version');
 		$this->dropTable('et_ophtroperationnote_buckle_version');
