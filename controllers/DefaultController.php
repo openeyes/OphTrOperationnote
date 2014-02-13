@@ -709,6 +709,7 @@ class DefaultController extends BaseEventTypeController
 		$criteria->order = 'name';
 
 		return AnaestheticAgent::model()
+			->active()
 			->with(array(
 					$relation => array(
 						'joinType' => 'JOIN',
