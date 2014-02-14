@@ -828,4 +828,24 @@ class DefaultController extends BaseEventTypeController
 				))
 			->findAll($criteria);
 	}
+
+	/**
+	 * Helper method to get the site for the operation booking on this event
+	 *
+	 * (currently only supports events that have been saved)
+	 *
+	 * @return null
+	 */
+	public function findBookingSite()
+	{
+		if ($pl = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($this->event->id))) {
+			if ($pl->bookingEvent) {
+				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+					return $api->findSiteForBookingEvent($pl->bookingEvent);
+				}
+			}
+		}
+
+		return null;
+	}
 }
