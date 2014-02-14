@@ -199,8 +199,6 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 		$element_type = ElementType::model()->find('event_type_id=? and class_name=?',array($event_type->id,'Element_OphTrOperationnote_ProcedureList'));
 
 		$criteria = new CDbCriteria;
-		$criteria->addCondition('element_type_id = :elementTypeId');
-		$criteria->params[':elementTypeId'] = $element_type->id;
 		$criteria->order = 't.display_order asc';
 
 		if (!in_array(Firm::model()->findByPk(Yii::app()->session['selected_firm_id'])->serviceSubspecialtyAssignment->subspecialty->name,array('Adnexal','Strabismus'))) {
@@ -208,12 +206,6 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 			$criteria->params[':three'] = 3;
 		}
 
-		return CHtml::listData(Eye::model()
-			->with(array(
-				'elementTypes' => array(
-					'joinType' => 'JOIN',
-				),
-			))
-			->findAll($criteria),'id','name');
+		return CHtml::listData(Eye::model()->findAll($criteria),'id','name');
 	}
 }

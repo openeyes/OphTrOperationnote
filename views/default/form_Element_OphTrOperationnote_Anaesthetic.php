@@ -30,7 +30,7 @@
 
 	<div class="element-fields">
 	<?php echo $form->radioButtons($element, 'anaesthetic_type_id', CHtml::listData(AnaestheticType::model()->active()->findAll(array('order'=>'display_order asc')),'id','name'))?>
-	<?php echo $form->radioButtons($element, 'anaesthetist_id', CHtml::listData(Anaesthetist::model()->findAll(array('order'=>'display_order asc')),'id','name'), false, false, $element->hidden)?>
+	<?php echo $form->radioButtons($element, 'anaesthetist_id', CHtml::listData(Anaesthetist::model()->notDeleted()->findAll(array('order'=>'display_order asc')),'id','name'), false, false, $element->hidden)?>
 	<?php if ($element->getSetting('fife')) {?>
 		<?php echo $form->dropDownList($element, 'anaesthetic_witness_id', CHtml::listData($element->surgeons, 'id', 'FullName'), array('empty'=>'- Please select -'), $element->witness_hidden,array('field'=>3));?>
 	<?php }?>
