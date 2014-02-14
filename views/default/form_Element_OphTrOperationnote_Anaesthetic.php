@@ -29,12 +29,12 @@
 
 
 	<div class="element-fields">
-	<?php echo $form->radioButtons($element, 'anaesthetic_type_id', 'anaesthetic_type');?>
-	<?php echo $form->radioButtons($element, 'anaesthetist_id', 'anaesthetist', false, false, $element->hidden)?>
+	<?php echo $form->radioButtons($element, 'anaesthetic_type_id', CHtml::listData(AnaestheticType::model()->findAll(array('order'=>'display_order asc')),'id','name'))?>
+	<?php echo $form->radioButtons($element, 'anaesthetist_id', CHtml::listData(Anaesthetist::model()->findAll(array('order'=>'display_order asc')),'id','name'), false, false, $element->hidden)?>
 	<?php if ($element->getSetting('fife')) {?>
 		<?php echo $form->dropDownList($element, 'anaesthetic_witness_id', CHtml::listData($element->surgeons, 'id', 'FullName'), array('empty'=>'- Please select -'), $element->witness_hidden,array('field'=>3));?>
 	<?php }?>
-	<?php echo $form->radioButtons($element, 'anaesthetic_delivery_id', 'anaesthetic_delivery',false,4, $element->hidden)?>
+	<?php echo $form->radioButtons($element, 'anaesthetic_delivery_id', CHtml::listData(AnaestheticDelivery::model()->findAll(array('order'=>'display_order asc')),'id','name'), false,4, $element->hidden)?>
 	<?php echo $form->multiSelectList($element, 'AnaestheticAgent', 'anaesthetic_agents', 'id', $this->getAnaesthetic_agent_list($element), null, array('empty' => '- Anaesthetic agents -', 'label' => 'Agents'), $element->hidden,false,null,false,false,array('field'=>3))?>
 	<?php echo $form->multiSelectList($element, 'OphTrOperationnote_AnaestheticComplications', 'anaesthetic_complications', 'id', CHtml::listData(OphTrOperationnote_AnaestheticComplications::model()->findAll(), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'), $element->hidden,false,null,false,false,array('field'=>3))?>
 	<?php echo $form->textArea($element, 'anaesthetic_comment', array(), $element->hidden, array('rows'=>4))?>
