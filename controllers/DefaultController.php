@@ -726,9 +726,11 @@ class DefaultController extends BaseEventTypeController
 	 */
 	public function getOperativeDeviceList($element)
 	{
-		$devices = $this->getOperativeDevicesBySiteAndSubspecialty();
-		$list = CHtml::listData($devices,'id','name');
 		$curr_list = CHtml::listData($element->operative_devices, 'id', 'name');
+
+		$devices = $this->getOperativeDevicesBySiteAndSubspecialty(false,array_keys($curr_list));
+		$list = CHtml::listData($devices,'id','name');
+
 		if ($missing = array_diff($curr_list, $list)) {
 			foreach ($missing as $id => $name) {
 				$list[$id] =  $name;
@@ -758,7 +760,7 @@ class DefaultController extends BaseEventTypeController
 	 * @param bool $default
 	 * @return OperativeDevice[]
 	 */
-	protected function getOperativeDevicesBySiteAndSubspecialty($default = false)
+	protected function getOperativeDevicesBySiteAndSubspecialty($default = false, $include_ids = null)
 	{
 		$criteria = new CDbCriteria;
 		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
@@ -773,6 +775,7 @@ class DefaultController extends BaseEventTypeController
 		$criteria->order = 'name asc';
 
 		return OperativeDevice::model()
+			->notDeletedOrPk($include_ids)
 			->with(array(
 					'siteSubspecialtyAssignments' => array(
 						'joinType' => 'JOIN',
