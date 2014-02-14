@@ -34,7 +34,7 @@
 	<?php if ($element->getSetting('fife')) {?>
 		<?php echo $form->dropDownList($element, 'anaesthetic_witness_id', CHtml::listData($element->surgeons, 'id', 'FullName'), array('empty'=>'- Please select -'), $element->witness_hidden,array('field'=>3));?>
 	<?php }?>
-	<?php echo $form->radioButtons($element, 'anaesthetic_delivery_id', CHtml::listData(AnaestheticDelivery::model()->active()->findAll(array('order'=>'display_order asc')),'id','name'), false,4, $element->hidden)?>
+	<?php echo $form->radioButtons($element, 'anaesthetic_delivery_id', CHtml::listData(AnaestheticDelivery::model()->activeOrPk($element->anaesthetic_delivery_id)->findAll(array('order'=>'display_order asc')),'id','name'), false,4, $element->hidden)?>
 	<?php echo $form->multiSelectList($element, 'AnaestheticAgent', 'anaesthetic_agents', 'id', $this->getAnaesthetic_agent_list($element), null, array('empty' => '- Anaesthetic agents -', 'label' => 'Agents'), $element->hidden,false,null,false,false,array('field'=>3))?>
 	<?php echo $form->multiSelectList($element, 'OphTrOperationnote_AnaestheticComplications', 'anaesthetic_complications', 'id', CHtml::listData(OphTrOperationnote_AnaestheticComplications::model()->findAll(), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'), $element->hidden,false,null,false,false,array('field'=>3))?>
 	<?php echo $form->textArea($element, 'anaesthetic_comment', array(), $element->hidden, array('rows'=>4))?>
