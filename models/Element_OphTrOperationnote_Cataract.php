@@ -47,7 +47,7 @@
  * @property OperativeDevice[] $operative_devices
  * @property OphTrOperationnote_IOLType $iol_type
  */
-class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
+class Element_OphTrOperationnote_Cataract extends Element_OnDemand
 {
 	public $service;
 

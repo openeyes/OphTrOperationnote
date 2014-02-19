@@ -18,108 +18,95 @@
  */
 ?>
 
-<section class="sub-element <?php echo $element->elementType->class_name?> on-demand<?php if (@$ondemand) {?> hidden<?php }?><?php if ($this->action->id == 'update' && !$element->event_id) {?> missing<?php }?>"
-		 data-element-type-id="<?php echo $element->elementType->id ?>"
-		 data-element-type-class="<?php echo $element->elementType->class_name ?>"
-		 data-element-type-name="<?php echo $element->elementType->name ?>"
-		 data-element-display-order="<?php echo $element->elementType->display_order ?>">
-	<?php if ($this->action->id == 'update' && !$element->event_id) {?>
-		<div class="alert-box alert">This element is missing and needs to be completed</div>
-	<?php }?>
-	<header class="sub-element-header">
-		<h4 class="sub-element-title"><?php  echo $element->elementType->name; ?></h4>
-	</header>
-
-	<?php
-	$layoutColumns=$form->layoutColumns;
-	$form->layoutColumns=array('label'=>3,'field'=>9);
-	?>
-	<div class="element-fields">
-		<div class="row cataract">
-			<div class="fixed column">
-				<?php
-					$this->widget('application.modules.OphTrOperationnote.widgets.OEEyeDrawWidgetCataract', array(
-							'doodleToolBarArray' => array(
-								0 => array('PhakoIncision','SidePort','IrisHook','PCIOL','ACIOL','PI'),
-								1 => array('MattressSuture','CapsularTensionRing','CornealSuture','ToricPCIOL','LimbalRelaxingIncision'),
+<?php
+$layoutColumns=$form->layoutColumns;
+$form->layoutColumns=array('label'=>3,'field'=>9);
+?>
+<div class="element-fields">
+	<div class="row cataract">
+		<div class="fixed column">
+			<?php
+				$this->widget('application.modules.OphTrOperationnote.widgets.OEEyeDrawWidgetCataract', array(
+						'doodleToolBarArray' => array(
+							0 => array('PhakoIncision','SidePort','IrisHook','PCIOL','ACIOL','PI'),
+							1 => array('MattressSuture','CapsularTensionRing','CornealSuture','ToricPCIOL','LimbalRelaxingIncision'),
+						),
+						'onReadyCommandArray' => array(
+							array('addDoodle', array('AntSeg')),
+							array('addDoodle', array('PhakoIncision')),
+							array('addDoodle', array('PCIOL')),
+							array('deselectDoodles', array()),
+						),
+						'bindingArray' => array(
+							'PhakoIncision' => array(
+								'incisionSite' => array('id' => 'Element_OphTrOperationnote_Cataract_incision_site_id', 'attribute' => 'data-value'),
+								'incisionType' => array('id' => 'Element_OphTrOperationnote_Cataract_incision_type_id', 'attribute' => 'data-value'),
+								'incisionLength' => array('id' => 'Element_OphTrOperationnote_Cataract_length'),
+								'incisionMeridian' => array('id' => 'Element_OphTrOperationnote_Cataract_meridian'),
 							),
+						),
+						'listenerArray' => array(
+							'sidePortController'
+						),
+						'idSuffix' => 'Cataract',
+						'side' => $this->selectedEyeForEyedraw->shortName,
+						'mode' => 'edit',
+						'width' => 300,
+						'height' => 300,
+						'model' => $element,
+						'attribute' => 'eyedraw',
+						'offsetX' => 10,
+						'offsetY' => 10,
+						'template' => 'OEEyeDrawWidgetCataract',
+					))?>
+				<?php echo $form->hiddenInput($element, 'report2', $element->report2)?>
+				<?php
+						$this->widget('application.modules.OphTrOperationnote.widgets.OEEyeDrawWidgetCataract', array(
 							'onReadyCommandArray' => array(
-								array('addDoodle', array('AntSeg')),
-								array('addDoodle', array('PhakoIncision')),
-								array('addDoodle', array('PCIOL')),
+								array('addDoodle', array('OperatingTable')),
+								array('addDoodle', array('Surgeon')),
 								array('deselectDoodles', array()),
 							),
-							'bindingArray' => array(
-								'PhakoIncision' => array(
-									'incisionSite' => array('id' => 'Element_OphTrOperationnote_Cataract_incision_site_id', 'attribute' => 'data-value'),
-									'incisionType' => array('id' => 'Element_OphTrOperationnote_Cataract_incision_type_id', 'attribute' => 'data-value'),
-									'incisionLength' => array('id' => 'Element_OphTrOperationnote_Cataract_length'),
-									'incisionMeridian' => array('id' => 'Element_OphTrOperationnote_Cataract_meridian'),
-								),
+							'syncArray' => array(
+								'Cataract' => array('Surgeon' => array('PhakoIncision' => array('parameters' => array('rotation')))),
 							),
-							'listenerArray' => array(
-								'sidePortController'
-							),
-							'idSuffix' => 'Cataract',
+							'idSuffix' => 'Position',
 							'side' => $this->selectedEyeForEyedraw->shortName,
 							'mode' => 'edit',
-							'width' => 300,
-							'height' => 300,
+							'width' => 140,
+							'height' => 140,
 							'model' => $element,
-							'attribute' => 'eyedraw',
+							'attribute' => 'eyedraw2',
 							'offsetX' => 10,
 							'offsetY' => 10,
-							'template' => 'OEEyeDrawWidgetCataract',
-						))?>
-					<?php echo $form->hiddenInput($element, 'report2', $element->report2)?>
-					<?php
-							$this->widget('application.modules.OphTrOperationnote.widgets.OEEyeDrawWidgetCataract', array(
-								'onReadyCommandArray' => array(
-									array('addDoodle', array('OperatingTable')),
-									array('addDoodle', array('Surgeon')),
-									array('deselectDoodles', array()),
-								),
-								'syncArray' => array(
-									'Cataract' => array('Surgeon' => array('PhakoIncision' => array('parameters' => array('rotation')))),
-								),
-								'idSuffix' => 'Position',
-								'side' => $this->selectedEyeForEyedraw->shortName,
-								'mode' => 'edit',
-								'width' => 140,
-								'height' => 140,
-								'model' => $element,
-								'attribute' => 'eyedraw2',
-								'offsetX' => 10,
-								'offsetY' => 10,
-								'toolbar' => false,
-								'template' => 'OEEyeDrawWidgetSurgeonPosition',
-							))
-						?>
-			</div>
-			<div class="fluid column">
-				<div class="row">
-					<div class="large-12 column">
-						<?php echo $form->dropDownList($element, 'incision_site_id', CHtml::listData(OphTrOperationnote_IncisionSite::model()->notDeletedOrPk($element->incision_site_id)->findAll(), 'id', 'name'),array('empty'=>'- Please select -','textAttribute'=>'data-value'),false,array('field'=>4))?>
-						<?php echo $form->textField($element, 'length', array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
-						<?php echo $form->textField($element, 'meridian', array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
-						<?php echo $form->dropDownList($element, 'incision_type_id', CHtml::listData(OphTrOperationnote_IncisionType::model()->notDeletedOrPk($element->incision_type_id)->findAll(), 'id', 'name'),array('empty'=>'- Please select -','textAttribute'=>'data-value'),false,array('field'=>4))?>
-						<?php echo $form->textArea($element, 'report',array(),false,array('rows'=>6))?>
-						<?php echo $form->dropDownList($element, 'iol_type_id', array(
-								CHtml::listData(OphTrOperationnote_IOLType::model()->activeOrPk($element->iol_type_id)->findAll(array('condition'=>'private=0','order'=>'display_order asc')),'id','name'),
-								CHtml::listData(OphTrOperationnote_IOLType::model()->activeOrPk($element->iol_type_id)->findAll(array('condition'=>'private=1','order'=>'display_order')),'id','name'),
-							),
-							array('empty' => '- Please select -','divided' => true),$element->iol_hidden,array('field' => 4))?>
-						<?php echo $form->textField($element, 'predicted_refraction',array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
-						<?php echo $form->textField($element, 'iol_power', array('hide' => $element->iol_hidden),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
-						<?php echo $form->dropDownList($element, 'iol_position_id', CHtml::listData(OphTrOperationnote_IOLPosition::model()->notDeletedOrPk($element->iol_position_id)->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'),$element->iol_hidden,array('field'=>4))?>
-						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractOperativeDevices', 'operative_devices', 'id', $this->getOperativeDeviceList($element), $this->getOperativeDeviceDefaults(), array('empty' => '- Devices -', 'label' => 'Devices'),false,false,null,false,false,array('field'=>4))?>
-						<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractComplications', 'complications', 'id', CHtml::listData(OphTrOperationnote_CataractComplications::model()->notDeletedOrPk($element->cataractComplicationValues)->findAll(array('order'=>'display_order asc')), 'id', 'name'), null, array('empty' => '- Complications -', 'label' => 'Complications'),false,false,null,false,false,array('field'=>4))?>
-						<?php echo $form->textArea($element, 'complication_notes',array(),false,array('rows'=>6))?>
-					</div>
+							'toolbar' => false,
+							'template' => 'OEEyeDrawWidgetSurgeonPosition',
+						))
+					?>
+		</div>
+		<div class="fluid column">
+			<div class="row">
+				<div class="large-12 column">
+					<?php echo $form->dropDownList($element, 'incision_site_id', CHtml::listData(OphTrOperationnote_IncisionSite::model()->notDeletedOrPk($element->incision_site_id)->findAll(), 'id', 'name'),array('empty'=>'- Please select -','textAttribute'=>'data-value'),false,array('field'=>4))?>
+					<?php echo $form->textField($element, 'length', array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
+					<?php echo $form->textField($element, 'meridian', array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
+					<?php echo $form->dropDownList($element, 'incision_type_id', CHtml::listData(OphTrOperationnote_IncisionType::model()->notDeletedOrPk($element->incision_type_id)->findAll(), 'id', 'name'),array('empty'=>'- Please select -','textAttribute'=>'data-value'),false,array('field'=>4))?>
+					<?php echo $form->textArea($element, 'report',array(),false,array('rows'=>6))?>
+					<?php echo $form->dropDownList($element, 'iol_type_id', array(
+							CHtml::listData(OphTrOperationnote_IOLType::model()->activeOrPk($element->iol_type_id)->findAll(array('condition'=>'private=0','order'=>'display_order asc')),'id','name'),
+							CHtml::listData(OphTrOperationnote_IOLType::model()->activeOrPk($element->iol_type_id)->findAll(array('condition'=>'private=1','order'=>'display_order')),'id','name'),
+						),
+						array('empty' => '- Please select -','divided' => true),$element->iol_hidden,array('field' => 4))?>
+					<?php echo $form->textField($element, 'predicted_refraction',array(),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
+					<?php echo $form->textField($element, 'iol_power', array('hide' => $element->iol_hidden),array(),array_merge($form->layoutColumns,array('field'=>2)))?>
+					<?php echo $form->dropDownList($element, 'iol_position_id', CHtml::listData(OphTrOperationnote_IOLPosition::model()->notDeletedOrPk($element->iol_position_id)->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty'=>'- Please select -'),$element->iol_hidden,array('field'=>4))?>
+					<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractOperativeDevices', 'operative_devices', 'id', $this->getOperativeDeviceList($element), $this->getOperativeDeviceDefaults(), array('empty' => '- Devices -', 'label' => 'Devices'),false,false,null,false,false,array('field'=>4))?>
+					<?php echo $form->multiSelectList($element, 'OphTrOperationnote_CataractComplications', 'complications', 'id', CHtml::listData(OphTrOperationnote_CataractComplications::model()->notDeletedOrPk($element->cataractComplicationValues)->findAll(array('order'=>'display_order asc')), 'id', 'name'), null, array('empty' => '- Complications -', 'label' => 'Complications'),false,false,null,false,false,array('field'=>4))?>
+					<?php echo $form->textArea($element, 'complication_notes',array(),false,array('rows'=>6))?>
 				</div>
 			</div>
 		</div>
 	</div>
-</section>
+</div>
 
 <?php $form->layoutColumns=$layoutColumns;?>

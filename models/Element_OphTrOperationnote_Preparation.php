@@ -27,9 +27,10 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class Element_OphTrOperationnote_Preparation extends BaseEventTypeElement
+class Element_OphTrOperationnote_Preparation extends Element_OpNote
 {
 	public $service;
+	public $useContainerView = false;
 
 	/**
 	 * Returns the static model of the specified AR class.

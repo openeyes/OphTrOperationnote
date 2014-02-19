@@ -28,7 +28,7 @@
  * @property Event $event
  * @property OphTrOperationnote_OperationDrug[] $drugs
  */
-class Element_OphTrOperationnote_PostOpDrugs extends BaseEventTypeElement
+class Element_OphTrOperationnote_PostOpDrugs extends Element_OpNote
 {
 	/**
 	 * Returns the static model of the specified AR class.

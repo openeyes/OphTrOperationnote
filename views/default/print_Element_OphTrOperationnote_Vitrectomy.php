@@ -18,10 +18,52 @@
  */
 ?>
 
-<h3 class="elementTypeName"><?php echo $element->elementType->name ?></h3>
-<div class="procedureContainer clearfix">
-	<div class="rightHalf">
-		<div class="detailRow clearfix">
+<section class="element <?php echo $element->elementType->class_name?> row">
+	<h3 class="element-title"><?php echo $element->elementType->name ?></h3>
+	<div class="row">
+		<div class="large-6 column">
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('gauge_id')); ?>:
+					</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value">
+						<?php echo $element->gauge->value ?>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('pvd_induced')); ?>:
+					</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value">
+						<?php echo $element->pvd_induced ? 'Yes' : 'No'; ?>
+					</div>
+				</div>
+			</div>
+
+			<?php if ($element->comments) {?>
+				<div class="row">
+					<div class="large-6 column text-right">
+						<div class="data-label">
+							<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>:
+						</div>
+					</div>
+					<div class="large-6 column">
+						<div class="data-value">
+							<?php echo CHtml::encode($element->comments)?>
+						</div>
+					</div>
+				</div>
+			<?php }?>
+		</div>
+		<div class="large-6 column">
 			<?php
 			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 				'idSuffix'=>'Vitrectomy',
@@ -35,35 +77,4 @@
 			?>
 		</div>
 	</div>
-
-	<div class="leftHalf">
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('gauge_id')); ?>:
-			</div>
-			<div class="value">
-				<?php echo $element->gauge->value ?>
-			</div>
-		</div>
-
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('pvd_induced')); ?>:
-			</div>
-			<div class="value">
-				<?php echo $element->pvd_induced ? 'Yes' : 'No'; ?>
-			</div>
-		</div>
-
-		<?php if ($element->comments) {?>
-			<div class="detailRow">
-				<div class="label">
-					<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>:
-				</div>
-				<div class="value">
-					<?php echo CHtml::encode($element->comments)?>
-				</div>
-			</div>
-		<?php }?>
-	</div>
-</div>
+</section>

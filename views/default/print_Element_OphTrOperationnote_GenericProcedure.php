@@ -17,14 +17,16 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-<h3><?php echo $element->getElementTypeName() ?></h3>
-<div class="procedureContainer clearfix">
-	<div class="detailRow clearVal">
-		<div class="label">
-			Comment
-		</div>
-		<div class="value">
-			<strong><?php echo CHtml::encode($element->comments)?></strong>
+<section class="element data-row <?php echo $element->elementType->class_name?>">
+	<h3 class="element-title"><?php echo $element->getElementTypeName() ?></h3>
+	<h4 class="data-title">Comment</h4>
+	<div class="details">
+		<div class="element-data">
+			<div class="data-row">
+				<div class="data-value">
+					<?php echo CHtml::encode($element->comments)?>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+</section>

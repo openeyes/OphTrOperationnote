@@ -18,7 +18,7 @@
  */
 ?>
 <?php $this->renderPartial(
-		'form_' . get_class($element),
-		array('element' => $element, 'data' => $data, 'form' => $form, 'child' => $child),
-		false, false
+	$element->form_view,
+	array('element' => $element, 'data' => $data, 'form' => $form, 'child' => $child),
+	false, false
 )?>
