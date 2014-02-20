@@ -287,7 +287,7 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 		$complication_values = array();
 
 		foreach ($this->anaesthetic_complication_assignments as $complication_assignment) {
-			$complication_values[] = $complication_assignment->complication_id;
+			$complication_values[] = $complication_assignment->anaesthetic_complication_id;
 		}
 
 		return $complication_values = array();
