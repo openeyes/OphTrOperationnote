@@ -351,7 +351,6 @@ CREATE TABLE `et_ophtroperationnote_procedurelist_version` (
 	`eye_id` int(10) unsigned NOT NULL,
 	`booking_event_id` int(10) unsigned DEFAULT NULL,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `event_id` (`event_id`),
 	KEY `acv_et_ophtroperationnote_procedurelist_last_modified_user_id_fk` (`last_modified_user_id`),
 	KEY `acv_et_ophtroperationnote_procedurelist_created_user_id_fk` (`created_user_id`),
 	KEY `acv_et_ophtroperationnote_procedurelist_eye_id_fk` (`eye_id`),
