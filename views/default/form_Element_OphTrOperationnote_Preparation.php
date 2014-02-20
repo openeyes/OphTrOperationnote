@@ -31,8 +31,8 @@
 			<?php echo $form->slider($element, 'spo2', array('min'=>0,'max'=>100,'step'=>1,'append'=>'%'))?>
 			<?php echo $form->slider($element, 'oxygen', array('min'=>0,'max'=>100,'step'=>1,'append'=>'%'))?>
 			<?php echo $form->slider($element, 'pulse', array('min'=>1, 'max'=>300,'step'=>1))?>
-			<?php echo $form->dropDownList($element, 'skin_preparation_id', CHtml::listData(OphTrOperationnote_PreparationSkinPreparation::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
-			<?php echo $form->dropDownList($element, 'intraocular_solution_id', CHtml::listData(OphTrOperationnote_PreparationIntraocularSolution::model()->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
+			<?php echo $form->dropDownList($element, 'skin_preparation_id', CHtml::listData(OphTrOperationnote_PreparationSkinPreparation::model()->activeOrPk($element->skin_preparation_id)->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
+			<?php echo $form->dropDownList($element, 'intraocular_solution_id', CHtml::listData(OphTrOperationnote_PreparationIntraocularSolution::model()->activeOrPk($element->intraocular_solution_id)->findAll(array('order'=>'display_order')), 'id', 'name'),array('empty' => '- Please select -'))?>
 		</div>
 	</section>
 <?php }?>

@@ -279,4 +279,17 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 		return parent::beforeValidate();
 	}
 
+	/**
+	 * Get ids of anaesthetic complications in use by the element
+	 */
+	public function getAnaestheticComplicationValues()
+	{
+		$complication_values = array();
+
+		foreach ($this->anaesthetic_complication_assignments as $complication_assignment) {
+			$complication_values[] = $complication_assignment->complication_id;
+		}
+
+		return $complication_values = array();
+	}
 }

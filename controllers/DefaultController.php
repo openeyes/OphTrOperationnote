@@ -792,7 +792,12 @@ class DefaultController extends BaseEventTypeController
 	 */
 	public function getPostOpDrugList($element)
 	{
-		$drugs = $this->getPostOpDrugsBySiteAndSubspecialty();
+		$drug_ids = array();
+		foreach ($element->drugs as $drug) {
+			$drug_ids[] = $drug->id;
+		}
+
+		$drugs = $this->getPostOpDrugsBySiteAndSubspecialty(false,$drug_ids);
 		$list = CHtml::listData($drugs,'id','name');
 		$curr_list = CHtml::listData($element->drugs, 'id', 'name');
 		if ($missing = array_diff($curr_list, $list)) {
@@ -809,7 +814,7 @@ class DefaultController extends BaseEventTypeController
 	 * @param bool $default
 	 * @return OphTrOperationnote_PostopDrug[]
 	 */
-	protected function getPostOpDrugsBySiteAndSubspecialty($default=false)
+	protected function getPostOpDrugsBySiteAndSubspecialty($default=false, $include_ids=null)
 	{
 		$criteria = new CDbCriteria;
 		$criteria->addCondition('subspecialty_id = :subspecialtyId and site_id = :siteId');
@@ -829,6 +834,7 @@ class DefaultController extends BaseEventTypeController
 						'joinType' => 'JOIN',
 					),
 				))
+			->activeOrPk($include_ids)
 			->findAll($criteria);
 	}
 
