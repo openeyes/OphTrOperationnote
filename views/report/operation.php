@@ -9,7 +9,7 @@
 						<?php echo CHtml::label('Surgeon', 'surgeon_id') ?>
 					</div>
 					<div class="large-4 column end">
-						<?php echo CHtml::dropDownList('surgeon_id', '', $surgeons) ?>
+						<?php echo CHtml::dropDownList('surgeon_id', null, $surgeons, array('empty' => 'All surgeons')) ?>
 					</div>
 				</div>
 				<div class="row field-row">
