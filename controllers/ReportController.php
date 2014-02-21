@@ -27,6 +27,29 @@ class ReportController extends BaseController
 		);
 	}
 
+	protected function array2Csv(array $data)
+	{
+		if (count($data) == 0) {
+			return null;
+		}
+		ob_start();
+		$df = fopen("php://output", 'w');
+		fputcsv($df, array_keys(reset($data)));
+		foreach ($data as $row) {
+			fputcsv($df, $row);
+		}
+		fclose($df);
+		return ob_get_clean();
+	}
+
+	protected function sendCsvHeaders($filename)
+	{
+		header("Content-type: text/csv");
+		header("Content-Disposition: attachment; filename=$filename");
+		header("Pragma: no-cache");
+		header("Expires: 0");
+	}
+
 	public function actionIndex()
 	{
 		$this->render('index');
@@ -53,29 +76,18 @@ class ReportController extends BaseController
 			}
 			$results = $this->getOperations($surgeon, null, null, $date_from, $date_to);
 
-			$filename = 'operation_report_'.date('YmdHis');
-			header("Content-type: text/csv");
-			header("Content-Disposition: attachment; filename=$filename");
-			header("Pragma: no-cache");
-			header("Expires: 0");
+			$filename = 'operation_report_' . date('YmdHis') . '.csv';
+			$this->sendCsvHeaders($filename);
 
-			echo "Operation report for ";
+			echo "\"Operation report for ";
 			if($surgeon) {
 				echo "$surgeon->first_name $surgeon->last_name";
 			} else {
 				echo "all surgeons";
 			}
-			echo ", from $date_from to $date_to\n";
+			echo " from $date_from to $date_to\"\n";
 
-			$header = "operation_date,patient_hosnum,patient_firstname,patient_surname,patient_dob,eye,procedures,complications";
-			if ($surgeon) {
-				$header .= ',surgeon_role';
-			}
-			echo "$header\n";
-
-			foreach($results as $result) {
-				echo '"' . implode('","', $result) . "\"\n";
-			}
+			$this->array2csv($results);
 		} else {
 			$context['surgeons'] = CHtml::listData(User::model()->findAll(array('condition' => 'is_doctor = 1', 'order' => 'first_name,last_name')), 'id', 'fullname');
 			$this->render('operation', $context);
@@ -170,25 +182,25 @@ class ReportController extends BaseController
 
 
 			$record = array(
-				date('j M Y', strtotime($row['created_date'])),
-				$row['hos_num'],
-				$row['first_name'],
-				$row['last_name'],
-				date('j M Y', strtotime($row['dob'])),
-				$row['eye'],
-				implode(', ', $procedures),
-				implode(', ', $complications),
+				"operation_date" => date('j M Y', strtotime($row['created_date'])),
+				"patient_hosnum" => $row['hos_num'],
+				"patient_firstname" => $row['first_name'],
+				"patient_surname" => $row['last_name'],
+				"patient_dob" => date('j M Y', strtotime($row['dob'])),
+				"eye" => $row['eye'],
+				"procedures" => implode(', ', $procedures),
+				"complications" => implode(', ', $complications),
 			);
 
 			if ($surgeon) {
 				if ($row['surgeon_id'] == $surgeon->id) {
-					$record[] = 'Surgeon';
+					$record['surgeon_role'] = 'Surgeon';
 				} else {
 					if ($row['assistant_id'] == $surgeon->id) {
-						$record[] = 'Assistant surgeon';
+						$record['surgeon_role'] = 'Assistant surgeon';
 					} else {
 						if ($row['supervising_surgeon_id'] == $surgeon->id) {
-							$record[] = 'Supervising surgeon';
+							$record['surgeon_role'] = 'Supervising surgeon';
 						}
 					}
 				}
