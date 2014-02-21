@@ -4,8 +4,8 @@
 		<div class="panel">
 			<h2>Operation Report</h2>
 			<form>
-				<?php echo CHtml::label('Surgeon','surgeon') ?>
-				<?php echo CHtml::dropDownList('surgeon', '', $surgeons) ?>
+				<?php echo CHtml::label('Surgeon','surgeon_id') ?>
+				<?php echo CHtml::dropDownList('surgeon_id', '', $surgeons) ?>
 				<?php echo CHtml::label('Date From','date_from') ?>
 				<?php echo CHtml::textField('date_from') ?>
 				<?php echo CHtml::label('Date To','date_to') ?>

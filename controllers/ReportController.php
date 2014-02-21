@@ -35,13 +35,13 @@ class ReportController extends BaseController
 	public function actionOperation()
 	{
 		if (isset($_GET['yt0'])) {
-			$user = null;
+			$surgeon = null;
 			$date_from = date('Y-m-d', strtotime("-1 year"));
 			$date_to = date('Y-m-d');
 
 			if (@$_GET['surgeon_id'] && (int)$_GET['surgeon_id']) {
 				$surgeon_id = (int)$_GET['surgeon_id'];
-				if(!$user = User::model()->findByPk($surgeon_id)) {
+				if(!$surgeon = User::model()->findByPk($surgeon_id)) {
 					throw new CException("Unknown surgeon $surgeon_id");
 				}
 			}
@@ -51,7 +51,7 @@ class ReportController extends BaseController
 			if (@$_GET['date_to'] && date('Y-m-d', strtotime($_GET['date_to']))) {
 				$date_to = date('Y-m-d', strtotime($_GET['date_to']));
 			}
-			$results = $this->getOperations(@$user, null, null, $date_from, $date_to);
+			$results = $this->getOperations(@$surgeon, null, null, $date_from, $date_to);
 
 			$filename = 'operation_report_'.date('YmdHis');
 			header("Content-type: text/csv");
