@@ -77,21 +77,13 @@ class ReportController extends BaseController
 				echo '"' . implode('","', $result) . "\"\n";
 			}
 		} else {
-			$context['surgeons'] = CHtml::listData(User::model()->findAll('is_doctor = 1'), 'id', 'fullname');
+			$context['surgeons'] = CHtml::listData(User::model()->findAll(array('condition' => 'is_doctor = 1', 'order' => 'first_name,last_name')), 'id', 'fullname');
 			$this->render('operation', $context);
 		}
 	}
 
-	public function actionCataract()
-	{
-		$this->render('cataract');
-	}
-
-	public function actionDiagnosis()
-	{
-	}
-
 	/**
+	 * Generate operation report
 	 * @param User $surgeon
 	 * @param array $filter_procedures
 	 * @param array $filter_complications
