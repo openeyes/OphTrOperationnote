@@ -74,7 +74,7 @@ class ReportController extends BaseController
 			echo "$header\n";
 
 			foreach($results as $result) {
-				echo '"' . implode('","', $result) . '"';
+				echo '"' . implode('","', $result) . "\"\n";
 			}
 		} else {
 			$context['surgeons'] = CHtml::listData(User::model()->findAll('is_doctor = 1'), 'id', 'fullname');
@@ -130,10 +130,7 @@ class ReportController extends BaseController
 
 			$complications = array();
 			if ($row['cat_id']) {
-				foreach (OphTrOperationnote_CataractComplication::model()->findAll(
-							 'cataract_id=?',
-							 array($row['cat_id'])
-						 ) as $complication) {
+				foreach (OphTrOperationnote_CataractComplication::model()->findAll('cataract_id = ?', array($row['cat_id'])) as $complication) {
 					$complications[$complication->complication->name] = $complication->complication->name;
 				}
 			}
@@ -153,10 +150,7 @@ class ReportController extends BaseController
 			}
 
 			$procedures = array();
-			foreach (OphTrOperationnote_ProcedureListProcedureAssignment::model()->findAll(
-						 'procedurelist_id=?',
-						 array($row['plid'])
-					 ) as $pa) {
+			foreach (OphTrOperationnote_ProcedureListProcedureAssignment::model()->findAll('procedurelist_id = ?', array($row['plid'])) as $pa) {
 				$procedures[$pa->procedure->term] = $pa->procedure->term;
 			}
 			$matched_procedures = 0;
