@@ -87,9 +87,9 @@ class ReportController extends BaseController
 			}
 			echo " from $date_from to $date_to\"\n";
 
-			$this->array2csv($results);
+			echo $this->array2Csv($results);
 		} else {
-			$context['surgeons'] = CHtml::listData(User::model()->findAll(array('condition' => 'is_doctor = 1', 'order' => 'first_name,last_name')), 'id', 'fullname');
+			$context['surgeons'] = CHtml::listData(User::model()->findAll(array('condition' => 'is_surgeon = 1', 'order' => 'first_name,last_name')), 'id', 'fullname');
 			$this->render('operation', $context);
 		}
 	}
