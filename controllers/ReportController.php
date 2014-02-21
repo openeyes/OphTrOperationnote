@@ -51,7 +51,7 @@ class ReportController extends BaseController
 			if (@$_GET['date_to'] && date('Y-m-d', strtotime($_GET['date_to']))) {
 				$date_to = date('Y-m-d', strtotime($_GET['date_to']));
 			}
-			$results = $this->getOperations(@$surgeon, null, null, $date_from, $date_to);
+			$results = $this->getOperations($surgeon, null, null, $date_from, $date_to);
 
 			$filename = 'operation_report_'.date('YmdHis');
 			header("Content-type: text/csv");
@@ -60,15 +60,15 @@ class ReportController extends BaseController
 			header("Expires: 0");
 
 			echo "Operation report for ";
-			if($user) {
-				echo "$user->first_name $user->last_name";
+			if($surgeon) {
+				echo "$surgeon->first_name $surgeon->last_name";
 			} else {
 				echo "all surgeons";
 			}
 			echo ", from $date_from to $date_to\n";
 
 			$header = "operation_date,patient_hosnum,patient_firstname,patient_surname,patient_dob,eye,procedures,complications";
-			if ($user) {
+			if ($surgeon) {
 				$header .= ',surgeon_role';
 			}
 			echo "$header\n";
@@ -106,7 +106,7 @@ class ReportController extends BaseController
 
 		$command = Yii::app()->db->createCommand()
 			->select(
-				"e.id, c.first_name, c.last_name, e.created_date, su.surgeon_id, su.assistant_id, su.supervising_surgeon_id, p.hos_num, p.dob, pl.id as plid, cat.id as cat_id, pl.eye_id"
+				"e.id, c.first_name, c.last_name, e.created_date, su.surgeon_id, su.assistant_id, su.supervising_surgeon_id, p.hos_num, p.dob, pl.id as plid, cat.id as cat_id, eye.name AS eye"
 			)
 			->from("event e")
 			->join("episode ep", "e.episode_id = ep.id")
@@ -114,6 +114,7 @@ class ReportController extends BaseController
 			->join("et_ophtroperationnote_procedurelist pl", "pl.event_id = e.id")
 			->join("et_ophtroperationnote_surgeon su", "su.event_id = e.id")
 			->join("contact c", "p.contact_id = c.id")
+			->join("eye", "eye.id = pl.eye_id")
 			->leftJoin("et_ophtroperationnote_cataract cat", "cat.event_id = e.id")
 			->where("e.deleted = 0 and ep.deleted = 0 and e.created_date >= :from_date and e.created_date < :to_date + interval 1 day");
 		$params = array(':from_date' => $from_date, ':to_date' => $to_date);
@@ -126,12 +127,16 @@ class ReportController extends BaseController
 		}
 
 		$results = array();
+		$cache = array();
 		foreach ($command->queryAll(true, $params) as $row) {
 
 			$complications = array();
 			if ($row['cat_id']) {
 				foreach (OphTrOperationnote_CataractComplication::model()->findAll('cataract_id = ?', array($row['cat_id'])) as $complication) {
-					$complications[$complication->complication->name] = $complication->complication->name;
+					if(!isset($cache['complications'][$complication->complication_id])) {
+						$cache['complications'][$complication->complication_id] = $complication->complication->name;
+					}
+					$complications[$cache['complications'][$complication->complication_id]] = $cache['complications'][$complication->complication_id];
 				}
 			}
 			$matched_complications = 0;
@@ -151,7 +156,10 @@ class ReportController extends BaseController
 
 			$procedures = array();
 			foreach (OphTrOperationnote_ProcedureListProcedureAssignment::model()->findAll('procedurelist_id = ?', array($row['plid'])) as $pa) {
-				$procedures[$pa->procedure->term] = $pa->procedure->term;
+				if(!isset($cache['procedures'][$pa->proc_id])) {
+					$cache['procedures'][$pa->proc_id] = $pa->procedure->term;
+				}
+				$procedures[$cache['procedures'][$pa->proc_id]] = $cache['procedures'][$pa->proc_id];
 			}
 			$matched_procedures = 0;
 			if ($filter_procedures) {
@@ -173,11 +181,11 @@ class ReportController extends BaseController
 				date('j M Y', strtotime($row['created_date'])),
 				$row['hos_num'],
 				$row['first_name'],
-				$row['last_name'] . '"',
+				$row['last_name'],
 				date('j M Y', strtotime($row['dob'])),
-				Eye::model()->findByPk($row['eye_id'])->name,
-				implode(',', $procedures),
-				implode(',', $complications),
+				$row['eye'],
+				implode(', ', $procedures),
+				implode(', ', $complications),
 			);
 
 			if ($surgeon) {
