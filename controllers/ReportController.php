@@ -75,8 +75,8 @@ class ReportController extends BaseController
 				$date_to = date('Y-m-d', strtotime($_GET['date_to']));
 			}
 			$filter_procedures = null;
-			if (@$_GET['Procedure_procs']) {
-				$filter_procedures = $_GET['Procedure_procs'];
+			if (@$_GET['Procedures_procs']) {
+				$filter_procedures = $_GET['Procedures_procs'];
 			}
 			$filter_complications =  null;
 			if (@$_GET['complications']) {
@@ -172,7 +172,7 @@ class ReportController extends BaseController
 				if(!isset($cache['procedures'][$pa->proc_id])) {
 					$cache['procedures'][$pa->proc_id] = $pa->procedure->term;
 				}
-				$procedures[$cache['procedures'][$pa->proc_id]] = $cache['procedures'][$pa->proc_id];
+				$procedures[(string)$pa->proc_id] = $cache['procedures'][$pa->proc_id];
 			}
 			$matched_procedures = 0;
 			if ($filter_procedures) {
