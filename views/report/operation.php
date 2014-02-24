@@ -12,6 +12,24 @@
 						<?php echo CHtml::dropDownList('surgeon_id', null, $surgeons, array('empty' => 'All surgeons')) ?>
 					</div>
 				</div>
+				<?php
+					$this->widget('application.widgets.ProcedureSelection',array(
+									'newRecord' => true,
+									'last' => true,
+							));
+				?>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Cataract Complications', 'cat_complications'); ?>
+					</div>
+					<div class="large-4 column end">
+						<?php $this->widget('application.widgets.MultiSelectList', array(
+								'field' => 'complications',
+								'options' => CHtml::listData(OphTrOperationnote_CataractComplications::model()->findAll(), 'id', 'name'),
+								'htmlOptions' => array('empty' => '- Complications -', 'multiple' => 'multiple', 'nowrapper' => true)
+						)); ?>
+					</div>
+				</div>
 				<div class="row field-row">
 					<div class="large-2 column">
 						<?php echo CHtml::label('Date From', 'date_from') ?>

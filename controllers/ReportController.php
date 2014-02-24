@@ -74,7 +74,15 @@ class ReportController extends BaseController
 			if (@$_GET['date_to'] && date('Y-m-d', strtotime($_GET['date_to']))) {
 				$date_to = date('Y-m-d', strtotime($_GET['date_to']));
 			}
-			$results = $this->getOperations($surgeon, null, null, $date_from, $date_to);
+			$filter_procedures = null;
+			if (@$_GET['Procedure_procs']) {
+				$filter_procedures = $_GET['Procedure_procs'];
+			}
+			$filter_complications =  null;
+			if (@$_GET['complications']) {
+				$filter_complications = $_GET['complications'];
+			}
+			$results = $this->getOperations($surgeon, $filter_procedures, $filter_complications, $date_from, $date_to);
 
 			$filename = 'operation_report_' . date('YmdHis') . '.csv';
 			$this->sendCsvHeaders($filename);
@@ -140,9 +148,10 @@ class ReportController extends BaseController
 					if(!isset($cache['complications'][$complication->complication_id])) {
 						$cache['complications'][$complication->complication_id] = $complication->complication->name;
 					}
-					$complications[$cache['complications'][$complication->complication_id]] = $cache['complications'][$complication->complication_id];
+					$complications[(string)$complication->complication_id] = $cache['complications'][$complication->complication_id];
 				}
 			}
+
 			$matched_complications = 0;
 			if ($filter_complications) {
 				foreach ($filter_complications as $filter_complication) {
