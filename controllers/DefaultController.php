@@ -335,25 +335,14 @@ class DefaultController extends BaseEventTypeController
 			}
 
 			$element->setDefaultOptions();
-
-			$this->renderPartial(
-				'create' . '_' . $element->create_view,
-				array('element' => $element, 'data' => array(), 'form' => $form, 'ondemand' => true),
-				false, true
-			);
+			$this->renderElement($element, 'create', $form, array(), array('ondemand' => true), false, true);
 		}
 
 		if (count($procedureSpecificElements) == 0) {
 			$element = new Element_OphTrOperationnote_GenericProcedure;
 			$element->proc_id = $proc->id;
-
 			$element->setDefaultOptions();
-
-			$this->renderPartial(
-				'create' . '_' . $element->create_view,
-				array('element' => $element, 'data' => array(), 'form' => $form, 'ondemand' => true),
-				false, true
-			);
+			$this->renderElement($element, 'create', $form, array(), array('ondemand' => true), false, true);
 		}
 	}
 

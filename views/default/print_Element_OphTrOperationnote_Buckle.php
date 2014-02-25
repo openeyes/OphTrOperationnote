@@ -18,10 +18,63 @@
  */
 ?>
 
-<h3 class="elementTypeName"><?php echo $element->elementType->name ?></h3>
-<div class="procedureContainer clearfix">
-	<div class="rightHalf">
-		<div class="detailRow clearfix">
+<section class="element <?php echo $element->elementType->class_name?> row">
+	<h3 class="element-title"><?php echo $element->elementType->name ?></h3>
+	<div class="row">
+		<div class="large-6 column">
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('drainage_type_id')); ?>:
+					</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value">
+						<?php echo $element->drainage_type->name ?>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('drain_haem')); ?>:
+					</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value">
+						<?php echo $element->drain_haem ? 'Yes' : 'No'; ?>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('deep_suture')); ?>:
+					</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value">
+						<?php echo $element->deep_suture ? 'Yes' : 'No'; ?>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="data-row">
+				<h4><?php echo CHtml::encode($element->getAttributeLabel('report')); ?></h4>
+				<div class="details">
+					<div class="data-value"><?php echo CHtml::encode($element->report)?></div>
+				</div>
+			</div>
+
+			<div class="data-row">
+				<h4><?php echo CHtml::encode($element->getAttributeLabel('comments')); ?></h4>
+				<div class="details">
+					<div class="data-value"><?php echo CHtml::encode($element->comments)?></div>
+				</div>
+			</div>
+		</div>
+		<div class="large-6 column">
 			<?php
 			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 				'idSuffix'=> 'Buckle',
@@ -33,53 +86,6 @@
 				'attribute'=>'eyedraw',
 			));
 			?>
-		</div>
-	</div>
-
-	<div class="leftHalf">
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('drainage_type_id')); ?>:
-			</div>
-			<div class="value">
-				<?php echo $element->drainage_type->name ?>
-			</div>
-		</div>
-
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('drain_haem')); ?>:
-			</div>
-			<div class="value">
-				<?php echo $element->drain_haem ? 'Yes' : 'No'; ?>
-			</div>
-		</div>
-
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('deep_suture')); ?>:
-			</div>
-			<div class="value">
-				<?php echo $element->deep_suture ? 'Yes' : 'No'; ?>
-			</div>
-		</div>
-
-		<div class="detailRow clearVal">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('report')); ?>
-			</div>
-			<div class="value">
-				<?php echo CHtml::encode($element->report)?>
-			</div>
-		</div>
-
-		<div class="detailRow clearVal">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>
-			</div>
-			<div class="value">
-				<?php echo CHtml::encode($element->comments)?>
-			</div>
 		</div>
 	</div>
 </div>

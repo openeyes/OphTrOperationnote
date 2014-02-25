@@ -17,24 +17,10 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
+<div class="element-fields">
+	<?php echo $form->radioBoolean($element, 'membrane_blue')?>
+	<?php echo $form->radioBoolean($element, 'brilliant_blue')?>
+	<?php echo $form->textField($element, 'other_dye',array(),array(),array_merge($form->layoutColumns, array('field'=>3)))?>
+	<?php echo $form->textArea($element, 'comments', array('rows' => 4),false,array(),array_merge($form->layoutColumns, array('field'=>6)))?>
+</div>
 
-<section class="sub-element <?php echo $element->elementType->class_name?> on-demand<?php if (@$ondemand) {?> hidden<?php }?><?php if ($this->action->id == 'update' && !$element->event_id) {?> missing<?php }?>"
-	data-element-type-id="<?php echo $element->elementType->id ?>"
-	data-element-type-class="<?php echo $element->elementType->class_name ?>"
-	data-element-type-name="<?php echo $element->elementType->name ?>"
-	data-element-display-order="<?php echo $element->elementType->display_order ?>">
-
-	<?php if ($this->action->id == 'update' && !$element->event_id) {?>
-		<div class="alert-box alert">This element is missing and needs to be completed</div>
-	<?php }?>
-	<header class="sub-element-header">
-		<h4 class="sub-element-title"><?php  echo $element->elementType->name; ?></h4>
-	</header>
-
-	<div class="element-fields">
-		<?php echo $form->radioBoolean($element, 'membrane_blue')?>
-		<?php echo $form->radioBoolean($element, 'brilliant_blue')?>
-		<?php echo $form->textField($element, 'other_dye',array(),array(),array_merge($form->layoutColumns, array('field'=>3)))?>
-		<?php echo $form->textArea($element, 'comments', array('rows' => 4),false,array(),array_merge($form->layoutColumns, array('field'=>6)))?>
-	</div>
-</section>

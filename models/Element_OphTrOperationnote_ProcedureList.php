@@ -31,7 +31,7 @@
  * @property Eye $eye
  * @property Procedure[] $procedures
  */
-class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
+class Element_OphTrOperationnote_ProcedureList extends Element_OpNote
 {
 	public $service;
 
@@ -207,5 +207,10 @@ class Element_OphTrOperationnote_ProcedureList extends BaseEventTypeElement
 		}
 
 		return CHtml::listData(Eye::model()->findAll($criteria),'id','name');
+	}
+
+	public function getContainer_form_view()
+	{
+		return false;
 	}
 }

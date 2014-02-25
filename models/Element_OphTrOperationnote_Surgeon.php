@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class Element_OphTrOperationnote_Surgeon extends BaseEventTypeElement
+class Element_OphTrOperationnote_Surgeon extends Element_OpNote
 {
 	public $service;
 	public $surgeonlist;

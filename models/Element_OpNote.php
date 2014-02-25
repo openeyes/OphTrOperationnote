@@ -16,9 +16,21 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
-?>
-<?php $this->renderPartial(
-		'form_' . get_class($element),
-		array('element' => $element, 'data' => $data, 'form' => $form),
-		false, false
-)?>
+
+class Element_OpNote extends BaseEventTypeElement
+{
+	public function getContainer_view_view()
+	{
+		return false;
+	}
+
+	public function getPrint_view()
+	{
+		return 'print_'.$this->getDefaultView();
+	}
+
+	public function getContainer_print_view()
+	{
+		return false;
+	}
+}

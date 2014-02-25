@@ -18,49 +18,69 @@
  */
 ?>
 
-<h3><?php echo $element->elementType->name ?></h3>
-<div class="procedureContainer">
-	<?php if ($element->membrane_blue) {?>
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('membrane_blue'))?>:
-			</div>
-			<div class="value">
-				Yes
-			</div>
-		</div>
-	<?php }?>
+<section class="element <?php echo $element->elementType->class_name?> row">
+	<h3 class="element-title"><?php echo $element->elementType->name ?></h3>
+	<div class="row">
+		<div class="large-6 column end">
+			<?php if ($element->membrane_blue) {?>
+				<div class="row">
+					<div class="large-6 column text-right">
+						<div class="data-label">
+							<?php echo CHtml::encode($element->getAttributeLabel('membrane_blue'))?>:
+						</div>
+					</div>
+					<div class="large-6 column">
+						<div class="data-value">
+							Yes
+						</div>
+					</div>
+				</div>
+			<?php }?>
 
-	<?php if ($element->brilliant_blue) {?>
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('brilliant_blue'))?>:
-			</div>
-			<div class="value">
-				Yes
-			</div>
-		</div>
-	<?php }?>
+			<?php if ($element->brilliant_blue) {?>
+				<div class="row">
+					<div class="large-6 column text-right">
+						<div class="data-label">
+							<?php echo CHtml::encode($element->getAttributeLabel('brilliant_blue'))?>:
+						</div>
+					</div>
+					<div class="large-6 column">
+						<div class="data-value">
+							Yes
+						</div>
+					</div>
+				</div>
+			<?php }?>
 
-	<?php if ($element->other_dye) {?>
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>:
-			</div>
-			<div class="value">
-				<?php echo CHtml::encode($element->other_dye)?>
-			</div>
-		</div>
-	<?php }?>
+			<?php if ($element->other_dye) {?>
+				<div class="row">
+					<div class="large-6 column text-right">
+						<div class="data-label">
+							<?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>:
+						</div>
+					</div>
+					<div class="large-6 column">
+						<div class="data-value">
+							<?php echo CHtml::encode($element->other_dye)?>
+						</div>
+					</div>
+				</div>
+			<?php }?>
 
-	<?php if ($element->comments) {?>
-		<div class="detailRow">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:
-			</div>
-			<div class="value">
-				<?php echo CHtml::encode($element->comments)?>
-			</div>
+			<?php if ($element->comments) {?>
+				<div class="row">
+					<div class="large-6 column text-right">
+						<div class="data-label">
+							<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:
+						</div>
+					</div>
+					<div class="large-6 column">
+						<div class="data-value">
+							<?php echo CHtml::encode($element->comments)?>
+						</div>
+					</div>
+				</div>
+			<?php }?>
 		</div>
-	<?php }?>
+	</div>
 </div>

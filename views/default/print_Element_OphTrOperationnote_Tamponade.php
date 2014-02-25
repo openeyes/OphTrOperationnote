@@ -18,35 +18,46 @@
  */
 ?>
 
-<h3 class="elementTypeName"><?php echo $element->elementType->name ?></h3>
-
-<div class="procedureContainer">
-
-	<div class="detailRow">
-		<div class="label">
-			<?php echo CHtml::encode($element->getAttributeLabel('gas_type_id')); ?>:
-		</div>
-		<div class="value">
-			<?php echo $element->gas_type->name ?>
+<section class="element <?php echo $element->elementType->class_name?> row">
+	<h3 class="element-title"><?php echo $element->elementType->name ?></h3>
+	<div class="row">
+		<div class="large-6 column end">
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('gas_type_id')); ?>:
+					</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value">
+						<?php echo $element->gas_type->name ?>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('gas_percentage_id')); ?>:
+					</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value">
+						<?php echo $element->gas_percentage->value ?>%
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label">
+						<?php echo CHtml::encode($element->getAttributeLabel('gas_volume_id')); ?>:
+					</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value">
+						<?php echo $element->gas_volume->value ?>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<div class="detailRow">
-		<div class="label">
-			<?php echo CHtml::encode($element->getAttributeLabel('gas_percentage_id')); ?>:
-		</div>
-		<div class="value">
-			<?php echo $element->gas_percentage->value ?>%
-		</div>
-	</div>
-
-	<div class="detailRow">
-		<div class="label">
-			<?php echo CHtml::encode($element->getAttributeLabel('gas_volume_id')); ?>:
-		</div>
-		<div class="value">
-			<?php echo $element->gas_volume->value ?>
-		</div>
-	</div>
-
-</div>
+</section>

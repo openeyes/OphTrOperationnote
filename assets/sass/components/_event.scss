@@ -25,12 +25,15 @@
 }
 
 .view {
-  & .sub-element-header {
-    margin-bottom: 0.5em;
-  }
-  .data-value {
-    &.highlight {
-      margin-left: 0.5em;
-    }
-  }
+	.sub-element-header {
+		margin-bottom: 0.5em;
+	}
+	&.highlight-fields {
+		.sub-elements {
+			padding: 0;
+		}
+		.sub-element-title {
+			padding-left: 10px;
+		}
+	}
 }

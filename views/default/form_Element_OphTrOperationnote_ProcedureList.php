@@ -17,7 +17,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
 <section class="element <?php echo $element->elementType->class_name?>"
 	data-element-type-id="<?php echo $element->elementType->id ?>"
 	data-element-type-class="<?php echo $element->elementType->class_name ?>"
@@ -29,19 +28,18 @@
 	</header>
 
 	<div class="element-fields">
-	<?php echo $form->hiddenInput($element, 'booking_event_id')?>
-	<?php echo $form->radioButtons($element, 'eye_id', $element->eyeOptions, ($element->eye() ? $element->eye()->id : null), null, null, null ,null,null,array('label'=>2,'field'=>10))?>
-	<?php
-	$form->widget('application.widgets.ProcedureSelection',array(
-		'element' => $element,
-		'selected_procedures' => $element->procedures,
-		'newRecord' => true,
-		'last' => true,
-		'hidden' => ($this->action->id == 'create' && $element->eye == null && !@$_POST['Element_OphTrOperationnote_ProcedureList']['eye_id']),
-	));
-	?>
+		<?php echo $form->hiddenInput($element, 'booking_event_id')?>
+		<?php echo $form->radioButtons($element, 'eye_id', $element->eyeOptions, ($element->eye() ? $element->eye()->id : null), null, null, null ,null,null,array('label'=>2,'field'=>10))?>
+		<?php
+		$form->widget('application.widgets.ProcedureSelection',array(
+			'element' => $element,
+			'selected_procedures' => $element->procedures,
+			'newRecord' => true,
+			'last' => true,
+			'hidden' => ($this->action->id == 'create' && $element->eye == null && !@$_POST['Element_OphTrOperationnote_ProcedureList']['eye_id']),
+		));
+		?>
 	</div>
-
 	<div class="sub-elements active">
 		<?php $this->renderChildOpenElements($element, $this->action->id, $form, $data)?>
 	</div>

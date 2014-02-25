@@ -35,13 +35,13 @@ $numHash = crc32($element->getElementTypeName());
 	data-element-type-name="<?php echo $element->elementType->name ?>"
 	data-element-display-order="<?php echo $element->elementType->display_order ?>">
 
-	<?php if ($this->action->id == 'update' && !$element->event_id) {?>
-		<div class="alert-box alert">This element is missing and needs to be completed</div>
-	<?php }?>
-
 	<header class="sub-element-header">
 		<h4 class="sub-element-title"><?php echo $element->getElementTypeName() ?></h4>
 	</header>
+
+	<?php if ($this->action->id == 'update' && !$element->event_id) {?>
+		<div class="alert-box alert">This element is missing and needs to be completed</div>
+	<?php }?>
 
 	<div class="element-fields" id="div_Element_OphTrOperationnote_GenericProcedure_comments">
 		<div class="row field-row">

@@ -42,7 +42,7 @@
  * @property OphTrOperationnote_AnaestheticComplication[] $anaesthetic_complications
  * @property User $witness
  */
-class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
+class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 {
 	public $service;
 	public $surgeonlist;

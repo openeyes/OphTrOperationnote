@@ -31,7 +31,7 @@
  * @property Event $event
  * @property Procedure $procedure
  */
-class Element_OphTrOperationnote_GenericProcedure extends BaseEventTypeElement
+class Element_OphTrOperationnote_GenericProcedure extends Element_OnDemand
 {
 	public $service;
 
@@ -128,5 +128,10 @@ class Element_OphTrOperationnote_GenericProcedure extends BaseEventTypeElement
 		else {
 			return 'No Procedure';
 		}
+	}
+
+	public function getContainer_form_view()
+	{
+		return false;
 	}
 }

@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class Element_OphTrOperationnote_Tamponade extends BaseEventTypeElement
+class Element_OphTrOperationnote_Tamponade extends Element_OnDemand
 {
 	public $service;
 
