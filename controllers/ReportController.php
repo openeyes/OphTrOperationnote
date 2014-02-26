@@ -309,7 +309,6 @@ class ReportController extends BaseController
 			$criteria->params[':op_date'] = $event->created_date;
 			$refraction = Element_OphCiExamination_Refraction::model()->find($criteria);
 			if ($refraction) {
-				$reading = $va->getBestReading(strtolower($record['eye']));
 				$record['pre-op refraction'] = $refraction->getCombined(strtolower($record['eye']));
 			}
 			else {
