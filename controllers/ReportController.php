@@ -82,7 +82,18 @@ class ReportController extends BaseController
 			if (@$_GET['complications']) {
 				$filter_complications = $_GET['complications'];
 			}
-			$results = $this->getOperations($surgeon, $filter_procedures, $filter_complications, $date_from, $date_to);
+
+			$appenders = array();
+
+			if (@$_GET['va_values']) {
+				$appenders[] = 'appendVaValues';
+			}
+
+			if (@$_GET['refraction_values']) {
+				$appenders[] = 'appendRefractionValues';
+			}
+
+			$results = $this->getOperations($surgeon, $filter_procedures, $filter_complications, $date_from, $date_to, $appenders);
 
 			$filename = 'operation_report_' . date('YmdHis') . '.csv';
 			$this->sendCsvHeaders($filename);
@@ -109,9 +120,10 @@ class ReportController extends BaseController
 	 * @param array $filter_complications
 	 * @param $from_date
 	 * @param $to_date
+	 * @param array $appenders - list of methods to call with patient id and date to retrieve additional data for each row
 	 * @return array
 	 */
-	protected function getOperations($surgeon = null, $filter_procedures = array(), $filter_complications = array(), $from_date, $to_date)
+	protected function getOperations($surgeon = null, $filter_procedures = array(), $filter_complications = array(), $from_date, $to_date, $appenders = array())
 	{
 		$filter_procedures_method = 'OR';
 		$filter_complications_method = 'OR';
@@ -189,7 +201,6 @@ class ReportController extends BaseController
 				}
 			}
 
-
 			$record = array(
 				"operation_date" => date('j M Y', strtotime($row['created_date'])),
 				"patient_hosnum" => $row['hos_num'],
@@ -215,9 +226,96 @@ class ReportController extends BaseController
 				}
 			}
 
+			foreach ($appenders as $appender) {
+				$this->$appender($record, $row['id']);
+			}
+
 			$results[] = $record;
 		}
 		return $results;
+	}
+
+	/**
+	 * will iterate through the array of operation values and append pre and post VA values for each operation
+	 * @param $results
+	 * @todo use the examination API for this.
+	 */
+	protected function appendVaValues(&$record, $event_id)
+	{
+		$event = Event::model()->with('episode')->findByPk($event_id);
+		if (strtolower($record['eye']) == 'left') {
+			$eyes = array(Eye::LEFT,Eye::BOTH);
+		}
+		else {
+			$eyes = array(Eye::RIGHT, Eye::BOTH);
+		}
+		if ($api = Yii::app()->moduleAPI->get('OphCiExamination')) {
+			// we know the examination module is present. At some point this behaviour should become part of the API itself as well.
+			$criteria = new CDbCriteria();
+			$criteria->addInCondition('eye_id', $eyes);
+			$criteria->order = 'created_date desc';
+			$criteria->limit = 1;
+			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('readings', 'readings.method'))->find($criteria);
+			if ($va) {
+				$reading = $va->getBestReading(strtolower($record['eye']));
+				$record['most recent post-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+			}
+			else {
+				$record['most recent post-op va'] = 'Unknown';
+			}
+
+			$criteria->addCondition('created_date < :op_date');
+			$criteria->params[':op_date'] = $event->created_date;
+			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('readings', 'readings.method'))->find($criteria);
+			if ($va) {
+				$reading = $va->getBestReading(strtolower($record['eye']));
+				$record['pre-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+			}
+			else {
+				$record['pre-op va'] = 'Unknown';
+			}
+		}
+	}
+
+	/**
+	 * will iterate through the array of operation values and append pre and post VA values for each operation
+	 * @param $results
+	 * @todo use the examination API for this.
+	 */
+	protected function appendRefractionValues(&$record, $event_id)
+	{
+		$event = Event::model()->with('episode')->findByPk($event_id);
+		if (strtolower($record['eye']) == 'left') {
+			$eyes = array(Eye::LEFT,Eye::BOTH);
+		}
+		else {
+			$eyes = array(Eye::RIGHT, Eye::BOTH);
+		}
+		if ($api = Yii::app()->moduleAPI->get('OphCiExamination')) {
+			// we know the examination module is present. At some point this behaviour should become part of the API itself as well.
+			$criteria = new CDbCriteria();
+			$criteria->addInCondition('eye_id', $eyes);
+			$criteria->order = 'created_date desc';
+			$criteria->limit = 1;
+			$refraction = Element_OphCiExamination_Refraction::model()->find($criteria);
+			if ($refraction) {
+				$record['most recent post-op refraction'] = $refraction->getCombined(strtolower($record['eye']));
+			}
+			else {
+				$record['most recent post-op refraction'] = 'Unknown';
+			}
+
+			$criteria->addCondition('created_date < :op_date');
+			$criteria->params[':op_date'] = $event->created_date;
+			$refraction = Element_OphCiExamination_Refraction::model()->find($criteria);
+			if ($refraction) {
+				$reading = $va->getBestReading(strtolower($record['eye']));
+				$record['pre-op refraction'] = $refraction->getCombined(strtolower($record['eye']));
+			}
+			else {
+				$record['pre-op refraction'] = 'Unknown';
+			}
+		}
 	}
 
 	/**

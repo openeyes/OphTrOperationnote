@@ -68,6 +68,22 @@
 				</div>
 				<div class="row field-row">
 					<div class="large-2 column">
+						<?php echo CHtml::label('Include VA Values', 'va_values') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('va_values'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Include Refraction Values', 'refraction_values') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('refraction_values'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
 						&nbsp;
 					</div>
 					<div class="large-4 column end">
