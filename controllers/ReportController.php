@@ -256,8 +256,11 @@ class ReportController extends BaseController
 			$criteria->order = 'created_date desc';
 			$criteria->limit = 1;
 			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('readings', 'readings.method'))->find($criteria);
+			$reading = null;
 			if ($va) {
 				$reading = $va->getBestReading(strtolower($record['eye']));
+			}
+			if ($reading) {
 				$record['most recent post-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
 			}
 			else {
@@ -267,8 +270,11 @@ class ReportController extends BaseController
 			$criteria->addCondition('created_date < :op_date');
 			$criteria->params[':op_date'] = $event->created_date;
 			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('readings', 'readings.method'))->find($criteria);
+			$reading = null;
 			if ($va) {
 				$reading = $va->getBestReading(strtolower($record['eye']));
+			}
+			if ($reading) {
 				$record['pre-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
 			}
 			else {
