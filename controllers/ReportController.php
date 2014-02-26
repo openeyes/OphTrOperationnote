@@ -252,24 +252,14 @@ class ReportController extends BaseController
 		if ($api = Yii::app()->moduleAPI->get('OphCiExamination')) {
 			// we know the examination module is present. At some point this behaviour should become part of the API itself as well.
 			$criteria = new CDbCriteria();
+			$criteria->addCondition('event.created_date < :op_date');
+			$criteria->addCondition('event.episode_id = :episode_id');
 			$criteria->addInCondition('eye_id', $eyes);
-			$criteria->order = 'created_date desc';
-			$criteria->limit = 1;
-			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('readings', 'readings.method'))->find($criteria);
-			$reading = null;
-			if ($va) {
-				$reading = $va->getBestReading(strtolower($record['eye']));
-			}
-			if ($reading) {
-				$record['most recent post-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
-			}
-			else {
-				$record['most recent post-op va'] = 'Unknown';
-			}
-
-			$criteria->addCondition('created_date < :op_date');
+			$criteria->params[':episode_id'] = $event->episode_id;
 			$criteria->params[':op_date'] = $event->created_date;
-			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('readings', 'readings.method'))->find($criteria);
+			$criteria->order = 'event.created_date desc';
+			$criteria->params[':op_date'] = $event->created_date;
+			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
 			$reading = null;
 			if ($va) {
 				$reading = $va->getBestReading(strtolower($record['eye']));
@@ -279,6 +269,26 @@ class ReportController extends BaseController
 			}
 			else {
 				$record['pre-op va'] = 'Unknown';
+			}
+
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('event.created_date > :op_date');
+			$criteria->addCondition('event.episode_id = :episode_id');
+			$criteria->addInCondition('eye_id', $eyes);
+			$criteria->params[':episode_id'] = $event->episode_id;
+			$criteria->params[':op_date'] = $event->created_date;
+			$criteria->order = 'event.created_date desc';
+			$criteria->limit = 1;
+			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
+			$reading = null;
+			if ($va) {
+				$reading = $va->getBestReading(strtolower($record['eye']));
+			}
+			if ($reading) {
+				$record['most recent post-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+			}
+			else {
+				$record['most recent post-op va'] = 'Unknown';
 			}
 		}
 	}
@@ -300,25 +310,35 @@ class ReportController extends BaseController
 		if ($api = Yii::app()->moduleAPI->get('OphCiExamination')) {
 			// we know the examination module is present. At some point this behaviour should become part of the API itself as well.
 			$criteria = new CDbCriteria();
+			$criteria->addCondition('event.created_date < :op_date');
+			$criteria->addCondition('event.episode_id = :episode_id');
 			$criteria->addInCondition('eye_id', $eyes);
-			$criteria->order = 'created_date desc';
-			$criteria->limit = 1;
-			$refraction = Element_OphCiExamination_Refraction::model()->find($criteria);
-			if ($refraction) {
-				$record['most recent post-op refraction'] = $refraction->getCombined(strtolower($record['eye']));
-			}
-			else {
-				$record['most recent post-op refraction'] = 'Unknown';
-			}
-
-			$criteria->addCondition('created_date < :op_date');
+			$criteria->params[':episode_id'] = $event->episode_id;
 			$criteria->params[':op_date'] = $event->created_date;
-			$refraction = Element_OphCiExamination_Refraction::model()->find($criteria);
+			$criteria->order = 'event.created_date desc';
+			$criteria->params[':op_date'] = $event->created_date;
+			$refraction = Element_OphCiExamination_Refraction::model()->with('event')->find($criteria);
 			if ($refraction) {
 				$record['pre-op refraction'] = $refraction->getCombined(strtolower($record['eye']));
 			}
 			else {
 				$record['pre-op refraction'] = 'Unknown';
+			}
+
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('event.created_date > :op_date');
+			$criteria->addCondition('event.episode_id = :episode_id');
+			$criteria->addInCondition('eye_id', $eyes);
+			$criteria->params[':episode_id'] = $event->episode_id;
+			$criteria->params[':op_date'] = $event->created_date;
+			$criteria->order = 'event.created_date desc';
+			$criteria->limit = 1;
+			$refraction = Element_OphCiExamination_Refraction::model()->with('event')->find($criteria);
+			if ($refraction) {
+				$record['most recent post-op refraction'] = $refraction->getCombined(strtolower($record['eye']));
+			}
+			else {
+				$record['most recent post-op refraction'] = 'Unknown';
 			}
 		}
 	}
