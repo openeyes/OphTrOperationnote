@@ -430,7 +430,6 @@ CREATE TABLE `et_ophtroperationnote_tamponade_version` (
 	KEY `acv_et_ophtroperationnote_tamponade_eid_fk` (`event_id`),
 	CONSTRAINT `acv_et_ophtroperationnote_tamponade_eid_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_tamponade_gv_id` FOREIGN KEY (`gas_volume_id`) REFERENCES `ophtroperationnote_gas_volume` (`id`),
-	CONSTRAINT `acv_et_ophtroperationnote_tamponade_pc_id` FOREIGN KEY (`gas_percentage_id`) REFERENCES `ophtroperationnote_gas_percentage` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_tp_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_tp_gas_type_id_fk` FOREIGN KEY (`gas_type_id`) REFERENCES `ophtroperationnote_gas_type` (`id`),
 	CONSTRAINT `acv_et_ophtroperationnote_tp_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
@@ -497,7 +496,6 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_agent_version` (
 	KEY `acv_ophtroperationnote_paa_created_user_id_fk` (`created_user_id`),
 	KEY `acv_ophtroperationnote_paa_anaesthetic_agent_id_fk` (`anaesthetic_agent_id`),
 	KEY `acv_ophtroperationnote_paa_anaesthetic_id_fk` (`et_ophtroperationnote_anaesthetic_id`),
-	CONSTRAINT `acv_ophtroperationnote_paa_anaesthetic_id_fk` FOREIGN KEY (`et_ophtroperationnote_anaesthetic_id`) REFERENCES `et_ophtroperationnote_anaesthetic` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_paa_anaesthetic_agent_id_fk` FOREIGN KEY (`anaesthetic_agent_id`) REFERENCES `anaesthetic_agent` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_paa_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_paa_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
@@ -530,7 +528,6 @@ CREATE TABLE `ophtroperationnote_anaesthetic_anaesthetic_complication_version` (
 	KEY `acv_ophtroperationnote_anaesthetic_ac_anaesthetic_id_fk` (`et_ophtroperationnote_anaesthetic_id`),
 	KEY `acv_ophtroperationnote_anaesthetic_aca_complication_id_fk` (`anaesthetic_complication_id`),
 	CONSTRAINT `acv_ophtroperationnote_anaesthetic_aca_complication_id_fk` FOREIGN KEY (`anaesthetic_complication_id`) REFERENCES `ophtroperationnote_anaesthetic_anaesthetic_complications` (`id`),
-	CONSTRAINT `acv_ophtroperationnote_anaesthetic_ac_anaesthetic_id_fk` FOREIGN KEY (`et_ophtroperationnote_anaesthetic_id`) REFERENCES `et_ophtroperationnote_anaesthetic` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pac_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pac_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
@@ -620,7 +617,6 @@ CREATE TABLE `ophtroperationnote_cataract_complication_version` (
 	KEY `acv_ophtroperationnote_cc2_last_modified_user_id_fk` (`last_modified_user_id`),
 	KEY `acv_ophtroperationnote_cc2_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_cc2_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_ophtroperationnote_cc2_cataract_id_fk` FOREIGN KEY (`cataract_id`) REFERENCES `et_ophtroperationnote_cataract` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cc2_complication_id_fk` FOREIGN KEY (`complication_id`) REFERENCES `ophtroperationnote_cataract_complications` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_cc2_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
@@ -798,7 +794,6 @@ CREATE TABLE `ophtroperationnote_cataract_operative_device_version` (
 	KEY `acv_ophtroperationnote_ccd_last_modified_user_id_fk` (`last_modified_user_id`),
 	KEY `acv_ophtroperationnote_ccd_created_user_id_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophtroperationnote_ccd_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT `acv_ophtroperationnote_ccd_cataract_id_fk` FOREIGN KEY (`cataract_id`) REFERENCES `et_ophtroperationnote_cataract` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_ccd_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_ccd_operative_device_id_fk` FOREIGN KEY (`operative_device_id`) REFERENCES `operative_device` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
@@ -974,7 +969,6 @@ CREATE TABLE `ophtroperationnote_postop_drugs_drug_version` (
 	KEY `acv_ophtroperationnote_pdd_last_modified_user_id_fk` (`last_modified_user_id`),
 	KEY `acv_ophtroperationnote_pdd_drug_id_fk` (`drug_id`),
 	KEY `acv_ophtroperationnote_pdd_drugs_id_fk` (`ophtroperationnote_postop_drugs_id`),
-	CONSTRAINT `acv_ophtroperationnote_pdd_drugs_id_fk` FOREIGN KEY (`ophtroperationnote_postop_drugs_id`) REFERENCES `et_ophtroperationnote_postop_drugs` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pdd_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pdd_drug_id_fk` FOREIGN KEY (`drug_id`) REFERENCES `ophtroperationnote_postop_drug` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_pdd_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
@@ -1136,7 +1130,6 @@ CREATE TABLE `ophtroperationnote_procedurelist_procedure_assignment_version` (
 	KEY `acv_ophtroperationnote_plpa_last_modified_user_id_fk` (`last_modified_user_id`),
 	KEY `acv_ophtroperationnote_plpa_created_user_id_fk` (`created_user_id`),
 	KEY `acv_procedurelist_procid_key` (`procedurelist_id`,`proc_id`),
-	CONSTRAINT `acv_et_ophtroperationnote_plpa_proclist_fk` FOREIGN KEY (`procedurelist_id`) REFERENCES `et_ophtroperationnote_procedurelist` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_plpa_created_user_id_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_plpa_last_modified_user_id_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophtroperationnote_procedurelist_procedure_assignment_ibfk_1` FOREIGN KEY (`proc_id`) REFERENCES `proc` (`id`)
