@@ -24,7 +24,7 @@
 			Comment
 		</div>
 		<div class="value">
-			<strong><?php echo CHtml::encode($element->comments)?></strong>
+			<strong><?php echo Yii::app()->format->Ntext($element->comments)?></strong>
 		</div>
 	</div>
 </div>

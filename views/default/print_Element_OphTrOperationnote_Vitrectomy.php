@@ -61,7 +61,7 @@
 					<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>:
 				</div>
 				<div class="value">
-					<?php echo CHtml::encode($element->comments)?>
+					<?php echo Yii::app()->format->Ntext($element->comments)?>
 				</div>
 			</div>
 		<?php }?>

@@ -151,7 +151,7 @@
 					<?php foreach ($element->complications as $complication) {?>
 						<?php echo $complication->name?><br/>
 					<?php }?>
-					<?php echo CHtml::encode($element->complication_notes)?>
+					<?php echo Yii::app()->format->Ntext($element->complication_notes)?>
 				<?php }?>
 			</div>
 		</div>

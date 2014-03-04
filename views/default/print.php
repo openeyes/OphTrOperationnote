@@ -152,7 +152,7 @@
 					Comments
 				</div>
 				<div class="value noBorder">
-					<?php echo CHtml::encode($anaesthetic_element->anaesthetic_comment)?>
+					<?php echo Yii::app()->format->Ntext($anaesthetic_element->anaesthetic_comment)?>
 				</div>
 			</div>
 		</div>
@@ -178,7 +178,7 @@
 				Post-op Instructions
 			</div>
 			<div class="value">
-				<?php echo CHtml::encode($comments_element->postop_instructions)?>
+				<?php echo Yii::app()->format->Ntext($comments_element->postop_instructions)?>
 			</div>
 		</div>
 		<div class="detailRow clearVal">
@@ -186,7 +186,7 @@
 				Comments
 			</div>
 			<div class="value">
-				<?php echo CHtml::encode($comments_element->comments)?>
+				<?php echo Yii::app()->format->Ntext($comments_element->comments)?>
 			</div>
 		</div>
 		<div class="footer">
