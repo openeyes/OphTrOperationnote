@@ -52,7 +52,7 @@ class ReportController extends BaseController
 
 	public function actionIndex()
 	{
-		$this->render('index');
+		$this->redirect('operation');
 	}
 
 	public function actionOperation()
