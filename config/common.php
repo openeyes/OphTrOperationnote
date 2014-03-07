@@ -27,5 +27,8 @@ return array(
 		'admin_menu' => array(
 			'Post-op drugs' => '/OphTrOperationnote/admin/viewPostOpDrugs',
 		),
+		// Default anaesthetic settings
+                //'ophtroperationnote_default_anaesthetic_child' => 'GA',
+                //'ophtroperationnote_default_anaesthetic' => 'GA',
 	),
 );
