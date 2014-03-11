@@ -85,13 +85,13 @@ class ReportController extends BaseController
 
 			$appenders = array();
 
-			if (@$_GET['va_values']) {
-				$appenders[] = 'appendVaValues';
-			}
-
 			if (@$_GET['refraction_values']) {
 				$appenders[] = 'appendRefractionValues';
 			}
+
+			$appenders[] = 'appendBookingValues';
+			$appenders[] = 'appendOpNoteValues';
+			$appenders[] = 'appendExaminationValues';
 
 			$results = $this->getOperations($surgeon, $filter_procedures, $filter_complications, $date_from, $date_to, $appenders);
 
@@ -142,6 +142,8 @@ class ReportController extends BaseController
 			->leftJoin("et_ophtroperationnote_cataract cat", "cat.event_id = e.id")
 			->where("e.deleted = 0 and ep.deleted = 0 and e.created_date >= :from_date and e.created_date < :to_date + interval 1 day");
 		$params = array(':from_date' => $from_date, ':to_date' => $to_date);
+
+		
 
 		if ($surgeon) {
 			$command->andWhere(
@@ -235,12 +237,44 @@ class ReportController extends BaseController
 		return $results;
 	}
 
+	//TODO: this would be more API'd if we weren't doing it live
+	protected function appendBookingValues(&$record, $event_id)
+	{
+		if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
+			$procedure = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=:event_id',array(':event_id'=>$event_id));
+			$bookingEventID = $procedure['booking_event_id'];
+			if(isset($bookingEventID)){
+				{
+					$operationElement = $api->getOperationForEvent($bookingEventID);
+					$latestBookingID = $operationElement['latest_booking_id'];
+					$operationBooking = OphTrOperationbooking_Operation_Booking::model()->find('id=:id',array('id'=>$latestBookingID));
+
+					if(@$_GET['theatre']) {
+
+					$theatreName = $operationElement->site['name'].' '.$operationBooking->theatre['name'];
+					$record['theatre'] = $theatreName;
+					}
+
+					if(@$_GET['opcomments']){
+						$record['opcomments'] = $operationElement['comments'];
+					}
+
+					if( @$_GET['surgerydate']){
+						$record['surgerydate']=$operationBooking['session_date'];
+					}
+				}
+			}
+		}
+
+
+	}
+
 	/**
 	 * will iterate through the array of operation values and append pre and post VA values for each operation
 	 * @param $results
 	 * @todo use the examination API for this.
 	 */
-	protected function appendVaValues(&$record, $event_id)
+	protected function appendExaminationValues(&$record, $event_id)
 	{
 		$event = Event::model()->with('episode')->findByPk($event_id);
 		if (strtolower($record['eye']) == 'left') {
@@ -249,46 +283,79 @@ class ReportController extends BaseController
 		else {
 			$eyes = array(Eye::RIGHT, Eye::BOTH);
 		}
+
+
+
 		if ($api = Yii::app()->moduleAPI->get('OphCiExamination')) {
 			// we know the examination module is present. At some point this behaviour should become part of the API itself as well.
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('event.created_date < :op_date');
 			$criteria->addCondition('event.episode_id = :episode_id');
-			$criteria->addInCondition('eye_id', $eyes);
 			$criteria->params[':episode_id'] = $event->episode_id;
 			$criteria->params[':op_date'] = $event->created_date;
 			$criteria->order = 'event.created_date desc';
 			$criteria->params[':op_date'] = $event->created_date;
-			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
-			$reading = null;
-			if ($va) {
-				$reading = $va->getBestReading(strtolower($record['eye']));
-			}
-			if ($reading) {
-				$record['pre-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
-			}
-			else {
-				$record['pre-op va'] = 'Unknown';
+
+
+
+			if(@$_GET['comorbidities']) {
+				$comorbiditiesElement = Element_OphCiExamination_Comorbidities::model()->with(array('event'))->find($criteria);
+
+				$comorbidities = array();
+				foreach($comorbiditiesElement->items as $comorbiditity){
+					$comorbidities[] = $comorbiditity['name'];
+				}
+				$record['$comorbidities']=implode(',', $comorbidities);
 			}
 
-			$criteria = new CDbCriteria();
-			$criteria->addCondition('event.created_date > :op_date');
-			$criteria->addCondition('event.episode_id = :episode_id');
-			$criteria->addInCondition('eye_id', $eyes);
-			$criteria->params[':episode_id'] = $event->episode_id;
-			$criteria->params[':op_date'] = $event->created_date;
-			$criteria->order = 'event.created_date desc';
-			$criteria->limit = 1;
-			$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
-			$reading = null;
-			if ($va) {
-				$reading = $va->getBestReading(strtolower($record['eye']));
+			if(@$_GET['target_refraction']) {
+				$cataractManagementElement = Element_OphCiExamination_CataractManagement::model()->with(array('event'))->find($criteria);
+				if($cataractManagementElement ){
+					$record['target_refraction']=$cataractManagementElement['target_postop_refraction'];
+				}
 			}
-			if ($reading) {
-				$record['most recent post-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+
+			if(@$_GET['first_eye']) {
+				$cataractManagementElement = Element_OphCiExamination_CataractManagement::model()->with(array('event'))->find($criteria);
+				if($cataractManagementElement ){
+					$record['first_or_second_eye']=$cataractManagementElement->eye['name'];
+				}
 			}
-			else {
-				$record['most recent post-op va'] = 'Unknown';
+
+			if (@$_GET['va_values']) {
+				$criteria->addInCondition('eye_id', $eyes);
+				$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
+				$reading = null;
+				if ($va) {
+					$reading = $va->getBestReading(strtolower($record['eye']));
+				}
+				if ($reading) {
+					$record['pre-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+				}
+				else {
+					$record['pre-op va'] = 'Unknown';
+				}
+
+
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('event.created_date > :op_date');
+				$criteria->addCondition('event.episode_id = :episode_id');
+				$criteria->addInCondition('eye_id', $eyes);
+				$criteria->params[':episode_id'] = $event->episode_id;
+				$criteria->params[':op_date'] = $event->created_date;
+				$criteria->order = 'event.created_date desc';
+				$criteria->limit = 1;
+				$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
+				$reading = null;
+				if ($va) {
+					$reading = $va->getBestReading(strtolower($record['eye']));
+				}
+				if ($reading) {
+					$record['most recent post-op va'] = $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+				}
+				else {
+					$record['most recent post-op va'] = 'Unknown';
+				}
 			}
 		}
 	}
@@ -340,6 +407,29 @@ class ReportController extends BaseController
 			else {
 				$record['most recent post-op refraction'] = 'Unknown';
 			}
+		}
+	}
+
+	protected function appendOpNoteValues(&$record, $event_id)
+	{
+
+		$anaesthetic=Element_OphTrOperationnote_Anaesthetic::model()->find('event_id = :event_id',array(':event_id'=>$event_id));
+
+		if (@$_GET['anaesthetic_type']) {
+			$record['anaesthetic_type']=$anaesthetic->anaesthetic_type['name'];
+		}
+
+		if (@$_GET['anaesthetic_delivery']) {
+			$record['anaesthetic_delivery']=$anaesthetic->anaesthetic_delivery['name'];
+		}
+
+		if (@$_GET['anaesthetic_comments']) {
+			$record['ancomments']=$anaesthetic['anaesthetic_comment'];
+		}
+
+		if (@$_GET['cataract_report']) {
+			$cataractElement=Element_OphTrOperationnote_Cataract::model()->find('event_id = :event_id',array(':event_id'=>$event_id));
+			$record['cataract_report']=	trim(preg_replace('/\s\s+/', ' ', $cataractElement['report']));
 		}
 	}
 

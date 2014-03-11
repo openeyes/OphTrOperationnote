@@ -68,6 +68,78 @@
 				</div>
 				<div class="row field-row">
 					<div class="large-2 column">
+						<?php echo CHtml::label('Anaesthetic comments', 'anaesthetic_comments') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('anaesthetic_comments'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Anaesthetic type', 'anaesthetic_type') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('anaesthetic_type'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Anaesthetic Delivery', 'anaesthetic_delivery') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('anaesthetic_delivery'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Theatre', 'theatre') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('theatre'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('First or Second Eye', 'first_eye') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('first_eye'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Target Refraction', 'target_refraction') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('target_refraction'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Comorbidities', 'comorbidities') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('comorbidities'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Surgery Date', 'surgerydate') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('surgerydate'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Operation Comments', 'opcomments') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('opcomments'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
 						<?php echo CHtml::label('Include VA Values', 'va_values') ?>
 					</div>
 					<div class="large-4 column end">
@@ -80,6 +152,14 @@
 					</div>
 					<div class="large-4 column end">
 						<?php echo CHtml::checkBox('refraction_values'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Cataract Report', 'cataract_report') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('cataract_report'); ?>
 					</div>
 				</div>
 				<div class="row field-row">
