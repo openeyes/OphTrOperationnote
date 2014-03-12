@@ -147,6 +147,26 @@ class Element_OphTrOperationnote_Anaesthetic extends BaseEventTypeElement
 	}
 
 	/**
+	 * Set default values for forms on create
+	 */
+	public function setDefaultOptions()
+	{
+		if (Yii::app()->getController()->getAction()->id == 'create') {
+			if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+				throw new SystemException('Patient not found: '.@$_GET['patient_id']);
+			}
+
+			if (ctype_digit($_GET['booking_event_id'])) {
+				if (($episode = $patient->getEpisodeForCurrentSubspecialty()) &&
+					($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) &&
+					($booking = $api->findBookingByEventID($_GET['booking_event_id']))) {
+					$this->anaesthetic_type_id = $booking->operation->anaesthetic_type_id;
+				}
+			}
+		}
+	}
+
+	/**
 	 * Should not display other anaesthetic details if the anaesthetic type is general
 	 *
 	 * @return bool
