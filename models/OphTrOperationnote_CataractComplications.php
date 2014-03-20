@@ -26,7 +26,7 @@
  * @property integer $display_order
  *
  */
-class OphTrOperationnote_CataractComplications extends BaseActiveRecordVersionedSoftDelete
+class OphTrOperationnote_CataractComplications extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -43,6 +43,11 @@ class OphTrOperationnote_CataractComplications extends BaseActiveRecordVersioned
 	public function tableName()
 	{
 		return 'ophtroperationnote_cataract_complications';
+	}
+
+	public function defaultScope()
+	{
+		return array('order' => $this->getTableAlias(true, false) . '.display_order');
 	}
 
 	/**
@@ -92,5 +97,12 @@ class OphTrOperationnote_CataractComplications extends BaseActiveRecordVersioned
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
+	}
+
+	public function behaviors()
+	{
+		return array(
+			'LookupTable' => 'LookupTable',
+		);
 	}
 }

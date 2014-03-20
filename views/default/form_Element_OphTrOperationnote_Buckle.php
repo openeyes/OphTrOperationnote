@@ -48,7 +48,7 @@
 		</div>
 		<div class="fluid column">
 			<?php echo $form->hiddenInput($element, 'report', $element->report)?>
-			<?php echo $form->dropDownList($element, 'drainage_type_id', CHtml::listData(OphTrOperationnote_DrainageType::model()->notDeletedOrPk($element->drainage_type_id)->findAll(), 'id', 'name'),array('empty'=>'- Please select -'))?>
+			<?php echo $form->dropDownList($element, 'drainage_type_id', 'OphTrOperationnote_DrainageType', array('empty'=>'- Please select -'))?>
 			<?php echo $form->radioBoolean($element, 'drain_haem')?>
 			<?php echo $form->radioBoolean($element, 'deep_suture')?>
 			<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 60))?>

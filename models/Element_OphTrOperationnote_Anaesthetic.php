@@ -252,10 +252,11 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 	{
 		if (!$this->surgeonlist) {
 			$criteria = new CDbCriteria;
+			$criteria->compare('active',true);
 			$criteria->compare('is_doctor',1);
 			$criteria->order = 'first_name,last_name asc';
 
-			$this->surgeonlist = User::model()->active()->findAll($criteria);
+			$this->surgeonlist = User::model()->findAll($criteria);
 		}
 
 		return $this->surgeonlist;
