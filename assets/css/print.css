@@ -16,8 +16,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 
-@import "../../../css/printcontent.css";
-
 .clearfix:after {
 	visibility: hidden;
 	display: block;
