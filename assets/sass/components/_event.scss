@@ -25,12 +25,21 @@
 }
 
 .view {
-  & .sub-element-header {
-    margin-bottom: 0.5em;
-  }
-  .data-value {
-    &.highlight {
-      margin-left: 0.5em;
-    }
-  }
+	&.highlight-fields {
+		.sub-elements {
+			background: none;
+			margin: 0 -20px;
+		}
+		.sub-element-title {
+			color: #56a7f1;
+			font-size: $default-font-size;
+			margin: 0;
+			padding: 8px 10px;
+		}
+	}
+	.data-value {
+		&.highlight {
+			margin: 0 -10px;
+		}
+	}
 }

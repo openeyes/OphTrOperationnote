@@ -21,20 +21,28 @@
 }
 /* line 19, ../sass/components/_event.scss */
 .event .event-content {
-  background-image: url('../img/watermark.png?1387445464');
+  background-image: url('../img/watermark.png?1392372889');
 }
 /* line 22, ../sass/components/_event.scss */
 .event .event-title {
   background-image: url('../img/medium.png?1383822786');
 }
 
-/* line 28, ../sass/components/_event.scss */
-.view .sub-element-header {
-  margin-bottom: 0.5em;
+/* line 29, ../sass/components/_event.scss */
+.view.highlight-fields .sub-elements {
+  background: none;
+  margin: 0 -20px;
 }
-/* line 32, ../sass/components/_event.scss */
+/* line 33, ../sass/components/_event.scss */
+.view.highlight-fields .sub-element-title {
+  color: #56a7f1;
+  font-size: 0.8125em;
+  margin: 0;
+  padding: 8px 10px;
+}
+/* line 41, ../sass/components/_event.scss */
 .view .data-value.highlight {
-  margin-left: 0.5em;
+  margin: 0 -10px;
 }
 
 /* line 17, ../sass/components/_eyedraw.scss */
