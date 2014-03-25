@@ -110,6 +110,16 @@ class DefaultController extends BaseEventTypeController
 	}
 
 	/**
+	 * Render HTML print layout
+	 * @see BaseEventTypeController::printHtml
+	 */
+	protected function printHTML($id, $elements, $template='print')
+	{
+		YII::app()->assetManager->registerCssFile('css/printcontent.css');
+		return parent::printHTML($id, $elements, $template);
+	}
+
+	/**
 	 * For new notes for a specific operation, initialise procedure list with relevant procedures
 	 *
 	 * @param Element_OphTrOperationnote_ProcedureList $element

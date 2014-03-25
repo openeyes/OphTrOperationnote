@@ -15,45 +15,71 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
-/*
- * This file contains print CSS used to style an event print layout.
- */
 @media print {
-  /* line 22, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  /* line 20, ../../../../assets/sass/openeyes/components/print/_event.scss */
   h2 {
     margin: 20px 0 10px 0;
   }
 
-  /* line 25, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  /* line 23, ../../../../assets/sass/openeyes/components/print/_event.scss */
   h3 {
     margin: 10px 0 5px 0;
   }
 
-  /* line 28, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  /* line 26, ../../../../assets/sass/openeyes/components/print/_event.scss */
   .header {
     padding: 0 0 10px 0;
     border-bottom: 1px solid #000;
-    margin-bottom: 15px;
   }
 
-  /* line 33, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  /* line 30, ../../../../assets/sass/openeyes/components/print/_event.scss */
   .title {
     margin: 0 auto;
     text-align: center;
   }
-  /* line 36, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  /* line 33, ../../../../assets/sass/openeyes/components/print/_event.scss */
   .title img {
     float: right;
   }
-  /* line 39, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  /* line 36, ../../../../assets/sass/openeyes/components/print/_event.scss */
   .title h1 {
     margin: 30px 0 15px 0;
     display: inline-block;
   }
 
-  /* line 44, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  /* line 41, ../../../../assets/sass/openeyes/components/print/_event.scss */
   .patient {
     border: 1px solid #000;
     padding: 5px 10px;
+  }
+
+  /* line 46, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  .event .element-title {
+    padding: 0;
+    margin: 20px 0 10px 0;
+  }
+  /* line 50, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  .event .element {
+    border: 0;
+    margin: 0;
+  }
+  /* line 53, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  .event .element .details {
+    padding: 10px;
+    border: 1px solid #000;
+  }
+  /* line 58, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  .event .sub-element {
+    border: 0;
+  }
+  /* line 60, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  .event .sub-element .sub-element-title {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  /* line 65, ../../../../assets/sass/openeyes/components/print/_event.scss */
+  .event .metadata {
+    padding: 10px 0;
+    margin: 10px 0;
   }
 }

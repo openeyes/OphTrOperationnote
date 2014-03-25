@@ -83,7 +83,7 @@
 					</div>
 					<div class="large-8 column">
 						<div class="data-value">
-							<?php echo CHtml::encode($element->comments)?>
+							<?php echo Yii::app()->format->Ntext($element->comments)?>
 						</div>
 					</div>
 				</div>

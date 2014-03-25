@@ -25,6 +25,17 @@
 }
 
 .view {
+<<<<<<< HEAD
+	.sub-element-header {
+		margin-bottom: 0.5em;
+	}
+	&.highlight-fields {
+		.sub-elements {
+			padding: 0;
+		}
+		.sub-element-title {
+			padding-left: 10px;
+=======
 	&.highlight-fields {
 		.sub-elements {
 			background: none;
@@ -43,6 +54,7 @@
 	.data-value {
 		&.highlight {
 			margin: 0 -10px;
+>>>>>>> release/1.6
 		}
 	}
 }
