@@ -244,9 +244,10 @@ class ReportController extends BaseController
 					$diagnoses[] = (($ep->eye) ? $ep->eye->adjective . " " : "") . $ep->diagnosis->term;
 				}
 			}
-			foreach ($patient->getSecondaryDisorders() as $sd) {
+			foreach ($patient->getOphthalmicDiagnoses() as $sd) {
 				$diagnoses[] = $sd->eye->adjective . " " . $sd->disorder->term;
 			}
+			$record['patient_diagnoses'] = implode(', ', $diagnoses);
 		}
 	}
 
@@ -255,6 +256,11 @@ class ReportController extends BaseController
 		if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
 			$procedure = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=:event_id',array(':event_id'=>$event_id));
 			$bookingEventID = $procedure['booking_event_id'];
+			foreach (array('booking_diagnosis', 'theatre', 'bookingcomments','surgerydate') as $k) {
+				if (@$_GET[$k]) {
+					$record[$k] = '';
+				}
+			}
 			if(isset($bookingEventID)){
 				{
 					$operationElement = $api->getOperationForEvent($bookingEventID);
@@ -454,14 +460,18 @@ class ReportController extends BaseController
 			if ($cataract_element = Element_OphTrOperationnote_Cataract::model()->find('event_id = :event_id',array(':event_id'=>$event_id))) {
 				$record['cataract_report']=	trim(preg_replace('/\s\s+/', ' ', $cataract_element['report']));
 				$record['cataract_predicted_refraction'] = $cataract_element->predicted_refraction;
-				$record['cataract_iol_type'] = $cataract_element->iol_type->name;
+				if ($cataract_element->iol_type) {
+					$record['cataract_iol_type'] = $cataract_element->iol_type->name;
+				}
+				else {
+					$record['cataract_iol_type'] = 'None';
+				}
 				$record['cataract_iol_power'] = $cataract_element->iol_power;
 			}
 		}
 
 		if (@$_GET['tamponade_used']) {
-			$tamponade_element = Element_OphTrOperationnote_Tamponade::model()->find('event_id = :event_id', array(':event_id'=>$event_id));
-			if ($tamponade_element) {
+			if ($tamponade_element = Element_OphTrOperationnote_Tamponade::model()->find('event_id = :event_id', array(':event_id'=>$event_id))) {
 				$record['tamponade_used'] = $tamponade_element->gas_type->name;
 			}
 			else {
