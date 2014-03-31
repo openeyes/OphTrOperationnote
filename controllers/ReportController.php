@@ -137,7 +137,7 @@ class ReportController extends BaseController
 			->where("e.deleted = 0 and ep.deleted = 0 and e.created_date >= :from_date and e.created_date < :to_date + interval 1 day");
 		$params = array(':from_date' => $from_date, ':to_date' => $to_date);
 
-		
+
 
 		if ($surgeon) {
 			$command->andWhere(
@@ -224,6 +224,7 @@ class ReportController extends BaseController
 			}
 
 		  //appenders
+			$this->appendPatientValues($record, $row['id']);
 			$this->appendBookingValues($record, $row['id']);
 			$this->appendOpNoteValues($record, $row['id']);
 			$this->appendExaminationValues($record, $row['id']);
@@ -231,6 +232,22 @@ class ReportController extends BaseController
 			$results[] = $record;
 		}
 		return $results;
+	}
+	protected function appendPatientValues(&$record, $event_id)
+	{
+		$event = Event::model()->findByPk($event_id);
+		$patient = $event->episode->patient;
+		if (@$_GET['patient_oph_diagnoses']) {
+			$diagnoses = array();
+			foreach ($patient->episodes as $ep) {
+				if ($ep->diagnosis) {
+					$diagnoses[] = (($ep->eye) ? $ep->eye->adjective . " " : "") . $ep->diagnosis->term;
+				}
+			}
+			foreach ($patient->getSecondaryDisorders() as $sd) {
+				$diagnoses[] = $sd->eye->adjective . " " . $sd->disorder->term;
+			}
+		}
 	}
 
 	protected function appendBookingValues(&$record, $event_id)
@@ -243,6 +260,16 @@ class ReportController extends BaseController
 					$operationElement = $api->getOperationForEvent($bookingEventID);
 					$latestBookingID = $operationElement['latest_booking_id'];
 					$operationBooking = OphTrOperationbooking_Operation_Booking::model()->find('id=:id',array('id'=>$latestBookingID));
+
+					if (@$_GET['booking_diagnosis']) {
+						$diag_el = $operationElement->getDiagnosis();
+						$disorder = $diag_el->disorder();
+						if ($disorder) {
+							$record['booking_diagnosis'] = $diag_el->eye->adjective  . " " . $disorder->term;
+						} else {
+							$record['booking_diagnosis'] = 'Unknown';
+						}
+					}
 
 					if(@$_GET['theatre']) {
 
@@ -421,8 +448,25 @@ class ReportController extends BaseController
 		}
 
 		if (@$_GET['cataract_report']) {
-			$cataractElement=Element_OphTrOperationnote_Cataract::model()->find('event_id = :event_id',array(':event_id'=>$event_id));
-			$record['cataract_report']=	trim(preg_replace('/\s\s+/', ' ', $cataractElement['report']));
+			foreach (array('cataract_report', 'cataract_predicted_refraction', 'cataract_iol_type', 'cataract_iol_power') as $k) {
+				$record[$k] = '';
+			}
+			if ($cataract_element = Element_OphTrOperationnote_Cataract::model()->find('event_id = :event_id',array(':event_id'=>$event_id))) {
+				$record['cataract_report']=	trim(preg_replace('/\s\s+/', ' ', $cataract_element['report']));
+				$record['cataract_predicted_refraction'] = $cataract_element->predicted_refraction;
+				$record['cataract_iol_type'] = $cataract_element->iol_type->name;
+				$record['cataract_iol_power'] = $cataract_element->iol_power;
+			}
+		}
+
+		if (@$_GET['tamponade_used']) {
+			$tamponade_element = Element_OphTrOperationnote_Tamponade::model()->find('event_id = :event_id', array(':event_id'=>$event_id));
+			if ($tamponade_element) {
+				$record['tamponade_used'] = $tamponade_element->gas_type->name;
+			}
+			else {
+				$record['tamponade_used'] = 'None';
+			}
 		}
 
 		if (@$_GET['opnote_comments']) {
