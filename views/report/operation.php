@@ -77,6 +77,14 @@
 				</div>
 				<div class="row field-row">
 					<div class="large-2 column">
+						<?php echo CHtml::label('Operation booking diagnosis', 'booking_diagnosis') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('booking_diagnosis'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
 						<?php echo CHtml::label('Surgery Date', 'surgerydate') ?>
 					</div>
 					<div class="large-4 column end">
@@ -143,6 +151,14 @@
 				</div>
 				<div class="row field-row">
 					<div class="large-2 column">
+						<?php echo CHtml::label('Tamponade Used', 'tamponade_used') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('tamponade_used'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
 						<?php echo CHtml::label('Anaesthetic Type', 'anaesthetic_type') ?>
 					</div>
 					<div class="large-4 column end">
@@ -179,6 +195,15 @@
 					</div>
 					<div class="large-4 column end">
 						<?php echo CHtml::checkBox('opnote_comments'); ?>
+					</div>
+				</div>
+				<h3>Patient Data</h3>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Patient Ophthalmic Diagnoses', 'patient_oph_diagnoses') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('patient_oph_diagnoses'); ?>
 					</div>
 				</div>
 				<div class="row field-row">
