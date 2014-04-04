@@ -91,6 +91,7 @@ class ReportController extends BaseController
 			$filename = 'operation_report_' . date('YmdHis') . '.csv';
 			$this->sendCsvHeaders($filename);
 
+			/*
 			echo "\"Operation report for ";
 			if($surgeon) {
 				echo "$surgeon->first_name $surgeon->last_name";
@@ -98,7 +99,7 @@ class ReportController extends BaseController
 				echo "all surgeons";
 			}
 			echo " from $date_from to $date_to\"\n";
-
+*/
 			echo $this->array2Csv($results);
 		} else {
 			$context['surgeons'] = CHtml::listData(User::model()->findAll(array('condition' => 'is_surgeon = 1', 'order' => 'first_name,last_name')), 'id', 'fullname');
