@@ -62,27 +62,28 @@
     margin-top: 0;
     font-size: 1rem;
     font-weight: bold;
+    padding-left: 0;
   }
 }
 @media print {
-  /* line 34, ../sass/components/_elements.scss */
+  /* line 35, ../sass/components/_elements.scss */
   .Element_OphTrOperationnote_Anaesthetic .row.columns-5 .column {
     width: 20%;
   }
-  /* line 39, ../sass/components/_elements.scss */
+  /* line 40, ../sass/components/_elements.scss */
   .Element_OphTrOperationnote_Anaesthetic .row.columns-4 .column {
     width: 25%;
   }
 }
 
 @media print {
-  /* line 47, ../sass/components/_elements.scss */
+  /* line 48, ../sass/components/_elements.scss */
   .Element_OphTrOperationnote_GenericProcedure {
     border-bottom: 1px dotted #666;
     padding-bottom: 20px;
     margin-bottom: 20px;
   }
-  /* line 52, ../sass/components/_elements.scss */
+  /* line 53, ../sass/components/_elements.scss */
   .Element_OphTrOperationnote_GenericProcedure:last-child {
     border-bottom: 0;
     margin-bottom: 0;
@@ -90,13 +91,13 @@
   }
 }
 @media print {
-  /* line 58, ../sass/components/_elements.scss */
+  /* line 59, ../sass/components/_elements.scss */
   .Element_OphTrOperationnote_GenericProcedure .element-title {
     margin-top: 10px;
   }
 }
 @media print {
-  /* line 63, ../sass/components/_elements.scss */
+  /* line 64, ../sass/components/_elements.scss */
   .Element_OphTrOperationnote_GenericProcedure .data-title {
     margin-top: 0;
     font-size: 1rem;
@@ -105,23 +106,23 @@
 }
 
 @media print {
-  /* line 74, ../sass/components/_elements.scss */
+  /* line 75, ../sass/components/_elements.scss */
   .Element_OphTrOperationnote_Cataract .pronounced ul {
     margin-bottom: 0;
   }
 }
 
 @media print {
-  /* line 85, ../sass/components/_elements.scss */
+  /* line 86, ../sass/components/_elements.scss */
   .operation-details > .details > .element-data {
     padding-top: 0;
   }
 
-  /* line 91, ../sass/components/_elements.scss */
+  /* line 92, ../sass/components/_elements.scss */
   .operation-meta .data-label {
     font-weight: bold;
   }
-  /* line 95, ../sass/components/_elements.scss */
+  /* line 96, ../sass/components/_elements.scss */
   .operation-meta .surgeons .column, .operation-meta .surgeons .columns {
     text-align: center;
   }
