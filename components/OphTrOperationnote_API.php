@@ -53,7 +53,7 @@ class OphTrOperationnote_API extends BaseAPI
 		}
 	}
 
-	public function GetLastEye($patient)
+	public function getLastEye($patient)
 	{
 		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
