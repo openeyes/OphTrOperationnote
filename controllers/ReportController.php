@@ -403,16 +403,28 @@ class ReportController extends BaseController
 		$criteria->addInCondition('eye_id', $this->eyesCondition($record));
 		$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
 		$reading = null;
-		if ($va) {
-			$reading = $va->getBestReading(strtolower($record['eye']));
+		$sides = array(strtolower($record['eye']));
+		if ($sides[0] == 'both') {
+			$sides = array('left', 'right');
 		}
 
-		if ($reading) {
-			return $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+		if ($va) {
+			$res = '';
+			foreach ($sides as $side) {
+				$reading = $va->getBestReading($side);
+				if ($res) {
+					$res .= " ";
+				}
+				if ($reading) {
+					$res .= ucfirst($side) . ": " . $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+				}
+				else {
+					$res .= ucfirst($side) . ": Unknown";
+				}
+			}
+			return $res;
 		}
-		else {
-			return 'Unknown';
-		}
+		return "Unknown";
 	}
 
 	public function getRefractionReading($criteria,$record)
