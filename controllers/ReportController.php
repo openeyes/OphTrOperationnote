@@ -86,7 +86,10 @@ class ReportController extends BaseController
 				$filter_complications = $_GET['complications'];
 			}
 
+			// ensure we don't hit PAS
+			Yii::app()->event->dispatch('start_batch_mode');
 			$results = $this->getOperations($surgeon, $filter_procedures, $filter_complications, $date_from, $date_to);
+			Yii::app()->event->dispatch('end_batch_mode');
 
 			$filename = 'operation_report_' . date('YmdHis') . '.csv';
 			$this->sendCsvHeaders($filename);
@@ -149,7 +152,7 @@ class ReportController extends BaseController
 		$results = array();
 		$cache = array();
 		foreach ($command->queryAll(true, $params) as $row) {
-
+			set_time_limit(1);
 			$complications = array();
 			if ($row['cat_id']) {
 				foreach (OphTrOperationnote_CataractComplication::model()->findAll('cataract_id = ?', array($row['cat_id'])) as $complication) {
