@@ -137,7 +137,8 @@ class ReportController extends BaseController
 			->join("contact c", "p.contact_id = c.id")
 			->join("eye", "eye.id = pl.eye_id")
 			->leftJoin("et_ophtroperationnote_cataract cat", "cat.event_id = e.id")
-			->where("e.deleted = 0 and ep.deleted = 0 and e.created_date >= :from_date and e.created_date < :to_date + interval 1 day");
+			->where("e.deleted = 0 and ep.deleted = 0 and e.created_date >= :from_date and e.created_date < :to_date + interval 1 day")
+			->order("p.id, e.created_date asc");
 		$params = array(':from_date' => $from_date, ':to_date' => $to_date);
 
 
