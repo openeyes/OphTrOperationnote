@@ -495,6 +495,18 @@ class ReportController extends BaseController
 			}
 		}
 
+		if (@$_GET['surgeon'] || @$_GET['surgeon_role'] || @$_GET['assistant'] || @$_GET['assistant_role'] || @$_GET['supervising_surgeon'] || @$_GET['supervising_surgeon_role']) {
+			$surgeon_element = Element_OphTrOperationnote_Surgeon::model()->findByAttributes(array('event_id' => $event_id));
+
+			foreach (array('surgeon', 'assistant', 'supervising_surgeon') as $surgeon_type) {
+				if (@$_GET[$surgeon_type] || @$_GET["{$surgeon_type}_role"]) {
+					$surgeon = $surgeon_element->{$surgeon_type};
+					if (@$_GET[$surgeon_type]) $record[$surgeon_type] = $surgeon ? $surgeon->getFullName() : 'None';
+					if (@$_GET["{$surgeon_type}_role"]) $record["{$surgeon_type}_role"] = $surgeon ? $surgeon->role : 'None';
+				}
+			}
+		}
+
 		if (@$_GET['opnote_comments']) {
 			$comments=Element_OphTrOperationnote_Comments::model()->find('event_id = :event_id',array(':event_id'=>$event_id));
 			$record['opnote_comments']=	trim(preg_replace('/\s\s+/', ' ', $comments['comments']));
