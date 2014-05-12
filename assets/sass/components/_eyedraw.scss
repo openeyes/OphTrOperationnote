@@ -14,27 +14,15 @@
 // * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
 // * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
 
-#ed_canvas_edit_Cataract {
-	background-color: #fff;
-	border: 1px solid #000;
-	margin-top: 1em;
+#eyedrawwidget_Cataract {
+	margin: 0;
 }
 
 #ed_canvas_edit_Position {
-	background-color: #DAE6F1;
-	border: 0;
 	margin-left: 80px;
 }
 
 #ed_canvas_edit_Buckle {
 	background-color: #fff;
 	border: 1px solid #000;
-}
-
-.Element_OphTrOperationnote_Vitrectomy,
-.Element_OphTrOperationnote_Buckle,
-.Element_OphTrOperationnote_Cataract {
-	.ed_toolbar {
-		margin: 0;
-	}
 }
