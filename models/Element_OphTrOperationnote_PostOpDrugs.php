@@ -139,7 +139,7 @@ class Element_OphTrOperationnote_PostOpDrugs extends BaseEventTypeElement
 		}
 
 		foreach ($curr_by_id as $curr) {
-			if (!$curr->delete) {
+			if (!$curr->delete()) {
 				throw new Exception('Unable to delete drug assignment: '.print_r($curr->getErrors(),true));
 			}
 		}
