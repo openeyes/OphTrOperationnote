@@ -36,6 +36,7 @@
  * @property Event $event
  * @property OphTrOperationnote_Trabectome_Power $power
  * @property OphTrOperationnote_Trabectome_Complication[] $complications
+ * @property OphTrOperationnote_Trabectome_ComplicationAssignment $complication_assigments - DO NOT use outside model
  *
  */
 class Element_OphTrOperationnote_Trabectome extends Element_OnDemand
@@ -139,5 +140,43 @@ class Element_OphTrOperationnote_Trabectome extends Element_OnDemand
 			$res[] = $comp->id;
 		}
 		return $res;
+	}
+
+	/**
+	 * Update the complication assignments for this element
+	 *
+	 * @param array $ids - OphTrOperationnote_Trabectome_Complication ids
+	 * @throws Exception
+	 */
+	public function updateComplications($ids)
+	{
+		$curr_by_id = array();
+		$save = array();
+
+		foreach ($this->complication_assignments as $ca) {
+			$curr_by_id[$ca->complication_id] = $ca;
+		}
+
+		foreach ($ids as $id) {
+			if (!array_key_exists($id, $curr_by_id)) {
+				$ass = new OphTrOperationnote_Trabectome_ComplicationAssignment();
+				$ass->attributes = array('element_id' => $this->id, 'complication_id' => $id);
+				$save[] = $ass;
+			} else {
+				unset($curr_by_id[$id]);
+			}
+
+			foreach ($save as $s) {
+				if (!$s->save()) {
+					throw new Exception('Unable to save complication assignment:' . print_r($s->getErrors(), true));
+				};
+			}
+
+			foreach ($curr_by_id as $curr) {
+				if (!$curr->delete()) {
+					throw new Exception('unable to delete complication assignment:' . print_r($curr->getErrors(), true));
+				}
+			}
+		}
 	}
 }
