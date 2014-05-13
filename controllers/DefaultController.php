@@ -74,7 +74,7 @@ class DefaultController extends BaseEventTypeController
 	 */
 	protected function getEventElements()
 	{
-		if ($this->event) {
+		if ($this->event && !$this->event->isNewRecord) {
 			return $this->event->getElements();
 			//TODO: check for missing elements for procedures
 
@@ -84,8 +84,6 @@ class DefaultController extends BaseEventTypeController
 			if ($procedures = $this->getBookingProcedures()) {
 				// need to add procedure elements for the booking operation
 				$extra_elements = array();
-
-
 				foreach ($procedures as $proc) {
 					$procedure_elements = $this->getProcedureSpecificElements($proc->id);
 					foreach ($procedure_elements as $element) {
