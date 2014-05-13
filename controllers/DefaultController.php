@@ -662,6 +662,22 @@ class DefaultController extends BaseEventTypeController
 	}
 
 	/**
+	 * Set the complications for the Element_OphTrOperationote_Trabectome element
+	 * @param $element
+	 * @param $data
+	 * @param $index
+	 */
+	protected function setComplexAttributes_Element_OphTrOperationote_Trabectome($element, $data, $index)
+	{
+		$model_name = CHtml::modelName($element);
+		$complications = array();
+		foreach (@$data[$model_name]['complications'] as $id) {
+			$complications[] = OphTrOperationnote_Trabectome_Complication::model()->findByPk($id);
+		}
+		$element->complications = $complications;
+	}
+
+	/**
 	 * Return the anaesthetic agent list
 	 *
 	 * @param Element_OphTrOperationnote_Anaesthetic $element

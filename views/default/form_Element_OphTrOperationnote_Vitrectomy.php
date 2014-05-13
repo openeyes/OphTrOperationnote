@@ -35,6 +35,7 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 					array('deselectDoodles', array()),
 				),
 				'side'=>$this->selectedEyeForEyedraw->shortName,
+				'idSuffix' => $element->elementType->id,
 				'mode'=>'edit',
 				'width'=>300,
 				'height'=>300,

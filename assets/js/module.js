@@ -232,6 +232,42 @@ $(document).ready(function() {
 	$('tr.clickable').click(function() {
 		$(this).children('td:first').children('input[type="radio"]').attr('checked',true);
 	});
+
+	$(this).delegate('.ed_report', 'click', function(e) {
+		e.preventDefault();
+
+		var element = $(this).closest('.sub-element');
+
+		// Get eyedraw js object
+		var eyedraw = element.attr('data-element-type-id');
+		eyedraw = window['ed_drawing_edit_' + eyedraw];
+
+		// Get report text and strip trailing comma
+		var text = eyedraw.report();
+		text = text.replace(/, +$/, '');
+
+		// Update description
+		var description = 'description';
+		description = $('textarea[name$="[' + description + ']"]', element).first();
+		if (description.val()) {
+			text = description.val() + ", " + text.toLowerCase();
+		}
+		description.val(text);
+		description.trigger('autosize');
+	});
+
+	$(this).delegate('.ed_clear', 'click', function(e) {
+		e.preventDefault();
+
+		var element = $(this).closest('.element');
+
+		var description = 'description';
+		description = $('textarea[name$="[' + description + ']"]', element).first();
+
+		description.val('');
+		description.trigger('autosize');
+	});
+
 });
 
 function callbackVerifyAddProcedure(proc_name,durations,callback) {

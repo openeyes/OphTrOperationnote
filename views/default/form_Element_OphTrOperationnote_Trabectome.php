@@ -1,0 +1,61 @@
+<?php
+/**
+ * OpenEyes
+ *
+ * (C) OpenEyes Foundation, 2014
+ * This file is part of OpenEyes.
+ * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with OpenEyes in a file titled COPYING. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package OpenEyes
+ * @link http://www.openeyes.org.uk
+ * @author OpenEyes <info@openeyes.org.uk>
+ * @copyright Copyright (c) 2014, OpenEyes Foundation
+ * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
+ */
+
+$layoutColumns=$form->layoutColumns;
+$form->layoutColumns=array('label'=>3,'field'=>9);
+?>
+	<div class="element-fields">
+		<div class="row eyedraw-row trabectome">
+			<div class="fixed column">
+				<?php
+				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+								'doodleToolBarArray' => array(
+										0 => array('Trabectome','SidePort','CornealSuture'),
+								),
+								'onReadyCommandArray' => array(
+										array('addDoodle', array('AntSeg')),
+										array('addDoodle', array('Trabectome')),
+										array('deselectDoodles', array()),
+								),
+								'side'=>$this->selectedEyeForEyedraw->shortName,
+								'idSuffix' => $element->elementType->id,
+								'mode'=>'edit',
+								'width'=>300,
+								'height'=>300,
+								'model'=>$element,
+								'attribute'=>'eyedraw',
+								'offsetX' => 10,
+								'offsetY' => 10,
+								'scale' => 0.72
+						));
+				?>
+			</div>
+			<div class="fluid column">
+				<?php echo $form->dropDownList($element, 'power_id', CHtml::listData(OphTrOperationnote_Trabectome_Power::model()->activeOrPk($element->power_id)->findAll(),'id','name'),array('empty'=>'- Please select -'),false,array('field'=>3))?>
+				<?php echo $form->checkbox($element, 'blood_reflux', array('class' => 'clearWithEyedraw'))?>
+				<?php echo $form->checkbox($element, 'hpmc', array('class' => 'clearWithEyedraw'))?>
+				<?php echo $form->textArea($element, 'description', array('rows' => 4, 'class' => 'autosize clearWithEyedraw'))?>
+				<?php echo $form->multiSelectList($element, CHtml::modelName($element) . '[complications]', 'complications', 'id', CHtml::listData(OphTrOperationnote_Trabectome_Complication::model()->activeOrPk($element->getComplicationIDs())->findAll(array('order'=>'display_order asc')), 'id', 'name'), null, array('empty' => '- Complications -', 'label' => 'Complications'),false,false,null,false,false,array('field'=>4))?>
+				<div class="field-row">
+					<button class="ed_report secondary small">Report</button>
+					<button class="ed_clear secondary small">Clear</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php $form->layoutColumns=$layoutColumns;?>
