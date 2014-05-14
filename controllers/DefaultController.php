@@ -667,12 +667,14 @@ class DefaultController extends BaseEventTypeController
 	 * @param $data
 	 * @param $index
 	 */
-	protected function setComplexAttributes_Element_OphTrOperationote_Trabectome($element, $data, $index)
+	protected function setComplexAttributes_Element_OphTrOperationnote_Trabectome($element, $data, $index)
 	{
 		$model_name = CHtml::modelName($element);
 		$complications = array();
-		foreach (@$data[$model_name]['complications'] as $id) {
-			$complications[] = OphTrOperationnote_Trabectome_Complication::model()->findByPk($id);
+		if (@$data[$model_name]['complications']) {
+			foreach ($data[$model_name]['complications'] as $id) {
+				$complications[] = OphTrOperationnote_Trabectome_Complication::model()->findByPk($id);
+			}
 		}
 		$element->complications = $complications;
 	}

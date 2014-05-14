@@ -68,11 +68,12 @@ class Element_OphTrOperationnote_Trabectome extends Element_OnDemand
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('power_id, blood_reflux, hpmc, description', 'required'),
-				array('event_id, power_id, blood_reflux, hpmc, description, eyedraw, complication_other', 'safe'),
+			array('power_id, blood_reflux, hpmc, description', 'required'),
+			array('event_id, power_id, blood_reflux, hpmc, description, eyedraw, complication_other', 'safe'),
+			array('complication_other', 'requiredIfComplicationOther'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-				array('id, event_id, power_id, blood_reflux, hpmc, report', 'safe', 'on' => 'search'),
+			array('id, event_id, power_id, blood_reflux, hpmc, report', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -129,6 +130,33 @@ class Element_OphTrOperationnote_Trabectome extends Element_OnDemand
 	}
 
 	/**
+	 * Ensures the attribute is provided when an 'other' complication is selected
+	 *
+	 * @param $attribute
+	 * @param $params
+	 */
+	public function requiredIfComplicationOther($attribute, $params)
+	{
+		if ($this->hasOtherComplication() && !$this->$attribute) {
+			$this->addError($attribute, $this->getAttributeLabel($attribute)." cannot be blank.");
+		}
+	}
+
+	/**
+	 * Check if any of the complications on the element is an "other" complication (i.e. in need of further information)
+	 *
+	 * @return bool
+	 */
+	public function hasOtherComplication()
+	{
+		foreach ($this->complications as $comp) {
+			if ($comp->other) {
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
 	 * Get a list of the ids of the currently assigned complications on this element
 	 *
 	 * @return array
@@ -140,6 +168,35 @@ class Element_OphTrOperationnote_Trabectome extends Element_OnDemand
 			$res[] = $comp->id;
 		}
 		return $res;
+	}
+
+	/**
+	 * Returns comma separated list of complications on this procedure note
+	 *
+	 * @param $default
+	 * @return string
+	 */
+	public function getComplicationsString($default = "None")
+	{
+		$res = array();
+		$other = false;
+		foreach ($this->complications as $comp) {
+			if ($comp->other) {
+				$other = true;
+			}
+			else {
+				$res[] = $comp->name;
+			}
+		}
+		if ($other) {
+			$res[] = $this->complication_other;
+		}
+		if ($res) {
+			return implode(', ', $res);
+		}
+		else {
+			return $default;
+		}
 	}
 
 	/**
@@ -157,6 +214,7 @@ class Element_OphTrOperationnote_Trabectome extends Element_OnDemand
 			$curr_by_id[$ca->complication_id] = $ca;
 		}
 
+
 		foreach ($ids as $id) {
 			if (!array_key_exists($id, $curr_by_id)) {
 				$ass = new OphTrOperationnote_Trabectome_ComplicationAssignment();
@@ -165,17 +223,17 @@ class Element_OphTrOperationnote_Trabectome extends Element_OnDemand
 			} else {
 				unset($curr_by_id[$id]);
 			}
+		}
 
-			foreach ($save as $s) {
-				if (!$s->save()) {
-					throw new Exception('Unable to save complication assignment:' . print_r($s->getErrors(), true));
-				};
-			}
+		foreach ($save as $s) {
+			if (!$s->save()) {
+				throw new Exception('Unable to save complication assignment:' . print_r($s->getErrors(), true));
+			};
+		}
 
-			foreach ($curr_by_id as $curr) {
-				if (!$curr->delete()) {
-					throw new Exception('unable to delete complication assignment:' . print_r($curr->getErrors(), true));
-				}
+		foreach ($curr_by_id as $curr) {
+			if (!$curr->delete()) {
+				throw new Exception('unable to delete complication assignment:' . print_r($curr->getErrors(), true));
 			}
 		}
 	}

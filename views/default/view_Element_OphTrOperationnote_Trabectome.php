@@ -79,15 +79,7 @@
 					</div>
 					<div class="large-8 column">
 						<div class="data-value">
-							<?php if ($element->complications) {
-								echo "<ul>";
-								foreach ($element->complications as $complication) {
-									echo "<li>" . $complication->name . "</li>";
-								}
-								echo "</ul>";
-							} else {
-									echo "None";
-							}?>
+							<?= $element->getComplicationsString(); ?>
 						</div>
 					</div>
 				</div>
