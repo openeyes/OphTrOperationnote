@@ -74,7 +74,7 @@ class DefaultController extends BaseEventTypeController
 	 */
 	protected function getEventElements()
 	{
-		if ($this->event) {
+		if ($this->event && $this->event->id) {
 			return $this->event->getElements();
 			//TODO: check for missing elements for procedures
 
@@ -84,7 +84,6 @@ class DefaultController extends BaseEventTypeController
 			if ($procedures = $this->getBookingProcedures()) {
 				// need to add procedure elements for the booking operation
 				$extra_elements = array();
-
 
 				foreach ($procedures as $proc) {
 					$procedure_elements = $this->getProcedureSpecificElements($proc->id);
@@ -528,7 +527,7 @@ class DefaultController extends BaseEventTypeController
 
 		if (!empty($_POST['Element_OphTrOperationnote_ProcedureList']['eye_id'])) {
 			$eye = Eye::model()->findByPk($_POST['Element_OphTrOperationnote_ProcedureList']['eye_id']);
-		} else if ($this->event) {
+		} else if ($this->event && $this->event->id) {
 			$eye = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($this->event->id))->eye;
 		} else if (!empty($_GET['eye'])) {
 			$eye = Eye::model()->findByPk($_GET['eye']);
@@ -830,5 +829,40 @@ class DefaultController extends BaseEventTypeController
 		}
 
 		return null;
+	}
+
+	protected function setComplexAttributes_Element_OphTrOperationnote_Trabeculectomy($element, $data, $index)
+	{
+		$difficulties = array();
+
+		if (!empty($data['MultiSelect_Difficulties'])) {
+			foreach ($data['MultiSelect_Difficulties'] as $difficulty_id) {
+				$assignment = new OphTrOperationnote_Trabeculectomy_Difficulties;
+				$assignment->difficulty_id = $difficulty_id;
+
+				$difficulties[] = $assignment;
+			}
+		}
+
+		$element->difficulties = $difficulties;
+
+		$complications = array();
+
+		if (!empty($data['MultiSelect_Complications'])) {
+			foreach ($data['MultiSelect_Complications'] as $complication_id) {
+				$assignment = new OphTrOperationnote_Trabeculectomy_Complications;
+				$assignment->complication_id = $complication_id;
+
+				$complications[] = $assignment;
+			}
+		}
+
+		$element->complications = $complications;
+	}
+
+	protected function saveComplexAttributes_Element_OphTrOperationnote_Trabeculectomy($element, $data, $index)
+	{
+		$element->updateMultiSelectData('OphTrOperationnote_Trabeculectomy_Difficulties',empty($data['MultiSelect_Difficulties']) ? array() : $data['MultiSelect_Difficulties'],'difficulty_id');
+		$element->updateMultiSelectData('OphTrOperationnote_Trabeculectomy_Complications',empty($data['MultiSelect_Complications']) ? array() : $data['MultiSelect_Complications'],'complication_id');
 	}
 }

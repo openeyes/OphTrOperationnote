@@ -232,6 +232,12 @@ $(document).ready(function() {
 	$('tr.clickable').click(function() {
 		$(this).children('td:first').children('input[type="radio"]').attr('checked',true);
 	});
+
+	$('#btn-trabeculectomy-report').die('click').live('click',function(e) {
+		e.preventDefault();
+
+		$('#Element_OphTrOperationnote_Trabeculectomy_report').val(ed_drawing_edit_Trabeculectomy.report());
+	});
 });
 
 function callbackVerifyAddProcedure(proc_name,durations,callback) {
@@ -436,6 +442,7 @@ function changeEye() {
 	// Swap side of each drawing
 	var drawingEdit1 = window['ed_drawing_edit_Position'];
 	var drawingEdit2 = window['ed_drawing_edit_Cataract'];
+	var drawingEdit3 = window['ed_drawing_edit_Trabeculectomy'];
 
 	if (typeof(drawingEdit1) != 'undefined') {
 		if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;
@@ -449,6 +456,11 @@ function changeEye() {
 	if (typeof(drawingEdit2) != 'undefined') {
 		if (drawingEdit2.eye == ED.eye.Right) drawingEdit2.eye = ED.eye.Left;
 		else drawingEdit2.eye = ED.eye.Right;
+	}
+
+	if (typeof(drawingEdit3) != 'undefined') {
+		if (drawingEdit3.eye == ED.eye.Right) drawingEdit3.eye = ED.eye.Left;
+		else drawingEdit3.eye = ED.eye.Right;
 	}
 }
 

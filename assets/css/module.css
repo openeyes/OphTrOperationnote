@@ -21,11 +21,11 @@
 }
 /* line 19, ../sass/components/_event.scss */
 .event .event-content {
-  background-image: url('../img/watermark.png?1392372889');
+  background-image: url('../img/watermark.png?1399992053');
 }
 /* line 22, ../sass/components/_event.scss */
 .event .event-title {
-  background-image: url('../img/medium.png?1383822786');
+  background-image: url('../img/medium.png?1399992053');
 }
 
 /* line 29, ../sass/components/_event.scss */
@@ -206,6 +206,25 @@
 @media print {
   /* line 118, ../../../../assets/sass/openeyes/_mixins.scss */
   .row.vitrectomy .column.fluid {
+    margin-top: 1em;
+    width: 100%;
+  }
+}
+
+/* line 115, ../../../../assets/sass/openeyes/_mixins.scss */
+.row.trabeculectomy .column.fixed {
+  width: 322px;
+}
+/* line 118, ../../../../assets/sass/openeyes/_mixins.scss */
+.row.trabeculectomy .column.fluid {
+  width: -moz-calc(100% - 322px);
+  width: -o-calc(100% - 322px);
+  width: -webkit-calc(100% - 322px);
+  width: calc(100% - 322px);
+}
+@media print {
+  /* line 118, ../../../../assets/sass/openeyes/_mixins.scss */
+  .row.trabeculectomy .column.fluid {
     margin-top: 1em;
     width: 100%;
   }

@@ -23,22 +23,62 @@ class Element_OphTrOperationnote_Trabeculectomy extends Element_OnDemand
 	public function rules()
 	{
 		return array(
-			'eyedraw, conjunctival_flap_type_id, stay_suture, site_id, size_id, sclerostomy_type_id, 27_guage_needle, ac_maintainer, viscoelastic_type_id, viscoelastic_removed, viscoelastic_flow_id, report, difficulty_other, complication_other', 'safe'
+			array('eyedraw, conjunctival_flap_type_id, stay_suture, site_id, size_id, sclerostomy_type_id, viscoelastic_type_id, viscoelastic_removed, viscoelastic_flow_id, report, difficulty_other, complication_other', 'safe'),
+		);
+	}
+
+	public function attributeLabels()
+	{
+		return array(
+			'conjunctival_flap_type_id' => 'Conjunctival flap',
+			'stay_suture' => 'Stay suture',
+			'site_id' => 'Site',
+			'size_id' => 'Size',
+			'sclerostomy_type_id' => 'Sclerostomy',
+			'viscoelastic_type_id' => 'Viscoelastic',
+			'viscoelastic_removed' => 'Removed',
+			'viscoelastic_flow_id' => 'Flow',
+			'complication_other' => 'Other complication',
+			'difficulty_other' => 'Other difficulty',
 		);
 	}
 
 	public function relations()
 	{
 		return array(
+			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'conjunctival_flap_type' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Conjunctival_Flap_Type', 'conjunctival_flap_type_id'),
 			'site' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Site', 'site_id'),
-			'size' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Site', 'size_id'),
+			'size' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Size', 'size_id'),
 			'sclerostomy_type' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Sclerostomy_Type', 'sclerostomy_type_id'),
 			'viscoelastic_type' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Viscoelastic_Type', 'viscoelastic_type_id'),
 			'viscoelastic_flow' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Viscoelastic_Flow', 'viscoelastic_flow_id'),
-			'difficulties' => array(self::MANY_MANY, 'Ophtroperationnote_Trabeculectomy_Difficulty', 'ophtroperationnote_trabeculectomy_difficulties (element_id, difficulty_id)'),
-			'complications' => array(self::MANY_MANY, 'Ophtroperationnote_Trabeculectomy_Complication', 'ophtroperationnote_trabeculectomy_complications (element_id, complication_id)'),
+			'difficulties' => array(self::MANY_MANY, 'OphTrOperationnote_Trabeculectomy_Difficulty', 'ophtroperationnote_trabeculectomy_difficulties(element_id, difficulty_id)'),
+			'difficulty_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_Trabeculectomy_Difficulties', 'element_id'),
+			'complications' => array(self::MANY_MANY, 'Ophtroperationnote_Trabeculectomy_Complication', 'ophtroperationnote_trabeculectomy_complications(element_id, complication_id)'),
+			'complication_assignments' => array(self::HAS_MANY, 'Ophtroperationnote_Trabeculectomy_Complications', 'element_id'),
 		);
 	}
-}
 
+	public function getEye()
+	{
+		return Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
+	}
+
+	public function afterValidate()
+	{
+		if ($this->hasMultiSelectValue('difficulties','Other')) {
+			if (!$this->difficulty_other) {
+				$this->addError('difficulty_other',$this->getAttributeLabel('difficulty_other').' cannot be blank.');
+			}
+		}
+
+		if ($this->hasMultiSelectValue('complications','Other')) {
+			if (!$this->complication_other) {
+				$this->addError('complication_other',$this->getAttributeLabel('complication_other').' cannot be blank.');
+			}
+		}
+
+		return parent::afterValidate();
+	}
+}

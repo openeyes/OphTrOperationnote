@@ -120,12 +120,12 @@ class m140430_123639_trabeculectomy extends OEMigration
 			true
 		);
 
-		$this->createElementType('OphTrOperationNote', 'Trabeculectomy', array('display_order' => 20, 'parent_name' => 'ProcedureList'));
+		$this->createElementType('OphTrOperationnote', 'Trabeculectomy', array('display_order' => 20, 'parent_name' => 'ProcedureList'));
 	}
 
 	public function down()
 	{
-		$this->delete('element_type', 'class_name = ?', array('Element_OphTrOperationNote_Trabeculectomy'));
+		$this->delete('element_type', 'class_name = ?', array('Element_OphTrOperationnote_Trabeculectomy'));
 
 		$this->dropTable('ophtroperationnote_trabeculectomy_difficulties');
 		$this->dropTable('ophtroperationnote_trabeculectomy_difficulties_version');

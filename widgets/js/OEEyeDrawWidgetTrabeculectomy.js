@@ -17,6 +17,11 @@
  *
  * @param ED.Drawing drawing
  */
+
+function OEEyeDrawWidgetTrabeculectomy_Controller (drawing) {
+}
+
+/*
 function OEEyeDrawWidgetTrabeculectomy_Controller (drawing) {
 	var globalScaleFactor = 0.72;
 
@@ -189,3 +194,4 @@ function OEEyeDrawWidgetTrabeculectomy_Controller (drawing) {
 
 	drawing.registerForNotifications(this);
 }
+*/
