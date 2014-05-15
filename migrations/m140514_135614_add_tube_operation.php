@@ -21,6 +21,7 @@ class m140514_135614_add_tube_operation extends OEMigration
 						'name' => 'string NOT NULL',
 						'active' => 'boolean NOT NULL DEFAULT true',
 						'display_order' => 'integer NOT NULL',
+						'eyedraw_value' => 'string NOT NULL'
 				), true);
 
 
@@ -46,16 +47,12 @@ class m140514_135614_add_tube_operation extends OEMigration
 						'plate_limbus' => 'integer NOT NULL',
 						'tube_position_id' => 'integer NOT NULL',
 						'stent' => 'boolean',
-						'ligature' => 'boolean',
 						'ligated_id' => 'integer',
 						'slit' => 'boolean',
 						'visco_in_ac' => 'boolean',
 						'flow_tested' => 'boolean',
-						'comments' => 'varchar(4096) NOT NULL',
-						'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
-						'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
-						'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
-						'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
+						'eyedraw' => 'text',
+						'description' => 'text NOT NULL',
 				), true);
 
 		$this->addForeignKey('et_ophtroperationnote_glautub_ev_fk',
