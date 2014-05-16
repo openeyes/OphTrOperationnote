@@ -168,7 +168,6 @@
 							</li>
 						<?php }?>
 						</ul>
-						<?php echo CHtml::encode($element->complication_notes)?>
 					<?php }?>
 				</div>
 			</div>
@@ -178,149 +177,16 @@
 				<div class="details">
 					<?php
 					$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'idSuffix'=>'Cataract',
+						'idSuffix'=>'Trabeculectomy',
 						'side'=>$element->eye->getShortName(),
 						'mode'=>'view',
 						'width'=>200,
 						'height'=>200,
 						'model'=>$element,
 						'attribute'=>'eyedraw',
-					));
-					?>
-					<?php
-					$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'idSuffix'=>'Position',
-						'side'=>$element->eye->getShortName(),
-						'mode'=>'view',
-						'width'=>200,
-						'height'=>200,
-						'model'=>$element,
-						'attribute'=>'eyedraw2',
-					));
-					?>
-					<?php echo CHtml::encode($element->report2)?>
+					))?>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="large-6 column">
-					<div class="data-label">
-						<?php echo CHtml::encode($element->getAttributeLabel('iol_type_id'))?>:
-					</div>
-				</div>
-				<div class="large-6 column">
-					<div class="data-value">
-						<?php echo $element->iol_type ? $element->iol_type->name : 'None'?>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-6 column">
-					<div class="data-label">
-						<?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?>:
-					</div>
-				</div>
-				<div class="large-6 column">
-					<div class="data-value">
-						<?php echo CHtml::encode($element->iol_power)?>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-6 column">
-					<div class="data-label">
-						<?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:
-					</div>
-				</div>
-				<div class="large-6 column">
-					<div class="data-value">
-						<?php echo $element->predicted_refraction?>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-6 column">
-					<div class="data-label">
-						<?php echo CHtml::encode($element->getAttributeLabel('iol_position_id'))?>:
-					</div>
-				</div>
-				<div class="large-6 column">
-					<div class="data-value">
-						<?php echo $element->iol_position->name?>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
 </section>
-
-<!--
-
-<div class="procedureContainer clearfix">
-	<div class="rightHalf">
-		<div class="detailRow grouped">
-			<div class="clearfix">
-				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-					'idSuffix'=>'Cataract',
-					'side'=>$element->eye->getShortName(),
-					'mode'=>'view',
-					'width'=>200,
-					'height'=>200,
-					'model'=>$element,
-					'attribute'=>'eyedraw',
-				));
-				?>
-				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-					'idSuffix'=>'Position',
-					'side'=>$element->eye->getShortName(),
-					'mode'=>'view',
-					'width'=>200,
-					'height'=>200,
-					'model'=>$element,
-					'attribute'=>'eyedraw2',
-				));
-				?>
-			</div>
-			<div class="value">
-				<?php echo CHtml::encode($element->report2)?>
-			</div>
-		</div>
-		<div class="detailRow leftAlign">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('iol_type_id'))?>:
-			</div>
-			<div class="value">
-				<?php echo $element->iol_type ? $element->iol_type->name : 'None'?>
-			</div>
-		</div>
-		<div class="detailRow leftAlign">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?>:
-			</div>
-			<div class="value">
-				<?php echo CHtml::encode($element->iol_power)?>
-			</div>
-		</div>
-		<div class="detailRow leftAlign">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:
-			</div>
-			<div class="value">
-				<?php echo $element->predicted_refraction?>
-			</div>
-		</div>
-		<div class="detailRow leftAlign">
-			<div class="label">
-				<?php echo CHtml::encode($element->getAttributeLabel('iol_position_id'))?>:
-			</div>
-			<div class="value">
-				<?php echo $element->iol_position->name?>
-			</div>
-		</div>
-	</div>
-
-</div>
--->
