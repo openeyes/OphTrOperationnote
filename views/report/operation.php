@@ -191,6 +191,54 @@
 				</div>
 				<div class="row field-row">
 					<div class="large-2 column">
+						<?php echo CHtml::label('Surgeon', 'surgeon') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('surgeon'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Surgeon role', 'surgeon_role') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('surgeon_role'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Assistant', 'assistant') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('assistant'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Assistant role', 'assistant_role') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('assistant_role'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Supervising surgeon', 'supervising_surgeon') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('supervising_surgeon'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
+						<?php echo CHtml::label('Supervising surgeon role', 'supervising_surgeon_role') ?>
+					</div>
+					<div class="large-4 column end">
+						<?php echo CHtml::checkBox('supervising_surgeon_role'); ?>
+					</div>
+				</div>
+				<div class="row field-row">
+					<div class="large-2 column">
 						<?php echo CHtml::label('Operation Note Comments', 'opnote_comments') ?>
 					</div>
 					<div class="large-4 column end">

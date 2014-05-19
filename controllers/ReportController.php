@@ -86,7 +86,10 @@ class ReportController extends BaseController
 				$filter_complications = $_GET['complications'];
 			}
 
+			// ensure we don't hit PAS
+			Yii::app()->event->dispatch('start_batch_mode');
 			$results = $this->getOperations($surgeon, $filter_procedures, $filter_complications, $date_from, $date_to);
+			Yii::app()->event->dispatch('end_batch_mode');
 
 			$filename = 'operation_report_' . date('YmdHis') . '.csv';
 			$this->sendCsvHeaders($filename);
@@ -134,7 +137,8 @@ class ReportController extends BaseController
 			->join("contact c", "p.contact_id = c.id")
 			->join("eye", "eye.id = pl.eye_id")
 			->leftJoin("et_ophtroperationnote_cataract cat", "cat.event_id = e.id")
-			->where("e.deleted = 0 and ep.deleted = 0 and e.created_date >= :from_date and e.created_date < :to_date + interval 1 day");
+			->where("e.deleted = 0 and ep.deleted = 0 and e.created_date >= :from_date and e.created_date < :to_date + interval 1 day")
+			->order("p.id, e.created_date asc");
 		$params = array(':from_date' => $from_date, ':to_date' => $to_date);
 
 
@@ -149,7 +153,7 @@ class ReportController extends BaseController
 		$results = array();
 		$cache = array();
 		foreach ($command->queryAll(true, $params) as $row) {
-
+			set_time_limit(1);
 			$complications = array();
 			if ($row['cat_id']) {
 				foreach (OphTrOperationnote_CataractComplication::model()->findAll('cataract_id = ?', array($row['cat_id'])) as $complication) {
@@ -400,16 +404,28 @@ class ReportController extends BaseController
 		$criteria->addInCondition('eye_id', $this->eyesCondition($record));
 		$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
 		$reading = null;
-		if ($va) {
-			$reading = $va->getBestReading(strtolower($record['eye']));
+		$sides = array(strtolower($record['eye']));
+		if ($sides[0] == 'both') {
+			$sides = array('left', 'right');
 		}
 
-		if ($reading) {
-			return $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+		if ($va) {
+			$res = '';
+			foreach ($sides as $side) {
+				$reading = $va->getBestReading($side);
+				if ($res) {
+					$res .= " ";
+				}
+				if ($reading) {
+					$res .= ucfirst($side) . ": " . $reading->convertTo($reading->value, $va->unit_id) . ' (' . $reading->method->name . ')';
+				}
+				else {
+					$res .= ucfirst($side) . ": Unknown";
+				}
+			}
+			return $res;
 		}
-		else {
-			return 'Unknown';
-		}
+		return "Unknown";
 	}
 
 	public function getRefractionReading($criteria,$record)
@@ -476,6 +492,18 @@ class ReportController extends BaseController
 			}
 			else {
 				$record['tamponade_used'] = 'None';
+			}
+		}
+
+		if (@$_GET['surgeon'] || @$_GET['surgeon_role'] || @$_GET['assistant'] || @$_GET['assistant_role'] || @$_GET['supervising_surgeon'] || @$_GET['supervising_surgeon_role']) {
+			$surgeon_element = Element_OphTrOperationnote_Surgeon::model()->findByAttributes(array('event_id' => $event_id));
+
+			foreach (array('surgeon', 'assistant', 'supervising_surgeon') as $surgeon_type) {
+				if (@$_GET[$surgeon_type] || @$_GET["{$surgeon_type}_role"]) {
+					$surgeon = $surgeon_element->{$surgeon_type};
+					if (@$_GET[$surgeon_type]) $record[$surgeon_type] = $surgeon ? $surgeon->getFullName() : 'None';
+					if (@$_GET["{$surgeon_type}_role"]) $record["{$surgeon_type}_role"] = $surgeon ? $surgeon->role : 'None';
+				}
 			}
 		}
 
