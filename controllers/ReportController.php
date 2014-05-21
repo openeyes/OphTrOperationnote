@@ -20,18 +20,17 @@
 
 //TODO: direct use of models should be replaced by API when this is not master branch
 
-class ReportController extends BaseEventTypeController
+class ReportController extends BaseController
 {
-	public $renderPatientPanel = false;
-
-	static protected $action_types = array(
-		'index' => self::ACTION_TYPE_REPORT,
-		'operation' => self::ACTION_TYPE_REPORT,
-	);
 
 	public function accessRules()
 	{
-		return array(array('allow', 'users' => array('@')));
+		return array(
+			array('allow',
+				'actions' => array('index', 'operation'),
+				'roles' => array('OprnGenerateReport'),
+			)
+		);
 	}
 
 	protected function array2Csv(array $data)
