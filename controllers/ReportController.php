@@ -26,7 +26,10 @@ class ReportController extends BaseController
 	public function accessRules()
 	{
 		return array(
-			array('deny'),
+			array('allow',
+				'actions' => array('index', 'operation'),
+				'roles' => array('OprnGenerateReport'),
+			)
 		);
 	}
 
@@ -227,7 +230,7 @@ class ReportController extends BaseController
 				}
 			}
 
-		  //appenders
+			//appenders
 			$this->appendPatientValues($record, $row['id']);
 			$this->appendBookingValues($record, $row['id']);
 			$this->appendOpNoteValues($record, $row['id']);
