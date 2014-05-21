@@ -51,10 +51,10 @@ $numHash = crc32($element->getElementTypeName());
 				</label>
 			</div>
 			<div class="large-<?php echo $layoutColumns['field'];?> column end">
-				<?php echo CHtml::textArea(get_class($element).'[comments][]',$element->comments,array('rows'=>4,'id'=>get_class($element)."_comments_".$numHash))?>
+				<?php echo CHtml::textArea(get_class($element).'[' . $element->proc_id. '][comments]',$element->comments,array('rows'=>4,'id'=>get_class($element)."_comments_".$numHash))?>
 			</div>
 		</div>
 	</div>
-	<input type="hidden" name="<?php echo get_class($element)?>[proc_id][]" value="<?php echo $element->proc_id?>" />
-	<input type="hidden" name="<?php echo get_class($element)?>[_element_id][]" value="<?php echo $element->id?>" />
+	<input type="hidden" name="<?php echo get_class($element)?>[<?php echo $element->proc_id?>][proc_id]" value="<?php echo $element->proc_id?>" />
+	<input type="hidden" name="<?php echo get_class($element)?>[<?php echo $element->proc_id?>][id]" value="<?php echo $element->id?>" />
 </section>
