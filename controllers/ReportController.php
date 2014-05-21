@@ -20,14 +20,18 @@
 
 //TODO: direct use of models should be replaced by API when this is not master branch
 
-class ReportController extends BaseController
+class ReportController extends BaseEventTypeController
 {
+	public $renderPatientPanel = false;
+
+	static protected $action_types = array(
+		'index' => self::ACTION_TYPE_REPORT,
+		'operation' => self::ACTION_TYPE_REPORT,
+	);
 
 	public function accessRules()
 	{
-		return array(
-			array('deny'),
-		);
+		return array(array('allow', 'users' => array('@')));
 	}
 
 	protected function array2Csv(array $data)
@@ -227,7 +231,7 @@ class ReportController extends BaseController
 				}
 			}
 
-		  //appenders
+			//appenders
 			$this->appendPatientValues($record, $row['id']);
 			$this->appendBookingValues($record, $row['id']);
 			$this->appendOpNoteValues($record, $row['id']);
