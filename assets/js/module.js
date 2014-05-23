@@ -110,10 +110,10 @@ function setCataractInput(key, value) {
 $(document).ready(function() {
 	handleButton($('#et_save'),function() {
 		if ($('#Element_OphTrOperationnote_Buckle_report').length >0) {
-			$('#Element_OphTrOperationnote_Buckle_report').val(ed_drawing_edit_Buckle.report());
+			$('#Element_OphTrOperationnote_Buckle_report').val(ED.getInstance('ed_drawing_edit_Buckle').report());
 		}
 		if ($('#Element_OphTrOperationnote_Cataract_report2').length >0) {
-			$('#Element_OphTrOperationnote_Cataract_report2').val(ed_drawing_edit_Cataract.report());
+			$('#Element_OphTrOperationnote_Cataract_report2').val(ED.getInstance('ed_drawing_edit_Cataract').report());
 		}
 	});
 
@@ -410,7 +410,7 @@ function sidePortController(_drawing)
 				if (_drawing.isNew)
 				{
 					// Get rotation value of surgeon doodle
-					var surgeonDrawing = window['ed_drawing_edit_Position'];
+					var surgeonDrawing = ED.getInstance('ed_drawing_edit_Position');
 					var surgeonRotation = surgeonDrawing.firstDoodleOfClass('Surgeon').rotation;
 
 					// Get doodle that has moved in opnote drawing
@@ -470,8 +470,8 @@ function sidePortController(_drawing)
 
 function changeEye() {
 	// Swap side of each drawing
-	var drawingEdit1 = window['ed_drawing_edit_Position'];
-	var drawingEdit2 = window['ed_drawing_edit_Cataract'];
+	var drawingEdit1 = window.ED ? ED.getInstance('ed_drawing_edit_Position') : undefined;
+	var drawingEdit2 = window.ED ? ED.getInstance('ed_drawing_edit_Cataract') : undefined;
 
 	if (typeof(drawingEdit1) != 'undefined') {
 		if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;
