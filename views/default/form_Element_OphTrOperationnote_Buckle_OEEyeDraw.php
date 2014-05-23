@@ -35,10 +35,6 @@ $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 	'attribute'=>'eyedraw',
 	'offsetX' => 10,
 	'offsetY' => 10,
-	'template' => 'OEEyeDrawWidget_InlineToolbar',
-	'fields' => $this->renderPartial($element->form_view . '_OEEyeDraw_fields', array(
-		'form' => $form,
-		'element' => $element
-	), true)
+	'template' => 'OEEyeDrawWidget_InlineToolbar'
 ));
 ?>

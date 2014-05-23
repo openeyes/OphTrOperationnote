@@ -2,8 +2,7 @@
 /**
  * OpenEyes
  *
- * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
- * (C) OpenEyes Foundation, 2011-2013
+ * (C) OpenEyes Foundation, 2014
  * This file is part of OpenEyes.
  * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -12,13 +11,28 @@
  * @package OpenEyes
  * @link http://www.openeyes.org.uk
  * @author OpenEyes <info@openeyes.org.uk>
- * @copyright Copyright (c) 2008-2011, Moorfields Eye Hospital NHS Foundation Trust
- * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
+ * @copyright Copyright (c) 2014, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
+
+$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+	'doodleToolBarArray' => array(
+			0 => array('Trabectome','SidePort','CornealSuture'),
+	),
+	'onReadyCommandArray' => array(
+			array('addDoodle', array('AntSeg')),
+			array('addDoodle', array('Trabectome')),
+			array('deselectDoodles', array()),
+	),
+	'side'=>$this->selectedEyeForEyedraw->shortName,
+	'idSuffix' => $element->elementType->id,
+	'mode'=>'edit',
+	'width'=>300,
+	'height'=>300,
+	'model'=>$element,
+	'attribute'=>'eyedraw',
+	'offsetX' => 10,
+	'offsetY' => 10,
+	'scale' => 0.72
+));
 ?>
-<?php echo $form->hiddenInput($element, 'report', $element->report)?>
-<?php echo $form->dropDownList($element, 'drainage_type_id', 'OphTrOperationnote_DrainageType', array('empty'=>'- Please select -'))?>
-<?php echo $form->radioBoolean($element, 'drain_haem')?>
-<?php echo $form->radioBoolean($element, 'deep_suture')?>
-<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 60))?>
