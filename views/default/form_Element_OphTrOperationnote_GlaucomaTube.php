@@ -24,29 +24,27 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 				<?php
 				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 								'doodleToolBarArray' => array(
-										0 => array('TubeExtender','Patch', 'PI', 'Supramid', 'Vicryl'),
+										0 => array('TubeExtender','Patch', 'PI', 'Supramid', 'TubeLigation'),
 								),
 								'onReadyCommandArray' => array(
 										array('addDoodle', array('AntSeg')),
 										array('addDoodle', array('Tube')),
 										array('deselectDoodles', array()),
 								),
+
 								'bindingArray' => array(
 										'Tube' => array(
 												'platePosition' => array('id' => 'Element_OphTrOperationnote_GlaucomaTube_plate_position_id', 'attribute' => 'data-value'),
 										),
-										//TODO: might need to handle this in a custom function if there's no parameter to bind to for the doodle.
-										/*
-										'Vicryl' => array(
-												'type' => array('id' => 'Element_OphTrOperationnote_GlaucomaTube_ligated_id', 'attribute' => 'data-value'),
+										'TubeLigation' => array(
+												'material' => array('id' => 'Element_OphTrOperationnote_GlaucomaTube_ligated_id', 'attribute' => 'data-value'),
 										),
-										*/
 								),
-								/*
+
+
 								'deleteValueArray' => array(
 										'Element_OphTrOperationnote_GlaucomaTube_ligated_id' => 'None',
 								),
-								*/
 								'side'=>$this->selectedEyeForEyedraw->shortName,
 								'idSuffix' => $element->elementType->id,
 								'mode'=>'edit',
@@ -56,7 +54,8 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 								'attribute'=>'eyedraw',
 								'offsetX' => 10,
 								'offsetY' => 10,
-								'scale' => 0.72
+								'scale' => 0.72,
+								'template' =>  'OEEyeDrawWidget_InlineToolbar'
 						));
 				?>
 			</div>
@@ -86,7 +85,7 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 				$ligated_opts = OphTrOperationnote_GlaucomaTube_Ligated::model()->activeOrPk($element->ligated_id)->findAll();
 				$html_options = array('empty'=>'None', 'options' => array());
 				foreach ($ligated_opts as $lo) {
-					$html_options['options'][$lo->id] = array('data-value' => 1);
+					$html_options['options'][$lo->id] = array('data-value' => $lo->name);
 				}
 				echo $form->dropDownList($element, 'ligated_id', CHtml::listData($ligated_opts,'id','name'),$html_options,false,array('field'=>3))?>
 				<?php echo $form->checkbox($element, 'slit', array('class' => 'clearWithEyedraw'))?>
