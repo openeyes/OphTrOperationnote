@@ -92,7 +92,7 @@
 			</div>
 			<div class="large-6 column">
 				<?php
-				$this->widget('OphTrOperationnote.widgets.OEEyeDrawWidgetTrabeculectomy', array(
+				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 						'idSuffix'=>'Trabeculectomy',
 						'side'=>$element->eye->getShortName(),
 						'mode'=>'view',
