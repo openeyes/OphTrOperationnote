@@ -20,8 +20,21 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 	<div class="row trabeculectomy">
 		<div class="fixed column">
 			<?php
-				$this->widget('OphTrOperationnote.widgets.OEEyeDrawWidgetTrabeculectomy',
+				$this->widget('application.modules.eyedraw.OEEyeDrawWidget',
 					array(
+						'doodleToolBarArray' => array(
+							array('TrabySuture', 'PI', 'SidePort', 'ScleralPatch', 'ConjunctivalSuture'),
+						),
+						'onReadyCommandArray' => array(
+							array('addDoodle',array('AntSeg')),
+							array('addDoodle',array('ConjunctivalFlap')),
+							array('addDoodle',array('PI',array('rotation' => 0))),
+							array('addDoodle',array('SidePort',array('rotation' => ($this->selectedEyeForEyedraw->name == 'Right' ? 5 : 3) * pi() / 4))),
+							array('addDoodle',array('TrabyFlap')),
+							array('addDoodle',array('TrabySuture')),
+							array('addDoodle',array('TrabySuture')),
+							array('addDoodle',array('TrabySuture')),
+						),
 						'model' => $element,
 						'attribute' => 'eyedraw',
 						'side' => $this->selectedEyeForEyedraw->shortName,
@@ -29,7 +42,10 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 						'mode' => 'edit',
 						'width' => 300,
 						'height' => 300,
-						'template' => 'OEEyeDrawWidgetTrabeculectomy',
+						'template' => 'OEEyeDrawWidget_InlineToolbar',
+						'listenerArray' => array(
+							'trabeculectomyController',
+						),
 						'bindingArray' => array(
 							'ConjunctivalFlap' => array(
 								'method' => array(
@@ -73,7 +89,7 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 							<label></label>
 						</div>
 						<div class="large-3 column end">
-							<button id="btn-trabeculectomy-report" class="secondary small">
+							<button id="btn-trabeculectomy-report" class="secondary small ed_report">
 								Report
 							</button>
 						</div>

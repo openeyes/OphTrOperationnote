@@ -45,7 +45,7 @@ function callbackAddProcedure(procedure_id) {
 						if (m[1] == 'Element_OphTrOperationnote_GenericProcedure' || $('.'+m[1]).length <1) {
 							$('.Element_OphTrOperationnote_ProcedureList .sub-elements').append(html);
 							$('.'+m[1]+':last').attr('style','display: none;');
-                            $('.'+m[1]+':last').removeClass('hidden');
+														$('.'+m[1]+':last').removeClass('hidden');
 							$('.'+m[1]+':last').slideToggle('fast');
 						}
 					}
@@ -161,11 +161,11 @@ $(document).ready(function() {
 							$('#Element_OphTrOperationnote_ProcedureList_eye_id_'+last_Element_OphTrOperationnote_ProcedureList_eye_id).attr('checked','checked');
 							if (parseInt(result.split("\n").length) == 1) {
 								new OpenEyes.UI.Dialog.Alert({
-								  content: "The following procedure requires a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
+									content: "The following procedure requires a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
 								}).open();
 							} else {
 								new OpenEyes.UI.Dialog.Alert({
-								  content: "The following procedures require a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
+									content: "The following procedures require a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
 								}).open();
 							}
 							return false;
@@ -285,7 +285,7 @@ function callbackVerifyAddProcedure(proc_name,durations,callback) {
 				callback(true);
 			} else {
 				new OpenEyes.UI.Dialog.Alert({
-				  content: "You must select either the right or the left eye before adding this procedure."
+					content: "You must select either the right or the left eye before adding this procedure."
 				}).open();
 				callback(false);
 			}
@@ -467,6 +467,54 @@ function sidePortController(_drawing)
 	}
 }
 
+function trabeculectomyController(_drawing)
+{
+	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'parameterChanged']);
+
+	this.notificationHandler = function(_messageArray)
+	{
+		var conjFlap = _drawing.firstDoodleOfClass('ConjunctivalFlap');
+		var trabFlap = _drawing.firstDoodleOfClass('TrabyFlap');
+		switch (_messageArray['eventName'])
+		{
+			case 'parameterChanged':
+				if (_drawing.isNew)
+				{
+					var doodle = _messageArray['object'].doodle;
+
+					if (doodle.isActive && (doodle.className == 'TrabyFlap' || doodle.className == 'TrabySuture' || doodle.className == 'ConjunctivalFlap')) {
+						trabFlap.willSync = false;
+					}
+
+					if (doodle.className == 'TrabyFlap') {
+						if (_messageArray['object']['parameter'] == 'rotation') {
+							if (trabFlap.willSync) {
+								var sutures = _drawing.allDoodlesOfClass('TrabySuture');
+
+								for (var i = 0; i < sutures.length; i++) {
+									var np = new ED.Point(sutures[i].originX, sutures[i].originY);
+
+									var delta = _messageArray['object'].value - _messageArray['object'].oldValue;
+
+									np.setWithPolars(np.length(), np.direction() + delta);
+
+									sutures[i].originX = np.x;
+									sutures[i].originY = np.y;
+
+									sutures[i].rotation += delta;
+								}
+
+								if (conjFlap) {
+									conjFlap.rotation = doodle.rotation;
+								}
+							}
+						}
+					}
+				}
+		}
+	}
+}
+
 function changeEye() {
 	// Swap side of each drawing
 	var drawingEdit1 = window.ED ? ED.getInstance('ed_drawing_edit_Position') : undefined;
@@ -490,6 +538,26 @@ function changeEye() {
 	if (typeof(drawingEdit3) != 'undefined') {
 		if (drawingEdit3.eye == ED.eye.Right) drawingEdit3.eye = ED.eye.Left;
 		else drawingEdit3.eye = ED.eye.Right;
+
+		rotateTrabeculectomy();
+	}
+}
+
+function rotateTrabeculectomy()
+{
+	var _drawing = ED.getInstance('ed_drawing_edit_Trabeculectomy');
+
+	if (_drawing.isNew) {
+		var sidePort = _drawing.firstDoodleOfClass('SidePort');
+		var trabFlap = _drawing.firstDoodleOfClass('TrabyFlap');
+
+		if (_drawing.eye == ED.eye.Right) {
+			sidePort.setParameterWithAnimation('rotation',225 * (Math.PI/180));
+			trabFlap.setParameterWithAnimation('site',$('#Element_OphTrOperationnote_Trabeculectomy_site_id').children('option:selected').text());
+		} else {
+			sidePort.setParameterWithAnimation('rotation',135 * (Math.PI/180));
+			trabFlap.setParameterWithAnimation('site',$('#Element_OphTrOperationnote_Trabeculectomy_site_id').children('option:selected').text());
+		}
 	}
 }
 
