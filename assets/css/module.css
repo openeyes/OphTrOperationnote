@@ -111,47 +111,40 @@
     margin-bottom: 0;
   }
 }
+/* line 81, ../sass/components/_elements.scss */
+.Element_OphTrOperationnote_Cataract #ed_canvas_edit_Position {
+  margin-top: 10px;
+}
 
 @media print {
-  /* line 86, ../sass/components/_elements.scss */
+  /* line 89, ../sass/components/_elements.scss */
   .operation-details > .details > .element-data {
     padding-top: 0;
   }
 
-  /* line 92, ../sass/components/_elements.scss */
+  /* line 95, ../sass/components/_elements.scss */
   .operation-meta .data-label {
     font-weight: bold;
   }
-  /* line 96, ../sass/components/_elements.scss */
+  /* line 99, ../sass/components/_elements.scss */
   .operation-meta .surgeons .column, .operation-meta .surgeons .columns {
     text-align: center;
   }
 }
 /* line 17, ../sass/components/_eyedraw.scss */
-#ed_canvas_edit_Cataract {
-  background-color: #fff;
-  border: 1px solid #000;
-  margin-top: 1em;
+#eyedrawwidget_Cataract {
+  margin: 0;
 }
 
-/* line 23, ../sass/components/_eyedraw.scss */
+/* line 21, ../sass/components/_eyedraw.scss */
 #ed_canvas_edit_Position {
-  background-color: #DAE6F1;
-  border: 0;
   margin-left: 80px;
 }
 
-/* line 29, ../sass/components/_eyedraw.scss */
+/* line 25, ../sass/components/_eyedraw.scss */
 #ed_canvas_edit_Buckle {
   background-color: #fff;
   border: 1px solid #000;
-}
-
-/* line 37, ../sass/components/_eyedraw.scss */
-.Element_OphTrOperationnote_Vitrectomy .ed_toolbar,
-.Element_OphTrOperationnote_Buckle .ed_toolbar,
-.Element_OphTrOperationnote_Cataract .ed_toolbar {
-  margin: 0;
 }
 
 /* line 115, ../../../../assets/sass/openeyes/_mixins.scss */
@@ -225,6 +218,25 @@
 @media print {
   /* line 118, ../../../../assets/sass/openeyes/_mixins.scss */
   .row.trabeculectomy .column.fluid {
+    margin-top: 1em;
+    width: 100%;
+  }
+}
+
+/* line 115, ../../../../assets/sass/openeyes/_mixins.scss */
+.row.trabectome .column.fixed {
+  width: 322px;
+}
+/* line 118, ../../../../assets/sass/openeyes/_mixins.scss */
+.row.trabectome .column.fluid {
+  width: -moz-calc(100% - 322px);
+  width: -o-calc(100% - 322px);
+  width: -webkit-calc(100% - 322px);
+  width: calc(100% - 322px);
+}
+@media print {
+  /* line 118, ../../../../assets/sass/openeyes/_mixins.scss */
+  .row.trabectome .column.fluid {
     margin-top: 1em;
     width: 100%;
   }

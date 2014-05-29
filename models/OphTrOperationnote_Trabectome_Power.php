@@ -2,8 +2,7 @@
 /**
  * OpenEyes
  *
- * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
- * (C) OpenEyes Foundation, 2011-2013
+ * (C) OpenEyes Foundation, 2014
  * This file is part of OpenEyes.
  * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -12,29 +11,25 @@
  * @package OpenEyes
  * @link http://www.openeyes.org.uk
  * @author OpenEyes <info@openeyes.org.uk>
- * @copyright Copyright (c) 2008-2011, Moorfields Eye Hospital NHS Foundation Trust
- * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
+ * @copyright Copyright (c) 2014, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 
 /**
- * This is the model class for table "ophtroperationnote_procedure_element".
+ * This is the model class for table "ophtroperationnote_trabectome_power".
  *
- * The followings are the available columns in table 'ophtroperationnote_procedure_element':
- * @property integer $id
- * @property integer $procedure_id
- * @property integer $element_type_id
+ * The followings are the available columns in table 'ophtroperationnote_trabectome_power':
+ * @property string $id
+ * @property string $name
+ * @property boolean $active
  * @property integer $display_order
  *
- * The followings are the available model relations:
- * @property Procedure $procedure
- * @property ElementType $element_type
  */
-class OphTrOperationnote_ProcedureListOperationElement extends BaseActiveRecordVersioned
+class OphTrOperationnote_Trabectome_Power extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return OphTrOperationnote_ProcedureListOperationElement the static model class
+	 * @return OphTrOperationnote_Trabectome_Power the static model class
 	 */
 	public static function model($className = __CLASS__)
 	{
@@ -46,7 +41,12 @@ class OphTrOperationnote_ProcedureListOperationElement extends BaseActiveRecordV
 	 */
 	public function tableName()
 	{
-		return 'ophtroperationnote_procedure_element';
+		return 'ophtroperationnote_trabectome_power';
+	}
+
+	public function defaultScope()
+	{
+		return array('order' => $this->getTableAlias(true, false) . '.display_order');
 	}
 
 	/**
@@ -68,8 +68,6 @@ class OphTrOperationnote_ProcedureListOperationElement extends BaseActiveRecordV
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'element_type' => array(self::BELONGS_TO, 'ElementType', 'element_type_id'),
-			'procedure' => array(self::BELONGS_TO, 'Procedure', 'procedure_id')
 		);
 	}
 
@@ -79,6 +77,13 @@ class OphTrOperationnote_ProcedureListOperationElement extends BaseActiveRecordV
 	public function attributeLabels()
 	{
 		return array(
+		);
+	}
+
+	public function behaviors()
+	{
+		return array(
+				'LookupTable' => 'LookupTable',
 		);
 	}
 
@@ -97,6 +102,6 @@ class OphTrOperationnote_ProcedureListOperationElement extends BaseActiveRecordV
 
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
-			));
+		));
 	}
 }

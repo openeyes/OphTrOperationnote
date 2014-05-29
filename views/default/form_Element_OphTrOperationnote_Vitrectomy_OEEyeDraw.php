@@ -17,26 +17,24 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
 <?php
-$layoutColumns=$form->layoutColumns;
-$form->layoutColumns=array('label'=>3,'field'=>9);
+	$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+		'doodleToolBarArray' => array(
+			0 => array('RRD','UTear','RoundHole','Dialysis','GRT','MacularHole','StarFold','AntPVR','Cryo','LaserCircle'),
+		),
+		'onReadyCommandArray' => array(
+			array('addDoodle', array('Fundus')),
+			array('deselectDoodles', array()),
+		),
+		'side'=>$this->selectedEyeForEyedraw->shortName,
+		'idSuffix' => $element->elementType->id,
+		'mode'=>'edit',
+		'width'=>300,
+		'height'=>300,
+		'model'=>$element,
+		'attribute'=>'eyedraw',
+		'offsetX' => 10,
+		'offsetY' => 10,
+		'template' => 'OEEyeDrawWidget_InlineToolbar'
+	));
 ?>
-<div class="element-fields">
-	<div class="eyedraw-row row vitrectomy">
-		<div class="fixed column">
-			<?php $this->renderPartial($element->form_view . '_OEEyeDraw', array(
-				'element' => $element,
-				'form' => $form
-			));?>
-		</div>
-		<div class="fluid column">
-			<?php $this->renderPartial($element->form_view . '_OEEyeDraw_fields', array(
-				'form' => $form,
-				'element' => $element
-			));?>
-		</div>
-	</div>
-</div>
-
-<?php $form->layoutColumns=$layoutColumns;?>

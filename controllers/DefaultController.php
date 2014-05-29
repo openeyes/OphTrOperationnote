@@ -74,7 +74,7 @@ class DefaultController extends BaseEventTypeController
 	 */
 	protected function getEventElements()
 	{
-		if ($this->event && $this->event->id) {
+		if ($this->event && !$this->event->isNewRecord) {
 			return $this->event->getElements();
 			//TODO: check for missing elements for procedures
 
@@ -660,6 +660,30 @@ class DefaultController extends BaseEventTypeController
 	{
 		$element->updateDrugs(isset($data['Drug']) ? $data['Drug'] : array());
 
+	}
+
+	/**
+	 * Set the complications for the Element_OphTrOperationote_Trabectome element
+	 * @param $element
+	 * @param $data
+	 * @param $index
+	 */
+	protected function setComplexAttributes_Element_OphTrOperationnote_Trabectome($element, $data, $index)
+	{
+		$model_name = CHtml::modelName($element);
+		$complications = array();
+		if (@$data[$model_name]['complications']) {
+			foreach ($data[$model_name]['complications'] as $id) {
+				$complications[] = OphTrOperationnote_Trabectome_Complication::model()->findByPk($id);
+			}
+		}
+		$element->complications = $complications;
+	}
+
+	protected function saveComplexAttributes_Element_OphTrOperationnote_Trabectome($element, $data, $index)
+	{
+		$model_name = CHtml::modelName($element);
+		$element->updateComplications(isset($data[$model_name]['complications']) ? $data[$model_name]['complications'] : array() );
 	}
 
 	/**

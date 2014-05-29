@@ -63,7 +63,7 @@ function callbackAddProcedure(procedure_id) {
 function callbackRemoveProcedure(procedure_id) {
 	var procedures = '';
 
-	var hpid = $('input[type="hidden"][name="Element_OphTrOperationnote_GenericProcedure[proc_id][]"][value="'+procedure_id+'"]');
+	var hpid = $('input[type="hidden"][name="Element_OphTrOperationnote_GenericProcedure['+procedure_id+'][proc_id]"][value="'+procedure_id+'"]');
 
 	if (hpid.length >0) {
 		hpid.parent().slideToggle('fast',function() {
@@ -110,10 +110,10 @@ function setCataractInput(key, value) {
 $(document).ready(function() {
 	handleButton($('#et_save'),function() {
 		if ($('#Element_OphTrOperationnote_Buckle_report').length >0) {
-			$('#Element_OphTrOperationnote_Buckle_report').val(ed_drawing_edit_Buckle.report());
+			$('#Element_OphTrOperationnote_Buckle_report').val(ED.getInstance('ed_drawing_edit_Buckle').report());
 		}
 		if ($('#Element_OphTrOperationnote_Cataract_report2').length >0) {
-			$('#Element_OphTrOperationnote_Cataract_report2').val(ed_drawing_edit_Cataract.report());
+			$('#Element_OphTrOperationnote_Cataract_report2').val(ED.getInstance('ed_drawing_edit_Cataract').report());
 		}
 	});
 
@@ -233,10 +233,39 @@ $(document).ready(function() {
 		$(this).children('td:first').children('input[type="radio"]').attr('checked',true);
 	});
 
-	$('#btn-trabeculectomy-report').die('click').live('click',function(e) {
+	$(this).delegate('.ed_report', 'click', function(e) {
 		e.preventDefault();
 
-		$('#Element_OphTrOperationnote_Trabeculectomy_report').val(ed_drawing_edit_Trabeculectomy.report());
+		var element = $(this).closest('.sub-element');
+
+		// Get eyedraw js object
+		var eyedraw = element.attr('data-element-type-id');
+		eyedraw = window['ed_drawing_edit_' + eyedraw];
+
+		// Get report text and strip trailing comma
+		var text = eyedraw.report();
+		text = text.replace(/, +$/, '');
+
+		// Update description
+		var description = 'description';
+		description = $('textarea[name$="[' + description + ']"]', element).first();
+		if (description.val()) {
+			text = description.val() + ", " + text.toLowerCase();
+		}
+		description.val(text);
+		description.trigger('autosize');
+	});
+
+	$(this).delegate('.ed_clear', 'click', function(e) {
+		e.preventDefault();
+
+		var element = $(this).closest('.element');
+
+		var description = 'description';
+		description = $('textarea[name$="[' + description + ']"]', element).first();
+
+		description.val('');
+		description.trigger('autosize');
 	});
 });
 
@@ -380,7 +409,7 @@ function sidePortController(_drawing)
 				if (_drawing.isNew)
 				{
 					// Get rotation value of surgeon doodle
-					var surgeonDrawing = window['ed_drawing_edit_Position'];
+					var surgeonDrawing = ED.getInstance('ed_drawing_edit_Position');
 					var surgeonRotation = surgeonDrawing.firstDoodleOfClass('Surgeon').rotation;
 
 					// Get doodle that has moved in opnote drawing
@@ -440,9 +469,9 @@ function sidePortController(_drawing)
 
 function changeEye() {
 	// Swap side of each drawing
-	var drawingEdit1 = window['ed_drawing_edit_Position'];
-	var drawingEdit2 = window['ed_drawing_edit_Cataract'];
-	var drawingEdit3 = window['ed_drawing_edit_Trabeculectomy'];
+	var drawingEdit1 = window.ED ? ED.getInstance('ed_drawing_edit_Position') : undefined;
+	var drawingEdit2 = window.ED ? ED.getInstance('ed_drawing_edit_Cataract') : undefined;
+	var drawingEdit3 = window.ED ? ED.getInstance('ed_drawing_edit_Trabeculectomy') : undefined;
 
 	if (typeof(drawingEdit1) != 'undefined') {
 		if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;

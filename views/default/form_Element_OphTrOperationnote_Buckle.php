@@ -23,35 +23,18 @@
 	$form->layoutColumns=array('label'=>3,'field'=>9);
 ?>
 <div class="element-fields">
-	<div class="row data-row buckle">
+	<div class="eyedraw-row row buckle">
 		<div class="fixed column">
-			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-				'doodleToolBarArray' => array(
-					0 => 'CircumferentialBuckle','EncirclingBand','RadialSponge','BuckleSuture','DrainageSite',
-				),
-				'onReadyCommandArray' => array(
-					array('addDoodle', array('BuckleOperation')),
-					array('deselectDoodles', array()),
-				),
-				'idSuffix'=>'Buckle',
-				'side'=>$this->selectedEyeForEyedraw->shortName,
-				'mode'=>'edit',
-				'width'=>300,
-				'height'=>300,
-				'model'=>$element,
-				'attribute'=>'eyedraw',
-				'offsetX' => 10,
-				'offsetY' => 10,
-			));
-			?>
+			<?php $this->renderPartial($element->form_view . '_OEEyeDraw', array(
+				'element' => $element,
+				'form' => $form
+			));?>
 		</div>
 		<div class="fluid column">
-			<?php echo $form->hiddenInput($element, 'report', $element->report)?>
-			<?php echo $form->dropDownList($element, 'drainage_type_id', 'OphTrOperationnote_DrainageType', array('empty'=>'- Please select -'))?>
-			<?php echo $form->radioBoolean($element, 'drain_haem')?>
-			<?php echo $form->radioBoolean($element, 'deep_suture')?>
-			<?php echo $form->textArea($element, 'comments', array('rows' => 4, 'cols' => 60))?>
+			<?php $this->renderPartial($element->form_view . '_OEEyeDraw_fields', array(
+				'form' => $form,
+				'element' => $element
+			));?>
 		</div>
 	</div>
 </div>
