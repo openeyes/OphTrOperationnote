@@ -180,8 +180,9 @@
 						'idSuffix'=>'Trabeculectomy',
 						'side'=>$element->eye->getShortName(),
 						'mode'=>'view',
-						'width'=>200,
-						'height'=>200,
+						'width'=>250,
+						'height'=>250,
+						'scale'=>0.72,
 						'model'=>$element,
 						'attribute'=>'eyedraw',
 					))?>
