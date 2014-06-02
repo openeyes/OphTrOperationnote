@@ -43,6 +43,7 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 						'width' => 300,
 						'height' => 300,
 						'template' => 'OEEyeDrawWidget_InlineToolbar',
+						'scale' => 0.72,
 						'listenerArray' => array(
 							'trabeculectomyController',
 						),
