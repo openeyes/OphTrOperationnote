@@ -154,7 +154,7 @@
 			<div class="data-row">
 				<h4>Complications</h4>
 				<div class="details">
-					<?php if (!$element->complications && !$element->complication_notes) {?>
+					<?php if (!$element->complications) {?>
 						<div class="data-value">None</div>
 					<?php } else {?>
 						<ul>
