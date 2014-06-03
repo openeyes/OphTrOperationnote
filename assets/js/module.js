@@ -236,7 +236,7 @@ $(document).ready(function() {
 	$(this).delegate('.ed_clear', 'click', function(e) {
 		e.preventDefault();
 
-		var element = $(this).closest('.element');
+		var element = $(this).closest('.sub-element');
 
 		var description = 'description';
 		description = $('textarea[name$="[' + description + ']"]', element).first();
@@ -245,25 +245,32 @@ $(document).ready(function() {
 		description.trigger('autosize');
 	});
 
+	$(this).delegate('#btn-glaucomatube-report', 'click', function(e) {
+		e.preventDefault();
+		var element = $(this).closest('.sub-element');
+		reportEyedraw(element, ED.getInstance('ed_drawing_edit_' + element.data('element-type-id')), 'description' );
+	});
+
 	$('#btn-trabeculectomy-report').click(function(e) {
 		e.preventDefault();
-
-		var eyedraw = ED.getInstance('ed_drawing_edit_Trabeculectomy');
-		text = eyedraw.report();
-		text = text.replace(/, +$/, '');
-
 		var element = $(this).closest('.element');
-
-		// Update description
-		var description = 'report';
-		description = $('textarea[name$="[' + description + ']"]', element).first();
-		if (description.val()) {
-			text = description.val() + ", " + text.toLowerCase();
-		}
-		description.val(text);
-		description.trigger('autosize');
+		reportEyedraw(element,  ED.getInstance('ed_drawing_edit_Trabeculectomy'), 'report' );
 	});
 });
+
+function reportEyedraw(element, eyedraw, fieldName)
+{
+	var text = eyedraw.report();
+	text = text.replace(/, +$/, '');
+
+	var field = $('textarea[name$="[' + fieldName + ']"]', element).first();
+	if (field.val()) {
+		text = field.val() + ", " + text.toLowerCase();
+	}
+	field.val(text);
+	field.trigger('autosize');
+}
+
 
 function callbackVerifyAddProcedure(proc_name,durations,callback) {
 	var eye = $('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]:checked').val();

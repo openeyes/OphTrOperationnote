@@ -80,7 +80,7 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 				<div class="row field-row">
 					<div class="large-3 column">&nbsp;</div>
 					<div class="large-4 column end">
-						<button class="ed_report secondary small">Report</button>
+						<button id="btn-glaucomatube-report" class="ed_report secondary small">Report</button>
 						<button class="ed_clear secondary small">Clear</button>
 					</div>
 				</div>

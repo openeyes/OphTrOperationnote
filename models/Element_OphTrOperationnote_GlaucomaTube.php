@@ -25,7 +25,6 @@
  * @property integer $plate_limbus
  * @property integer $tube_position_id
  * @property boolean $stent
- * @property integer $ligated_id
  * @property boolean $slit
  * @property boolean $visco_in_ac
  * @property boolean $flow_tested
@@ -40,7 +39,6 @@
  * @property Event $event
  * @property OphTrOperationnote_GlaucomaTube_PlatePosition $plate_position
  * @property OphTrOperationnote_GlaucomaTube_TubePosition $tube_position
- * @property OphTrOperationnote_GlaucomaTube_Ligated $ligated
  *
  */
 class Element_OphTrOperationnote_GlaucomaTube extends Element_OnDemand
@@ -76,7 +74,7 @@ class Element_OphTrOperationnote_GlaucomaTube extends Element_OnDemand
 					eyedraw, description', 'required'),
 				array('plate_limbus', 'numerical', 'integerOnly' => true, 'min' => 2, 'max' => 15,
 						'tooSmall' => '{attribute} cannot be smaller than 2mm', 'tooBig' => '{attribute} cannot be more than 15mm'),
-				array('event_id, plate_position_id, plate_limbus, tube_position_id, stent, ligated_id, slit, visco_in_ac,
+				array('event_id, plate_position_id, plate_limbus, tube_position_id, stent, slit, visco_in_ac,
 				flow_tested, eyedraw, description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -98,7 +96,6 @@ class Element_OphTrOperationnote_GlaucomaTube extends Element_OnDemand
 				'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 				'plate_position' => array(self::BELONGS_TO, 'OphTrOperationnote_GlaucomaTube_PlatePosition', 'plate_position_id'),
 				'tube_position' => array(self::BELONGS_TO, 'OphTrOperationnote_GlaucomaTube_TubePosition', 'tube_position_id'),
-				'ligated' => array(self::BELONGS_TO, 'OphTrOperationnote_GlaucomaTube_Ligated', 'ligated_id')
 		);
 	}
 
@@ -111,7 +108,6 @@ class Element_OphTrOperationnote_GlaucomaTube extends Element_OnDemand
 			'id' => 'ID',
 			'plate_position_id' => 'Plate postiion',
 			'tube_position_id' => 'Tube position',
-			'ligated_id' => 'Ligated',
 			'visco_in_ac' => 'Visco in AC'
 		);
 	}

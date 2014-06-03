@@ -73,18 +73,6 @@
 			<div class="row data-row">
 				<div class="large-4 column">
 					<div class="data-label">
-						<?php echo CHtml::encode($element->getAttributeLabel('ligated_id'))?>
-					</div>
-				</div>
-				<div class="large-8 column">
-					<div class="data-value">
-						<?php echo $element->ligated ? $element->ligated->name : 'None'; ?>
-					</div>
-				</div>
-			</div>
-			<div class="row data-row">
-				<div class="large-4 column">
-					<div class="data-label">
 						<?php echo CHtml::encode($element->getAttributeLabel('slit'))?>
 					</div>
 				</div>
