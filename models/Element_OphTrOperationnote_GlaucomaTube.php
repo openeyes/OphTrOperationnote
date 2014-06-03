@@ -74,6 +74,8 @@ class Element_OphTrOperationnote_GlaucomaTube extends Element_OnDemand
 		return array(
 				array('plate_position_id, plate_limbus, tube_position_id, stent, slit, visco_in_ac, flow_tested,
 					eyedraw, description', 'required'),
+				array('plate_limbus', 'numerical', 'integerOnly' => true, 'min' => 2, 'max' => 15,
+						'tooSmall' => '{attribute} cannot be smaller than 2mm', 'tooBig' => '{attribute} cannot be more than 15mm'),
 				array('event_id, plate_position_id, plate_limbus, tube_position_id, stent, ligated_id, slit, visco_in_ac,
 				flow_tested, eyedraw, description', 'safe'),
 			// The following rule is used by search().

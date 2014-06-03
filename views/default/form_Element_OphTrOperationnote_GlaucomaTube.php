@@ -36,14 +36,6 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 										'Tube' => array(
 												'platePosition' => array('id' => 'Element_OphTrOperationnote_GlaucomaTube_plate_position_id', 'attribute' => 'data-value'),
 										),
-										'TubeLigation' => array(
-												'material' => array('id' => 'Element_OphTrOperationnote_GlaucomaTube_ligated_id', 'attribute' => 'data-value'),
-										),
-								),
-
-
-								'deleteValueArray' => array(
-										'Element_OphTrOperationnote_GlaucomaTube_ligated_id' => 'None',
 								),
 								'side'=>$this->selectedEyeForEyedraw->shortName,
 								'idSuffix' => $element->elementType->id,
@@ -81,13 +73,6 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 
 				<?php echo $form->dropDownList($element, 'tube_position_id', CHtml::listData(OphTrOperationnote_GlaucomaTube_TubePosition::model()->activeOrPk($element->tube_position_id)->findAll(),'id','name'),array('empty'=>'- Please select -'),false,array('field'=>3))?>
 				<?php echo $form->checkbox($element, 'stent', array('class' => 'clearWithEyedraw'))?>
-				<?php
-				$ligated_opts = OphTrOperationnote_GlaucomaTube_Ligated::model()->activeOrPk($element->ligated_id)->findAll();
-				$html_options = array('empty'=>'None', 'options' => array());
-				foreach ($ligated_opts as $lo) {
-					$html_options['options'][$lo->id] = array('data-value' => $lo->name);
-				}
-				echo $form->dropDownList($element, 'ligated_id', CHtml::listData($ligated_opts,'id','name'),$html_options,false,array('field'=>3))?>
 				<?php echo $form->checkbox($element, 'slit', array('class' => 'clearWithEyedraw'))?>
 				<?php echo $form->checkbox($element, 'visco_in_ac', array('class' => 'clearWithEyedraw'))?>
 				<?php echo $form->checkbox($element, 'flow_tested', array('class' => 'clearWithEyedraw'))?>

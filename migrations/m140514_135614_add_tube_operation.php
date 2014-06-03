@@ -33,14 +33,6 @@ class m140514_135614_add_tube_operation extends OEMigration
 						'display_order' => 'integer NOT NULL',
 				), true);
 
-		$this->createOETable('ophtroperationnote_gt_ligated', array(
-						'id' => 'pk',
-						'name' => 'string NOT NULL',
-						'active' => 'boolean NOT NULL DEFAULT true',
-						'display_order' => 'integer NOT NULL',
-				), true);
-
-
 		$this->createOETable('et_ophtroperationnote_glaucomatube', array(
 						'id' => 'pk',
 						'event_id' => 'int(10) unsigned NOT NULL',
@@ -48,7 +40,6 @@ class m140514_135614_add_tube_operation extends OEMigration
 						'plate_limbus' => 'integer NOT NULL',
 						'tube_position_id' => 'integer NOT NULL',
 						'stent' => 'boolean',
-						'ligated_id' => 'integer',
 						'slit' => 'boolean',
 						'visco_in_ac' => 'boolean',
 						'flow_tested' => 'boolean',
@@ -64,9 +55,6 @@ class m140514_135614_add_tube_operation extends OEMigration
 		$this->addForeignKey('et_ophtroperationnote_glaucomatube_tpos_fk',
 				'et_ophtroperationnote_glaucomatube',
 				'tube_position_id', 'ophtroperationnote_gt_tubeposition', 'id');
-		$this->addForeignKey('et_ophtroperationnote_glaucomatube_lig_fk',
-				'et_ophtroperationnote_glaucomatube',
-				'ligated_id', 'ophtroperationnote_gt_ligated', 'id');
 
 		$procs = $this->dbConnection->createCommand()->select("id")->from("proc")->where(array("in", "snomed_code", array(265291005,440587008)))->queryAll();
 
@@ -83,7 +71,6 @@ class m140514_135614_add_tube_operation extends OEMigration
 		$this->dropOETable('et_ophtroperationnote_glaucomatube', true);
 		$this->dropOETable('ophtroperationnote_gt_plateposition', true);
 		$this->dropOETable('ophtroperationnote_gt_tubeposition', true);
-		$this->dropOETable('ophtroperationnote_gt_ligated', true);
 
 		$element_type_id = $this->getIdOfElementTypeByClassName('Element_OphTrOperationnote_GlaucomaTube');
 		$this->delete('ophtroperationnote_procedure_element', 'element_type_id = ?', array($element_type_id));
