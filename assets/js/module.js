@@ -245,7 +245,7 @@ $(document).ready(function() {
 		description.trigger('autosize');
 	});
 
-	$('#btn-trabeculectomy-report').click(function(e) {
+	$('#btn-trabeculectomy-report').die('click').live('click',function(e) {
 		e.preventDefault();
 
 		var eyedraw = ED.getInstance('ed_drawing_edit_Trabeculectomy');
