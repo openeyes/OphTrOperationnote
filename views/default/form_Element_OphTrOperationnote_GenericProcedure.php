@@ -55,6 +55,6 @@ $numHash = crc32($element->getElementTypeName());
 			</div>
 		</div>
 	</div>
-	<input type="hidden" name="<?php echo get_class($element)?>[proc_id][]" value="<?php echo $element->proc_id?>" />
-	<input type="hidden" name="<?php echo get_class($element)?>[_element_id][]" value="<?php echo $element->id?>" />
+	<input type="hidden" name="<?php echo get_class($element)?>[proc_id][]" value="<?php echo CHtml::encode($element->proc_id)?>" />
+	<input type="hidden" name="<?php echo get_class($element)?>[_element_id][]" value="<?php echo CHtml::encode($element->id)?>" />
 </section>
