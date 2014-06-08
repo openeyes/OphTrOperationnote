@@ -23,11 +23,11 @@
 		<div class="row data-row">
 			<div class="large-4 column">
 				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('postop_instructions'))?></h4>
-				<div class="data-value<?php if (!$element->postop_instructions) {?> none<?php }?>"><?php echo $element->postop_instructions ? Yii::app()->format->Ntext($element->postop_instructions) : 'None'?></div>
+				<div class="data-value<?php if (!$element->postop_instructions) {?> none<?php }?>"><?php echo CHtml::encode($element->postop_instructions) ? Yii::app()->format->Ntext($element->postop_instructions) : 'None'?></div>
 			</div>
 			<div class="large-8 column end">
 			<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('comments'))?></h4>
-				<div class="data-value<?php if (!$element->comments) {?> none<?php }?>"><?php echo $element->comments ? Yii::app()->format->Ntext($element->comments) : 'None'?></div>
+				<div class="data-value<?php if (!$element->comments) {?> none<?php }?>"><?php echo CHtml::encode($element->comments) ? Yii::app()->format->Ntext($element->comments) : 'None'?></div>
 			</div>
 		</div>
 	</div>

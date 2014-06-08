@@ -388,7 +388,7 @@ class ReportController extends BaseController
 
 	protected function getTargetRefraction($criteria)
 	{
-		$cataractManagementElement = Element_OphCiExamination_CataractManagement::model()->with(array('event'))->find($criteria);
+		$cataractManagementElement = Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
 		if($cataractManagementElement ){
 		return $cataractManagementElement['target_postop_refraction'];
 		}
@@ -396,7 +396,7 @@ class ReportController extends BaseController
 
 	public function getFirstEyeOrSecondEye($criteria)
 	{
-		$cataractManagementElement = Element_OphCiExamination_CataractManagement::model()->with(array('event'))->find($criteria);
+		$cataractManagementElement = Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
 		if($cataractManagementElement ){
 		return $cataractManagementElement->eye['name'];
 		}
