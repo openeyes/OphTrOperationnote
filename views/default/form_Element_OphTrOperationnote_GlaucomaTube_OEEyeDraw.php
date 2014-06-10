@@ -1,5 +1,7 @@
 <?php
 /**
+ * OpenEyes
+ *
  * (C) OpenEyes Foundation, 2014
  * This file is part of OpenEyes.
  * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -9,27 +11,35 @@
  * @package OpenEyes
  * @link http://www.openeyes.org.uk
  * @author OpenEyes <info@openeyes.org.uk>
- * @copyright Copyright (C) 2014, OpenEyes Foundation
+ * @copyright Copyright (c) 2014, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
-
-$layoutColumns=$form->layoutColumns;
-$form->layoutColumns=array('label'=>3,'field'=>9);
 ?>
-<div class="element-fields">
-	<div class="row trabeculectomy">
-		<div class="fixed column">
-			<?php $this->renderPartial($element->form_view . '_OEEyeDraw', array(
-				'element' => $element,
-				'form' => $form
-			));?>
-		</div>
-		<div class="fluid column">
-			<?php $this->renderPartial($element->form_view . '_OEEyeDraw_fields', array(
-				'form' => $form,
-				'element' => $element
-			));?>
-		</div>
-	</div>
-</div>
-<?php $form->layoutColumns = $layoutColumns;?>
+<?php
+	$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+		'doodleToolBarArray' => array(
+			0 => array('TubeExtender','Patch', 'PI', 'Supramid', 'TubeLigation'),
+		),
+		'onReadyCommandArray' => array(
+			array('addDoodle', array('AntSeg')),
+			array('addDoodle', array('Tube')),
+			array('deselectDoodles', array()),
+		),
+		'bindingArray' => array(
+			'Tube' => array(
+				'platePosition' => array('id' => 'Element_OphTrOperationnote_GlaucomaTube_plate_position_id', 'attribute' => 'data-value'),
+			),
+		),
+		'side'=>$this->selectedEyeForEyedraw->shortName,
+		'idSuffix' => $element->elementType->id,
+		'mode'=>'edit',
+		'width'=>300,
+		'height'=>300,
+		'model'=>$element,
+		'attribute'=>'eyedraw',
+		'offsetX' => 10,
+		'offsetY' => 10,
+		'scale' => 0.72,
+		'template' =>  'OEEyeDrawWidget_InlineToolbar'
+));
+?>
