@@ -251,10 +251,16 @@ $(document).ready(function() {
 		reportEyedraw(element, ED.getInstance('ed_drawing_edit_' + element.data('element-type-id')), 'description' );
 	});
 
-	$('#btn-trabeculectomy-report').click(function(e) {
+	$('#btn-trabeculectomy-report').die('click').live('click',function(e) {
 		e.preventDefault();
 		var element = $(this).closest('.element');
-		reportEyedraw(element,  ED.getInstance('ed_drawing_edit_Trabeculectomy'), 'report' );
+		reportEyedraw(element,  ED.getInstance('ed_drawing_edit_Trabeculectomy'), 'report');
+	});
+
+	$('#btn-trabectome-report').die('click').live('click',function(e) {
+		e.preventDefault();
+		var element = $(this).closest('.element');
+		reportEyedraw(element,  ED.getInstance('ed_drawing_edit_120'), 'description');
 	});
 });
 

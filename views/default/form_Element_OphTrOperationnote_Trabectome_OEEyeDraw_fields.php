@@ -22,7 +22,7 @@
 <div class="row field-row">
 	<div class="large-3 column">&nbsp;</div>
 	<div class="large-4 column end">
-		<button class="ed_report secondary small">Report</button>
+		<button id="btn-trabectome-report" class="ed_report secondary small">Report</button>
 		<button class="ed_clear secondary small">Clear</button>
 	</div>
 </div>
