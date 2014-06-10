@@ -16,7 +16,7 @@
 <?php
 	$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 		'doodleToolBarArray' => array(
-			array('TrabySuture', 'PI', 'SidePort', 'ScleralPatch', 'ConjunctivalSuture'),
+			array('TrabySuture', 'PI', 'SidePort', 'Patch', 'ConjunctivalSuture'),
 		),
 		'onReadyCommandArray' => array(
 			array('addDoodle',array('AntSeg')),
