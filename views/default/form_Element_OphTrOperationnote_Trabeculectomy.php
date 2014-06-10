@@ -76,7 +76,7 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 		<div class="fluid column">
 			<div class="row">
 				<div class="large-12 column">
-					<?php echo $form->dropDownList($element, 'conjunctival_flap_type_id', 'Ophtroperationnote_Trabeculectomy_Conjunctival_Flap_Type', array('textAttribute'=>'data-value'), false, array('field' => 4))?>
+					<?php echo $form->dropDownList($element, 'conjunctival_flap_type_id', 'OphTrOperationnote_Trabeculectomy_Conjunctival_Flap_Type', array('textAttribute'=>'data-value'), false, array('field' => 4))?>
 					<?php echo $form->checkBox($element, 'stay_suture', array('text-align' => 'right'), array('field' => 4))?>
 					<?php echo $form->dropDownList($element, 'site_id', 'OphTrOperationnote_Trabeculectomy_Site', array('textAttribute' => 'data-value'), false, array('field' => 4))?>
 					<?php echo $form->dropDownList($element, 'size_id', 'OphTrOperationnote_Trabeculectomy_Size', array('textAttribute' => 'data-value'), false, array('field' => 4))?>
