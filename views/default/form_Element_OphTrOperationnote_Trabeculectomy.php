@@ -19,88 +19,16 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 <div class="element-fields">
 	<div class="row trabeculectomy">
 		<div class="fixed column">
-			<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget',
-					array(
-						'doodleToolBarArray' => array(
-							array('TrabySuture', 'PI', 'SidePort', 'ScleralPatch', 'ConjunctivalSuture'),
-						),
-						'onReadyCommandArray' => array(
-							array('addDoodle',array('AntSeg')),
-							array('addDoodle',array('ConjunctivalFlap')),
-							array('addDoodle',array('PI',array('rotation' => 0))),
-							array('addDoodle',array('SidePort',array('rotation' => ($this->selectedEyeForEyedraw->name == 'Right' ? 5 : 3) * pi() / 4))),
-							array('addDoodle',array('TrabyFlap')),
-							array('addDoodle',array('TrabySuture')),
-							array('addDoodle',array('TrabySuture')),
-							array('addDoodle',array('TrabySuture')),
-						),
-						'model' => $element,
-						'attribute' => 'eyedraw',
-						'side' => $this->selectedEyeForEyedraw->shortName,
-						'idSuffix' => 'Trabeculectomy',
-						'mode' => 'edit',
-						'width' => 300,
-						'height' => 300,
-						'template' => 'OEEyeDrawWidget_InlineToolbar',
-						'scale' => 0.72,
-						'listenerArray' => array(
-							'trabeculectomyController',
-						),
-						'bindingArray' => array(
-							'ConjunctivalFlap' => array(
-								'method' => array(
-									'id' => 'Element_OphTrOperationnote_Trabeculectomy_conjunctival_flap_type_id',
-									'attribute' => 'data-value',
-								),
-							),
-							'TrabyFlap' => array(
-								'site' => array(
-									'id' => 'Element_OphTrOperationnote_Trabeculectomy_site_id',
-									'attribute' => 'data-value',
-								),
-								'size' => array(
-									'id' => 'Element_OphTrOperationnote_Trabeculectomy_size_id',
-									'attribute' => 'data-value',
-								),
-								'sclerostomy' => array(
-									'id' => 'Element_OphTrOperationnote_Trabeculectomy_sclerostomy_type_id',
-									'attribute' => 'data-value',
-								),
-							),
-						),
-					)
-				);
-			?>
+			<?php $this->renderPartial($element->form_view . '_OEEyeDraw', array(
+				'element' => $element,
+				'form' => $form
+			));?>
 		</div>
 		<div class="fluid column">
-			<div class="row">
-				<div class="large-12 column">
-					<?php echo $form->dropDownList($element, 'conjunctival_flap_type_id', 'OphTrOperationnote_Trabeculectomy_Conjunctival_Flap_Type', array('textAttribute'=>'data-value'), false, array('field' => 4))?>
-					<?php echo $form->checkBox($element, 'stay_suture', array('text-align' => 'right'), array('field' => 4))?>
-					<?php echo $form->dropDownList($element, 'site_id', 'OphTrOperationnote_Trabeculectomy_Site', array('textAttribute' => 'data-value'), false, array('field' => 4))?>
-					<?php echo $form->dropDownList($element, 'size_id', 'OphTrOperationnote_Trabeculectomy_Size', array('textAttribute' => 'data-value'), false, array('field' => 4))?>
-					<?php echo $form->dropDownList($element, 'sclerostomy_type_id', 'OphTrOperationnote_Trabeculectomy_Sclerostomy_Type', array('textAttribute' => 'data-value'), false, array('field' => 4))?>
-					<?php echo $form->dropDownList($element, 'viscoelastic_type_id', 'OphTrOperationnote_Trabeculectomy_Viscoelastic_Type', array(), false, array('field' => 4))?>
-					<?php echo $form->checkBox($element, 'viscoelastic_removed', array('text-align' => 'right'), array('field' => 4))?>
-					<?php echo $form->dropDownList($element, 'viscoelastic_flow_id', 'OphTrOperationnote_Trabeculectomy_Viscoelastic_Flow', array(), false, array('field' => 4))?>
-					<?php echo $form->textArea($element, 'report', array(), false, array(), array('field' => 6))?>
-					<div class="row field-row">
-						<div class="large-3 column">
-							<label></label>
-						</div>
-						<div class="large-3 column end">
-							<button id="btn-trabeculectomy-report" class="secondary small ed_report">
-								Report
-							</button>
-						</div>
-					</div>
-					<?php echo $form->multiSelectList($element, 'MultiSelect_Difficulties', 'difficulty_assignments', 'difficulty_id', CHtml::listData(OphTrOperationnote_Trabeculectomy_Difficulty::model()->findAll(array('order'=>'display_order asc')),'id','name'), array(), array('empty' => '- Select -','label' => 'Operative difficulties','class' => 'linked-fields','data-linked-fields' => 'difficulty_other', 'data-linked-values' => 'Other'), false, false, null, false, false, array('field' => 4))?>
-					<?php echo $form->textArea($element, 'difficulty_other', array(), !$element->hasMultiSelectValue('difficulties','Other'), array(), array('field' => 6))?>
-					<?php echo $form->multiSelectList($element, 'MultiSelect_Complications', 'complication_assignments', 'complication_id', CHtml::listData(OphTrOperationnote_Trabeculectomy_Complication::model()->findAll(array('order'=>'display_order asc')),'id','name'), array(), array('empty' => '- Select -','label' => 'Complications','class' => 'linked-fields','data-linked-fields' => 'complication_other', 'data-linked-values' => 'Other'), false, false, null, false, false, array('field' => 4))?>
-					<?php echo $form->textArea($element, 'complication_other', array(), !$element->hasMultiSelectValue('complications','Other'), array(), array('field' => 6))?>
-				</div>
-			</div>
+			<?php $this->renderPartial($element->form_view . '_OEEyeDraw_fields', array(
+				'form' => $form,
+				'element' => $element
+			));?>
 		</div>
 	</div>
 </div>
