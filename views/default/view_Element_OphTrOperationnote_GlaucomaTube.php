@@ -128,7 +128,8 @@
 								'height'=>200,
 								'model'=>$element,
 								'attribute'=>'eyedraw',
-								'scale' => 0.72
+								'scale' => 0.72,
+								'idSuffix'=>'GlaucomaTube',
 						));
 				?>
 			</div>

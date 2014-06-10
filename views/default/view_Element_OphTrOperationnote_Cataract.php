@@ -127,6 +127,7 @@
 						'height'=>200,
 						'model'=>$element,
 						'attribute'=>'eyedraw',
+						'idSuffix'=>'Cataract',
 					));
 				?>
 				<?php
@@ -138,6 +139,7 @@
 						'height'=>200,
 						'model'=>$element,
 						'attribute'=>'eyedraw2',
+						'idSuffix'=>'CataractSurgeon',
 					));
 				?>
 			</div>

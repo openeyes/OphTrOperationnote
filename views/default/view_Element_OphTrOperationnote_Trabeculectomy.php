@@ -101,6 +101,7 @@
 						'scale'=>0.72,
 						'model'=>$element,
 						'attribute'=>'eyedraw',
+						'idSuffix'=>'Trabeculectomy',
 					));
 				?>
 			</div>

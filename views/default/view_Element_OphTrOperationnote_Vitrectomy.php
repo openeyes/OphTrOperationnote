@@ -69,6 +69,7 @@
 					'height'=>200,
 					'model'=>$element,
 					'attribute'=>'eyedraw',
+					'idSuffix'=>'Vitrectomy',
 					));
 				?>
 			</div>
