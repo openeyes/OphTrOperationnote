@@ -47,16 +47,16 @@ class Element_OphTrOperationnote_Trabeculectomy extends Element_OnDemand
 	{
 		return array(
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'conjunctival_flap_type' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Conjunctival_Flap_Type', 'conjunctival_flap_type_id'),
-			'site' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Site', 'site_id'),
-			'size' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Size', 'size_id'),
-			'sclerostomy_type' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Sclerostomy_Type', 'sclerostomy_type_id'),
-			'viscoelastic_type' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Viscoelastic_Type', 'viscoelastic_type_id'),
-			'viscoelastic_flow' => array(self::BELONGS_TO, 'Ophtroperationnote_Trabeculectomy_Viscoelastic_Flow', 'viscoelastic_flow_id'),
+			'conjunctival_flap_type' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Conjunctival_Flap_Type', 'conjunctival_flap_type_id'),
+			'site' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Site', 'site_id'),
+			'size' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Size', 'size_id'),
+			'sclerostomy_type' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Sclerostomy_Type', 'sclerostomy_type_id'),
+			'viscoelastic_type' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Viscoelastic_Type', 'viscoelastic_type_id'),
+			'viscoelastic_flow' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Viscoelastic_Flow', 'viscoelastic_flow_id'),
 			'difficulties' => array(self::MANY_MANY, 'OphTrOperationnote_Trabeculectomy_Difficulty', 'ophtroperationnote_trabeculectomy_difficulties(element_id, difficulty_id)'),
 			'difficulty_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_Trabeculectomy_Difficulties', 'element_id'),
-			'complications' => array(self::MANY_MANY, 'Ophtroperationnote_Trabeculectomy_Complication', 'ophtroperationnote_trabeculectomy_complications(element_id, complication_id)'),
-			'complication_assignments' => array(self::HAS_MANY, 'Ophtroperationnote_Trabeculectomy_Complications', 'element_id'),
+			'complications' => array(self::MANY_MANY, 'OphTrOperationnote_Trabeculectomy_Complication', 'ophtroperationnote_trabeculectomy_complications(element_id, complication_id)'),
+			'complication_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_Trabeculectomy_Complications', 'element_id'),
 		);
 	}
 
