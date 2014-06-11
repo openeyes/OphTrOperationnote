@@ -260,7 +260,8 @@ $(document).ready(function() {
 	$('#btn-trabectome-report').die('click').live('click',function(e) {
 		e.preventDefault();
 		var element = $(this).closest('.element');
-		reportEyedraw(element,  ED.getInstance('ed_drawing_edit_120'), 'description');
+		var drawing_name = $('#Element_OphTrOperationnote_Trabectome_eyedraw').prev('canvas').attr('id').replace(/canvas/,'drawing');
+		reportEyedraw(element,  ED.getInstance(drawing_name), 'description');
 	});
 });
 
