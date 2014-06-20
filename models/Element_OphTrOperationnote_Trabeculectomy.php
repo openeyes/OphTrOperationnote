@@ -40,6 +40,7 @@ class Element_OphTrOperationnote_Trabeculectomy extends Element_OnDemand
 			'viscoelastic_flow_id' => 'Flow',
 			'complication_other' => 'Other complication',
 			'difficulty_other' => 'Other difficulty',
+			'report' => 'Description'
 		);
 	}
 
