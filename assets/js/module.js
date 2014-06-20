@@ -239,10 +239,15 @@ $(document).ready(function() {
 		var element = $(this).closest('.sub-element');
 
 		var description = 'description';
-		description = $('textarea[name$="[' + description + ']"]', element).first();
+		var report = 'report';
 
-		description.val('');
-		description.trigger('autosize');
+		var textarea = element.find([
+			'textarea[name$="[' + description + ']"]',
+			'textarea[name$="[' + report + ']"]',
+		].join(',')).first();
+
+		textarea.val('');
+		textarea.trigger('autosize');
 	});
 
 	$(this).delegate('#btn-glaucomatube-report', 'click', function(e) {
