@@ -95,6 +95,13 @@ class Element_OphTrOperationnote_Trabectome extends Element_OnDemand
 		);
 	}
 
+	public function beforeDelete()
+	{
+		OphTrOperationnote_Trabectome_ComplicationAssignment::model()->deleteAll("element_id = ?", array($this->id));
+
+		return parent::beforeDelete();
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
