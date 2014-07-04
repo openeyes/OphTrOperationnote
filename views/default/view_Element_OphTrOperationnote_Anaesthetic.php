@@ -69,7 +69,13 @@
 					</div>
 				</div>
 			<?php }?>
-		</div>
 		<?php }?>
+		</div>
+		<div class="row data-row">
+			<div class="large-8 column end">
+				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_comment'))?></h4>
+				<div class="data-value<?php if (!$element->anaesthetic_comment) {?> none<?php }?>"><?php echo CHtml::encode($element->anaesthetic_comment) ? Yii::app()->format->Ntext($element->anaesthetic_comment) : 'None'?></div>
+			</div>
+		</div>
 	</div>
 </section>
