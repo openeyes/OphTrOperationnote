@@ -76,7 +76,7 @@
 					</div>
 					<div class="large-6 column">
 						<div class="data-value">
-							<?php echo CHtml::encode($element->comments)?>
+							<?= Yii::app()->format->Ntext($element->comments)?>
 						</div>
 					</div>
 				</div>

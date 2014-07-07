@@ -70,7 +70,7 @@
 			<div class="data-row">
 				<h4><?php echo CHtml::encode($element->getAttributeLabel('comments')); ?></h4>
 				<div class="details">
-					<div class="data-value"><?php echo CHtml::encode($element->comments)?></div>
+					<div class="data-value"><?= Yii::app()->format->Ntext($element->comments) ?></div>
 				</div>
 			</div>
 		</div>
