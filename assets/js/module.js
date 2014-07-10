@@ -488,22 +488,30 @@ function trabeculectomyController(_drawing)
 
 	this.notificationHandler = function(_messageArray)
 	{
-		var conjFlap = _drawing.firstDoodleOfClass('ConjunctivalFlap');
-		var trabFlap = _drawing.firstDoodleOfClass('TrabyFlap');
+
+		var sutureArray = Array();
 		switch (_messageArray['eventName'])
 		{
+			case 'ready':
+				this.conjFlap = _drawing.firstDoodleOfClass('ConjunctivalFlap');
+				this.trabFlap = _drawing.firstDoodleOfClass('TrabyFlap');
+				this.gsf = _drawing.globalScaleFactor;
+				_drawing.deselectDoodles();
+				break;
 			case 'parameterChanged':
 				if (_drawing.isNew)
 				{
 					var doodle = _messageArray['object'].doodle;
 
 					if (doodle.isSelected && (doodle.className == 'TrabyFlap' || doodle.className == 'TrabySuture' || doodle.className == 'ConjunctivalFlap')) {
-						trabFlap.willSync = false;
+						if (this.trabFlap) {
+							this.trabFlap.willSync = false;
+						}
 					}
 
 					if (doodle.className == 'TrabyFlap') {
 						if (_messageArray['object']['parameter'] == 'rotation') {
-							if (trabFlap.willSync) {
+							if (doodle.willSync) {
 								var sutures = _drawing.allDoodlesOfClass('TrabySuture');
 
 								for (var i = 0; i < sutures.length; i++) {
@@ -519,15 +527,16 @@ function trabeculectomyController(_drawing)
 									sutures[i].rotation += delta;
 								}
 
-								if (conjFlap) {
-									conjFlap.rotation = doodle.rotation;
+								if (this.conjFlap) {
+									this.conjFlap.rotation = doodle.rotation;
 								}
 							}
 						}
 					}
 				}
+				break;
 		}
-	}
+	}.bind(this)
 }
 
 function changeEye() {
