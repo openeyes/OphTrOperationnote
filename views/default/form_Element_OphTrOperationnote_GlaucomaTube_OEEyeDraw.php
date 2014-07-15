@@ -18,7 +18,7 @@
 <?php
 	$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
 		'doodleToolBarArray' => array(
-			0 => array('TubeExtender','Patch', 'PI', 'Supramid', 'TubeLigation'),
+			0 => array('TubeExtender','Patch', 'PI', 'Supramid', 'TubeLigation', 'ACMaintainer'),
 		),
 		'onReadyCommandArray' => array(
 			array('addDoodle', array('AntSeg')),
