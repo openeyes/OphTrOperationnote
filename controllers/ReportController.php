@@ -375,7 +375,7 @@ class ReportController extends BaseController
 
 	protected function getComorbidities($criteria)
 	{
-		$comorbiditiesElement = Element_OphCiExamination_Comorbidities::model()->with(array('event'))->find($criteria);
+		$comorbiditiesElement = \OEModule\OphCiExamination\models\Element_OphCiExamination_Comorbidities::model()->with(array('event'))->find($criteria);
 
 		$comorbidities = array();
 		if(isset($comorbiditiesElement->items)) {
@@ -388,7 +388,7 @@ class ReportController extends BaseController
 
 	protected function getTargetRefraction($criteria)
 	{
-		$cataractManagementElement = Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
+		$cataractManagementElement = \OEModule\OphCiExamination\models\Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
 		if($cataractManagementElement ){
 		return $cataractManagementElement['target_postop_refraction'];
 		}
@@ -396,7 +396,7 @@ class ReportController extends BaseController
 
 	public function getFirstEyeOrSecondEye($criteria)
 	{
-		$cataractManagementElement = Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
+		$cataractManagementElement = \OEModule\OphCiExamination\models\Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
 		if($cataractManagementElement ){
 		return $cataractManagementElement->eye['name'];
 		}
@@ -405,7 +405,7 @@ class ReportController extends BaseController
 	public function getVAReading($criteria,$record)
 	{
 		$criteria->addInCondition('eye_id', $this->eyesCondition($record));
-		$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
+		$va = \OEModule\OphCiExamination\models\Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
 		$reading = null;
 		$sides = array(strtolower($record['eye']));
 		if ($sides[0] == 'both') {
@@ -434,7 +434,7 @@ class ReportController extends BaseController
 	public function getRefractionReading($criteria,$record)
 	{
 		$criteria->addInCondition('eye_id', $this->eyesCondition($record));
-		$refraction = Element_OphCiExamination_Refraction::model()->with('event')->find($criteria);
+		$refraction = \OEModule\OphCiExamination\models\Element_OphCiExamination_Refraction::model()->with('event')->find($criteria);
 		if ($refraction) {
 			return $refraction->getCombined(strtolower($record['eye']));
 		}
