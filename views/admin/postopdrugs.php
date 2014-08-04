@@ -33,11 +33,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php
-				$criteria = new CDbCriteria;
-				$criteria->compare('deleted',0);
-				$criteria->order = "display_order asc";
-				foreach (OphTrOperationnote_PostopDrug::model()->findAll($criteria) as $i => $drug) {?>
+				<?php foreach (OphTrOperationnote_PostopDrug::model()->findAll(array('order'=>'display_order asc')) as $i => $drug) {?>
 					<tr class="clickable" data-id="<?php echo $drug->id?>" data-uri="OphTrOperationnote/admin/editPostOpDrug/<?php echo $drug->id?>">
 						<td><input type="checkbox" name="drugs[]" value="<?php echo $drug->id?>" /></td>
 						<td><?php echo $drug->name?></td>

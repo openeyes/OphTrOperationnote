@@ -127,6 +127,7 @@
 						'height'=>200,
 						'model'=>$element,
 						'attribute'=>'eyedraw',
+						'idSuffix'=>'Cataract',
 					));
 				?>
 				<?php
@@ -138,6 +139,7 @@
 						'height'=>200,
 						'model'=>$element,
 						'attribute'=>'eyedraw2',
+						'idSuffix'=>'CataractSurgeon',
 					));
 				?>
 			</div>
@@ -148,7 +150,7 @@
 				<h3 class="data-title">Cataract report</h3>
 				<div class="data-value highlight">
 					<?php foreach (explode(chr(10),CHtml::encode($element->report)) as $line) {?>
-						<?php echo $line?><br/>
+						<?php echo CHtml::encode($line)?><br/>
 					<?php }?>
 				</div>
 			</div>

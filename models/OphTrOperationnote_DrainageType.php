@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class OphTrOperationnote_DrainageType extends BaseEventTypeElement
+class OphTrOperationnote_DrainageType extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -47,6 +47,11 @@ class OphTrOperationnote_DrainageType extends BaseEventTypeElement
 	public function tableName()
 	{
 		return 'ophtroperationnote_buckle_drainage_type';
+	}
+
+	public function defaultScope()
+	{
+		return array('order' => $this->getTableAlias(true, false) . '.display_order');
 	}
 
 	/**
@@ -96,5 +101,12 @@ class OphTrOperationnote_DrainageType extends BaseEventTypeElement
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 			));
+	}
+
+	public function behaviors()
+	{
+		return array(
+			'LookupTable' => 'LookupTable',
+		);
 	}
 }

@@ -21,7 +21,7 @@ class AdminController extends ModuleAdminController
 {
 	public function actionViewPostOpDrugs()
 	{
-		Audit::add('admin','list',null,false,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_PostopDrug'));
+		Audit::add('admin','list',null,null,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_PostopDrug'));
 
 		$this->render('postopdrugs');
 	}
@@ -39,7 +39,7 @@ class AdminController extends ModuleAdminController
 				if (!$drug->save()) {
 					throw new Exception("Unable to save drug: ".print_r($drug->getErrors(),true));
 				}
-				Audit::add('admin-OphTrOperationnote_PostopDrug','add',serialize($_POST));
+				Audit::add('admin-OphTrOperationnote_PostopDrug','add',$drug->id);
 				$this->redirect('/OphTrOperationnote/admin/viewPostOpDrugs');
 			}
 		}
@@ -66,7 +66,7 @@ class AdminController extends ModuleAdminController
 					throw new Exception("Unable to save drug: ".print_r($drug->getErrors(),true));
 				}
 
-				Audit::add('admin-OphTrOperationnote_PostopDrug','edit',serialize(array_merge(array('id'=>$id),$_POST)));
+				Audit::add('admin-OphTrOperationnote_PostopDrug','edit',$id);
 
 				$this->redirect('/OphTrOperationnote/admin/viewPostOpDrugs');
 			}
@@ -84,11 +84,10 @@ class AdminController extends ModuleAdminController
 	{
 		$result = 1;
 		foreach (OphTrOperationnote_PostopDrug::model()->findAllByPk(@$_POST['drugs']) as $drug) {
-			$drug->deleted = 1;
-			if (!$drug->save()) {
+			if (!$drug->delete()) {
 				$result = 0;
 			} else {
-				Audit::add('admin','delete',$drug->id,false,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_PostopDrug'));
+				Audit::add('admin','delete',$drug->id,null,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_PostopDrug'));
 			}
 		}
 		echo $result;

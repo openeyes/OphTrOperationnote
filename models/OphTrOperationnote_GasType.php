@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class OphTrOperationnote_GasType extends BaseEventTypeElement
+class OphTrOperationnote_GasType extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -47,6 +47,11 @@ class OphTrOperationnote_GasType extends BaseEventTypeElement
 	public function tableName()
 	{
 		return 'ophtroperationnote_gas_type';
+	}
+
+	public function defaultScope()
+	{
+		return array('order' => $this->getTableAlias(true, false) . '.display_order');
 	}
 
 	/**
@@ -77,6 +82,13 @@ class OphTrOperationnote_GasType extends BaseEventTypeElement
 	public function attributeLabels()
 	{
 		return array(
+		);
+	}
+
+	public function behaviors()
+	{
+		return array(
+			'LookupTable' => 'LookupTable',
 		);
 	}
 

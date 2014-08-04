@@ -29,7 +29,7 @@
  * @property Element_OphTrOperationnote_Cataract $cataract
  * @property Element_OphTrOperationnote_CataractComplications $complication
  */
-class OphTrOperationnote_CataractComplication extends BaseEventTypeElement
+class OphTrOperationnote_CataractComplication extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.

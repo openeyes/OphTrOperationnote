@@ -24,7 +24,7 @@
  * @property string $id
  * @property varchar $name
  */
-class OphTrOperationnote_PreparationIntraocularSolution extends BaseEventTypeElement
+class OphTrOperationnote_PreparationIntraocularSolution extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -41,6 +41,11 @@ class OphTrOperationnote_PreparationIntraocularSolution extends BaseEventTypeEle
 	public function tableName()
 	{
 		return 'ophtroperationnote_preparation_intraocular_solution';
+	}
+
+	public function defaultScope()
+	{
+		return array('order' => $this->getTableAlias(true, false) . '.display_order');
 	}
 
 	/**
@@ -71,6 +76,13 @@ class OphTrOperationnote_PreparationIntraocularSolution extends BaseEventTypeEle
 	public function attributeLabels()
 	{
 		return array(
+		);
+	}
+
+	public function behaviors()
+	{
+		return array(
+			'LookupTable' => 'LookupTable',
 		);
 	}
 

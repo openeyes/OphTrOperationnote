@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class OphTrOperationnote_PostopInstruction extends BaseEventTypeElement
+class OphTrOperationnote_PostopInstruction extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.

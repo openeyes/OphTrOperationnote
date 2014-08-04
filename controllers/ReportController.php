@@ -375,7 +375,7 @@ class ReportController extends BaseController
 
 	protected function getComorbidities($criteria)
 	{
-		$comorbiditiesElement = Element_OphCiExamination_Comorbidities::model()->with(array('event'))->find($criteria);
+		$comorbiditiesElement = \OEModule\OphCiExamination\models\Element_OphCiExamination_Comorbidities::model()->with(array('event'))->find($criteria);
 
 		$comorbidities = array();
 		if(isset($comorbiditiesElement->items)) {
@@ -388,7 +388,7 @@ class ReportController extends BaseController
 
 	protected function getTargetRefraction($criteria)
 	{
-		$cataractManagementElement = Element_OphCiExamination_CataractManagement::model()->with(array('event'))->find($criteria);
+		$cataractManagementElement = \OEModule\OphCiExamination\models\Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
 		if($cataractManagementElement ){
 		return $cataractManagementElement['target_postop_refraction'];
 		}
@@ -396,7 +396,7 @@ class ReportController extends BaseController
 
 	public function getFirstEyeOrSecondEye($criteria)
 	{
-		$cataractManagementElement = Element_OphCiExamination_CataractManagement::model()->with(array('event'))->find($criteria);
+		$cataractManagementElement = \OEModule\OphCiExamination\models\Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
 		if($cataractManagementElement ){
 		return $cataractManagementElement->eye['name'];
 		}
@@ -405,7 +405,7 @@ class ReportController extends BaseController
 	public function getVAReading($criteria,$record)
 	{
 		$criteria->addInCondition('eye_id', $this->eyesCondition($record));
-		$va = Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
+		$va = \OEModule\OphCiExamination\models\Element_OphCiExamination_VisualAcuity::model()->with(array('event'))->find($criteria);
 		$reading = null;
 		$sides = array(strtolower($record['eye']));
 		if ($sides[0] == 'both') {
@@ -434,7 +434,7 @@ class ReportController extends BaseController
 	public function getRefractionReading($criteria,$record)
 	{
 		$criteria->addInCondition('eye_id', $this->eyesCondition($record));
-		$refraction = Element_OphCiExamination_Refraction::model()->with('event')->find($criteria);
+		$refraction = \OEModule\OphCiExamination\models\Element_OphCiExamination_Refraction::model()->with('event')->find($criteria);
 		if ($refraction) {
 			return $refraction->getCombined(strtolower($record['eye']));
 		}
@@ -595,21 +595,18 @@ class ReportController extends BaseController
 		}
 
 		foreach (Yii::app()->$db->createCommand()
-					 ->select("pl.eye_id, p.dob, p.date_of_death, comp.id as comp_id, pc.id as pc_id")
-					 ->from("et_ophtroperationnote_procedurelist pl")
-					 ->join("et_ophtroperationnote_cataract c", "pl.event_id = c.event_id")
-					 ->join("event e", "c.event_id = e.id")
-					 ->join("et_ophtroperationnote_surgeon s", "s.event_id = e.id")
-					 ->join("episode ep", "e.episode_id = ep.id")
-					 ->join("firm f", "ep.firm_id = f.id")
-					 ->join("patient p", "ep.patient_id = p.id")
-					 ->leftJoin("et_ophtroperationnote_cataract_complication comp", "comp.cataract_id = c.id")
-					 ->leftJoin(
-						 "et_ophtroperationnote_cataract_complication pc",
-						 "pc.cataract_id = c.id and pc.complication_id = 11"
-					 )
-					 ->where("e.deleted = 0 and ep.deleted = 0 $where")
-					 ->queryAll() as $row) {
+			->select("pl.eye_id, p.dob, p.date_of_death, comp.id as comp_id, pc.id as pc_id")
+			->from("et_ophtroperationnote_procedurelist pl")
+			->join("et_ophtroperationnote_cataract c","pl.event_id = c.event_id")
+			->join("event e","c.event_id = e.id")
+			->join("et_ophtroperationnote_surgeon s","s.event_id = e.id")
+			->join("episode ep","e.episode_id = ep.id")
+			->join("firm f","ep.firm_id = f.id")
+			->join("patient p","ep.patient_id = p.id")
+			->leftJoin("et_ophtroperationnote_cataract_complication comp","comp.cataract_id = c.id")
+			->leftJoin("et_ophtroperationnote_cataract_complication pc","pc.cataract_id = c.id and pc.complication_id = 11")
+			->where("pl.deleted = 0 and c.deleted = 0 and e.deleted = 0 and s.deleted = 0 and ep.deleted = 0 and f.deleted = 0 and p.deleted = 0 and (comp.id is null or comp.deleted = 0) and (pc.id is null or pc.deleted = 0) $where")
+			->queryAll() as $row) {
 
 			$data['cataracts']++;
 			($row['eye_id'] == 1) ? $data['eyes']['left']['number']++ : $data['eyes']['right']['number']++;
@@ -658,21 +655,18 @@ class ReportController extends BaseController
 		}
 
 		foreach (Yii::app()->$db->createCommand()
-					 ->select("pl.eye_id, p.dob, p.date_of_death, comp.id as comp_id, pc.id as pc_id")
-					 ->from("et_ophtroperationnote_procedurelist pl")
-					 ->join("et_ophtroperationnote_cataract c", "pl.event_id = c.event_id")
-					 ->join("event e", "c.event_id = e.id")
-					 ->join("et_ophtroperationnote_surgeon s", "s.event_id = e.id")
-					 ->join("episode ep", "e.episode_id = ep.id")
-					 ->join("firm f", "ep.firm_id = f.id")
-					 ->join("patient p", "ep.patient_id = p.id")
-					 ->leftJoin("et_ophtroperationnote_cataract_complication comp", "comp.cataract_id = c.id")
-					 ->leftJoin(
-						 "et_ophtroperationnote_cataract_complication pc",
-						 "pc.cataract_id = c.id and pc.complication_id = 11"
-					 )
-					 ->where("e.deleted = 0 and ep.deleted = 0")
-					 ->queryAll() as $i => $row) {
+			->select("pl.eye_id, p.dob, p.date_of_death, comp.id as comp_id, pc.id as pc_id")
+			->from("et_ophtroperationnote_procedurelist pl")
+			->join("et_ophtroperationnote_cataract c","pl.event_id = c.event_id")
+			->join("event e","c.event_id = e.id")
+			->join("et_ophtroperationnote_surgeon s","s.event_id = e.id")
+			->join("episode ep","e.episode_id = ep.id")
+			->join("firm f","ep.firm_id = f.id")
+			->join("patient p","ep.patient_id = p.id")
+			->leftJoin("et_ophtroperationnote_cataract_complication comp","comp.cataract_id = c.id")
+			->leftJoin("et_ophtroperationnote_cataract_complication pc","pc.cataract_id = c.id and pc.complication_id = 11")
+			->where("pl.deleted = 0 and c.deleted = 0 and e.deleted = 0 and s.deleted = 0 and ep.deleted = 0 and f.deleted = 0 and p.deleted = 0 and (comp.id is null or comp.deleted = 0) and (pc.id is null or pc.deleted = 0)")
+			->queryAll() as $i => $row) {
 
 			$row['pc_id'] and $data['pc_rupture_average']['number']++;
 			$row['comp_id'] and $data['complication_average']['number']++;
@@ -692,4 +686,75 @@ class ReportController extends BaseController
 		return $data;
 	}
 
+	public function reportOperations($params=array())
+	{
+		$where = '';
+
+		if (strtotime($params['date_from'])) {
+			$where .= " and e.created_date >= '".date('Y-m-d',strtotime($params['date_from']))." 00:00:00'";
+		}
+		if (strtotime($params['date_to'])) {
+			$where .= " and e.created_date <= '".date('Y-m-d',strtotime($params['date_to']))." 23:59:59'";
+		}
+
+		if ($user = User::model()->findByPk($params['surgeon_id'])) {
+			$clause = '';
+			if (@$params['match_surgeon']) {
+				$clause .= "s.surgeon_id = $user->id";
+			}
+			if (@$params['match_assistant_surgeon']) {
+				if ($clause) $clause .= ' or ';
+				$clause .= "s.assistant_id = $user->id";
+			}
+			if (@$params['match_supervising_surgeon']) {
+				if ($clause) $clause .= ' or ';
+				$clause .= "s.supervising_surgeon_id = $user->id";
+			}
+			$where .= " and ($clause)";
+		}
+
+		if (!($db = Yii::app()->params['report_db'])) {
+			$db = 'db';
+		}
+
+		foreach (Yii::app()->$db->createCommand()
+			->select("p.hos_num, c.first_name, c.last_name, e.created_date, s.surgeon_id, s.assistant_id, s.supervising_surgeon_id, pl.id as pl_id, e.id as event_id, cat.id as cat_id, eye.name as eye")
+			->from('patient p')
+			->join('contact c',"c.parent_class = 'Patient' and c.parent_id = p.id")
+			->join('episode ep','ep.patient_id = p.id')
+			->join('event e','e.episode_id = ep.id')
+			->join('et_ophtroperationnote_procedurelist pl','pl.event_id = e.id')
+			->join('eye','pl.eye_id = eye.id')
+			->join('et_ophtroperationnote_surgeon s','s.event_id = e.id')
+			->leftJoin('et_ophtroperationnote_cataract cat','cat.event_id = e.id')
+			->where("p.deleted = 0 and c.deleted = 0 and ep.deleted = 0 and e.deleted = 0 and pl.deleted = 0 and s.deleted = 0 and (cat.id is null or cat.deleted = 0) $where")
+			->order('e.created_date asc')
+			->queryAll() as $row) {
+
+			$operations[] = array(
+				'date' => date('j M Y',strtotime($row['created_date'])),
+				'hos_num' => $row['hos_num'],
+				'first_name' => $row['first_name'],
+				'last_name' => $row['last_name'],
+				'procedures' => array(),
+				'complications' => array(),
+				'role' => ($row['surgeon_id'] == $user->id ? 'Surgeon' : ($row['assistant_id'] == $user->id ? 'Assistant surgeon' : 'Supervising surgeon')),
+			);
+
+			foreach (OphTrOperationnote_ProcedureListProcedureAssignment::model()->findAll('procedurelist_id=?',array($row['pl_id'])) as $i => $pa) {
+				$operations[count($operations)-1]['procedures'][] = array(
+					'eye' => $row['eye'],
+					'procedure' => $pa->procedure->term,
+				);
+			}
+
+			if ($row['cat_id']) {
+				foreach (OphTrOperationnote_CataractComplication::model()->findAll('cataract_id=?',array($row['cat_id'])) as $complication) {
+					$operations[count($operations)-1]['complications'][] = array('complication'=>$complication->complication->name);
+				}
+			}
+		}
+
+		return array('operations'=>$operations);
+	}
 }

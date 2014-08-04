@@ -18,9 +18,9 @@
  */
 
 /**
- * This is the model class for table "et_ophtroperationnote_procedure_element".
+ * This is the model class for table "ophtroperationnote_procedure_element".
  *
- * The followings are the available columns in table 'et_ophtroperationnote_procedure_element':
+ * The followings are the available columns in table 'ophtroperationnote_procedure_element':
  * @property integer $id
  * @property integer $procedure_id
  * @property integer $element_type_id
@@ -30,7 +30,7 @@
  * @property Procedure $procedure
  * @property ElementType $element_type
  */
-class OphTrOperationnote_ProcedureListOperationElement extends BaseEventTypeElement
+class OphTrOperationnote_ProcedureListOperationElement extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.

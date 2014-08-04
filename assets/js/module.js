@@ -45,7 +45,7 @@ function callbackAddProcedure(procedure_id) {
 						if (m[1] == 'Element_OphTrOperationnote_GenericProcedure' || $('.'+m[1]).length <1) {
 							$('.Element_OphTrOperationnote_ProcedureList .sub-elements').append(html);
 							$('.'+m[1]+':last').attr('style','display: none;');
-                            $('.'+m[1]+':last').removeClass('hidden');
+														$('.'+m[1]+':last').removeClass('hidden');
 							$('.'+m[1]+':last').slideToggle('fast');
 						}
 					}
@@ -63,7 +63,7 @@ function callbackAddProcedure(procedure_id) {
 function callbackRemoveProcedure(procedure_id) {
 	var procedures = '';
 
-	var hpid = $('input[type="hidden"][name="Element_OphTrOperationnote_GenericProcedure[proc_id][]"][value="'+procedure_id+'"]');
+	var hpid = $('input[type="hidden"][name="Element_OphTrOperationnote_GenericProcedure['+procedure_id+'][proc_id]"][value="'+procedure_id+'"]');
 
 	if (hpid.length >0) {
 		hpid.parent().slideToggle('fast',function() {
@@ -110,10 +110,10 @@ function setCataractInput(key, value) {
 $(document).ready(function() {
 	handleButton($('#et_save'),function() {
 		if ($('#Element_OphTrOperationnote_Buckle_report').length >0) {
-			$('#Element_OphTrOperationnote_Buckle_report').val(ed_drawing_edit_Buckle.report());
+			$('#Element_OphTrOperationnote_Buckle_report').val(ED.getInstance('ed_drawing_edit_Buckle').report());
 		}
 		if ($('#Element_OphTrOperationnote_Cataract_report2').length >0) {
-			$('#Element_OphTrOperationnote_Cataract_report2').val(ed_drawing_edit_Cataract.report());
+			$('#Element_OphTrOperationnote_Cataract_report2').val(ED.getInstance('ed_drawing_edit_Cataract').report());
 		}
 	});
 
@@ -161,11 +161,11 @@ $(document).ready(function() {
 							$('#Element_OphTrOperationnote_ProcedureList_eye_id_'+last_Element_OphTrOperationnote_ProcedureList_eye_id).attr('checked','checked');
 							if (parseInt(result.split("\n").length) == 1) {
 								new OpenEyes.UI.Dialog.Alert({
-								  content: "The following procedure requires a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
+									content: "The following procedure requires a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
 								}).open();
 							} else {
 								new OpenEyes.UI.Dialog.Alert({
-								  content: "The following procedures require a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
+									content: "The following procedures require a specific eye selection and cannot be entered for both eyes at once:\n\n"+result
 								}).open();
 							}
 							return false;
@@ -232,7 +232,57 @@ $(document).ready(function() {
 	$('tr.clickable').click(function() {
 		$(this).children('td:first').children('input[type="radio"]').attr('checked',true);
 	});
+
+	$(this).delegate('.ed_clear', 'click', function(e) {
+		e.preventDefault();
+
+		var element = $(this).closest('.sub-element');
+
+		var description = 'description';
+		var report = 'report';
+
+		var textarea = element.find([
+			'textarea[name$="[' + description + ']"]',
+			'textarea[name$="[' + report + ']"]',
+		].join(',')).first();
+
+		textarea.val('');
+		textarea.trigger('autosize');
+	});
+
+	$(this).delegate('#btn-glaucomatube-report', 'click', function(e) {
+		e.preventDefault();
+		var element = $(this).closest('.sub-element');
+		reportEyedraw(element, ED.getInstance('ed_drawing_edit_' + element.data('element-type-id')), 'description' );
+	});
+
+	$('#btn-trabeculectomy-report').die('click').live('click',function(e) {
+		e.preventDefault();
+		var element = $(this).closest('.element');
+		reportEyedraw(element,  ED.getInstance('ed_drawing_edit_Trabeculectomy'), 'report');
+	});
+
+	$('#btn-trabectome-report').die('click').live('click',function(e) {
+		e.preventDefault();
+		var element = $(this).closest('.element');
+		var drawing_name = $('#Element_OphTrOperationnote_Trabectome_eyedraw').prev('canvas').attr('id').replace(/canvas/,'drawing');
+		reportEyedraw(element,  ED.getInstance(drawing_name), 'description');
+	});
 });
+
+function reportEyedraw(element, eyedraw, fieldName)
+{
+	var text = eyedraw.report();
+	text = text.replace(/, +$/, '');
+
+	var field = $('textarea[name$="[' + fieldName + ']"]', element).first();
+	if (field.val()) {
+		text = field.val() + ", " + text.toLowerCase();
+	}
+	field.val(text);
+	field.trigger('autosize');
+}
+
 
 function callbackVerifyAddProcedure(proc_name,durations,callback) {
 	var eye = $('input[name="Element_OphTrOperationnote_ProcedureList\[eye_id\]"]:checked').val();
@@ -250,7 +300,7 @@ function callbackVerifyAddProcedure(proc_name,durations,callback) {
 				callback(true);
 			} else {
 				new OpenEyes.UI.Dialog.Alert({
-				  content: "You must select either the right or the left eye before adding this procedure."
+					content: "You must select either the right or the left eye before adding this procedure."
 				}).open();
 				callback(false);
 			}
@@ -374,7 +424,7 @@ function sidePortController(_drawing)
 				if (_drawing.isNew)
 				{
 					// Get rotation value of surgeon doodle
-					var surgeonDrawing = window['ed_drawing_edit_Position'];
+					var surgeonDrawing = ED.getInstance('ed_drawing_edit_Position');
 					var surgeonRotation = surgeonDrawing.firstDoodleOfClass('Surgeon').rotation;
 
 					// Get doodle that has moved in opnote drawing
@@ -432,10 +482,68 @@ function sidePortController(_drawing)
 	}
 }
 
+function trabeculectomyController(_drawing)
+{
+	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'parameterChanged']);
+
+	this.notificationHandler = function(_messageArray)
+	{
+
+		var sutureArray = Array();
+		switch (_messageArray['eventName'])
+		{
+			case 'ready':
+				this.conjFlap = _drawing.firstDoodleOfClass('ConjunctivalFlap');
+				this.trabFlap = _drawing.firstDoodleOfClass('TrabyFlap');
+				this.gsf = _drawing.globalScaleFactor;
+				_drawing.deselectDoodles();
+				break;
+			case 'parameterChanged':
+				if (_drawing.isNew)
+				{
+					var doodle = _messageArray['object'].doodle;
+
+					if (doodle.isSelected && (doodle.className == 'TrabyFlap' || doodle.className == 'TrabySuture' || doodle.className == 'ConjunctivalFlap')) {
+						if (this.trabFlap) {
+							this.trabFlap.willSync = false;
+						}
+					}
+
+					if (doodle.className == 'TrabyFlap') {
+						if (_messageArray['object']['parameter'] == 'rotation') {
+							if (doodle.willSync) {
+								var sutures = _drawing.allDoodlesOfClass('TrabySuture');
+
+								for (var i = 0; i < sutures.length; i++) {
+									var np = new ED.Point(sutures[i].originX, sutures[i].originY);
+
+									var delta = _messageArray['object'].value - _messageArray['object'].oldValue;
+
+									np.setWithPolars(np.length(), np.direction() + delta);
+
+									sutures[i].originX = np.x;
+									sutures[i].originY = np.y;
+
+									sutures[i].rotation += delta;
+								}
+
+								if (this.conjFlap) {
+									this.conjFlap.rotation = doodle.rotation;
+								}
+							}
+						}
+					}
+				}
+				break;
+		}
+	}.bind(this)
+}
+
 function changeEye() {
 	// Swap side of each drawing
-	var drawingEdit1 = window['ed_drawing_edit_Position'];
-	var drawingEdit2 = window['ed_drawing_edit_Cataract'];
+	var drawingEdit1 = window.ED ? ED.getInstance('ed_drawing_edit_Position') : undefined;
+	var drawingEdit2 = window.ED ? ED.getInstance('ed_drawing_edit_Cataract') : undefined;
+	var drawingEdit3 = window.ED ? ED.getInstance('ed_drawing_edit_Trabeculectomy') : undefined;
 
 	if (typeof(drawingEdit1) != 'undefined') {
 		if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;
@@ -449,6 +557,31 @@ function changeEye() {
 	if (typeof(drawingEdit2) != 'undefined') {
 		if (drawingEdit2.eye == ED.eye.Right) drawingEdit2.eye = ED.eye.Left;
 		else drawingEdit2.eye = ED.eye.Right;
+	}
+
+	if (typeof(drawingEdit3) != 'undefined') {
+		if (drawingEdit3.eye == ED.eye.Right) drawingEdit3.eye = ED.eye.Left;
+		else drawingEdit3.eye = ED.eye.Right;
+
+		rotateTrabeculectomy();
+	}
+}
+
+function rotateTrabeculectomy()
+{
+	var _drawing = ED.getInstance('ed_drawing_edit_Trabeculectomy');
+
+	if (_drawing.isNew) {
+		var sidePort = _drawing.firstDoodleOfClass('SidePort');
+		var trabFlap = _drawing.firstDoodleOfClass('TrabyFlap');
+
+		if (_drawing.eye == ED.eye.Right) {
+			sidePort.setParameterWithAnimation('rotation',225 * (Math.PI/180));
+			trabFlap.setParameterWithAnimation('site',$('#Element_OphTrOperationnote_Trabeculectomy_site_id').children('option:selected').text());
+		} else {
+			sidePort.setParameterWithAnimation('rotation',135 * (Math.PI/180));
+			trabFlap.setParameterWithAnimation('site',$('#Element_OphTrOperationnote_Trabeculectomy_site_id').children('option:selected').text());
+		}
 	}
 }
 

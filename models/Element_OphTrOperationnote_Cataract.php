@@ -47,7 +47,7 @@
  * @property OperativeDevice[] $operative_devices
  * @property OphTrOperationnote_IOLType $iol_type
  */
-class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
+class Element_OphTrOperationnote_Cataract extends Element_OnDemand
 {
 	public $service;
 
@@ -256,26 +256,6 @@ class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
 		return Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($this->event_id))->eye;
 	}
 
-	public function getOphTrOperationnote_IOLTypes_NHS()
-	{
-		$criteria = new CDbCriteria;
-
-		$criteria->compare('private', 0);
-		$criteria->order = 'display_order asc';
-
-		return OphTrOperationnote_IOLType::model()->findAll($criteria);
-	}
-
-	public function getOphTrOperationnote_IOLTypes_Private()
-	{
-		$criteria = new CDbCriteria;
-
-		$criteria->compare('private', 1);
-		$criteria->order = 'display_order asc';
-
-		return OphTrOperationnote_IOLType::model()->findAll($criteria);
-	}
-
 	/**
 	 * Validate IOL data if IOL is part of the element
 	 *
@@ -318,5 +298,19 @@ class Element_OphTrOperationnote_Cataract extends BaseEventTypeElement
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get ids of cataract complications associated with the element
+	 */
+	public function getCataractComplicationValues()
+	{
+		$complication_values = array();
+
+		foreach ($this->complication_assignments as $complication_assignment) {
+			$complication_values[] = $complication_assignment->complication_id;
+		}
+
+		return $complication_values;
 	}
 }

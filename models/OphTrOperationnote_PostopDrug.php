@@ -24,7 +24,7 @@
  * @property integer $id
  * @property string $name
  */
-class OphTrOperationnote_PostopDrug extends BaseEventTypeElement
+class OphTrOperationnote_PostopDrug extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -41,6 +41,11 @@ class OphTrOperationnote_PostopDrug extends BaseEventTypeElement
 	public function tableName()
 	{
 		return 'ophtroperationnote_postop_drug';
+	}
+
+	public function defaultScope()
+	{
+		return array('order' => $this->getTableAlias(true, false) . '.display_order');
 	}
 
 	/**
@@ -77,6 +82,13 @@ class OphTrOperationnote_PostopDrug extends BaseEventTypeElement
 	public function attributeLabels()
 	{
 		return array(
+		);
+	}
+
+	public function behaviors()
+	{
+		return array(
+			'LookupTable' => 'LookupTable',
 		);
 	}
 

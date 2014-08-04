@@ -1,4 +1,0 @@
-element_type_id => element_type.class_name,eye_id => Eye.name,display_order
-Element_OphTrOperationnote_ProcedureList,Right,1
-Element_OphTrOperationnote_ProcedureList,Left,3
-Element_OphTrOperationnote_ProcedureList,Both,2
