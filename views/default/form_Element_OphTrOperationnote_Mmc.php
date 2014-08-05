@@ -32,6 +32,6 @@ $form->layoutColumns = array('label' => 3, 'field' => 3);
 	</div>
 	<div id="ophtroperationnote-mmc-injection" class="ophtroperationnote-mmc-application hidden">
 		<?php $form->dropDownList($element, 'volume_id', 'OphTrOperationnote_Mmc_Volume'); ?>
-		<div class="row"><div class="<?= $form->columns() ?>"><label>Dose:</label></div><div id="ophtroperationnote-mmc-dose" class="data-value <?= $form->columns('field', true) ?>"></div></div>
+		<div class="row"><div class="<?= $form->columns() ?>"><label><?= CHtml::encode($element->getAttributeLabel('dose')) ?></label></div><div id="ophtroperationnote-mmc-dose" class="data-value <?= $form->columns('field', true) ?>"></div></div>
 	</div>
 </div>
