@@ -15,6 +15,7 @@ class m140812_111740_fix_db_schema extends CDbMigration
 	public function down()
 	{
 		$this->dropForeignKey('et_ophtroperationnote_trabeculectomy_size_id_fk','et_ophtroperationnote_trabeculectomy');
+		$this->dropIndex('et_ophtroperationnote_trabeculectomy_size_id_fk','et_ophtroperationnote_trabeculectomy');
 
 		$this->addForeignKey('et_ophtroperationnote_trabeculectomy_size_id_fk','et_ophtroperationnote_trabeculectomy','site_id','ophtroperationnote_trabeculectomy_size','id');
 	}
