@@ -503,7 +503,7 @@ function trabeculectomyController(_drawing)
 				{
 					var doodle = _messageArray['object'].doodle;
 
-					if (doodle.isSelected && (doodle.className == 'TrabyFlap' || doodle.className == 'TrabySuture' || doodle.className == 'ConjunctivalFlap')) {
+					if (doodle.isSelected && (doodle.className == 'TrabySuture' || doodle.className == 'ConjunctivalFlap')) {
 						if (this.trabFlap) {
 							this.trabFlap.willSync = false;
 						}
