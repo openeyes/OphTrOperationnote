@@ -20,15 +20,14 @@
 
 //TODO: direct use of models should be replaced by API when this is not master branch
 
-class ReportController extends BaseController
+class ReportController extends BaseReportController
 {
-
 	public function accessRules()
 	{
 		return array(
 			array('allow',
 				'actions' => array('index', 'operation'),
-				'roles' => array('OprnGenerateReport'),
+				'roles' => array('OprnGenerateReport', 'admin'),
 			)
 		);
 	}
