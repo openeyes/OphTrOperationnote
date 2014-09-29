@@ -259,14 +259,14 @@ $(document).ready(function() {
 	$('#btn-trabeculectomy-report').die('click').live('click',function(e) {
 		e.preventDefault();
 		var element = $(this).closest('.element');
-		reportEyedraw(element,  ED.getInstance('ed_drawing_edit_Trabeculectomy'), 'report');
+		reportEyedraw(element,	ED.getInstance('ed_drawing_edit_Trabeculectomy'), 'report');
 	});
 
 	$('#btn-trabectome-report').die('click').live('click',function(e) {
 		e.preventDefault();
 		var element = $(this).closest('.element');
 		var drawing_name = $('#Element_OphTrOperationnote_Trabectome_eyedraw').prev('canvas').attr('id').replace(/canvas/,'drawing');
-		reportEyedraw(element,  ED.getInstance(drawing_name), 'description');
+		reportEyedraw(element,	ED.getInstance(drawing_name), 'description');
 	});
 });
 
@@ -382,6 +382,7 @@ AnaestheticGivenBySlide.prototype = {
 
 var anaestheticSlide = new AnaestheticSlide;
 var anaestheticGivenBySlide = new AnaestheticGivenBySlide;
+var iol_position;
 
 function sidePortController(_drawing)
 {
@@ -389,8 +390,14 @@ function sidePortController(_drawing)
 	var sidePort1;
 	var sidePort2;
 
+	var iol_position;
+	var site_id;
+	var type_id;
+	var length;
+	var meridian;
+
 	// Register controller for notifications
-	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'parameterChanged', 'doodleAdded', 'doodleDeleted']);
+	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'beforeReset', 'reset', 'resetEdit', 'parameterChanged', 'doodleAdded', 'doodleDeleted']);
 
 	// Method called for notification
 	this.notificationHandler = function(_messageArray)
@@ -416,6 +423,27 @@ function sidePortController(_drawing)
 						phakoIncision.willSync = false;
 					}
 				}
+
+				site_id = $('#Element_OphTrOperationnote_Cataract_incision_site_id').val();
+				type_id = $('#Element_OphTrOperationnote_Cataract_incision_type_id').val();
+				length = $('#Element_OphTrOperationnote_Cataract_length').val();
+				meridian = $('#Element_OphTrOperationnote_Cataract_meridian').val();
+				break;
+
+			case 'beforeReset':
+				iol_position = $('#Element_OphTrOperationnote_Cataract_iol_position_id').val();
+				break;
+
+			case 'reset':
+				sidePort1 = _drawing.addDoodle('SidePort', {rotation:0});
+				sidePort2 = _drawing.addDoodle('SidePort', {rotation:Math.PI});
+				_drawing.deselectDoodles();
+			case 'resetEdit':
+				$('#Element_OphTrOperationnote_Cataract_iol_position_id').val(iol_position);
+				$('#Element_OphTrOperationnote_Cataract_incision_site_id').val(site_id);
+				$('#Element_OphTrOperationnote_Cataract_incision_type_id').val(type_id);
+				$('#Element_OphTrOperationnote_Cataract_length').val(length);
+				$('#Element_OphTrOperationnote_Cataract_meridian').val(meridian);
 				break;
 
 			// Parameter change notification
@@ -484,7 +512,12 @@ function sidePortController(_drawing)
 
 function trabeculectomyController(_drawing)
 {
-	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'parameterChanged']);
+	_drawing.registerForNotifications(this, 'notificationHandler', ['ready', 'reset', 'resetEdit', 'parameterChanged']);
+
+	var conjunctival_flap_type_id;
+	var site_id;
+	var size_id;
+	var sclerostomy_type_id;
 
 	this.notificationHandler = function(_messageArray)
 	{
@@ -497,7 +530,27 @@ function trabeculectomyController(_drawing)
 				this.trabFlap = _drawing.firstDoodleOfClass('TrabyFlap');
 				this.gsf = _drawing.globalScaleFactor;
 				_drawing.deselectDoodles();
+
+				conjunctival_flap_type_id = $('#Element_OphTrOperationnote_Trabeculectomy_conjunctival_flap_type_id').val();
+				site_id = $('#Element_OphTrOperationnote_Trabeculectomy_site_id').val();
+				size_id = $('#Element_OphTrOperationnote_Trabeculectomy_size_id').val();
+				sclerostomy_type_id = $('#Element_OphTrOperationnote_Trabeculectomy_sclerostomy_type_id').val();
 				break;
+
+			case 'reset':
+				$('#Element_OphTrOperationnote_Trabeculectomy_conjunctival_flap_type_id').val('');
+				$('#Element_OphTrOperationnote_Trabeculectomy_site_id').val('');
+				$('#Element_OphTrOperationnote_Trabeculectomy_size_id').val('');
+				$('#Element_OphTrOperationnote_Trabeculectomy_sclerostomy_type_id').val('');
+				break;
+
+			case 'resetEdit':
+				$('#Element_OphTrOperationnote_Trabeculectomy_conjunctival_flap_type_id').val(conjunctival_flap_type_id);
+				$('#Element_OphTrOperationnote_Trabeculectomy_site_id').val(site_id);
+				$('#Element_OphTrOperationnote_Trabeculectomy_size_id').val(size_id);
+				$('#Element_OphTrOperationnote_Trabeculectomy_sclerostomy_type_id').val(sclerostomy_type_id);
+				break;
+
 			case 'parameterChanged':
 				if (_drawing.isNew)
 				{
@@ -588,4 +641,27 @@ function rotateTrabeculectomy()
 function OphTrOperationnote_do_print() {
 	printIFrameUrl(OE_print_url, null);
 	enableButtons();
+}
+
+function glaucomaController(_drawing)
+{
+	_drawing.registerForNotifications(this, 'notificationHandler', ['reset','resetEdit']);
+
+	var position_id;
+
+	this.notificationHandler = function(_messageArray)
+	{
+		switch (_messageArray['eventName'])
+		{
+			case 'ready':
+				position_id = $('#Element_OphTrOperationnote_GlaucomaTube_plate_position_id').val();
+				break;
+			case 'reset':
+				$('#Element_OphTrOperationnote_GlaucomaTube_plate_position_id').val('');
+				break;
+			case 'resetEdit':
+				$('#Element_OphTrOperationnote_GlaucomaTube_plate_position_id').val(position_id);
+				break;
+		}
+	}
 }
