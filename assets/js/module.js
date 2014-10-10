@@ -131,8 +131,8 @@ $(document).ready(function() {
 	handleButton($('#et_canceldelete'));
 
 	handleButton($('#et_print'),function(e) {
-		OphTrOperationnote_do_print();
 		e.preventDefault();
+		printEvent(null);
 	});
 
 	var last_Element_OphTrOperationnote_ProcedureList_eye_id = null;
@@ -428,6 +428,7 @@ function sidePortController(_drawing)
 				type_id = $('#Element_OphTrOperationnote_Cataract_incision_type_id').val();
 				length = $('#Element_OphTrOperationnote_Cataract_length').val();
 				meridian = $('#Element_OphTrOperationnote_Cataract_meridian').val();
+
 				break;
 
 			case 'beforeReset':
@@ -636,11 +637,6 @@ function rotateTrabeculectomy()
 			trabFlap.setParameterWithAnimation('site',$('#Element_OphTrOperationnote_Trabeculectomy_site_id').children('option:selected').text());
 		}
 	}
-}
-
-function OphTrOperationnote_do_print() {
-	printIFrameUrl(OE_print_url, null);
-	enableButtons();
 }
 
 function glaucomaController(_drawing)
