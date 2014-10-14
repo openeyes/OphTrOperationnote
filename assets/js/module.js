@@ -270,16 +270,28 @@ $(document).ready(function() {
 	});
 });
 
+var OphTrOperationnote_reports = {};
+
 function reportEyedraw(element, eyedraw, fieldName)
 {
 	var text = eyedraw.report();
 	text = text.replace(/, +$/, '');
 
 	var field = $('textarea[name$="[' + fieldName + ']"]', element).first();
-	if (field.val()) {
-		text = field.val() + ", " + text.toLowerCase();
+
+	if (field.val() == '') {
+		OphTrOperationnote_reports[element.data('element-type-id')] = text;
+		field.val(text);
+	} else {
+		if (typeof(OphTrOperationnote_reports[element.data('element-type-id')]) != 'undefined' &&
+			field.val().indexOf(OphTrOperationnote_reports[element.data('element-type-id')]) != -1) {
+			field.val(field.val().replace(new RegExp(OphTrOperationnote_reports[element.data('element-type-id')]),text));
+			OphTrOperationnote_reports[element.data('element-type-id')] = text;
+		} else {
+			field.val(text);
+		}
 	}
-	field.val(text);
+
 	field.trigger('autosize');
 }
 
