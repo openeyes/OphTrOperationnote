@@ -548,7 +548,7 @@ class DefaultController extends BaseEventTypeController
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
+					if ($booking = $api->getMostRecentBookingForEpisode($episode)) {
 						$eye = $booking->operation->eye;
 					}
 				}
