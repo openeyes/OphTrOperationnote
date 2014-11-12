@@ -23,6 +23,7 @@ class DefaultController extends BaseEventTypeController
 		'loadElementByProcedure' => self::ACTION_TYPE_FORM,
 		'getElementsToDelete' => self::ACTION_TYPE_FORM,
 		'verifyProcedure' => self::ACTION_TYPE_FORM,
+		'getImage' => self::ACTION_TYPE_FORM,
 	);
 
 	/* @var Element_OphTrOperationbooking_Operation operation that this note is for when creating */
@@ -547,7 +548,7 @@ class DefaultController extends BaseEventTypeController
 
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
-					if ($booking = $api->getMostRecentBookingForEpisode($patient, $episode)) {
+					if ($booking = $api->getMostRecentBookingForEpisode($episode)) {
 						$eye = $booking->operation->eye;
 					}
 				}
@@ -896,5 +897,12 @@ class DefaultController extends BaseEventTypeController
 	{
 		$element->updateMultiSelectData('OphTrOperationnote_Trabeculectomy_Difficulties',empty($data['MultiSelect_Difficulties']) ? array() : $data['MultiSelect_Difficulties'],'difficulty_id');
 		$element->updateMultiSelectData('OphTrOperationnote_Trabeculectomy_Complications',empty($data['MultiSelect_Complications']) ? array() : $data['MultiSelect_Complications'],'complication_id');
+	}
+
+	public function actionGetImage()
+	{
+		preg_match('/data\:image\/png;base64,(.*)$/',$_POST['image'],$m);
+
+		file_put_contents("/tmp/image.png",base64_decode($m[1]));
 	}
 }
