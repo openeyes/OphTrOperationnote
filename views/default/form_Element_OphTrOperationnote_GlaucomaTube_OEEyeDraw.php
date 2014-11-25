@@ -30,6 +30,9 @@
 				'platePosition' => array('id' => 'Element_OphTrOperationnote_GlaucomaTube_plate_position_id', 'attribute' => 'data-value'),
 			),
 		),
+		'listenerArray' => array(
+			'glaucomaController'
+		),
 		'side'=>$this->selectedEyeForEyedraw->shortName,
 		'idSuffix' => $element->elementType->id,
 		'mode'=>'edit',
