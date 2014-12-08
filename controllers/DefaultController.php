@@ -611,7 +611,7 @@ class DefaultController extends BaseEventTypeController
 	protected function setComplexAttributes_Element_OphTrOperationnote_Cataract($element, $data, $index)
 	{
 		$complications = array();
-		if (isset($data['OphTrOperationnote_CataractComplications'])) {
+		if (!empty($data['OphTrOperationnote_CataractComplications'])) {
 			foreach ($data['OphTrOperationnote_CataractComplications'] as $c_id) {
 				$complications[] = OphTrOperationnote_CataractComplications::model()->findByPk($c_id);
 			}
@@ -619,7 +619,7 @@ class DefaultController extends BaseEventTypeController
 		$element->complications = $complications;
 
 		$devices = array();
-		if (isset($data['OphTrOperationnote_CataractOperativeDevices'])) {
+		if (!empty($data['OphTrOperationnote_CataractOperativeDevices'])) {
 			foreach ($data['OphTrOperationnote_CataractOperativeDevices'] as $oa_id) {
 				$devices[] = OphTrOperationnote_CataractComplications::model()->findByPk($oa_id);
 			}
@@ -681,7 +681,7 @@ class DefaultController extends BaseEventTypeController
 	{
 		$model_name = CHtml::modelName($element);
 		$complications = array();
-		if (@$data[$model_name]['complications']) {
+		if (!empty($data[$model_name]['complications'])) {
 			foreach ($data[$model_name]['complications'] as $id) {
 				$complications[] = OphTrOperationnote_Trabectome_Complication::model()->findByPk($id);
 			}
@@ -871,7 +871,7 @@ class DefaultController extends BaseEventTypeController
 		if (!empty($data['MultiSelect_Difficulties'])) {
 			foreach ($data['MultiSelect_Difficulties'] as $difficulty_id) {
 				$assignment = new OphTrOperationnote_Trabeculectomy_Difficulties;
-				$assignment->difficulty_id = $difficulty_id;
+				$assignment->difficulty_id = $difficulty_id['id'];
 
 				$difficulties[] = $assignment;
 			}
@@ -884,7 +884,7 @@ class DefaultController extends BaseEventTypeController
 		if (!empty($data['MultiSelect_Complications'])) {
 			foreach ($data['MultiSelect_Complications'] as $complication_id) {
 				$assignment = new OphTrOperationnote_Trabeculectomy_Complications;
-				$assignment->complication_id = $complication_id;
+				$assignment->complication_id = $complication_id['id'];
 
 				$complications[] = $assignment;
 			}
