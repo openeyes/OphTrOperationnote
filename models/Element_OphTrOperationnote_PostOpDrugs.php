@@ -124,19 +124,17 @@ class Element_OphTrOperationnote_PostOpDrugs extends Element_OpNote
 			$curr_by_id[$od->drug_id] = $od;
 		}
 
-		if (!empty($drug_ids)) {
-			foreach ($drug_ids as $d_id) {
-				if (!isset($curr_by_id[$d_id['id']])) {
-					$da = new OphTrOperationnote_OperationDrug();
-					$da->ophtroperationnote_postop_drugs_id = $this->id;
-					$da->drug_id = $d_id['id'];
-					if (!$da->save()) {
-						throw new Exception('Unable to save drug assignment: '.print_r($da->getErrors(),true));
-					}
+		foreach ($drug_ids as $d_id) {
+			if (!isset($curr_by_id[$d_id])) {
+				$da = new OphTrOperationnote_OperationDrug();
+				$da->ophtroperationnote_postop_drugs_id = $this->id;
+				$da->drug_id = $d_id;
+				if (!$da->save()) {
+					throw new Exception('Unable to save drug assignment: '.print_r($da->getErrors(),true));
 				}
-				else {
-					unset($curr_by_id[$d_id['id']]);
-				}
+			}
+			else {
+				unset($curr_by_id[$d_id]);
 			}
 		}
 

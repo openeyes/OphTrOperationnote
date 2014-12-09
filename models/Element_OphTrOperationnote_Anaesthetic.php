@@ -191,17 +191,17 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 		}
 
 		foreach ($agent_ids as $aa_id) {
-			if (!isset($curr_by_id[$aa_id['id']])) {
+			if (!isset($curr_by_id[$aa_id])) {
 				$aa = new OphTrOperationnote_OperationAnaestheticAgent();
 				$aa->et_ophtroperationnote_anaesthetic_id = $this->id;
-				$aa->anaesthetic_agent_id = $aa_id['id'];
+				$aa->anaesthetic_agent_id = $aa_id;
 
 				if (!$aa->save()) {
 					throw new Exception('Unable to save anaesthetic agent assignment: '.print_r($aa->getErrors(),true));
 				}
 			}
 			else {
-				unset($curr_by_id[$aa_id['id']]);
+				unset($curr_by_id[$aa_id]);
 			}
 		}
 		foreach ($curr_by_id as $aa) {
@@ -225,20 +225,18 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 			$curr_by_id[$ca->anaesthetic_complication_id] = $ca;
 		}
 
-		if (!empty($complication_ids)) {
-			foreach ($complication_ids as $c_id) {
-				if (!isset($curr_by_id[$c_id['id']])) {
-					$ca = new OphTrOperationnote_AnaestheticComplication();
-					$ca->et_ophtroperationnote_anaesthetic_id = $this->id;
-					$ca->anaesthetic_complication_id = $c_id['id'];
+		foreach ($complication_ids as $c_id) {
+			if (!isset($curr_by_id[$c_id])) {
+				$ca = new OphTrOperationnote_AnaestheticComplication();
+				$ca->et_ophtroperationnote_anaesthetic_id = $this->id;
+				$ca->anaesthetic_complication_id = $c_id;
 
-					if (!$ca->save()) {
-						throw new Exception('Unable to save complication assignment: '.print_r($ca->getErrors(),true));
-					}
+				if (!$ca->save()) {
+					throw new Exception('Unable to save complication assignment: '.print_r($ca->getErrors(),true));
 				}
-				else {
-					unset($curr_by_id[$c_id['id']]);
-				}
+			}
+			else {
+				unset($curr_by_id[$c_id]);
 			}
 		}
 
