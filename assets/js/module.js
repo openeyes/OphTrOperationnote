@@ -598,6 +598,7 @@ function changeEye() {
 	var drawingEdit1 = window.ED ? ED.getInstance('ed_drawing_edit_Position') : undefined;
 	var drawingEdit2 = window.ED ? ED.getInstance('ed_drawing_edit_Cataract') : undefined;
 	var drawingEdit3 = window.ED ? ED.getInstance('ed_drawing_edit_Trabeculectomy') : undefined;
+	var drawingEdit4 = window.ED ? ED.getInstance('ed_drawing_edit_Vitrectomy') : undefined;
 
 	if (typeof(drawingEdit1) != 'undefined') {
 		if (drawingEdit1.eye == ED.eye.Right) drawingEdit1.eye = ED.eye.Left;
@@ -619,6 +620,13 @@ function changeEye() {
 
 		rotateTrabeculectomy();
 	}
+
+	if (typeof(drawingEdit4) != 'undefined') {
+		if (drawingEdit4.eye == ED.eye.Right) drawingEdit4.eye = ED.eye.Left;
+		else drawingEdit4.eye = ED.eye.Right;
+
+		rotateVitrectomy();
+	}
 }
 
 function rotateTrabeculectomy()
@@ -636,6 +644,15 @@ function rotateTrabeculectomy()
 			sidePort.setParameterWithAnimation('rotation',135 * (Math.PI/180));
 			trabFlap.setParameterWithAnimation('site',$('#Element_OphTrOperationnote_Trabeculectomy_site_id').children('option:selected').text());
 		}
+	}
+}
+
+function rotateVitrectomy()
+{
+	var _drawing = ED.getInstance('ed_drawing_edit_Vitrectomy');
+
+	if (_drawing.isNew) {
+		_drawing.firstDoodleOfClass('Fundus').setParameterWithAnimation('rotation',0);
 	}
 }
 

@@ -27,7 +27,7 @@
 			array('deselectDoodles', array()),
 		),
 		'side'=>$this->selectedEyeForEyedraw->shortName,
-		'idSuffix' => $element->elementType->id,
+		'idSuffix' => 'Vitrectomy',
 		'mode'=>'edit',
 		'width'=>300,
 		'height'=>300,
