@@ -243,7 +243,7 @@ $(document).ready(function() {
 
 		var textarea = element.find([
 			'textarea[name$="[' + description + ']"]',
-			'textarea[name$="[' + report + ']"]',
+			'textarea[name$="[' + report + ']"]'
 		].join(',')).first();
 
 		textarea.val('');
@@ -253,19 +253,21 @@ $(document).ready(function() {
 	$(this).delegate('#btn-glaucomatube-report', 'click', function(e) {
 		e.preventDefault();
 		var element = $(this).closest('.sub-element');
-		reportEyedraw(element, ED.getInstance('ed_drawing_edit_' + element.data('element-type-id')), 'description' );
+		var drawing_name = $('#Element_OphTrOperationnote_GlaucomaTube_eyedraw').prev('canvas').data('drawing-name');
+		reportEyedraw(element, ED.getInstance(drawing_name), 'description' );
 	});
 
-	$('#btn-trabeculectomy-report').die('click').live('click',function(e) {
+	$(this).delegate('#btn-trabeculectomy-report', 'click', function(e) {
 		e.preventDefault();
-		var element = $(this).closest('.element');
-		reportEyedraw(element,	ED.getInstance('ed_drawing_edit_Trabeculectomy'), 'report');
+		var element = $(this).closest('.sub-element');
+		var drawing_name = $('#Element_OphTrOperationnote_Trabeculectomy_eyedraw').prev('canvas').data('drawing-name');
+		reportEyedraw(element,	ED.getInstance(drawing_name), 'report');
 	});
 
-	$('#btn-trabectome-report').die('click').live('click',function(e) {
+	$(this).delegate('#btn-trabectome-report', 'click', function(e) {
 		e.preventDefault();
-		var element = $(this).closest('.element');
-		var drawing_name = $('#Element_OphTrOperationnote_Trabectome_eyedraw').prev('canvas').attr('id').replace(/canvas/,'drawing');
+		var element = $(this).closest('.sub-element');
+		var drawing_name = $('#Element_OphTrOperationnote_Trabectome_eyedraw').prev('canvas').data('drawing-name');
 		reportEyedraw(element,	ED.getInstance(drawing_name), 'description');
 	});
 });
