@@ -28,7 +28,7 @@ echo $form->dropDownList($element, 'plate_position_id', CHtml::listData($plate_p
 		<label for="Element_OphTrOperationnote_GlaucomaTube_plate_limbus"><?= $element->getAttributeLabel('plate_limbus'); ?></label>
 	</div>
 	<div class="large-2 column">
-		<?php echo CHtml::activeTextField($element, 'plate_limbus', array('class' => 'clearWithEyedraw')); ?>
+		<?php echo CHtml::activeTextField($element, 'plate_limbus', array('autocomplete' => Yii::app()->params['html_autocomplete'], 'class' => 'clearWithEyedraw')); ?>
 	</div>
 	<div class="large-1 column end field-info postfix align">
 		mm
