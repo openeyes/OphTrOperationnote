@@ -18,40 +18,36 @@
  */
 ?>
 
-<div class="container main" id="<?php echo $this->event_type->class_name.'_print'?>">
+<?php $this->renderPartial('//print/event_header')?>
 
-	<?php $this->renderPartial('//print/event_header')?>
+<div class="container content event">
 
-	<div class="container content event">
+	<!-- Operation metadata -->
+	<?php $this->renderPartial('print_operation_metadata');?>
 
-		<!-- Operation metadata -->
-		<?php $this->renderPartial('print_operation_metadata');?>
+	<!-- Operation details -->
+	<?php $this->renderPartial('print_operation_details');?>
 
-		<!-- Operation details -->
-		<?php $this->renderPartial('print_operation_details');?>
+	<!-- Anaesthetic Details -->
+	<?php
+		$anaesthetic_element = Element_OphTrOperationnote_Anaesthetic::model()->find("event_id = ?", array($this->event->id));
+		$this->renderElement($anaesthetic_element, 'print', false, false);
+	?>
 
-		<!-- Anaesthetic Details -->
-		<?php
-			$anaesthetic_element = Element_OphTrOperationnote_Anaesthetic::model()->find("event_id = ?", array($this->event->id));
-			$this->renderElement($anaesthetic_element, 'print', false, false);
-		?>
+	<!-- Per-operative drugs -->
+	<?php
+		$postdrugs_element = Element_OphTrOperationnote_PostOpDrugs::model()->find("event_id = ?", array($this->event->id));
+		$this->renderElement($postdrugs_element, 'print', false, false);
+	?>
 
-		<!-- Per-operative drugs -->
-		<?php
-			$postdrugs_element = Element_OphTrOperationnote_PostOpDrugs::model()->find("event_id = ?", array($this->event->id));
-			$this->renderElement($postdrugs_element, 'print', false, false);
-		?>
+	<!-- Post-op instructions and Comments -->
+	<?php
+		$comments_element = Element_OphTrOperationnote_Comments::model()->find("event_id = ?", array($this->event->id));
+		$this->renderElement($comments_element, 'print', false, false);
+	?>
 
-		<!-- Post-op instructions and Comments -->
-		<?php
-			$comments_element = Element_OphTrOperationnote_Comments::model()->find("event_id = ?", array($this->event->id));
-			$this->renderElement($comments_element, 'print', false, false);
-		?>
-
-		<!-- Metadata -->
-		<?php $this->renderPartial('//print/event_metadata', array(
-			'hide_modified' => @$hide_modified
-		));?>
-	</div>
+	<!-- Metadata -->
+	<?php $this->renderPartial('//print/event_metadata', array(
+		'hide_modified' => @$hide_modified
+	));?>
 </div>
-

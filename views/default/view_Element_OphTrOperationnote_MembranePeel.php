@@ -58,7 +58,7 @@
 
 		<?php if ($element->comments) {?>
 			<div class="row data-row">
-				<div class="large-1 column">
+				<div class="large-2 column">
 					<div class="data-label">
 						<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:
 					</div>

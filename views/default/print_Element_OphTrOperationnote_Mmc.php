@@ -21,66 +21,66 @@
 <section class="element <?php echo $element->elementType->class_name?> row">
 	<h3 class="element-title"><?php echo $element->elementType->name ?></h3>
 	<div class="row">
-		<div class="large-6 column end">
-			<?php if ($element->membrane_blue) {?>
+		<div class="large-8 column end">
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label"><?= CHtml::encode($element->getAttributeLabel('application_type_id'))?>:</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value"><?= $element->application_type->name?></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-6 column text-right">
+					<div class="data-label"><?= CHtml::encode($element->getAttributeLabel('concentration_id')) ?>:</div>
+				</div>
+				<div class="large-6 column">
+					<div class="data-value"><?= $element->concentration->value ?></div>
+				</div>
+			</div>
+			<?php if ($element->application_type_id == OphTrOperationnote_Antimetabolite_Application_Type::SPONGE): ?>
 				<div class="row">
 					<div class="large-6 column text-right">
-						<div class="data-label">
-							<?php echo CHtml::encode($element->getAttributeLabel('membrane_blue'))?>:
-						</div>
+						<div class="data-label"><?= CHtml::encode($element->getAttributeLabel('duration')) ?>:</div>
 					</div>
 					<div class="large-6 column">
-						<div class="data-value">
-							Yes
-						</div>
+						<div class="data-value"><?= $element->duration ?></div>
 					</div>
 				</div>
-			<?php }?>
-
-			<?php if ($element->brilliant_blue) {?>
 				<div class="row">
 					<div class="large-6 column text-right">
-						<div class="data-label">
-							<?php echo CHtml::encode($element->getAttributeLabel('brilliant_blue'))?>:
-						</div>
+						<div class="data-label"><?= CHtml::encode($element->getAttributeLabel('number')) ?>:</div>
 					</div>
 					<div class="large-6 column">
-						<div class="data-value">
-							Yes
-						</div>
+						<div class="data-value"><?= $element->number ?></div>
 					</div>
 				</div>
-			<?php }?>
-
-			<?php if ($element->other_dye) {?>
 				<div class="row">
 					<div class="large-6 column text-right">
-						<div class="data-label">
-							<?php echo CHtml::encode($element->getAttributeLabel('other_dye'))?>:
-						</div>
+						<div class="data-label"><?= CHtml::encode($element->getAttributeLabel('washed')) ?>:</div>
 					</div>
 					<div class="large-6 column">
-						<div class="data-value">
-							<?php echo CHtml::encode($element->other_dye)?>
-						</div>
+						<div class="data-value"><?= $element->washed ? "Yes" : "No" ?></div>
 					</div>
 				</div>
-			<?php }?>
-
-			<?php if ($element->comments) {?>
+			<?php else: ?>
 				<div class="row">
 					<div class="large-6 column text-right">
-						<div class="data-label">
-							<?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:
-						</div>
+						<div class="data-label"><?= CHtml::encode($element->getAttributeLabel('volume_id')) ?>:</div>
 					</div>
 					<div class="large-6 column">
-						<div class="data-value">
-							<?= Yii::app()->format->Ntext($element->comments)?>
-						</div>
+						<div class="data-value"><?= $element->volume->value ?></div>
 					</div>
 				</div>
-			<?php }?>
+				<div class="row">
+					<div class="large-6 column text-right">
+						<div class="data-label"><?= CHtml::encode($element->getAttributeLabel('dose')) ?>:</div>
+					</div>
+					<div class="large-6 column">
+						<div class="data-value"><?= $element->dose ?></div>
+					</div>
+				</div>
+			<?php endif ?>
 		</div>
 	</div>
 </section>

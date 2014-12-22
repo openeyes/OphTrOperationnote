@@ -33,7 +33,7 @@ class OphTrOperationnote_API extends BaseAPI
 		$return = '';
 
 		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
+			if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
 				foreach ($plist->procedures as $i => $procedure) {
 					if ($i) $return .= ', ';
 					$return .= $plist->eye->adjective.' '.$procedure->term;
@@ -47,7 +47,7 @@ class OphTrOperationnote_API extends BaseAPI
 	public function getLetterProceduresBookingEventID($patient)
 	{
 		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
+			if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
 				return $plist->booking_event_id;
 			}
 		}
@@ -56,7 +56,7 @@ class OphTrOperationnote_API extends BaseAPI
 	public function getLastEye($patient)
 	{
 		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
+			if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
 				return $plist->eye_id;
 			}
 		}
@@ -67,7 +67,7 @@ class OphTrOperationnote_API extends BaseAPI
 		$return = '';
 
 		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($patient, $episode, 'Element_OphTrOperationnote_ProcedureList')) {
+			if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
 				foreach ($plist->procedures as $i => $procedure) {
 					if ($i) $return .= ', ';
 					$return .= $plist->eye->adjective.' '.$procedure->snomed_term;

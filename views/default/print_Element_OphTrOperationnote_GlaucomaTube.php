@@ -124,6 +124,7 @@
 				<div class="details">
 				<?php
 				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+								'idSuffix'=>'GlaucomaTube',
 								'mode'=>'view',
 								'width'=>200,
 								'height'=>200,
