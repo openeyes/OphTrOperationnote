@@ -16,23 +16,29 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
-
-return array(
-	'params' => array(
-		'eyedraw_iol_classes' => array(
-			'PCIOL',
-			'ACIOL',
-			'ToricPCIOL',
-		),
-		'admin_menu' => array(
-			'Post-op drugs' => '/OphTrOperationnote/admin/viewPostOpDrugs',
-		),
-		'reports' => array(
-			'Operations' => '/OphTrOperationnote/report/operation',
-		),
-
-		// Default anaesthetic settings
-                //'ophtroperationnote_default_anaesthetic_child' => 'GA',
-                //'ophtroperationnote_default_anaesthetic' => 'GA',
-	),
-);
+?>
+<table>
+	<thead>
+		<tr>
+			<?php foreach ($report->getColumns() as $column) {?>
+				<th><?php echo $column?></th>
+			<?php }?>
+		</tr>
+	<tbody>
+		<?php if (empty($report->operations)) {?>
+			<tr>
+				<td colspan="6">
+					No operations were found with the selected search criteria.
+				</td>
+			</tr>
+		<?php }else{?>
+			<?php foreach ($report->operations as $ts => $operation) {?>
+				<tr>
+					<?php foreach ($operation as $item) {?>
+						<td><?php echo $item?></td>
+					<?php }?>
+				</tr>
+			<?php }?>
+		<?php }?>
+	</tbody>
+</table>
