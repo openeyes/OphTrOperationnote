@@ -1,0 +1,7 @@
+{
+  "name" : "openeyes/oph-tr-operation-note",
+  "description": "Operation note module for OpenEyes",
+  "require": {
+    "openeyes/eyedraw": "dev-hotfix/composer"
+  }
+}
