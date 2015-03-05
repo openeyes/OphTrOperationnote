@@ -1,5 +1,5 @@
 {
-  "name" : "openeyes/oph-tr-operation-note",
+  "name" : "openeyes/oph-tr-operationnote",
   "description": "Operation note module for OpenEyes",
   "type": "openeyes-module",
   "require": {
