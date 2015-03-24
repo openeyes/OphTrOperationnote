@@ -26,6 +26,77 @@ class AdminController extends ModuleAdminController
 		$this->render('postopdrugs');
 	}
 
+	public function actionViewIncisionLengthDefaults()
+	{
+		$this->render('incisionlengthdefaults');	
+	}
+
+	public function actionIncisionLengthDefaultAddForm()
+	{
+	        $default = new OphTrOperationnote_CataractIncisionLengthDefault;
+
+		$sites = Site::model()->findAll();
+		$siteList = array();
+
+		foreach ($sites as $site)
+		{
+			$id = $site->id;
+			$siteList[$id] = $site->name;
+		}		
+
+                if (!empty($_POST)) {
+                        $default->attributes = $_POST['OphTrOperationnote_CataractIncisionLengthDefault'];
+
+                        if (!$default->validate()) {
+                                $errors = $default->getErrors();
+                        } else {
+                                if (!$default->save()) {
+                                        throw new Exception("Unable to save drug: ".print_r($default->getErrors(),true));
+                                }
+				else
+				{
+					Audit::add('admin-OphTrOperationnote_PostopDrug','add',$default->id);
+					$this->redirect('/OphTrOperationnote/admin/viewIncisionLengthDefaults');
+				
+				}
+                        }
+                }
+
+                $this->render('/admin/incisionlengthdefaultaddform',array(
+                        'default' => $default,
+                        'errors' => @$errors,
+			'siteList' => $siteList
+                ));
+	}
+
+	public function actionAddIncisionLengthDefault()
+	{
+		$incisionLength = new OphTrOperationnote_IncisionLengthDefault;
+		$incisionLength->value = $_POST['OphTrOperationnote_IncisionLengthDefaultValue'];
+
+		if (!$incisionLength->save())
+		{
+			throw new Exception("Unable to save default incision length: ".print_r($incisionLength->getErrors(),true));
+		}
+		
+		Audit::add('admin-OphTrOperationnote_IncisionLengthDefault','incisionLength',$incisionLength->id);
+		$this->redirect('/OphTrOperationnote/admin/viewIncisionLengthDefault');
+	}
+
+	public function actionDeleteIncisionLengthDefault()
+        {
+                $result = 1;
+                foreach (OphTrOperationnote_IncisionLengthDefault::model()->findAllByPk(@$_POST['defaultIncisionLength']) as $incisionLength) {
+                        if (!$incisionLength->delete()) {
+                                $result = 0;
+                        } else {
+                                Audit::add('admin','delete',$drug->id,null,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_IncisionLengthDefault'));
+                        }
+                }
+                echo $result;
+        }
+
+
 	public function actionAddPostOpDrug()
 	{
 		$drug = new OphTrOperationnote_PostopDrug;

@@ -57,6 +57,7 @@ class m140205_235959_table_versioning extends OEMigration
 		$this->versionExistingTable('ophtroperationnote_procedure_element');
 		$this->versionExistingTable('ophtroperationnote_procedurelist_procedure_assignment');
 		$this->versionExistingTable('ophtroperationnote_site_subspecialty_postop_instructions');
+		$this->versionExistingTable('ophtroperationnote_cataract_incision_length_default');
 	}
 
 	public function down()
