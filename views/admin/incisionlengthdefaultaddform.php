@@ -20,29 +20,20 @@
 ?>
 <div class="box admin">
 	<h2>Add incision length default</h2>
-	<?php echo $this->renderPartial('//admin/_form_errors',array('errors'=>$errors))?>
+	<?php echo $this->renderPartial('//admin/_form_errors', array('errors' => $errors)) ?>
 	<?php
 	$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-		'id'=>'adminform',
-		'enableAjaxValidation'=>false,
-		'focus'=>'#username',
-		'layoutColumns'=>array(
+		'id' => 'adminform',
+		'enableAjaxValidation' => false,
+		'layoutColumns' => array(
 			'label' => 2,
 			'field' => 5
 		)
 	));
 
-
-	$siteList2 = CHtml::listData(Site::model()->findAll(), 'id', 'name');	
-//	print_r($siteList2);
 	?>
-		<?php echo $form->dropDownList($default,'firm_id',Firm::model()->getListWithSpecialties(),array('empty'=>'Site Wide'))?>
-		<?php echo $form->textField($default,'value')?>
-		<?php echo $form->formActions(array('cancel-uri' => '/admin/viewIncisionLengthDefaults'))?>
-	<?php $this->endWidget()?>
+	<?php echo $form->dropDownList($default, 'firm_id', Firm::model()->getListWithSpecialties(), array('empty' => 'Select Firm')) ?>
+	<?php echo $form->textField($default, 'value') ?>
+	<?php echo $form->formActions(array('cancel-uri' => '/admin/viewIncisionLengthDefaults')) ?>
+	<?php $this->endWidget() ?>
 </div>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#OphTrOperationnote_PostopDrug_name').focus();
-	});
-</script>

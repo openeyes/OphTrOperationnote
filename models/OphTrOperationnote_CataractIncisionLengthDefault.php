@@ -18,19 +18,20 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "ophtroperationnote_cataract_incision_length_default".
  *
- * The followings are the available columns in table 'element_operation':
- * @property string $id
- * @property string $value
- * @property integer $hierarchy_entity_type
- * @property integer $hierarcht_entity_id
-*
+ * The followings are the available columns in table 'ophtroperationnote_cataract_incision_length_default':
+ * @property int $id
+ * @property int $firm_id
+ * @property float $value
+ *
+ *
  * The followings are the available model relations:
  * @property Event $event
  */
 class OphTrOperationnote_CataractIncisionLengthDefault extends BaseActiveRecordVersioned
 {
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return ElementOperation the static model class
@@ -48,15 +49,10 @@ class OphTrOperationnote_CataractIncisionLengthDefault extends BaseActiveRecordV
 		return 'ophtroperationnote_cataract_incision_length_default';
 	}
 
-	public function defaultScope()
-	{
-		return array('order' => $this->getTableAlias(true, false) . '.display_order');
-	}
-
 
 	/**
-	* @return string human readable representation of the linked hierarchy type and id
-	*/
+	 * @return string human readable representation of the linked hierarchy type and id
+	 */
 	public function getPrettyHierarchy()
 	{
 		return "n/a";
@@ -70,6 +66,8 @@ class OphTrOperationnote_CataractIncisionLengthDefault extends BaseActiveRecordV
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('firm_id, value', 'required'),
+			array('firm_id', 'unique'),
 		);
 	}
 
@@ -79,8 +77,7 @@ class OphTrOperationnote_CataractIncisionLengthDefault extends BaseActiveRecordV
 	 */
 	public function attributeLabels()
 	{
-		return array(
-		);
+		return array();
 	}
 
 	public function behaviors()
@@ -90,19 +87,18 @@ class OphTrOperationnote_CataractIncisionLengthDefault extends BaseActiveRecordV
 		);
 	}
 
-	
-        /**
-         * @return array relational rules.
-         */
-        public function relations()
-        {
-                // NOTE: you may need to adjust the relation name and the related
-                // class name for the relations automatically generated below.
-                return array(
-                        'firm' => array(self::BELONGS_TO, 'Firm', 'firm_id'),
-                );
-        }
 
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'firm' => array(self::BELONGS_TO, 'Firm', 'firm_id'),
+		);
+	}
 
 
 	/**
@@ -119,7 +115,7 @@ class OphTrOperationnote_CataractIncisionLengthDefault extends BaseActiveRecordV
 		$criteria->compare('id', $this->id, true);
 
 		return new CActiveDataProvider(get_class($this), array(
-				'criteria' => $criteria,
-			));
+			'criteria' => $criteria,
+		));
 	}
 }

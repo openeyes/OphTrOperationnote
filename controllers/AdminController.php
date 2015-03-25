@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OpenEyes
  *
@@ -16,85 +17,64 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
-
 class AdminController extends ModuleAdminController
 {
 	public function actionViewPostOpDrugs()
 	{
-		Audit::add('admin','list',null,null,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_PostopDrug'));
+		Audit::add('admin', 'list', null, null,
+			array('module' => 'OphTrOperationnote', 'model' => 'OphTrOperationnote_PostopDrug'));
 
 		$this->render('postopdrugs');
 	}
 
 	public function actionViewIncisionLengthDefaults()
 	{
-		$this->render('incisionlengthdefaults');	
+		$this->render('incisionlengthdefaults');
 	}
 
-	public function actionIncisionLengthDefaultAddForm()
+	public function actionIncisionLengthDefaultAddForm($id = null)
 	{
-	        $default = new OphTrOperationnote_CataractIncisionLengthDefault;
-
-		$sites = Site::model()->findAll();
-		$siteList = array();
-
-		foreach ($sites as $site)
-		{
-			$id = $site->id;
-			$siteList[$id] = $site->name;
-		}		
-
-                if (!empty($_POST)) {
-                        $default->attributes = $_POST['OphTrOperationnote_CataractIncisionLengthDefault'];
-
-                        if (!$default->validate()) {
-                                $errors = $default->getErrors();
-                        } else {
-                                if (!$default->save()) {
-                                        throw new Exception("Unable to save drug: ".print_r($default->getErrors(),true));
-                                }
-				else
-				{
-					Audit::add('admin-OphTrOperationnote_PostopDrug','add',$default->id);
-					$this->redirect('/OphTrOperationnote/admin/viewIncisionLengthDefaults');
-				
-				}
-                        }
-                }
-
-                $this->render('/admin/incisionlengthdefaultaddform',array(
-                        'default' => $default,
-                        'errors' => @$errors,
-			'siteList' => $siteList
-                ));
-	}
-
-	public function actionAddIncisionLengthDefault()
-	{
-		$incisionLength = new OphTrOperationnote_IncisionLengthDefault;
-		$incisionLength->value = $_POST['OphTrOperationnote_IncisionLengthDefaultValue'];
-
-		if (!$incisionLength->save())
-		{
-			throw new Exception("Unable to save default incision length: ".print_r($incisionLength->getErrors(),true));
+		$default = new OphTrOperationnote_CataractIncisionLengthDefault;
+		if($id !== null){
+			$default = OphTrOperationnote_CataractIncisionLengthDefault::model()->findByPk((int) $id);
 		}
-		
-		Audit::add('admin-OphTrOperationnote_IncisionLengthDefault','incisionLength',$incisionLength->id);
-		$this->redirect('/OphTrOperationnote/admin/viewIncisionLengthDefault');
+		$errors = array();
+
+		if (!empty($_POST)) {
+			$default->attributes = $_POST['OphTrOperationnote_CataractIncisionLengthDefault'];
+
+			if (!$default->validate()) {
+				$errors = $default->getErrors();
+			} else {
+				if (!$default->save()) {
+					throw new CHttpException(400, "Unable to save drug: " . print_r($default->getErrors(), true));
+				} else {
+					Audit::add('admin-OphTrOperationnote_IncisionLengthDefaults', 'add', $default->id);
+					$this->redirect('/OphTrOperationnote/admin/viewIncisionLengthDefaults');
+				}
+			}
+		}
+
+		$this->render('/admin/incisionlengthdefaultaddform', array(
+			'default' => $default,
+			'errors' => $errors,
+		));
 	}
 
-	public function actionDeleteIncisionLengthDefault()
-        {
-                $result = 1;
-                foreach (OphTrOperationnote_IncisionLengthDefault::model()->findAllByPk(@$_POST['defaultIncisionLength']) as $incisionLength) {
-                        if (!$incisionLength->delete()) {
-                                $result = 0;
-                        } else {
-                                Audit::add('admin','delete',$drug->id,null,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_IncisionLengthDefault'));
-                        }
-                }
-                echo $result;
-        }
+	public function actionDeleteIncisionLengthDefaults()
+	{
+		$result = 1;
+		if(is_array($_POST['incisionLengths'])){
+			foreach (OphTrOperationnote_CataractIncisionLengthDefault::model()->findAllByPk($_POST['incisionLengths']) as $incisionLength) {
+				if (!$incisionLength->delete()) {
+					$result = 0;
+				} else {
+					Audit::add('admin','delete',$incisionLength->id,null,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_IncisionLengthDefault'));
+				}
+			}
+		}
+		echo $result;
+	}
 
 
 	public function actionAddPostOpDrug()
@@ -108,14 +88,14 @@ class AdminController extends ModuleAdminController
 				$errors = $drug->getErrors();
 			} else {
 				if (!$drug->save()) {
-					throw new Exception("Unable to save drug: ".print_r($drug->getErrors(),true));
+					throw new Exception("Unable to save drug: " . print_r($drug->getErrors(), true));
 				}
-				Audit::add('admin-OphTrOperationnote_PostopDrug','add',$drug->id);
+				Audit::add('admin-OphTrOperationnote_PostopDrug', 'add', $drug->id);
 				$this->redirect('/OphTrOperationnote/admin/viewPostOpDrugs');
 			}
 		}
 
-		$this->render('/admin/addpostopdrug',array(
+		$this->render('/admin/addpostopdrug', array(
 			'drug' => $drug,
 			'errors' => @$errors,
 		));
@@ -134,22 +114,22 @@ class AdminController extends ModuleAdminController
 				$errors = $drug->getErrors();
 			} else {
 				if (!$drug->save()) {
-					throw new Exception("Unable to save drug: ".print_r($drug->getErrors(),true));
+					throw new Exception("Unable to save drug: " . print_r($drug->getErrors(), true));
 				}
 
-				Audit::add('admin-OphTrOperationnote_PostopDrug','edit',$id);
+				Audit::add('admin-OphTrOperationnote_PostopDrug', 'edit', $id);
 
 				$this->redirect('/OphTrOperationnote/admin/viewPostOpDrugs');
 			}
 		} else {
-			Audit::add('admin-OphTrOperationnote_PostopDrug','view',$id);
+			Audit::add('admin-OphTrOperationnote_PostopDrug', 'view', $id);
 		}
 
-    $this->render('/admin/editpostopdrug',array(
-      'drug' => $drug,
-      'errors' => @$errors,
-    ));
-  }
+		$this->render('/admin/editpostopdrug', array(
+			'drug' => $drug,
+			'errors' => @$errors,
+		));
+	}
 
 	public function actionDeletePostOpDrugs()
 	{
@@ -158,7 +138,8 @@ class AdminController extends ModuleAdminController
 			if (!$drug->delete()) {
 				$result = 0;
 			} else {
-				Audit::add('admin','delete',$drug->id,null,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_PostopDrug'));
+				Audit::add('admin', 'delete', $drug->id, null,
+					array('module' => 'OphTrOperationnote', 'model' => 'OphTrOperationnote_PostopDrug'));
 			}
 		}
 		echo $result;
@@ -169,9 +150,9 @@ class AdminController extends ModuleAdminController
 		if (!empty($_POST['order'])) {
 			foreach ($_POST['order'] as $i => $id) {
 				if ($drug = OphTrOperationnote_PostopDrug::model()->findByPk($id)) {
-					$drug->display_order = $i+1;
+					$drug->display_order = $i + 1;
 					if (!$drug->save()) {
-						throw new Exception("Unable to save drug: ".print_r($drug->getErrors(),true));
+						throw new Exception("Unable to save drug: " . print_r($drug->getErrors(), true));
 					}
 				}
 			}
