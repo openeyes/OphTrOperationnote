@@ -335,11 +335,14 @@ class DefaultController extends BaseEventTypeController
 			$element = new $class_name;
 
 			// FIXME: define a property on the element to indicate that specific eye is required
-			if (in_array($class_name,array('Element_OphTrOperationnote_Cataract','Element_OphTrOperationnote_Vitrectomy','Element_OphTrOperationnote_Buckle'))) {
-				if (!in_array(@$_GET['eye'],array(Eye::LEFT,Eye::RIGHT))) {
-					echo "must-select-eye";
-					return;
-				}
+			$requiresEye = array(
+				'Element_OphTrOperationnote_Cataract',
+				'Element_OphTrOperationnote_Vitrectomy',
+				'Element_OphTrOperationnote_Buckle'
+			);
+			if (in_array($class_name, $requiresEye) && array_key_exists('eye', $_GET) && !in_array($_GET['eye'],array(Eye::LEFT,Eye::RIGHT))) {
+				echo "must-select-eye";
+				return;
 			}
 
 			$element->setDefaultOptions();

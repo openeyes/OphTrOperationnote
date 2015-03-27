@@ -313,4 +313,18 @@ class Element_OphTrOperationnote_Cataract extends Element_OnDemand
 
 		return $complication_values;
 	}
+
+	protected function afterConstruct()
+	{
+		if($this->isNewRecord && isset(Yii::app()->session['selected_firm_id'])){
+			$defaultLengthRecord = OphTrOperationnote_CataractIncisionLengthDefault::model()->findByAttributes(
+				array('firm_id' => (int) Yii::app()->session['selected_firm_id'])
+			);
+			if($defaultLengthRecord){
+				$this->length = $defaultLengthRecord->value;
+			}
+		}
+
+		parent::afterConstruct();
+	}
 }
