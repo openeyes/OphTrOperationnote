@@ -18,20 +18,26 @@
  */
 
 /**
- * This is the model class for table "element_procedurelist".
+ * This is the model class for table "ophtroperationnote_site_subspecialty_postop_instructions".
  *
  * The followings are the available columns in table 'element_operation':
  * @property string $id
- * @property integer $event_id
- * @property integer $surgeon_id
- * @property integer $assistant_id
- * @property integer $anaesthetic_type
+ * @property integer $site_id
+ * @property integer $subspeciality_id
+ * @property integer $display_order
+ * @property string $content
  *
  * The followings are the available model relations:
  * @property Event $event
  */
 class OphTrOperationnote_PostopInstruction extends BaseActiveRecordVersioned
 {
+
+	/**
+	 * Label field for display in generic admin.
+	 */
+	const SELECTION_LABEL_FIELD = 'content';
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return ElementOperation the static model class
