@@ -19,6 +19,11 @@
  */
 class AdminController extends ModuleAdminController
 {
+	/**
+	 * Renders list of post op drugs
+	 *
+	 * @throws Exception
+	 */
 	public function actionViewPostOpDrugs()
 	{
 		Audit::add('admin', 'list', null, null,
@@ -27,16 +32,26 @@ class AdminController extends ModuleAdminController
 		$this->render('postopdrugs');
 	}
 
+	/**
+	 * Rendors incision length list
+	 */
 	public function actionViewIncisionLengthDefaults()
 	{
 		$this->render('incisionlengthdefaults');
 	}
 
+	/**
+	 * Renders the add form and accepts posts to update or add incision lengths
+	 *
+	 * @param null $id
+	 * @throws CHttpException
+	 * @throws Exception
+	 */
 	public function actionIncisionLengthDefaultAddForm($id = null)
 	{
 		$default = new OphTrOperationnote_CataractIncisionLengthDefault;
-		if($id !== null){
-			$default = OphTrOperationnote_CataractIncisionLengthDefault::model()->findByPk((int) $id);
+		if ($id !== null) {
+			$default = OphTrOperationnote_CataractIncisionLengthDefault::model()->findByPk((int)$id);
 		}
 		$errors = array();
 
@@ -61,22 +76,32 @@ class AdminController extends ModuleAdminController
 		));
 	}
 
+	/**
+	 * Allows a user to delete an incision length
+	 *
+	 * @throws Exception
+	 */
 	public function actionDeleteIncisionLengthDefaults()
 	{
 		$result = 1;
-		if(is_array($_POST['incisionLengths'])){
+		if (is_array($_POST['incisionLengths'])) {
 			foreach (OphTrOperationnote_CataractIncisionLengthDefault::model()->findAllByPk($_POST['incisionLengths']) as $incisionLength) {
 				if (!$incisionLength->delete()) {
 					$result = 0;
 				} else {
-					Audit::add('admin','delete',$incisionLength->id,null,array('module'=>'OphTrOperationnote','model'=>'OphTrOperationnote_IncisionLengthDefault'));
+					Audit::add('admin', 'delete', $incisionLength->id, null,
+						array('module' => 'OphTrOperationnote', 'model' => 'OphTrOperationnote_IncisionLengthDefault'));
 				}
 			}
 		}
 		echo $result;
 	}
 
-
+	/**
+	 * Add a Post Op drug
+	 *
+	 * @throws Exception
+	 */
 	public function actionAddPostOpDrug()
 	{
 		$drug = new OphTrOperationnote_PostopDrug;
@@ -101,6 +126,12 @@ class AdminController extends ModuleAdminController
 		));
 	}
 
+	/**
+	 * Edit existing post op drug
+	 *
+	 * @param $id
+	 * @throws Exception
+	 */
 	public function actionEditPostOpDrug($id)
 	{
 		if (!$drug = OphTrOperationnote_PostopDrug::model()->findByPk($id)) {
@@ -131,6 +162,11 @@ class AdminController extends ModuleAdminController
 		));
 	}
 
+	/**
+	 * Delete a post op drug
+	 *
+	 * @throws Exception
+	 */
 	public function actionDeletePostOpDrugs()
 	{
 		$result = 1;
@@ -145,6 +181,11 @@ class AdminController extends ModuleAdminController
 		echo $result;
 	}
 
+	/**
+	 * Reorder post op drugs
+	 *
+	 * @throws Exception
+	 */
 	public function actionSortPostOpDrugs()
 	{
 		if (!empty($_POST['order'])) {
@@ -157,5 +198,28 @@ class AdminController extends ModuleAdminController
 				}
 			}
 		}
+	}
+
+	/**
+	 * Renders a form and accepts post for updating, editing and adding Post Op Instructions.
+	 *
+	 * @throws Exception
+	 */
+	public function actionPostOpInstructions()
+	{
+		$this->genericAdmin('Post Op Instructions', 'OphTrOperationnote_PostopInstruction', array(
+			'extra_fields' => array(
+				array(
+					'field' => 'site_id',
+					'type' => 'lookup',
+					'model' => 'Site'
+				),
+				array(
+					'field' => 'subspecialty_id',
+					'type' => 'lookup',
+					'model' => 'Subspecialty'
+				)
+			)
+		));
 	}
 }
