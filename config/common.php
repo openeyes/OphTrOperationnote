@@ -26,7 +26,8 @@ return array(
 		),
 		'admin_menu' => array(
 			'Post-op drugs' => '/OphTrOperationnote/admin/viewPostOpDrugs',
-			'Default Incision Length' => '/OphTrOperationnote/admin/viewIncisionLengthDefaults'
+			'Post-op Instructions' => '/OphTrOperationnote/admin/postOpInstructions',
+			'Default Incision Length' => '/OphTrOperationnote/admin/viewIncisionLengthDefaults',
 		),
 		'reports' => array(
 			'Operations' => '/OphTrOperationnote/report/operation',
