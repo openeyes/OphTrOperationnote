@@ -207,7 +207,7 @@ class AdminController extends ModuleAdminController
 	 */
 	public function actionPostOpInstructions()
 	{
-		$this->genericAdmin('Post Op Instructions', 'OphTrOperationnote_PostopInstruction', array(
+		$this->genericAdmin('Per Op Instructions', 'OphTrOperationnote_PostopInstruction', array(
 			'extra_fields' => array(
 				array(
 					'field' => 'site_id',
@@ -218,6 +218,29 @@ class AdminController extends ModuleAdminController
 					'field' => 'subspecialty_id',
 					'type' => 'lookup',
 					'model' => 'Subspecialty'
+				)
+			)
+		));
+	}
+
+	public function actionPostOpDrugMappings()
+	{
+		$this->genericAdmin('Per Op Drug Mappings', 'OphTrOperationnote_PostopSiteSubspecialtyDrug', array(
+			'extra_fields' => array(
+				array(
+					'field' => 'site_id',
+					'type' => 'lookup',
+					'model' => 'Site'
+				),
+				array(
+					'field' => 'subspecialty_id',
+					'type' => 'lookup',
+					'model' => 'Subspecialty'
+				),
+				array(
+					'field' => 'drug_id',
+					'type' => 'lookup',
+					'model' => 'OphTrOperationnote_PostopDrug'
 				)
 			)
 		));

@@ -20,7 +20,7 @@
 <div class="box admin">
 	<div class="row">
 		<div class="large-8 column">
-			<h2>Post-operative drugs</h2>
+			<h2>Per-operative Drugs</h2>
 		</div>
 	</div>
 	<form id="admin_drugs">

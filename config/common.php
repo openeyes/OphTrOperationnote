@@ -25,8 +25,7 @@ return array(
 			'ToricPCIOL',
 		),
 		'admin_menu' => array(
-			'Post-op drugs' => '/OphTrOperationnote/admin/viewPostOpDrugs',
-			'Post-op Instructions' => '/OphTrOperationnote/admin/postOpInstructions',
+			'Per Op Instructions' => '/OphTrOperationnote/admin/postOpInstructions',
 			'Default Incision Length' => '/OphTrOperationnote/admin/viewIncisionLengthDefaults',
 		),
 		'reports' => array(
