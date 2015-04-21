@@ -28,6 +28,8 @@
  */
 class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVersioned
 {
+	const SELECTION_LABEL_FIELD = 'site_id';
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return OphTrOperationnote_PostopSiteSubspecialtyDrug the static model class
@@ -53,6 +55,7 @@ class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVers
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('site_id, subspeciality_id, drug_id, display_order, default', 'safe')
 		);
 	}
 

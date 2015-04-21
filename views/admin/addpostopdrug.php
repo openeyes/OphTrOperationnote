@@ -19,7 +19,7 @@
 
 ?>
 <div class="box admin">
-	<h2>Add post-op drug</h2>
+		<h2>Add Per Op Drug</h2>
 	<?php echo $this->renderPartial('//admin/_form_errors',array('errors'=>$errors))?>
 	<?php
 	$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
