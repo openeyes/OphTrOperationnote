@@ -16,12 +16,16 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 
+$( document ).ready(function() {
+    highlightBiometryElement();
+});
+
 function callbackAddProcedure(procedure_id) {
     var eye = $('input[name="Element_OphTrOperationnote_ProcedureList\\[eye_id\\]"]:checked').val();
 
     $.ajax({
         'type': 'GET',
-        'url': baseUrl + '/OphTrOperationnote/Default/loadElementByProcedure?procedure_id=' + procedure_id + '&eye=' + eye,
+        'url': baseUrl + '/OphTrOperationnote/Default/loadElementByProcedure?procedure_id=' + procedure_id + '&eye=' + eye +'&patientId=' + OE_patient_id,
         'success': function (html) {
             if (html.length > 0) {
                 if (html.match(/must-select-eye/)) {
@@ -52,6 +56,7 @@ function callbackAddProcedure(procedure_id) {
                         }
                     }
                 }
+                highlightBiometryElement();
             }
         }
     });
@@ -631,6 +636,7 @@ function changeEye() {
 
         rotateVitrectomy();
     }
+    highlightBiometryElement();
 }
 
 function rotateTrabeculectomy() {
@@ -676,4 +682,19 @@ function glaucomaController(_drawing) {
                 break;
         }
     }
+}
+
+function highlightBiometryElement( ){
+    // right: 2
+    // left: 1
+
+    if( $('#Element_OphTrOperationnote_ProcedureList_eye_id_2').is(':checked') ){
+        $('.right-eye').removeClass('disabled-eye').addClass('highlighted-eye');
+        $('.left-eye').removeClass('highlighted-eye').addClass('disabled-eye');
+    }else if($('#Element_OphTrOperationnote_ProcedureList_eye_id_1').is(':checked') ){
+        $('.left-eye').removeClass('disabled-eye').addClass('highlighted-eye');
+        $('.right-eye').removeClass('highlighted-eye').addClass('disabled-eye');
+
+    }
+
 }
