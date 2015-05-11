@@ -106,7 +106,7 @@ class Element_OphTrOperationnote_Biometry extends Element_OpNote
 		);
 	}
 
-	public function findAll($attributes, $values){
+	public function findAll($attributes = "", $values=array()){
 		// because we are working with a view, we should present the event as the last Biometry from the view
 		// we need the patient ID and the last_modified date of the current event
 		// $attributes == "event_id = ?" in this case
@@ -123,11 +123,11 @@ class Element_OphTrOperationnote_Biometry extends Element_OpNote
 	}
 
 	// because we are working with a view here we do not need to save
-	function __set ($name, $value){
+	public function __set ($name, $value){
 		return true;
 	}
 
-	function save( $validation = false, $attributes = NULL){
+	public function save( $validation = false, $attributes = NULL, $allow_overriding=false){
 		return true;
 	}
 }
