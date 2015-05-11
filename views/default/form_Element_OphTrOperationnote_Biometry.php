@@ -21,7 +21,6 @@
 <?php
 $layoutColumns=$form->layoutColumns;
 $form->layoutColumns=array('label'=>3,'field'=>9);
-// TODO: need to search for the date of the op note to display proper values in the view!!!
 if( $element->patientId > 0) {
 	$latestData = $element->findBySql("
 						SELECT eob.* FROM et_ophtroperationnote_biometry eob
