@@ -69,15 +69,15 @@ class DefaultController extends BaseEventTypeController
 	}
 
 	/**
-	 * Set flash message for patient allergies
+	 * Set flash message for patient risks
 	 */
 	protected function showRiskWarning()
 	{
 		if ($this->patient->no_risks_date) {
-			Yii::app()->user->setFlash('info.prescription_allergy', $this->patient->getRisksString());
+			Yii::app()->user->setFlash('info.prescription_risk', $this->patient->getRisksString());
 		}
 		else {
-			Yii::app()->user->setFlash('warning.prescription_allergy', $this->patient->getRisksString());
+			Yii::app()->user->setFlash('warning.prescription_risk', $this->patient->getRisksString());
 		}
 	}
 
