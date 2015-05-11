@@ -333,6 +333,10 @@ class DefaultController extends BaseEventTypeController
 			$class_name = $element->element_type->class_name;
 
 			$element = new $class_name;
+			$patientId = Yii::app()->request->getParam('patientId');
+			if( $patientId > 0 ) {
+				$element->patientId = $patientId;
+			}
 
 			// FIXME: define a property on the element to indicate that specific eye is required
 			$requiresEye = array(
@@ -457,6 +461,7 @@ class DefaultController extends BaseEventTypeController
 					foreach ($procedure_elements as $proc_el) {
 						if (isset($by_cls[$proc_el->element_type->class_name])) {
 							if ($el = array_shift($by_cls[$proc_el->element_type->class_name])) {
+								$el->patientId = $this->patient->id;
 								$elements[] = $el;
 							}
 						}

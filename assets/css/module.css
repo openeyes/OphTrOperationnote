@@ -241,3 +241,11 @@
     width: 100%;
   }
 }
+
+.highlighted-eye{
+    border: 2px solid red !important;
+}
+
+.disabled-eye{
+    opacity: 0.4;
+}
