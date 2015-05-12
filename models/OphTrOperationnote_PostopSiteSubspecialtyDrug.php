@@ -71,7 +71,7 @@ class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVers
 		return array(
 			'sites' => array(self::BELONGS_TO, 'Site', 'site_id'),
 			'subspecialties' => array(self::BELONGS_TO, 'Subspecialty', 'subspecialty_id'),
-			'postopdrugs' => array(self::BELONGS_TO, 'Ophtroperationnote_PostopDrug', 'drug_id'),
+			'postopdrugs' => array(self::BELONGS_TO, 'OphTrOperationnote_PostopDrug', 'drug_id'),
 		);
 	}
 
