@@ -66,7 +66,12 @@ class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVers
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
+
+
 		return array(
+			'sites' => array(self::BELONGS_TO, 'Site', 'site_id'),
+			'subspecialties' => array(self::BELONGS_TO, 'Subspecialty', 'subspecialty_id'),
+			'postopdrugs' => array(self::BELONGS_TO, 'Ophtroperationnote_PostopDrug', 'drug_id'),
 		);
 	}
 
@@ -76,6 +81,7 @@ class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVers
 	public function attributeLabels()
 	{
 		return array(
+			'postopdrugs.name' => 'Drug Name'
 		);
 	}
 
