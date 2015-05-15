@@ -50,4 +50,10 @@ if( $element->patientId > 0) {
 	</div>
 </div>
 
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.Element_OphTrOperationnote_Biometry').find('.sub-element-actions').remove();
+	});
+</script>
 <?php $form->layoutColumns=$layoutColumns;?>
