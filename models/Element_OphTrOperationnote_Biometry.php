@@ -130,4 +130,8 @@ class Element_OphTrOperationnote_Biometry extends Element_OpNote
 	public function save( $validation = false, $attributes = NULL, $allow_overriding=false){
 		return true;
 	}
+
+	public function isChild(){
+		return false;
+	}
 }
