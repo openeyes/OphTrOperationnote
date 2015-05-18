@@ -53,7 +53,8 @@ if( $element->patientId > 0) {
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('.Element_OphTrOperationnote_Biometry').find('.sub-element-actions').remove();
+		// we always want to display the cataract element! somehow it is hidden by default...
+		$('.Element_OphTrOperationnote_Cataract').show();   // this is a hack, need to find the Javascript hiding the element and why is it hidden
 	});
 </script>
 <?php $form->layoutColumns=$layoutColumns;?>

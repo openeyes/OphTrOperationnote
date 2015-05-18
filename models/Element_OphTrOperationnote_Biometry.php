@@ -30,7 +30,7 @@
  * The followings are the available model relations:
  * @property Event $event
  */
-class Element_OphTrOperationnote_Biometry extends Element_OpNote
+class Element_OphTrOperationnote_Biometry extends Element_OnDemand
 {
 	// these are legacy and should be removed one switch to using the constants on the Eye model
 	const LEFT = Eye::LEFT;
