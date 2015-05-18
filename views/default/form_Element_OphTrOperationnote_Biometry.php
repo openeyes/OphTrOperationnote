@@ -50,4 +50,12 @@ if( $element->patientId > 0) {
 	</div>
 </div>
 
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		// we always want to display the cataract element! somehow it is hidden by default...
+		$('.Element_OphTrOperationnote_Cataract').show();   // this is a hack, need to find the Javascript hiding the element and why is it hidden
+		$('.Element_OphTrOperationnote_Biometry').show();
+	});
+</script>
 <?php $form->layoutColumns=$layoutColumns;?>
