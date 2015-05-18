@@ -20,31 +20,33 @@
 <div class="box admin">
 	<div class="row">
 		<div class="large-8 column">
-			<h2>Per-operative Drugs</h2>
+			<h2>Default Incision Lengths</h2>
 		</div>
 	</div>
-	<form id="admin_drugs">
+	<form id="admin_incisionLengths">
 		<input type="hidden" name="YII_CSRF_TOKEN" value="<?php echo Yii::app()->request->csrfToken?>" />
 		<table class="grid">
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="selectall" id="selectall" /></th>
-					<th>Name</th>
+					<th>Value</th>
+					<th>Firm ID</th>
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach (OphTrOperationnote_PostopDrug::model()->findAll(array('order'=>'display_order asc')) as $i => $drug) {?>
-					<tr class="clickable" data-id="<?php echo $drug->id?>" data-uri="OphTrOperationnote/admin/editPostOpDrug/<?php echo $drug->id?>">
-						<td><input type="checkbox" name="drugs[]" value="<?php echo $drug->id?>" /></td>
-						<td><?php echo $drug->name?></td>
+				<?php foreach (OphTrOperationnote_CataractIncisionLengthDefault::model()->findAll() as $i => $incisionLength) {?>
+					<tr class="clickable" data-id="<?php echo $incisionLength->id?>" data-uri="OphTrOperationnote/admin/incisionLengthDefaultAddForm/<?php echo $incisionLength->id?>">
+						<td><input type="checkbox" name="incisionLengths[]" value="<?php echo $incisionLength->id?>" /></td>
+						<td><?php echo $incisionLength->value?></td>
+						<td><?php echo $incisionLength->firm->getNameAndSubspecialty(); ?></td>
 					</tr>
 				<?php }?>
 			</tbody>
 			<tfoot class="pagination-container">
 				<tr>
 					<td colspan="3">
-						<?php echo EventAction::button('Add', 'add', null, array('class' => 'small', 'data-uri' => '/OphTrOperationnote/admin/addPostOpDrug'))->toHtml()?>
-						<?php echo EventAction::button('Delete', 'delete', null, array('class' => 'small', 'data-uri' => '/OphTrOperationnote/admin/deletePostOpDrugs', 'data-object' => 'drug'))->toHtml()?>
+						<?php echo EventAction::button('Add', 'add', null, array('class' => 'small', 'data-uri' => '/OphTrOperationnote/admin/incisionLengthDefaultAddForm'))->toHtml()?>
+						<?php echo EventAction::button('Delete', 'delete', null, array('class' => 'small', 'data-uri' => '/OphTrOperationnote/admin/deleteIncisionLengthDefaults', 'data-object' => 'incisionLength'))->toHtml()?>
 					</td>
 				</tr>
 			</tfoot>

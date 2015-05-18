@@ -28,6 +28,8 @@
  */
 class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVersioned
 {
+	const SELECTION_LABEL_FIELD = 'site_id';
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return OphTrOperationnote_PostopSiteSubspecialtyDrug the static model class
@@ -53,6 +55,7 @@ class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVers
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('site_id, subspeciality_id, drug_id, display_order, default', 'safe')
 		);
 	}
 
@@ -63,7 +66,12 @@ class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVers
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
+
+
 		return array(
+			'sites' => array(self::BELONGS_TO, 'Site', 'site_id'),
+			'subspecialties' => array(self::BELONGS_TO, 'Subspecialty', 'subspecialty_id'),
+			'postopdrugs' => array(self::BELONGS_TO, 'OphTrOperationnote_PostopDrug', 'drug_id'),
 		);
 	}
 
@@ -73,6 +81,7 @@ class OphTrOperationnote_PostopSiteSubspecialtyDrug extends BaseActiveRecordVers
 	public function attributeLabels()
 	{
 		return array(
+			'postopdrugs.name' => 'Drug Name'
 		);
 	}
 

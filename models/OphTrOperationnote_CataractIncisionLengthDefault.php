@@ -18,25 +18,19 @@
  */
 
 /**
- * This is the model class for table "ophtroperationnote_site_subspecialty_postop_instructions".
+ * This is the model class for table "ophtroperationnote_cataract_incision_length_default".
  *
- * The followings are the available columns in table 'element_operation':
- * @property string $id
- * @property integer $site_id
- * @property integer $subspeciality_id
- * @property integer $display_order
- * @property string $content
+ * The followings are the available columns in table 'ophtroperationnote_cataract_incision_length_default':
+ * @property int $id
+ * @property int $firm_id
+ * @property float $value
+ *
  *
  * The followings are the available model relations:
  * @property Event $event
  */
-class OphTrOperationnote_PostopInstruction extends BaseActiveRecordVersioned
+class OphTrOperationnote_CataractIncisionLengthDefault extends BaseActiveRecordVersioned
 {
-
-	/**
-	 * Label field for display in generic admin.
-	 */
-	const SELECTION_LABEL_FIELD = 'content';
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -52,7 +46,16 @@ class OphTrOperationnote_PostopInstruction extends BaseActiveRecordVersioned
 	 */
 	public function tableName()
 	{
-		return 'ophtroperationnote_site_subspecialty_postop_instructions';
+		return 'ophtroperationnote_cataract_incision_length_default';
+	}
+
+
+	/**
+	 * @return string human readable representation of the linked hierarchy type and id
+	 */
+	public function getPrettyHierarchy()
+	{
+		return "n/a";
 	}
 
 	/**
@@ -63,8 +66,27 @@ class OphTrOperationnote_PostopInstruction extends BaseActiveRecordVersioned
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('firm_id, value', 'required'),
+			array('firm_id', 'unique'),
 		);
 	}
+
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array();
+	}
+
+	public function behaviors()
+	{
+		return array(
+			'LookupTable' => 'LookupTable',
+		);
+	}
+
 
 	/**
 	 * @return array relational rules.
@@ -74,17 +96,10 @@ class OphTrOperationnote_PostopInstruction extends BaseActiveRecordVersioned
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'firm' => array(self::BELONGS_TO, 'Firm', 'firm_id'),
 		);
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-		);
-	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -100,7 +115,7 @@ class OphTrOperationnote_PostopInstruction extends BaseActiveRecordVersioned
 		$criteria->compare('id', $this->id, true);
 
 		return new CActiveDataProvider(get_class($this), array(
-				'criteria' => $criteria,
-			));
+			'criteria' => $criteria,
+		));
 	}
 }

@@ -16,24 +16,38 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
+?>
 
-return array(
-	'params' => array(
-		'eyedraw_iol_classes' => array(
-			'PCIOL',
-			'ACIOL',
-			'ToricPCIOL',
-		),
-		'admin_menu' => array(
-			'Per Op Instructions' => '/OphTrOperationnote/admin/postOpInstructions',
-			'Default Incision Length' => '/OphTrOperationnote/admin/viewIncisionLengthDefaults',
-		),
-		'reports' => array(
-			'Operations' => '/OphTrOperationnote/report/operation',
-		),
+<?php
+$layoutColumns=$form->layoutColumns;
+$form->layoutColumns=array('label'=>3,'field'=>9);
+if( $element->patientId > 0) {
+	$latestData = $element->findBySql("
+						SELECT eob.* FROM et_ophtroperationnote_biometry eob
+										WHERE eob.patient_id=" . $element->patientId . "
+										ORDER BY eob.last_modified_date
+										DESC LIMIT 1; ");
+}else{
+	$latestData = NULL;
+}
+?>
+<div class="element-fields">
+	<div class="row ">
+		<div class="fixed column">
+			<?php if( ! $latestData ) { ?>
+				<div class="alert-box">No biometry data presented.</div>
+			<?php }else { ?>
+				<div class="alert-box">The displayed biometry data last modified date and
+					time: <?php echo date("F j, Y, g:i a", strtotime($latestData->{'last_modified_date'})); ?></div>
+				<?php
+				$this->renderPartial('form_Element_OphTrOperationnote_Biometry_Data', array(
+					'element' => $latestData,
+					'form' => $form
+				));
+			}
+			?>
+		</div>
+	</div>
+</div>
 
-		// Default anaesthetic settings
-                //'ophtroperationnote_default_anaesthetic_child' => 'GA',
-                //'ophtroperationnote_default_anaesthetic' => 'GA',
-	),
-);
+<?php $form->layoutColumns=$layoutColumns;?>
