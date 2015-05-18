@@ -29,16 +29,14 @@ class m150518_111819_modifyCataractComplication extends CDbMigration
 
 		// updating rows
 		foreach( $this->changeComplications as $changeCompKey=>$changeCompValue){
-			var_dump($changeCompKey);
-			var_dump($changeCompValue);
-			$this->update('ophtroperationnote_cataract_complications', array('name'=>$changeCompValue), "name = :name", array(":name"=>$changeCompKey));
+			$this->update('ophtroperationnote_cataract_complications', array('name'=>$changeCompValue), "name = '".$changeCompKey."'");
 		}
 	}
 
 	public function down()
 	{
 		foreach( $this->changeComplications as $changeCompKey=>$changeCompValue){
-			$this->update('ophtroperationnote_cataract_complications', array('name'=>$changeCompKey), "name = :name", array(":name"=>$changeCompValue));
+			$this->update('ophtroperationnote_cataract_complications', array('name'=>$changeCompKey), "name = '".$changeCompValue."'");
 		}
 
 		foreach( $this->inactivateComplications as $inactivateComp ) {
