@@ -3,13 +3,13 @@
 class m150518_111819_modifyCataractComplication extends CDbMigration
 {
 	protected $newComplications = array(
-		"None",
-		"Zonule rupture no vitreous loss",
-		"Zonule rupture with vitreous loss",
-		"PC rupture no vitreous loss",
-		"PC rupture with vitreous loss",
-		"Lens fragments into vitreous",
-		"Other");
+		"None"=>"1",
+		"Zonule rupture no vitreous loss"=>"160",
+		"Zonule rupture with vitreous loss"=>"170",
+		"PC rupture no vitreous loss"=>"111",
+		"PC rupture with vitreous loss"=>"112",
+		"Lens fragments into vitreous"=>"85",
+		"Other"=>"250");
 
 	protected $inactivateComplications = array("Zonular rupture","PC rupture");
 
@@ -18,8 +18,8 @@ class m150518_111819_modifyCataractComplication extends CDbMigration
 	public function up()
 	{
 		// inserting new rows
-		foreach( $this->newComplications as $newComp ){
-			$this->insert('ophtroperationnote_cataract_complications', array('name'=>$newComp));
+		foreach( $this->newComplications as $newCompName => $newCompOrder ){
+			$this->insert('ophtroperationnote_cataract_complications', array('name'=>$newCompName, 'display_order'=> $newCompOrder));
 		}
 
 		// inactivating rows
@@ -43,8 +43,8 @@ class m150518_111819_modifyCataractComplication extends CDbMigration
 			$this->update('ophtroperationnote_cataract_complications', array('active'=>1), "name = :name", array(":name"=>$inactivateComp));
 		}
 
-		foreach( $this->newComplications as $newComp ){
-			$this->delete('ophtroperationnote_cataract_complications', "name = :name", array(':name'=>$newComp));
+		foreach( $this->newComplications as $newCompName => $order ){
+			$this->delete('ophtroperationnote_cataract_complications', "name = :name", array(':name'=>$newCompName));
 		}
 	}
 
