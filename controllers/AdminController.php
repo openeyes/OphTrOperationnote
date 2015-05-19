@@ -171,7 +171,8 @@ class AdminController extends ModuleAdminController
 	{
 		$result = 1;
 		foreach (OphTrOperationnote_PostopDrug::model()->findAllByPk(@$_POST['drugs']) as $drug) {
-			if (!$drug->delete()) {
+			$drug->active = 0;
+			if (!$drug->save()) {
 				$result = 0;
 			} else {
 				Audit::add('admin', 'delete', $drug->id, null,

@@ -32,6 +32,7 @@
 		)
 	))?>
 		<?php echo $form->textField($drug,'name')?>
+		<?php echo $form->checkBox($drug,'active')?>
 		<?php echo $form->formActions(array('cancel-uri'=>'/OphTrOperationnote/admin/viewPostOpDrugs'))?>
 	<?php $this->endWidget()?>
 </div>
