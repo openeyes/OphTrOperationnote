@@ -35,6 +35,7 @@ class OperativeDeviceController extends BaseAdminController
 	public function actionList()
 	{
 		$admin = new Admin(OperativeDevice::model(), $this);
+		$admin->setModelDisplayName("Operative Devices");
 		$admin->setListFields(array(
 							'id',
 							'name',
@@ -55,6 +56,7 @@ class OperativeDeviceController extends BaseAdminController
 	public function actionEdit($id = false)
 	{
 		$admin = new Admin(OperativeDevice::model(), $this);
+		$admin->setModelDisplayName("Operative Device");
 		if($id){
 			$admin->setModelId($id);
 		}
