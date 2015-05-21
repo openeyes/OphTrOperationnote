@@ -32,6 +32,7 @@
  */
 class Element_OphTrOperationnote_SiteTheatre extends Element_OpNote
 {
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return ElementOperation the static model class
@@ -85,5 +86,27 @@ class Element_OphTrOperationnote_SiteTheatre extends Element_OpNote
 			'site' => array(self::BELONGS_TO, 'Site', 'site_id'),
 			'theatre' => array(self::BELONGS_TO, 'OphTrOperationbooking_Operation_Theatre', 'theatre_id')
 		);
+	}
+
+	/**
+	 * Set default values for forms on create
+	 */
+	public function setDefaultOptions()
+	{
+		if(Yii::app()->controller->getBookingOperation()){
+			$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
+			if( ! $this->site_id ) {
+				//var_dump(Yii::app()->controller->getBookingOperation()->event_id);
+				//die;
+				$this->site_id = $api->findSiteForBookingEvent(Event::model()->findByPk(Yii::app()->controller->getBookingOperation()->event_id))->id;
+			}
+			if( ! $this->theatre_id ){
+				$this->theatre_id = $api->findTheatreForBookingEvent(Event::model()->findByPk(Yii::app()->controller->getBookingOperation()->event_id))->id;
+			}
+		}else{
+			if(! $this->site_id) {
+				$this->site_id = Yii::app()->session['selected_site_id'];
+			}
+		}
 	}
 }

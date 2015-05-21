@@ -24,7 +24,7 @@
 		echo $form->dropDownList(
 			$element,
 			"site_id",
-			CHtml::listData(Site::model()->findAll(array('condition'=>'active=1', 'order'=>'name')), 'id', 'name'),
+			CHtml::listData(Site::model()->findAll(array('condition'=>'active=1', 'order'=>'short_name')), 'id', 'short_name'),
 			array('empty' => '- None -'),
 			false);
 	?>
@@ -35,7 +35,7 @@
 			echo $form->dropDownList(
 				$element,
 				"theatre_id",
-				CHtml::listData(OphTrOperationbooking_Operation_Theatre::model()->findAll(array('condition'=>'active=1', 'order'=>'name')), 'id', 'name'),
+				CHtml::listData(OphTrOperationbooking_Operation_Theatre::model()->findAll(array('condition'=>'active=1 and site_id='.$element->site_id, 'order'=>'name')), 'id', 'name'),
 				array('empty' => '- None -'),
 				false);
 
@@ -44,3 +44,19 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#Element_OphTrOperationnote_SiteTheatre_site_id').change(function(){
+			$.ajax({
+				type: 'GET',
+				url: '/OphTrOperationnote/Default/getTheatreOptions',
+				data: {
+						siteId: $(this).val()
+					},
+				success: function( result ){
+					$('#Element_OphTrOperationnote_SiteTheatre_theatre_id').html(result);
+					}
+			});
+		});
+	});
+</script>

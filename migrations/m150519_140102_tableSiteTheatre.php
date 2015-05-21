@@ -8,7 +8,7 @@ class m150519_140102_tableSiteTheatre extends OEMigration
 			'id' => 'pk',
 			'event_id' => 'int(10) unsigned NOT NULL',
 			'site_id' => 'int(10) unsigned NOT NULL',
-			'theatre_id' => 'int(10) unsigned NOT NULL'
+			'theatre_id' => 'int(10) unsigned NULL default NULL'
 		), true);
 
 		$this->addForeignKey('et_ophtroperationnote_site_theatre_ev_fk',
@@ -45,6 +45,8 @@ class m150519_140102_tableSiteTheatre extends OEMigration
 		$this->dropForeignKey('et_ophtroperationnote_site_theatre_ev_fk','et_ophtroperationnote_site_theatre');
 
 		$this->dropOETable('et_ophtroperationnote_site_theatre', true);
+
+		$this->delete('element_type', "class_name = 'Element_OphTrOperationnote_SiteTheatre'");
 
 	}
 
