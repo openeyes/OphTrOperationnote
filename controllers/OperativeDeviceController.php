@@ -17,24 +17,60 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 
-return array(
-	'params' => array(
-		'eyedraw_iol_classes' => array(
-			'PCIOL',
-			'ACIOL',
-			'ToricPCIOL',
-		),
-		'admin_menu' => array(
-			'Per Op Instructions' => '/OphTrOperationnote/admin/postOpInstructions',
-			'Default Incision Length' => '/OphTrOperationnote/admin/viewIncisionLengthDefaults',
-			'Operative Devices' => '/OphTrOperationnote/OperativeDevice/list',
-		),
-		'reports' => array(
-			'Operations' => '/OphTrOperationnote/report/operation',
-		),
+/**
+ * Class BenefitController
+ */
+class OperativeDeviceController extends BaseAdminController
+{
+	/**
+	 * @var int
+	 */
+	public $itemsPerPage = 100;
 
-		// Default anaesthetic settings
-                //'ophtroperationnote_default_anaesthetic_child' => 'GA',
-                //'ophtroperationnote_default_anaesthetic' => 'GA',
-	),
-);
+	/**
+	 * Lists procedures
+	 *
+	 * @throws CHttpException
+	 */
+	public function actionList()
+	{
+		$admin = new Admin(OperativeDevice::model(), $this);
+		$admin->setListFields(array(
+							'id',
+							'name',
+							'active'
+		));
+		$admin->searchAll();
+		$admin->getSearch()->addActiveFilter();
+		$admin->getSearch()->setItemsPerPage($this->itemsPerPage);
+		$admin->listModel();
+	}
+
+	/**
+	 * Edits or adds a Procedure
+	 *
+	 * @param bool|int $id
+	 * @throws CHttpException
+	 */
+	public function actionEdit($id = false)
+	{
+		$admin = new Admin(OperativeDevice::model(), $this);
+		if($id){
+			$admin->setModelId($id);
+		}
+		$admin->setEditFields(array(
+			'name' => 'text',
+			'active' => 'checkbox'
+		));
+		$admin->editModel();
+	}
+
+	/**
+	 * Deletes rows for the model
+	 */
+	public function actionDelete()
+	{
+		$admin = new Admin(OperativeDevice::model(), $this);
+		$admin->deleteModel();
+	}
+}
