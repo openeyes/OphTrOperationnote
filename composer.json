@@ -4,6 +4,6 @@
   "type": "openeyes-module",
   "require": {
     "openeyes/module-installer": "*",
-    "openeyes/eyedraw": "dev-master"
+    "openeyes/eyedraw": "dev-develop"
   }
 }
