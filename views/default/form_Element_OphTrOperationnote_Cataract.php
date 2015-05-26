@@ -19,8 +19,8 @@
 ?>
 
 <?php
-$layoutColumns=$form->layoutColumns;
-$form->layoutColumns=array('label'=>3,'field'=>9);
+$layoutColumns = $form->layoutColumns;
+$form->layoutColumns = array('label' => 3, 'field' => 9);
 ?>
 <div class="element-fields">
 	<div class="row eyedraw-row cataract">
@@ -28,21 +28,28 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 			<?php $this->renderPartial($element->form_view . '_OEEyeDraw', array(
 				'element' => $element,
 				'form' => $form
-			));?>
+			)); ?>
 		</div>
 		<div class="fluid column">
 			<?php $this->renderPartial($element->form_view . '_OEEyeDraw_fields', array(
 				'form' => $form,
 				'element' => $element
-			));?>
+			)); ?>
 		</div>
 	</div>
-	<div style="border-width:1px; border-style: solid; border-color: #ffffff;">
+
+	<a href="javascript:showhidePCR('optTrOperationnotePCRDiv')">
+		PCR Risk
+	</a>
+
+	<div id="optTrOperationnotePCRDiv"
+		 style="border-width:1px; border-style: solid; border-color: #ffffff; display:none;">
 		<?php
-		$this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk', array('form' => $form, 'element' => $element));
+		$this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk',
+			array('form' => $form, 'element' => $element));
 		?>
 	</div>
 </div>
 
 
-<?php $form->layoutColumns=$layoutColumns;?>
+<?php $form->layoutColumns = $layoutColumns; ?>
