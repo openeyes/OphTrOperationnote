@@ -37,6 +37,12 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 			));?>
 		</div>
 	</div>
+	<div style="border-width:1px; border-style: solid; border-color: #ffffff;">
+		<?php
+		$this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk', array('form' => $form, 'element' => $element));
+		?>
+	</div>
 </div>
+
 
 <?php $form->layoutColumns=$layoutColumns;?>
