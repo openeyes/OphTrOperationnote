@@ -28,7 +28,7 @@ class OperativeDeviceController extends BaseAdminController
 	public $itemsPerPage = 100;
 
 	/**
-	 * Lists procedures
+	 * Lists operative devices
 	 *
 	 * @throws CHttpException
 	 */
@@ -48,7 +48,7 @@ class OperativeDeviceController extends BaseAdminController
 	}
 
 	/**
-	 * Edits or adds a Procedure
+	 * Edits or adds an operative device
 	 *
 	 * @param bool|int $id
 	 * @throws CHttpException
