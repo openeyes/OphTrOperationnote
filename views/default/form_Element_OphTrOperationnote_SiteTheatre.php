@@ -32,10 +32,11 @@
 		<div class="large-6 column">
 	<?php
 		if(in_array('ophtroperationbooking_operation_theatre',Yii::app()->db->getSchema()->getTableNames())) {
+			$siteId = ($element->site_id) ? $element->site_id : Yii::app()->session['selected_site_id'];
 			echo $form->dropDownList(
 				$element,
 				"theatre_id",
-				CHtml::listData(OphTrOperationbooking_Operation_Theatre::model()->findAll(array('condition'=>'active=1 and site_id='.$element->site_id, 'order'=>'name')), 'id', 'name'),
+				CHtml::listData(OphTrOperationbooking_Operation_Theatre::model()->findAll(array('condition'=>'active=1 and site_id='.$siteId, 'order'=>'name')), 'id', 'name'),
 				array('empty' => '- None -'),
 				false);
 
