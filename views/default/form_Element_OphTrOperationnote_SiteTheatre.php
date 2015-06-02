@@ -17,45 +17,47 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
-<?php
-$layoutColumns=$form->layoutColumns;
-$form->layoutColumns=array('label'=>3,'field'=>9);
-if( $element->patientId > 0) {
-	$latestData = $element->findBySql("
-						SELECT eob.* FROM et_ophtroperationnote_biometry eob
-										WHERE eob.patient_id=" . $element->patientId . "
-										ORDER BY eob.last_modified_date
-										DESC LIMIT 1; ");
-}else{
-	$latestData = NULL;
-}
-?>
 <div class="element-fields">
-	<div class="row ">
-		<div class="fixed column">
-			<?php if( ! $latestData ) { ?>
-				<div class="alert-box">No biometry data presented.</div>
-			<?php }else { ?>
-				<div class="alert-box">The displayed biometry data last modified date and
-					time: <?php echo date("F j, Y, g:i a", strtotime($latestData->{'last_modified_date'})); ?></div>
-				<?php
-				$this->renderPartial('form_Element_OphTrOperationnote_Biometry_Data', array(
-					'element' => $latestData,
-					'form' => $form
-				));
-			}
-			?>
+	<div class="row">
+		<div class="large-6 column">
+	<?php
+		echo $form->dropDownList(
+			$element,
+			"site_id",
+			CHtml::listData(Site::model()->findAll(array('condition'=>'active=1', 'order'=>'short_name')), 'id', 'short_name'),
+			array('empty' => '- None -'),
+			false);
+	?>
+		</div>
+		<div class="large-6 column">
+	<?php
+		if(array_key_exists('OphTrOperationbooking', Yii::app()->modules) && in_array('ophtroperationbooking_operation_theatre',Yii::app()->db->getSchema()->getTableNames())) {
+			$siteId = ($element->site_id) ? $element->site_id : Yii::app()->session['selected_site_id'];
+			echo $form->dropDownList(
+				$element,
+				"theatre_id",
+				CHtml::listData(OphTrOperationbooking_Operation_Theatre::model()->findAll(array('condition'=>'active=1 and site_id='.$siteId, 'order'=>'name')), 'id', 'name'),
+				array('empty' => '- None -'),
+				false);
+
+		}
+	?>
 		</div>
 	</div>
 </div>
-
-
 <script type="text/javascript">
 	$(document).ready(function(){
-		// we always want to display the cataract element! somehow it is hidden by default...
-		$('.Element_OphTrOperationnote_Cataract').show();   // this is a hack, need to find the Javascript hiding the element and why is it hidden
-		$('.Element_OphTrOperationnote_Biometry').show();
+		$('#Element_OphTrOperationnote_SiteTheatre_site_id').change(function(){
+			$.ajax({
+				type: 'GET',
+				url: '/OphTrOperationnote/Default/getTheatreOptions',
+				data: {
+						siteId: $(this).val()
+					},
+				success: function( result ){
+					$('#Element_OphTrOperationnote_SiteTheatre_theatre_id').html(result);
+					}
+			});
+		});
 	});
 </script>
-<?php $form->layoutColumns=$layoutColumns;?>

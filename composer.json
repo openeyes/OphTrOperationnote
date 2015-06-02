@@ -3,7 +3,6 @@
   "description": "Operation note module for OpenEyes",
   "type": "openeyes-module",
   "require": {
-    "openeyes/module-installer": "*",
-    "openeyes/eyedraw": "dev-master"
+    "openeyes/module-installer": "*"
   }
 }

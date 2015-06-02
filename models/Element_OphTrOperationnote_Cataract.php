@@ -267,12 +267,12 @@ class Element_OphTrOperationnote_Cataract extends Element_OnDemand
 
 		if (!$iol_position || $iol_position->name != 'None') {
 			if (!$this->iol_type_id) {
-				$this->addError('Cataract','IOL type cannot be blank');
+				$this->addError('iol_type_id','IOL type cannot be blank');
 			}
 			if (!$this->iol_power) {
-				$this->addError('Cataract','IOL power cannot be blank');
+				$this->addError('iol_power','IOL power cannot be blank');
 			} elseif (!preg_match('/^\-?[0-9]{1,3}(\.[0-9])?$/',$this->iol_power)) {
-				$this->addError('Cataract','IOL power must be a number with an optional single decimal place between -999.9 and 999.9');
+				$this->addError('iol_power','IOL power must be a number with an optional single decimal place between -999.9 and 999.9');
 			}
 		}
 

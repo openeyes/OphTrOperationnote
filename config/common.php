@@ -27,6 +27,7 @@ return array(
 		'admin_menu' => array(
 			'Per Op Instructions' => '/OphTrOperationnote/admin/postOpInstructions',
 			'Default Incision Length' => '/OphTrOperationnote/admin/viewIncisionLengthDefaults',
+			'Operative Devices' => '/OphTrOperationnote/OperativeDevice/list',
 		),
 		'reports' => array(
 			'Operations' => '/OphTrOperationnote/report/operation',
