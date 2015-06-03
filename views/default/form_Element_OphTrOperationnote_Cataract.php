@@ -37,15 +37,15 @@ $form->layoutColumns = array('label' => 3, 'field' => 9);
 			)); ?>
 		</div>
 	</div>
-	<a href="javascript:showhidePCR('optTrOperationnotePCRRiskDiv')">PCR Risk</a>
-<div id="optTrOperationnotePCRRiskDiv">
-	<div id="optTrOperationnotePCRDiv" class="pcr-exam-link-opnote">
+	<a href="javascript:showhidePCR('ophTrOperationnotePCRRiskDiv')">PCR Risk</a>
+<div id="ophTrOperationnotePCRRiskDiv">
+	<div id="ophCiExaminationPCRRiskLeftEye" class="pcr-exam-link-opnote">
 		<?php
 		$this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk',
 			array('form' => $form, 'element' => $element, 'side'=>'left'));
 		?>
 	</div>
-	<div id="optCiExaminationRightEyePCRDiv" class="pcr-exam-link-opnote">
+	<div id="ophCiExaminationPCRRiskRightEye" class="pcr-exam-link-opnote">
 		<?php
 		$this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk',
 			array('form' => $form, 'element' => $element, 'side'=>'right'));
