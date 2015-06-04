@@ -687,16 +687,16 @@ function glaucomaController(_drawing) {
 function highlightBiometryElement( ){
     // right: 2
     // left: 1
-    $('#optTrOperationnotePCRRiskDiv').hide();
+    $('#ophTrOperationnotePCRRiskDiv').hide();
     if( $('#Element_OphTrOperationnote_ProcedureList_eye_id_2').is(':checked') ){
         $('.right-eye').removeClass('disabled-eye').addClass('highlighted-eye');
         $('.left-eye').removeClass('highlighted-eye').addClass('disabled-eye');
-        $('#optTrOperationnotePCRDiv').hide();
-        $('#optCiExaminationRightEyePCRDiv').show();
+        $('#ophCiExaminationPCRRiskLeftEye').hide();
+        $('#ophCiExaminationPCRRiskRightEye').show();
     }else if($('#Element_OphTrOperationnote_ProcedureList_eye_id_1').is(':checked') ){
         $('.left-eye').removeClass('disabled-eye').addClass('highlighted-eye');
         $('.right-eye').removeClass('highlighted-eye').addClass('disabled-eye');
-        $('#optCiExaminationRightEyePCRDiv').hide();
-        $('#optTrOperationnotePCRDiv').show();
+        $('#ophCiExaminationPCRRiskRightEye').hide();
+        $('#ophCiExaminationPCRRiskLeftEye').show();
     }
 }
