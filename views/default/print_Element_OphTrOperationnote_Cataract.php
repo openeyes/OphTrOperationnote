@@ -125,8 +125,8 @@
 						'idSuffix'=>'Cataract',
 						'side'=>$element->eye->getShortName(),
 						'mode'=>'view',
-						'width'=>200,
-						'height'=>200,
+						'width'=>170,
+						'height'=>170,
 						'model'=>$element,
 						'attribute'=>'eyedraw',
 					));
@@ -136,8 +136,8 @@
 						'idSuffix'=>'Position',
 						'side'=>$element->eye->getShortName(),
 						'mode'=>'view',
-						'width'=>200,
-						'height'=>200,
+						'width'=>170,
+						'height'=>170,
 						'model'=>$element,
 						'attribute'=>'eyedraw2',
 					));
