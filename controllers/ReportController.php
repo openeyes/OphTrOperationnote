@@ -24,7 +24,7 @@ class ReportController extends BaseReportController
 	{
 		return array(
 			array('allow',
-				'actions' => array('index', 'operation', 'runReport', 'downloadReport'),
+				'actions' => array('index', 'operation', 'runReport', 'downloadReport', 'pcrRisk'),
 				'roles' => array('OprnGenerateReport', 'admin'),
 			)
 		);
@@ -281,5 +281,10 @@ class ReportController extends BaseReportController
 		}
 
 		return array('operations'=>$operations);
+	}
+
+	public function actionPcrRisk()
+	{
+		$this->render('//report/pcrrisk', array('chart' => $pcrRiskChart->getChart()));
 	}
 }
