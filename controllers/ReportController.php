@@ -285,6 +285,6 @@ class ReportController extends BaseReportController
 
 	public function actionPcrRisk()
 	{
-		$this->render('//report/pcrrisk', array('chart' => $pcrRiskChart->getChart()));
+		$this->render('//report/pcrrisk');
 	}
 }
