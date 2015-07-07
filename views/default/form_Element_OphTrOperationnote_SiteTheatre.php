@@ -24,7 +24,7 @@
 		echo $form->dropDownList(
 			$element,
 			"site_id",
-			CHtml::listData(Site::model()->findAll(array('select'=> "id, case when short_name='' then name else short_name end as short_name",'condition'=>'active=1', 'order'=>'short_name')), 'id', 'short_name'),
+			CHtml::listData(Site::model()->findAll(array('condition'=>"active=1 and short_name !=''", 'order'=>'short_name')), 'id', 'short_name'),
 			array('empty' => '- None -'),
 			false);
 	?>
