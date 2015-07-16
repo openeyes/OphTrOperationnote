@@ -34,13 +34,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach (OphTrOperationnote_CataractIncisionLengthDefault::model()->findAll() as $i => $incisionLength) {?>
+				<?php foreach (OphTrOperationnote_CataractIncisionLengthDefault::model()->findAll() as $i => $incisionLength) {
+    ?>
 					<tr class="clickable" data-id="<?php echo $incisionLength->id?>" data-uri="OphTrOperationnote/admin/incisionLengthDefaultAddForm/<?php echo $incisionLength->id?>">
 						<td><input type="checkbox" name="incisionLengths[]" value="<?php echo $incisionLength->id?>" /></td>
 						<td><?php echo $incisionLength->value?></td>
-						<td><?php echo $incisionLength->firm->getNameAndSubspecialty(); ?></td>
+						<td><?php echo $incisionLength->firm->getNameAndSubspecialty();
+    ?></td>
 					</tr>
-				<?php }?>
+				<?php 
+}?>
 			</tbody>
 			<tfoot class="pagination-container">
 				<tr>

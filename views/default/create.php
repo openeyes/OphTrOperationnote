@@ -20,16 +20,16 @@
 <?php $this->beginContent('//patient/event_container'); ?>
 
 	<?php
-		$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-			'id'=>'opnote-create',
-			'enableAjaxValidation'=>false,
-			'focus'=>'#procedure_id',
-			'layoutColumns'=>array('label'=>2,'field'=>10),
-		));
+        $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
+            'id'=>'opnote-create',
+            'enableAjaxValidation'=>false,
+            'focus'=>'#procedure_id',
+            'layoutColumns'=>array('label'=>2, 'field'=>10),
+        ));
 
-		// Event actions
-		$this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form'=>'opnote-create'));
-	?>
+        // Event actions
+        $this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form'=>'opnote-create'));
+    ?>
 
 		<?php $this->displayErrors($errors)?>
 		<?php $this->renderOpenElements($this->action->id, $form); ?>

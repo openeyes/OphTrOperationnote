@@ -90,16 +90,16 @@
 			</div>
 			<div class="large-6 column">
 				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-					'side'=>$element->eye->getShortName(),
-					'mode'=>'view',
-					'width'=>200,
-					'height'=>200,
-					'model'=>$element,
-					'attribute'=>'eyedraw',
-					'idSuffix'=>'Buckle',
-				));
-				?>
+                $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                    'side'=>$element->eye->getShortName(),
+                    'mode'=>'view',
+                    'width'=>200,
+                    'height'=>200,
+                    'model'=>$element,
+                    'attribute'=>'eyedraw',
+                    'idSuffix'=>'Buckle',
+                ));
+                ?>
 			</div>
 		</div>
 	</div>

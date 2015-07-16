@@ -20,18 +20,18 @@
 ?>
 <div class="box admin">
 		<h2>Add Per Op Drug</h2>
-	<?php echo $this->renderPartial('//admin/_form_errors',array('errors'=>$errors))?>
+	<?php echo $this->renderPartial('//admin/_form_errors', array('errors'=>$errors))?>
 	<?php
-	$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-		'id'=>'adminform',
-		'enableAjaxValidation'=>false,
-		'focus'=>'#username',
-		'layoutColumns'=>array(
-			'label' => 2,
-			'field' => 5
-		)
-	))?>
-		<?php echo $form->textField($drug,'name')?>
+    $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
+        'id'=>'adminform',
+        'enableAjaxValidation'=>false,
+        'focus'=>'#username',
+        'layoutColumns'=>array(
+            'label' => 2,
+            'field' => 5
+        )
+    ))?>
+		<?php echo $form->textField($drug, 'name')?>
 		<?php echo $form->formActions(array('cancel-uri' => '/admin/viewPostOpDrugs'))?>
 	<?php $this->endWidget()?>
 </div>

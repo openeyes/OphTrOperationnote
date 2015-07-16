@@ -15,15 +15,15 @@
 
 class OphTrOperationnote_Trabeculectomy_Difficulties extends BaseActiveRecordVersioned
 {
-	public function relations()
-	{
-		return array(
-			'difficulty' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Difficulty', 'difficulty_id'),
-		);
-	}
+    public function relations()
+    {
+        return array(
+            'difficulty' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Difficulty', 'difficulty_id'),
+        );
+    }
 
-	public function getName()
-	{
-		return $this->difficulty->name;
-	}
+    public function getName()
+    {
+        return $this->difficulty->name;
+    }
 }

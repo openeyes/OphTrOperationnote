@@ -20,15 +20,15 @@
 <?php $this->beginContent('//patient/event_container'); ?>
 
 	<?php
-		$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-			'id'=>'opnote-update',
-			'enableAjaxValidation'=>false,
-			'focus'=>'#procedure_id'
-		));
+        $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
+            'id'=>'opnote-update',
+            'enableAjaxValidation'=>false,
+            'focus'=>'#procedure_id'
+        ));
 
-		// Event actions
-		$this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form'=>'opnote-update'));
-	?>
+        // Event actions
+        $this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form'=>'opnote-update'));
+    ?>
 
 		<?php $this->displayErrors($errors)?>
 		<?php $this->renderOpenElements($this->action->id, $form); ?>

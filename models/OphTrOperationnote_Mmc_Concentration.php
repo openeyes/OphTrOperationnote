@@ -15,5 +15,5 @@
 
 class OphTrOperationnote_Mmc_Concentration extends BaseActiveRecordVersioned
 {
-	const SELECTION_LABEL_FIELD = 'value';
+    const SELECTION_LABEL_FIELD = 'value';
 }

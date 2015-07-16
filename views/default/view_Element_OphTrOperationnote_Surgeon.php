@@ -27,11 +27,15 @@
 			</div>
 			<div class="large-2 column">
 				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('assistant_id'))?></h4>
-				<div class="data-value<?php if (!$element->assistant) {?> none<?php }?>"><?php echo ($element->assistant ? $element->assistant->fullNameAndTitle : 'None')?></div>
+				<div class="data-value<?php if (!$element->assistant) {
+    ?> none<?php 
+}?>"><?php echo($element->assistant ? $element->assistant->fullNameAndTitle : 'None')?></div>
 			</div>
 			<div class="large-2 column end">
 				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('supervising_surgeon_id'))?></h4>
-				<div class="data-value<?php if (!$element->supervising_surgeon) {?> none<?php }?>"><?php echo ($element->supervising_surgeon ? $element->supervising_surgeon->fullNameAndTitle : 'None')?></div>
+				<div class="data-value<?php if (!$element->supervising_surgeon) {
+    ?> none<?php 
+}?>"><?php echo($element->supervising_surgeon ? $element->supervising_surgeon->fullNameAndTitle : 'None')?></div>
 			</div>
 		</div>
 	</div>

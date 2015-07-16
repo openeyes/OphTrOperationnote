@@ -26,33 +26,53 @@
 				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_type_id'))?></h4>
 				<div class="data-value"><?php echo $element->anaesthetic_type->name?></div>
 			</div>
-			<?php if ($element->anaesthetic_type->name != 'GA') {?>
+			<?php if ($element->anaesthetic_type->name != 'GA') {
+    ?>
 			<div class="large-2 column">
 				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('anaesthetist_id'))?></h4>
 				<div class="data-value"><?php echo $element->anaesthetist->name?></div>
 			</div>
 			<div class="large-2 column">
 				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('agents'))?></h4>
-				<div class="data-value <?php if (!$element->anaesthetic_agents) {?> none<?php }?>">
-					<?php if (!$element->anaesthetic_agents) {?>
+				<div class="data-value <?php if (!$element->anaesthetic_agents) {
+    ?> none<?php 
+}
+    ?>">
+					<?php if (!$element->anaesthetic_agents) {
+    ?>
 						None
-					<?php } else {?>
-						<?php foreach ($element->anaesthetic_agents as $agent) {?>
+					<?php 
+} else {
+    ?>
+						<?php foreach ($element->anaesthetic_agents as $agent) {
+    ?>
 							<?php echo $agent->name?><br/>
-						<?php }?>
-					<?php }?>
+						<?php 
+}
+    ?>
+					<?php 
+}
+    ?>
 				</div>
 			</div>
 			<div class="large-3 column">
 				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('complications'))?></h4>
 				<div class="data-value">
-					<?php if (!$element->anaesthetic_complications) {?>
+					<?php if (!$element->anaesthetic_complications) {
+    ?>
 						None
-					<?php } else {?>
-						<?php foreach ($element->anaesthetic_complications as $complication) {?>
+					<?php 
+} else {
+    ?>
+						<?php foreach ($element->anaesthetic_complications as $complication) {
+    ?>
 							<?php echo $complication->name?><br/>
-						<?php }?>
-					<?php }?>
+						<?php 
+}
+    ?>
+					<?php 
+}
+    ?>
 				</div>
 			</div>
 			<div class="large-3 column">
@@ -61,20 +81,29 @@
 					<?php echo $element->anaesthetic_delivery->name?>
 				</div>
 			</div>
-			<?php if ($element->getSetting('fife')) {?>
+			<?php if ($element->getSetting('fife')) {
+    ?>
 				<div class="large-3 column">
 					<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_witness_id'))?></h4>
-					<div class="data-value<?php if (!$element->witness) {?> none<?php }?>">
-						<?php echo ($element->witness ? $element->witness->fullName : 'None')?>
+					<div class="data-value<?php if (!$element->witness) {
+    ?> none<?php 
+}
+    ?>">
+						<?php echo($element->witness ? $element->witness->fullName : 'None')?>
 					</div>
 				</div>
-			<?php }?>
-		<?php }?>
+			<?php 
+}
+    ?>
+		<?php 
+}?>
 		</div>
 		<div class="row data-row">
 			<div class="large-8 column end">
 				<h4 class="data-title"><?php echo CHtml::encode($element->getAttributeLabel('anaesthetic_comment'))?></h4>
-				<div class="data-value<?php if (!$element->anaesthetic_comment) {?> none<?php }?>"><?php echo CHtml::encode($element->anaesthetic_comment) ? Yii::app()->format->Ntext($element->anaesthetic_comment) : 'None'?></div>
+				<div class="data-value<?php if (!$element->anaesthetic_comment) {
+    ?> none<?php 
+}?>"><?php echo CHtml::encode($element->anaesthetic_comment) ? Yii::app()->format->Ntext($element->anaesthetic_comment) : 'None'?></div>
 			</div>
 		</div>
 	</div>

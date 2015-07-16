@@ -18,26 +18,28 @@
  */
 ?>
 
-<?php if ($element->getSetting('fife')) {?>
+<?php if ($element->getSetting('fife')) {
+    ?>
 	<div class="element-fields">
 		<?php echo $form->dropDownListRow(
-			$element,
-			array(
-				'scrub_nurse_id',
-				'floor_nurse_id',
-				'accompanying_nurse_id',
-			),
-			array(
-				CHtml::listData($element->scrub_nurses, 'id', 'FullName'),
-				CHtml::listData($element->floor_nurses, 'id', 'FullName'),
-				CHtml::listData($element->accompanying_nurses, 'id', 'FullName'),
-			),
-			array(
-				array('empty'=>'- Please select -'),
-				array('empty'=>'- Please select -'),
-				array('empty'=>'- Please select -'),
-			)
-		)?>
+            $element,
+            array(
+                'scrub_nurse_id',
+                'floor_nurse_id',
+                'accompanying_nurse_id',
+            ),
+            array(
+                CHtml::listData($element->scrub_nurses, 'id', 'FullName'),
+                CHtml::listData($element->floor_nurses, 'id', 'FullName'),
+                CHtml::listData($element->accompanying_nurses, 'id', 'FullName'),
+            ),
+            array(
+                array('empty'=>'- Please select -'),
+                array('empty'=>'- Please select -'),
+                array('empty'=>'- Please select -'),
+            )
+        )?>
 		<?php echo $form->dropDownList($element, 'operating_department_practitioner_id', CHtml::listData($element->operating_department_practitioners, 'id', 'FullName'), array('empty'=>'- Please select -'), $element->operating_department_practitioner_id)?>
 	</div>
-<?php }?>
+<?php 
+}?>

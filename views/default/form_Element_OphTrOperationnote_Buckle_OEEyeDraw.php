@@ -19,22 +19,22 @@
 ?>
 <?php
 $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-	'doodleToolBarArray' => array(
-		0 => 'CircumferentialBuckle','EncirclingBand','RadialSponge','BuckleSuture','DrainageSite',
-	),
-	'onReadyCommandArray' => array(
-		array('addDoodle', array('BuckleOperation')),
-		array('deselectDoodles', array()),
-	),
-	'idSuffix'=>'Buckle',
-	'side'=>$this->selectedEyeForEyedraw->shortName,
-	'mode'=>'edit',
-	'width'=>300,
-	'height'=>300,
-	'model'=>$element,
-	'attribute'=>'eyedraw',
-	'offsetX' => 10,
-	'offsetY' => 10,
-	'template' => 'OEEyeDrawWidget_InlineToolbar'
+    'doodleToolBarArray' => array(
+        0 => 'CircumferentialBuckle', 'EncirclingBand', 'RadialSponge', 'BuckleSuture', 'DrainageSite',
+    ),
+    'onReadyCommandArray' => array(
+        array('addDoodle', array('BuckleOperation')),
+        array('deselectDoodles', array()),
+    ),
+    'idSuffix'=>'Buckle',
+    'side'=>$this->selectedEyeForEyedraw->shortName,
+    'mode'=>'edit',
+    'width'=>300,
+    'height'=>300,
+    'model'=>$element,
+    'attribute'=>'eyedraw',
+    'offsetX' => 10,
+    'offsetY' => 10,
+    'template' => 'OEEyeDrawWidget_InlineToolbar'
 ));
 ?>

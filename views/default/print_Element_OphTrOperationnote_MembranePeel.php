@@ -22,7 +22,8 @@
 	<h3 class="element-title"><?php echo $element->elementType->name ?></h3>
 	<div class="row">
 		<div class="large-6 column end">
-			<?php if ($element->membrane_blue) {?>
+			<?php if ($element->membrane_blue) {
+    ?>
 				<div class="row">
 					<div class="large-6 column text-right">
 						<div class="data-label">
@@ -35,9 +36,11 @@
 						</div>
 					</div>
 				</div>
-			<?php }?>
+			<?php 
+}?>
 
-			<?php if ($element->brilliant_blue) {?>
+			<?php if ($element->brilliant_blue) {
+    ?>
 				<div class="row">
 					<div class="large-6 column text-right">
 						<div class="data-label">
@@ -50,9 +53,11 @@
 						</div>
 					</div>
 				</div>
-			<?php }?>
+			<?php 
+}?>
 
-			<?php if ($element->other_dye) {?>
+			<?php if ($element->other_dye) {
+    ?>
 				<div class="row">
 					<div class="large-6 column text-right">
 						<div class="data-label">
@@ -65,9 +70,11 @@
 						</div>
 					</div>
 				</div>
-			<?php }?>
+			<?php 
+}?>
 
-			<?php if ($element->comments) {?>
+			<?php if ($element->comments) {
+    ?>
 				<div class="row">
 					<div class="large-6 column text-right">
 						<div class="data-label">
@@ -80,7 +87,8 @@
 						</div>
 					</div>
 				</div>
-			<?php }?>
+			<?php 
+}?>
 		</div>
 	</div>
 </section>

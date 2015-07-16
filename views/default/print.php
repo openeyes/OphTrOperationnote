@@ -30,24 +30,24 @@
 
 	<!-- Anaesthetic Details -->
 	<?php
-		$anaesthetic_element = Element_OphTrOperationnote_Anaesthetic::model()->find("event_id = ?", array($this->event->id));
-		$this->renderElement($anaesthetic_element, 'print', false, false);
-	?>
+        $anaesthetic_element = Element_OphTrOperationnote_Anaesthetic::model()->find("event_id = ?", array($this->event->id));
+        $this->renderElement($anaesthetic_element, 'print', false, false);
+    ?>
 
 	<!-- Per-operative drugs -->
 	<?php
-		$postdrugs_element = Element_OphTrOperationnote_PostOpDrugs::model()->find("event_id = ?", array($this->event->id));
-		$this->renderElement($postdrugs_element, 'print', false, false);
-	?>
+        $postdrugs_element = Element_OphTrOperationnote_PostOpDrugs::model()->find("event_id = ?", array($this->event->id));
+        $this->renderElement($postdrugs_element, 'print', false, false);
+    ?>
 
 	<!-- Post-op instructions and Comments -->
 	<?php
-		$comments_element = Element_OphTrOperationnote_Comments::model()->find("event_id = ?", array($this->event->id));
-		$this->renderElement($comments_element, 'print', false, false);
-	?>
+        $comments_element = Element_OphTrOperationnote_Comments::model()->find("event_id = ?", array($this->event->id));
+        $this->renderElement($comments_element, 'print', false, false);
+    ?>
 
 	<!-- Metadata -->
 	<?php $this->renderPartial('//print/event_metadata', array(
-		'hide_modified' => @$hide_modified
-	));?>
+        'hide_modified' => @$hide_modified
+    ));?>
 </div>

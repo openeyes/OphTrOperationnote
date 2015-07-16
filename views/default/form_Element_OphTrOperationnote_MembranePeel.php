@@ -20,7 +20,7 @@
 <div class="element-fields">
 	<?php echo $form->radioBoolean($element, 'membrane_blue')?>
 	<?php echo $form->radioBoolean($element, 'brilliant_blue')?>
-	<?php echo $form->textField($element, 'other_dye',array(),array(),array_merge($form->layoutColumns, array('field'=>3)))?>
-	<?php echo $form->textArea($element, 'comments', array('rows' => 4),false,array(),array_merge($form->layoutColumns, array('field'=>6)))?>
+	<?php echo $form->textField($element, 'other_dye', array(), array(), array_merge($form->layoutColumns, array('field'=>3)))?>
+	<?php echo $form->textArea($element, 'comments', array('rows' => 4), false, array(), array_merge($form->layoutColumns, array('field'=>6)))?>
 </div>
 

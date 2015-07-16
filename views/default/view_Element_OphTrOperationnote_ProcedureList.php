@@ -21,9 +21,11 @@
 <section class="element element-data">
 	<h3 class="data-title"><?php echo $element->elementType->name ?></h3>
 	<ul class="data-value highlight important">
-		<?php foreach ($element->procedures as $procedure) {?>
+		<?php foreach ($element->procedures as $procedure) {
+    ?>
 			<li><?php echo $element->eye->adjective?> <?php echo $procedure->term?></li>
-		<?php }?>
+		<?php 
+}?>
 	</ul>
 	<div class="sub-elements">
 		<?php $this->renderChildOpenElements($element, 'view', $form, $data)?>

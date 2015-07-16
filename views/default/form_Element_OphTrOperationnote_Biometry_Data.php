@@ -25,20 +25,24 @@
 				<h4>Right side</h4>
 			</div>
 			<?php if ($element->hasRight()) {
-				$this->renderPartial('form_Element_OphTrOperationnote_Biometry_Data_Fields', array('side' => 'right', 'element' => $element));
-			} else { ?>
+    $this->renderPartial('form_Element_OphTrOperationnote_Biometry_Data_Fields', array('side' => 'right', 'element' => $element));
+} else {
+    ?>
 				<div class="data-value">Not recorded</div>
-			<?php } ?>
+			<?php 
+} ?>
 		</div>
 		<div class="element-eye left-eye column">
 			<div class="element-header left-side">
 				<h4>Left side</h4>
 			</div>
 			<?php if ($element->hasLeft()) {
-				$this->renderPartial('form_Element_OphTrOperationnote_Biometry_Data_Fields', array('side' => 'left', 'element' => $element));
-			} else { ?>
+    $this->renderPartial('form_Element_OphTrOperationnote_Biometry_Data_Fields', array('side' => 'left', 'element' => $element));
+} else {
+    ?>
 				<div class="data-value">Not recorded</div>
-			<?php } ?>
+			<?php 
+} ?>
 		</div>
 	</div>
 </section>

@@ -15,5 +15,5 @@
 
 class OphTrOperationnote_Mmc_Volume extends BaseActiveRecordVersioned
 {
-	const SELECTION_LABEL_FIELD = 'value';
+    const SELECTION_LABEL_FIELD = 'value';
 }

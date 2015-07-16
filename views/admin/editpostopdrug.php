@@ -20,19 +20,19 @@
 ?>
 <div class="box admin">
 	<h2>Edit Per Op drug</h2>
-	<?php echo $this->renderPartial('//admin/_form_errors',array('errors'=>$errors))?>
+	<?php echo $this->renderPartial('//admin/_form_errors', array('errors'=>$errors))?>
 	<?php
-	$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-		'id'=>'adminform',
-		'enableAjaxValidation'=>false,
-		'focus'=>'#username',
-		'layoutColumns'=>array(
-			'label' => 2,
-			'field' => 5
-		)
-	))?>
-		<?php echo $form->textField($drug,'name')?>
-		<?php echo $form->checkBox($drug,'active')?>
+    $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
+        'id'=>'adminform',
+        'enableAjaxValidation'=>false,
+        'focus'=>'#username',
+        'layoutColumns'=>array(
+            'label' => 2,
+            'field' => 5
+        )
+    ))?>
+		<?php echo $form->textField($drug, 'name')?>
+		<?php echo $form->checkBox($drug, 'active')?>
 		<?php echo $form->formActions(array('cancel-uri'=>'/OphTrOperationnote/admin/viewPostOpDrugs'))?>
 	<?php $this->endWidget()?>
 </div>

@@ -75,9 +75,11 @@
 				<h4>Details</h4>
 				<div class="details pronounced">
 					<ul>
-					<?php foreach (explode(chr(10),CHtml::encode($element->report)) as $line) {?>
+					<?php foreach (explode(chr(10), CHtml::encode($element->report)) as $line) {
+    ?>
 						<li><?php echo $line?></li>
-					<?php }?>
+					<?php 
+}?>
 					</ul>
 				</div>
 			</div>
@@ -90,13 +92,20 @@
 				</div>
 				<div class="large-6 column">
 					<div class="data-value">
-						<?php if (!$element->operative_devices) {?>
+						<?php if (!$element->operative_devices) {
+    ?>
 							None
-						<?php } else {?>
-							<?php foreach ($element->operative_devices as $device) {?>
+						<?php 
+} else {
+    ?>
+							<?php foreach ($element->operative_devices as $device) {
+    ?>
 								<?php echo $device->name?><br>
-							<?php }?>
-						<?php }?>
+							<?php 
+}
+    ?>
+						<?php 
+}?>
 					</div>
 				</div>
 			</div>
@@ -104,16 +113,23 @@
 			<div class="data-row">
 				<h4>Per Operative Complications</h4>
 				<div class="details">
-					<?php if (!$element->complications && !$element->complication_notes) {?>
+					<?php if (!$element->complications && !$element->complication_notes) {
+    ?>
 						<div class="data-value">None</div>
-					<?php } else {?>
+					<?php 
+} else {
+    ?>
 						<ul>
-						<?php foreach ($element->complications as $complication) {?>
+						<?php foreach ($element->complications as $complication) {
+    ?>
 							<li><?php echo $complication->name?></li>
-						<?php }?>
+						<?php 
+}
+    ?>
 						</ul>
 						<?php echo CHtml::encode($element->complication_notes)?>
-					<?php }?>
+					<?php 
+}?>
 				</div>
 			</div>
 		</div>
@@ -121,27 +137,27 @@
 			<div class="data-row">
 				<div class="details">
 					<?php
-					$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'idSuffix'=>'Cataract',
-						'side'=>$element->eye->getShortName(),
-						'mode'=>'view',
-						'width'=>150,
-						'height'=>150,
-						'model'=>$element,
-						'attribute'=>'eyedraw',
-					));
-					?>
+                    $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                        'idSuffix'=>'Cataract',
+                        'side'=>$element->eye->getShortName(),
+                        'mode'=>'view',
+                        'width'=>150,
+                        'height'=>150,
+                        'model'=>$element,
+                        'attribute'=>'eyedraw',
+                    ));
+                    ?>
 					<?php
-					$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'idSuffix'=>'Position',
-						'side'=>$element->eye->getShortName(),
-						'mode'=>'view',
-						'width'=>135,
-						'height'=>135,
-						'model'=>$element,
-						'attribute'=>'eyedraw2',
-					));
-					?>
+                    $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                        'idSuffix'=>'Position',
+                        'side'=>$element->eye->getShortName(),
+                        'mode'=>'view',
+                        'width'=>135,
+                        'height'=>135,
+                        'model'=>$element,
+                        'attribute'=>'eyedraw2',
+                    ));
+                    ?>
 					<?php echo CHtml::encode($element->report2)?>
 				</div>
 			</div>

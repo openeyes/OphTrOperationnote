@@ -32,101 +32,101 @@
  */
 class Element_OphTrOperationnote_Vitrectomy extends Element_OnDemand
 {
-	public $service;
+    public $service;
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @return ElementOperation the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'et_ophtroperationnote_vitrectomy';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'et_ophtroperationnote_vitrectomy';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('event_id, gauge_id, pvd_induced, eyedraw, comments', 'safe'),
-			array('gauge_id, pvd_induced', 'required'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, event_id, gauge_id, pvd_induced', 'safe', 'on' => 'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('event_id, gauge_id, pvd_induced, eyedraw, comments', 'safe'),
+            array('gauge_id, pvd_induced', 'required'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, event_id, gauge_id, pvd_induced', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
-			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'gauge' => array(self::BELONGS_TO, 'OphTrOperationnote_VitrectomyGauge', 'gauge_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
-			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
+            'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
+            'gauge' => array(self::BELONGS_TO, 'OphTrOperationnote_VitrectomyGauge', 'gauge_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
+            'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'gauge_id' => 'Gauge',
-			'pvd_induced' => 'PVD Induced',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'gauge_id' => 'Gauge',
+            'pvd_induced' => 'PVD Induced',
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		$criteria = new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('gauge_id', $this->gauge_id);
-		$criteria->compare('pvd_induced', $this->pvd_induced);
+        $criteria->compare('id', $this->id, true);
+        $criteria->compare('event_id', $this->event_id, true);
+        $criteria->compare('gauge_id', $this->gauge_id);
+        $criteria->compare('pvd_induced', $this->pvd_induced);
 
-		return new CActiveDataProvider(get_class($this), array(
-				'criteria' => $criteria,
-			));
-	}
+        return new CActiveDataProvider(get_class($this), array(
+                'criteria' => $criteria,
+            ));
+    }
 
-	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
-	}
+    /**
+     * Set default values for forms on create
+     */
+    public function setDefaultOptions()
+    {
+    }
 
-	public function getEye()
-	{
-		if ($this->event_id && $pl = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?',array($this->event_id))) {
-			return $pl->eye;
-		}
-	}
+    public function getEye()
+    {
+        if ($this->event_id && $pl = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=?', array($this->event_id))) {
+            return $pl->eye;
+        }
+    }
 }

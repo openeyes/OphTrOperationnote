@@ -20,25 +20,37 @@
 <table>
 	<thead>
 		<tr>
-			<?php foreach ($report->getColumns() as $column) {?>
+			<?php foreach ($report->getColumns() as $column) {
+    ?>
 				<th><?php echo $column?></th>
-			<?php }?>
+			<?php 
+}?>
 		</tr>
 	<tbody>
-		<?php if (empty($report->operations)) {?>
+		<?php if (empty($report->operations)) {
+    ?>
 			<tr>
 				<td colspan="6">
 					No operations were found with the selected search criteria.
 				</td>
 			</tr>
-		<?php }else{?>
-			<?php foreach ($report->operations as $ts => $operation) {?>
+		<?php 
+} else {
+    ?>
+			<?php foreach ($report->operations as $ts => $operation) {
+    ?>
 				<tr>
-					<?php foreach ($operation as $item) {?>
+					<?php foreach ($operation as $item) {
+    ?>
 						<td><?php echo $item?></td>
-					<?php }?>
+					<?php 
+}
+    ?>
 				</tr>
-			<?php }?>
-		<?php }?>
+			<?php 
+}
+    ?>
+		<?php 
+}?>
 	</tbody>
 </table>

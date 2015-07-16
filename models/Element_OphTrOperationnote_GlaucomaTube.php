@@ -43,91 +43,90 @@
  */
 class Element_OphTrOperationnote_GlaucomaTube extends Element_OnDemand
 {
-	public $service;
+    public $service;
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return Element_OphTrOperationnote_GlaucomaTube the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @return Element_OphTrOperationnote_GlaucomaTube the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'et_ophtroperationnote_glaucomatube';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'et_ophtroperationnote_glaucomatube';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-				array('plate_position_id, plate_limbus, tube_position_id, stent, slit, visco_in_ac, flow_tested,
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+                array('plate_position_id, plate_limbus, tube_position_id, stent, slit, visco_in_ac, flow_tested,
 					eyedraw, description', 'required'),
-				array('plate_limbus', 'numerical', 'integerOnly' => true, 'min' => 2, 'max' => 15,
-						'tooSmall' => '{attribute} cannot be smaller than 2mm', 'tooBig' => '{attribute} cannot be more than 15mm'),
-				array('event_id, plate_position_id, plate_limbus, tube_position_id, stent, slit, visco_in_ac,
+                array('plate_limbus', 'numerical', 'integerOnly' => true, 'min' => 2, 'max' => 15,
+                        'tooSmall' => '{attribute} cannot be smaller than 2mm', 'tooBig' => '{attribute} cannot be more than 15mm'),
+                array('event_id, plate_position_id, plate_limbus, tube_position_id, stent, slit, visco_in_ac,
 				flow_tested, eyedraw, description', 'safe'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, event_id', 'safe', 'on' => 'search'),
-		);
-	}
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, event_id', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-				'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
-				'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-				'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
-				'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-				'plate_position' => array(self::BELONGS_TO, 'OphTrOperationnote_GlaucomaTube_PlatePosition', 'plate_position_id'),
-				'tube_position' => array(self::BELONGS_TO, 'OphTrOperationnote_GlaucomaTube_TubePosition', 'tube_position_id'),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+                'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
+                'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
+                'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
+                'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+                'plate_position' => array(self::BELONGS_TO, 'OphTrOperationnote_GlaucomaTube_PlatePosition', 'plate_position_id'),
+                'tube_position' => array(self::BELONGS_TO, 'OphTrOperationnote_GlaucomaTube_TubePosition', 'tube_position_id'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'plate_position_id' => 'Plate postiion',
-			'tube_position_id' => 'Tube position',
-			'visco_in_ac' => 'Visco in AC'
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'plate_position_id' => 'Plate postiion',
+            'tube_position_id' => 'Tube position',
+            'visco_in_ac' => 'Visco in AC'
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		$criteria = new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id, true);
+        $criteria->compare('id', $this->id, true);
 
-		return new CActiveDataProvider(get_class($this), array(
-				'criteria' => $criteria,
-		));
-	}
-
+        return new CActiveDataProvider(get_class($this), array(
+                'criteria' => $criteria,
+        ));
+    }
 }

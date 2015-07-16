@@ -23,14 +23,23 @@
 		<div class="row data-row">
 			<div class="large-3 column">
 				<h4 class="data-title"><?php echo $element->elementType->name?></h4>
-				<div class="data-value <?php if (!$element->drugs) {?> none<?php }?>">
-					<?php if (!$element->drugs) {?>
+				<div class="data-value <?php if (!$element->drugs) {
+    ?> none<?php 
+}?>">
+					<?php if (!$element->drugs) {
+    ?>
 						None
-					<?php } else {?>
-						<?php foreach ($element->drugs as $drug) {?>
+					<?php 
+} else {
+    ?>
+						<?php foreach ($element->drugs as $drug) {
+    ?>
 							<?php echo $drug->name?><br/>
-						<?php }?>
-					<?php }?>
+						<?php 
+}
+    ?>
+					<?php 
+}?>
 				</div>
 			</div>
 		</div>

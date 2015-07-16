@@ -26,58 +26,57 @@
 
 class OphTrOperationnote_Trabectome_ComplicationAssignment extends BaseActiveRecordVersioned
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @return the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'ophtroperationnote_trabectome_comp_ass';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'ophtroperationnote_trabectome_comp_ass';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		return array(
-				array('element_id, complication_id', 'safe'),
-				array('element_id, complication_id', 'required'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-				array('id', 'safe', 'on' => 'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        return array(
+                array('element_id, complication_id', 'safe'),
+                array('element_id, complication_id', 'required'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+                array('id', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-				'element' => array(self::BELONGS_TO, 'Element_OphTrOperationnote_Trabectome', 'element_id'),
-				'complication' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabectome_Complication', 'complication_id'),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+                'element' => array(self::BELONGS_TO, 'Element_OphTrOperationnote_Trabectome', 'element_id'),
+                'complication' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabectome_Complication', 'complication_id'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-				'id' => 'ID',
-		);
-	}
-
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+                'id' => 'ID',
+        );
+    }
 }

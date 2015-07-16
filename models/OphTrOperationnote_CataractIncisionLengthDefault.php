@@ -31,91 +31,90 @@
  */
 class OphTrOperationnote_CataractIncisionLengthDefault extends BaseActiveRecordVersioned
 {
+    /**
+     * Returns the static model of the specified AR class.
+     * @return ElementOperation the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
-
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'ophtroperationnote_cataract_incision_length_default';
-	}
-
-
-	/**
-	 * @return string human readable representation of the linked hierarchy type and id
-	 */
-	public function getPrettyHierarchy()
-	{
-		return "n/a";
-	}
-
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('firm_id, value', 'required'),
-			array('firm_id', 'unique'),
-		);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'ophtroperationnote_cataract_incision_length_default';
+    }
 
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array();
-	}
+    /**
+     * @return string human readable representation of the linked hierarchy type and id
+     */
+    public function getPrettyHierarchy()
+    {
+        return "n/a";
+    }
 
-	public function behaviors()
-	{
-		return array(
-			'LookupTable' => 'LookupTable',
-		);
-	}
-
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'firm' => array(self::BELONGS_TO, 'Firm', 'firm_id'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('firm_id, value', 'required'),
+            array('firm_id', 'unique'),
+        );
+    }
 
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array();
+    }
 
-		$criteria = new CDbCriteria;
+    public function behaviors()
+    {
+        return array(
+            'LookupTable' => 'LookupTable',
+        );
+    }
 
-		$criteria->compare('id', $this->id, true);
 
-		return new CActiveDataProvider(get_class($this), array(
-			'criteria' => $criteria,
-		));
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'firm' => array(self::BELONGS_TO, 'Firm', 'firm_id'),
+        );
+    }
+
+
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id, true);
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria' => $criteria,
+        ));
+    }
 }

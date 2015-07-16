@@ -76,16 +76,16 @@
 		</div>
 		<div class="large-6 column">
 			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-				'idSuffix'=> 'Buckle',
-				'side'=>$element->eye->getShortName(),
-				'mode'=>'view',
-				'width'=>200,
-				'height'=>200,
-				'model'=>$element,
-				'attribute'=>'eyedraw',
-			));
-			?>
+            $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                'idSuffix'=> 'Buckle',
+                'side'=>$element->eye->getShortName(),
+                'mode'=>'view',
+                'width'=>200,
+                'height'=>200,
+                'model'=>$element,
+                'attribute'=>'eyedraw',
+            ));
+            ?>
 		</div>
 	</div>
 </section>

@@ -15,15 +15,15 @@
 
 class OphTrOperationnote_Trabeculectomy_Complications extends BaseActiveRecordVersioned
 {
-	public function relations()
-	{
-		return array(
-			'complication' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Complication', 'complication_id'),
-		);
-	}
+    public function relations()
+    {
+        return array(
+            'complication' => array(self::BELONGS_TO, 'OphTrOperationnote_Trabeculectomy_Complication', 'complication_id'),
+        );
+    }
 
-	public function getName()
-	{
-		return $this->complication->name;
-	}
+    public function getName()
+    {
+        return $this->complication->name;
+    }
 }

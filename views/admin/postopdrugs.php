@@ -34,14 +34,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach (OphTrOperationnote_PostopDrug::model()->findAll(array('order'=>'display_order asc')) as $i => $drug) {?>
+				<?php foreach (OphTrOperationnote_PostopDrug::model()->findAll(array('order'=>'display_order asc')) as $i => $drug) {
+    ?>
 					<tr class="clickable" data-id="<?php echo $drug->id?>" data-uri="OphTrOperationnote/admin/editPostOpDrug/<?php echo $drug->id?>">
 						<td><input type="checkbox" name="drugs[]" value="<?php echo $drug->id?>" /></td>
-						<td><?php echo ($drug->active) ? ($drug->name) : ( "<s>".$drug->name."</s>");?></td>
-						<td><?php echo ($drug->active) ? ('<i class="fa fa-check"></i>') : ( '<i class="fa fa-times"></i>');?></td>
+						<td><?php echo ($drug->active) ? ($drug->name) : ("<s>".$drug->name."</s>");
+    ?></td>
+						<td><?php echo ($drug->active) ? ('<i class="fa fa-check"></i>') : ('<i class="fa fa-times"></i>');
+    ?></td>
 
 					</tr>
-				<?php }?>
+				<?php 
+}?>
 			</tbody>
 			<tfoot class="pagination-container">
 				<tr>

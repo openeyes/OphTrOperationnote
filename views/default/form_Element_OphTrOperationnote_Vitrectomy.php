@@ -26,15 +26,15 @@ $form->layoutColumns=array('label'=>3,'field'=>9);
 	<div class="eyedraw-row row vitrectomy">
 		<div class="fixed column">
 			<?php $this->renderPartial($element->form_view . '_OEEyeDraw', array(
-				'element' => $element,
-				'form' => $form
-			));?>
+                'element' => $element,
+                'form' => $form
+            ));?>
 		</div>
 		<div class="fluid column">
 			<?php $this->renderPartial($element->form_view . '_OEEyeDraw_fields', array(
-				'form' => $form,
-				'element' => $element
-			));?>
+                'form' => $form,
+                'element' => $element
+            ));?>
 		</div>
 	</div>
 </div>

@@ -121,9 +121,11 @@
 				<h4>Details</h4>
 				<div class="details pronounced">
 					<ul>
-					<?php foreach (explode(chr(10),CHtml::encode($element->report)) as $line) {?>
+					<?php foreach (explode(chr(10), CHtml::encode($element->report)) as $line) {
+    ?>
 						<li><?php echo $line?></li>
-					<?php }?>
+					<?php 
+}?>
 					</ul>
 				</div>
 			</div>
@@ -136,17 +138,29 @@
 				</div>
 				<div class="large-6 column">
 					<div class="data-value">
-						<?php if (!$element->difficulties) {?>
+						<?php if (!$element->difficulties) {
+    ?>
 							None
-						<?php } else {?>
-							<?php foreach ($element->difficulties as $difficulty) {?>
-								<?php if ($difficulty->name == 'Other') {?>
-									<?php echo str_replace("\n",'<br/>',$element->difficulty_other)?>
-								<?php }else{?>
+						<?php 
+} else {
+    ?>
+							<?php foreach ($element->difficulties as $difficulty) {
+    ?>
+								<?php if ($difficulty->name == 'Other') {
+    ?>
+									<?php echo str_replace("\n", '<br/>', $element->difficulty_other)?>
+								<?php 
+} else {
+    ?>
 									<?php echo $difficulty->name?><br>
-								<?php }?>
-							<?php }?>
-						<?php }?>
+								<?php 
+}
+    ?>
+							<?php 
+}
+    ?>
+						<?php 
+}?>
 					</div>
 				</div>
 			</div>
@@ -154,21 +168,33 @@
 			<div class="data-row">
 				<h4>Complications</h4>
 				<div class="details">
-					<?php if (!$element->complications) {?>
+					<?php if (!$element->complications) {
+    ?>
 						<div class="data-value">None</div>
-					<?php } else {?>
+					<?php 
+} else {
+    ?>
 						<ul>
-						<?php foreach ($element->complications as $complication) {?>
+						<?php foreach ($element->complications as $complication) {
+    ?>
 							<li>
-								<?php if ($complication->name == 'Other') {?>
+								<?php if ($complication->name == 'Other') {
+    ?>
 									<?php echo $element->complication_other?>
-								<?php }else{?>
+								<?php 
+} else {
+    ?>
 									<?php echo $complication->name?>
-								<?php }?>
+								<?php 
+}
+    ?>
 							</li>
-						<?php }?>
+						<?php 
+}
+    ?>
 						</ul>
-					<?php }?>
+					<?php 
+}?>
 				</div>
 			</div>
 		</div>
@@ -176,16 +202,16 @@
 			<div class="data-row">
 				<div class="details">
 					<?php
-					$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'idSuffix'=>'Trabeculectomy',
-						'side'=>$element->eye->getShortName(),
-						'mode'=>'view',
-						'width'=>250,
-						'height'=>250,
-						'scale'=>0.72,
-						'model'=>$element,
-						'attribute'=>'eyedraw',
-					))?>
+                    $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                        'idSuffix'=>'Trabeculectomy',
+                        'side'=>$element->eye->getShortName(),
+                        'mode'=>'view',
+                        'width'=>250,
+                        'height'=>250,
+                        'scale'=>0.72,
+                        'model'=>$element,
+                        'attribute'=>'eyedraw',
+                    ))?>
 				</div>
 			</div>
 		</div>

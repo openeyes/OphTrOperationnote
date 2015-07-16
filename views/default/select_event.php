@@ -18,9 +18,9 @@
  */
 ?>
 <?php
-	$this->beginContent('//patient/event_container');
-	$assetAliasPath = 'application.modules.OphTrOperationbooking.assets';
-	$this->moduleNameCssClass.=' edit';
+    $this->beginContent('//patient/event_container');
+    $assetAliasPath = 'application.modules.OphTrOperationbooking.assets';
+    $this->moduleNameCssClass.=' edit';
 ?>
 
 	<div class="row">
@@ -28,13 +28,13 @@
 
 			<section class="element">
 				<?php $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-						'id'=>'operation-note-select',
-						'enableAjaxValidation'=>false,
-					));
+                        'id'=>'operation-note-select',
+                        'enableAjaxValidation'=>false,
+                    ));
 
-					// Event actions
-					$this->event_actions[] = EventAction::button('Create Operation Note', 'save', array('level' => 'secondary'), array('form'=>'operation-note-select','class'=>'button small'));
-				?>
+                    // Event actions
+                    $this->event_actions[] = EventAction::button('Create Operation Note', 'save', array('level' => 'secondary'), array('form'=>'operation-note-select', 'class'=>'button small'));
+                ?>
 					<?php  $this->displayErrors($errors)?>
 
 					<header class="element-header">
@@ -45,18 +45,23 @@
 
 						<div class="field-row">
 							<div class="field-info">
-								<?php if (count($bookings) >0) {?>
+								<?php if (count($bookings) >0) {
+    ?>
 									Please indicate whether this operation note relates to a booking or an unbooked emergency:
-								<?php } else {?>
+								<?php 
+} else {
+    ?>
 									There are no open bookings in the current episode so only an emergency operation note can be created.
-								<?php }?>
+								<?php 
+}?>
 							</div>
 						</div>
 
 						<fieldset class="row field-row">
 							<legend class="large-2 column">Select:</legend>
 							<div class="large-6 column end">
-								<?php foreach ($bookings as $booking) {?>
+								<?php foreach ($bookings as $booking) {
+    ?>
 									<label class="highlight booking">
 										<span class="row">
 											<span class="large-1 column">
@@ -73,17 +78,23 @@
 											</span>
 											<span class="large-4 column">
 												<?php foreach ($booking->operation->procedures as $i => $procedure) {
-												if ($i >0) { echo "<br/>"; }
-													 echo $booking->operation->eye->name.' '.$procedure->term;
-											}?>
+    if ($i >0) {
+        echo "<br/>";
+    }
+    echo $booking->operation->eye->name.' '.$procedure->term;
+}
+    ?>
 											</span>
 										</span>
 									</label>
-								<?php }?>
+								<?php 
+}?>
 								<label class="highlight booking">
 									<span class="row">
 										<span class="large-1 column">
-											<input type="radio" value="emergency" name="SelectBooking" <?php if (count($bookings)==0) {?>checked="checked" <?php }?>/>
+											<input type="radio" value="emergency" name="SelectBooking" <?php if (count($bookings)==0) {
+    ?>checked="checked" <?php 
+}?>/>
 										</span>
 										<span class="large-11 column">
 											Emergency

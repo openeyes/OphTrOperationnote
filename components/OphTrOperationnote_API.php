@@ -19,77 +19,81 @@
 
 class OphTrOperationnote_API extends BaseAPI
 {
-	/**
-	 * Return the list of procedures as a string for use in correspondence for the given patient and episode.
-	 * if the $snomed_terms is true, return the snomed_term, otherwise the standard text term.
-	 *
-	 * @param Patient $patient
-	 * @param Episode $episode
-	 * @param boolean $snomed_terms
-	 * @return string
-	 */
-	public function getLetterProcedures($patient)
-	{
-		$return = '';
+    /**
+     * Return the list of procedures as a string for use in correspondence for the given patient and episode.
+     * if the $snomed_terms is true, return the snomed_term, otherwise the standard text term.
+     *
+     * @param Patient $patient
+     * @param Episode $episode
+     * @param boolean $snomed_terms
+     * @return string
+     */
+    public function getLetterProcedures($patient)
+    {
+        $return = '';
 
-		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
-				foreach ($plist->procedures as $i => $procedure) {
-					if ($i) $return .= ', ';
-					$return .= $plist->eye->adjective.' '.$procedure->term;
-				}
-			}
-		}
+        if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+            if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
+                foreach ($plist->procedures as $i => $procedure) {
+                    if ($i) {
+                        $return .= ', ';
+                    }
+                    $return .= $plist->eye->adjective.' '.$procedure->term;
+                }
+            }
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 
-	public function getLetterProceduresBookingEventID($patient)
-	{
-		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
-				return $plist->booking_event_id;
-			}
-		}
-	}
+    public function getLetterProceduresBookingEventID($patient)
+    {
+        if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+            if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
+                return $plist->booking_event_id;
+            }
+        }
+    }
 
-	public function getLastEye($patient)
-	{
-		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
-				return $plist->eye_id;
-			}
-		}
-	}
+    public function getLastEye($patient)
+    {
+        if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+            if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
+                return $plist->eye_id;
+            }
+        }
+    }
 
-	public function getLetterProceduresSNOMED($patient)
-	{
-		$return = '';
+    public function getLetterProceduresSNOMED($patient)
+    {
+        $return = '';
 
-		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
-				foreach ($plist->procedures as $i => $procedure) {
-					if ($i) $return .= ', ';
-					$return .= $plist->eye->adjective.' '.$procedure->snomed_term;
-				}
-			}
-		}
+        if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+            if ($plist = $this->getElementForLatestEventInEpisode($episode, 'Element_OphTrOperationnote_ProcedureList')) {
+                foreach ($plist->procedures as $i => $procedure) {
+                    if ($i) {
+                        $return .= ', ';
+                    }
+                    $return .= $plist->eye->adjective.' '.$procedure->snomed_term;
+                }
+            }
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 
-	public function getOpnoteWithCataractElementInCurrentEpisode($patient)
-	{
-		if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
-			$event_type = EventType::model()->find('class_name=?',array('OphTrOperationnote'));
+    public function getOpnoteWithCataractElementInCurrentEpisode($patient)
+    {
+        if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+            $event_type = EventType::model()->find('class_name=?', array('OphTrOperationnote'));
 
-			$criteria = new CDbCriteria;
-			$criteria->compare('episode_id',$episode->id);
-			$criteria->compare('event_type_id',$event_type->id);
+            $criteria = new CDbCriteria;
+            $criteria->compare('episode_id', $episode->id);
+            $criteria->compare('event_type_id', $event_type->id);
 
-			return Element_OphTrOperationnote_Cataract::model()
-				->with('event')
-				->find($criteria);
-		}
-	}
+            return Element_OphTrOperationnote_Cataract::model()
+                ->with('event')
+                ->find($criteria);
+        }
+    }
 }

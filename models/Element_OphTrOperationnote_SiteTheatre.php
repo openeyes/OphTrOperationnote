@@ -32,81 +32,80 @@
  */
 class Element_OphTrOperationnote_SiteTheatre extends Element_OpNote
 {
+    /**
+     * Returns the static model of the specified AR class.
+     * @return ElementOperation the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'et_ophtroperationnote_site_theatre';
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'et_ophtroperationnote_site_theatre';
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('event_id, site_id, theatre_id', 'safe'),
+            array('site_id', 'required'),
+        );
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('event_id, site_id, theatre_id', 'safe'),
-			array('site_id', 'required'),
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'site_id' => 'Site',
+            'theatre_id' => 'Theatre'
+        );
+    }
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
+            'site' => array(self::BELONGS_TO, 'Site', 'site_id'),
+            'theatre' => array(self::BELONGS_TO, 'OphTrOperationbooking_Operation_Theatre', 'theatre_id')
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'site_id' => 'Site',
-			'theatre_id' => 'Theatre'
-		);
-	}
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'site' => array(self::BELONGS_TO, 'Site', 'site_id'),
-			'theatre' => array(self::BELONGS_TO, 'OphTrOperationbooking_Operation_Theatre', 'theatre_id')
-		);
-	}
-
-	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
-		if(Yii::app()->controller->getBookingOperation()){
-			$api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
-			if( ! $this->site_id ) {
-				//var_dump(Yii::app()->controller->getBookingOperation()->event_id);
-				//die;
-				$this->site_id = $api->findSiteForBookingEvent(Event::model()->findByPk(Yii::app()->controller->getBookingOperation()->event_id))->id;
-			}
-			if( ! $this->theatre_id ){
-				$this->theatre_id = $api->findTheatreForBookingEvent(Event::model()->findByPk(Yii::app()->controller->getBookingOperation()->event_id))->id;
-			}
-		}else{
-			if(! $this->site_id) {
-				$this->site_id = Yii::app()->session['selected_site_id'];
-			}
-		}
-	}
+    /**
+     * Set default values for forms on create
+     */
+    public function setDefaultOptions()
+    {
+        if (Yii::app()->controller->getBookingOperation()) {
+            $api = Yii::app()->moduleAPI->get('OphTrOperationbooking');
+            if (! $this->site_id) {
+                //var_dump(Yii::app()->controller->getBookingOperation()->event_id);
+                //die;
+                $this->site_id = $api->findSiteForBookingEvent(Event::model()->findByPk(Yii::app()->controller->getBookingOperation()->event_id))->id;
+            }
+            if (! $this->theatre_id) {
+                $this->theatre_id = $api->findTheatreForBookingEvent(Event::model()->findByPk(Yii::app()->controller->getBookingOperation()->event_id))->id;
+            }
+        } else {
+            if (! $this->site_id) {
+                $this->site_id = Yii::app()->session['selected_site_id'];
+            }
+        }
+    }
 }

@@ -15,6 +15,6 @@
 
 class OphTrOperationnote_Antimetabolite_Application_Type extends BaseActiveRecordVersioned
 {
-	const SPONGE = 1;
-	const INJECTION = 2;
+    const SPONGE = 1;
+    const INJECTION = 2;
 }

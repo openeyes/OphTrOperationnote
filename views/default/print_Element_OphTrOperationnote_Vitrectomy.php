@@ -48,11 +48,13 @@
 				</div>
 			</div>
 
-			<?php if ($element->comments) {?>
+			<?php if ($element->comments) {
+    ?>
 				<div class="row">
 					<div class="large-6 column text-right">
 						<div class="data-label">
-							<?php echo CHtml::encode($element->getAttributeLabel('comments')); ?>:
+							<?php echo CHtml::encode($element->getAttributeLabel('comments'));
+    ?>:
 						</div>
 					</div>
 					<div class="large-6 column">
@@ -61,20 +63,21 @@
 						</div>
 					</div>
 				</div>
-			<?php }?>
+			<?php 
+}?>
 		</div>
 		<div class="large-6 column">
 			<?php
-			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-				'idSuffix'=>'Vitrectomy',
-				'side'=>$element->eye->getShortName(),
-				'mode'=>'view',
-				'width'=>200,
-				'height'=>200,
-				'model'=>$element,
-				'attribute'=>'eyedraw',
-			));
-			?>
+            $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                'idSuffix'=>'Vitrectomy',
+                'side'=>$element->eye->getShortName(),
+                'mode'=>'view',
+                'width'=>200,
+                'height'=>200,
+                'model'=>$element,
+                'attribute'=>'eyedraw',
+            ));
+            ?>
 		</div>
 	</div>
 </section>

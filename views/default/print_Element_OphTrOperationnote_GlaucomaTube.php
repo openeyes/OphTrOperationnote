@@ -123,16 +123,16 @@
 			<div class="data-row">
 				<div class="details">
 				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-								'idSuffix'=>'GlaucomaTube',
-								'mode'=>'view',
-								'width'=>200,
-								'height'=>200,
-								'model'=>$element,
-								'attribute'=>'eyedraw',
-								'scale' => 0.72
-						));
-				?>
+                $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                                'idSuffix'=>'GlaucomaTube',
+                                'mode'=>'view',
+                                'width'=>200,
+                                'height'=>200,
+                                'model'=>$element,
+                                'attribute'=>'eyedraw',
+                                'scale' => 0.72
+                        ));
+                ?>
 				</div>
 			</div>
 		</div>

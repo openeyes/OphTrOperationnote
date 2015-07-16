@@ -18,6 +18,6 @@
  */
 ?>
 
-<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(OphTrOperationnote_VitrectomyGauge::model()->activeOrPk($element->gauge_id)->findAll(),'id','value'),array('empty'=>'- Please select -'),false,array('field'=>3))?>
-<?php echo $form->radioBoolean($element, 'pvd_induced',array())?>
+<?php echo $form->dropDownList($element, 'gauge_id', CHtml::listData(OphTrOperationnote_VitrectomyGauge::model()->activeOrPk($element->gauge_id)->findAll(), 'id', 'value'), array('empty'=>'- Please select -'), false, array('field'=>3))?>
+<?php echo $form->radioBoolean($element, 'pvd_induced', array())?>
 <?php echo $form->textArea($element, 'comments', array('rows' => 4))?>

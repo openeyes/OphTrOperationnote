@@ -19,13 +19,13 @@
 
 class Element_OnDemand extends Element_OpNote
 {
-	public function getContainer_form_view()
-	{
-		return 'element_ondemand_container_form';
-	}
+    public function getContainer_form_view()
+    {
+        return 'element_ondemand_container_form';
+    }
 
-	public function getContainer_view_view()
-	{
-		return false;
-	}
+    public function getContainer_view_view()
+    {
+        return false;
+    }
 }

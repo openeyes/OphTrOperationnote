@@ -30,120 +30,117 @@
  */
 class Element_OphTrOperationnote_PostOpDrugs extends Element_OpNote
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return Element_OphTrOperationnote_PostOpDrugs the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @return Element_OphTrOperationnote_PostOpDrugs the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'et_ophtroperationnote_postop_drugs';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'et_ophtroperationnote_postop_drugs';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('event_id', 'safe'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('event_id', 'safe'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'drug_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_OperationDrug', 'ophtroperationnote_postop_drugs_id'),
-			'drugs' => array(self::HAS_MANY, 'OphTrOperationnote_PostopDrug', 'drug_id',
-				'through' => 'drug_assignments'),
-			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
-			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
+            'drug_assignments' => array(self::HAS_MANY, 'OphTrOperationnote_OperationDrug', 'ophtroperationnote_postop_drugs_id'),
+            'drugs' => array(self::HAS_MANY, 'OphTrOperationnote_PostopDrug', 'drug_id',
+                'through' => 'drug_assignments'),
+            'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
+            'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		$criteria = new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
+        $criteria->compare('id', $this->id, true);
+        $criteria->compare('event_id', $this->event_id, true);
 
-		return new CActiveDataProvider(get_class($this), array(
-				'criteria' => $criteria,
-			));
-	}
+        return new CActiveDataProvider(get_class($this), array(
+                'criteria' => $criteria,
+            ));
+    }
 
-	/**
-	 * Need to delete associated records
-	 * @see CActiveRecord::beforeDelete()
-	 */
-	protected function beforeDelete()
-	{
-		OphTrOperationnote_OperationDrug::model()->deleteAllByAttributes(array('ophtroperationnote_postop_drugs_id' => $this->id));
-		return parent::beforeDelete();
-	}
+    /**
+     * Need to delete associated records
+     * @see CActiveRecord::beforeDelete()
+     */
+    protected function beforeDelete()
+    {
+        OphTrOperationnote_OperationDrug::model()->deleteAllByAttributes(array('ophtroperationnote_postop_drugs_id' => $this->id));
+        return parent::beforeDelete();
+    }
 
-	public function updateDrugs($drug_ids)
-	{
-		$curr_by_id = array();
-		foreach (OphTrOperationnote_OperationDrug::model()->findAll('ophtroperationnote_postop_drugs_id = :drugsId', array(':drugsId' => $this->id)) as $od) {
-			$curr_by_id[$od->drug_id] = $od;
-		}
+    public function updateDrugs($drug_ids)
+    {
+        $curr_by_id = array();
+        foreach (OphTrOperationnote_OperationDrug::model()->findAll('ophtroperationnote_postop_drugs_id = :drugsId', array(':drugsId' => $this->id)) as $od) {
+            $curr_by_id[$od->drug_id] = $od;
+        }
 
-		foreach ($drug_ids as $d_id) {
-			if (!isset($curr_by_id[$d_id])) {
-				$da = new OphTrOperationnote_OperationDrug();
-				$da->ophtroperationnote_postop_drugs_id = $this->id;
-				$da->drug_id = $d_id;
-				if (!$da->save()) {
-					throw new Exception('Unable to save drug assignment: '.print_r($da->getErrors(),true));
-				}
-			}
-			else {
-				unset($curr_by_id[$d_id]);
-			}
-		}
+        foreach ($drug_ids as $d_id) {
+            if (!isset($curr_by_id[$d_id])) {
+                $da = new OphTrOperationnote_OperationDrug();
+                $da->ophtroperationnote_postop_drugs_id = $this->id;
+                $da->drug_id = $d_id;
+                if (!$da->save()) {
+                    throw new Exception('Unable to save drug assignment: '.print_r($da->getErrors(), true));
+                }
+            } else {
+                unset($curr_by_id[$d_id]);
+            }
+        }
 
-		foreach ($curr_by_id as $curr) {
-			if (!$curr->delete()) {
-				throw new Exception('Unable to delete drug assignment: '.print_r($curr->getErrors(),true));
-			}
-		}
-
-	}
-
+        foreach ($curr_by_id as $curr) {
+            if (!$curr->delete()) {
+                throw new Exception('Unable to delete drug assignment: '.print_r($curr->getErrors(), true));
+            }
+        }
+    }
 }

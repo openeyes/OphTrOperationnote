@@ -122,16 +122,16 @@
 			</div>
 			<div class="large-6 column">
 				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-								'mode'=>'view',
-								'width'=>200,
-								'height'=>200,
-								'model'=>$element,
-								'attribute'=>'eyedraw',
-								'scale' => 0.72,
-								'idSuffix'=>'GlaucomaTube',
-						));
-				?>
+                $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                                'mode'=>'view',
+                                'width'=>200,
+                                'height'=>200,
+                                'model'=>$element,
+                                'attribute'=>'eyedraw',
+                                'scale' => 0.72,
+                                'idSuffix'=>'GlaucomaTube',
+                        ));
+                ?>
 			</div>
 		</div>
 	</div>

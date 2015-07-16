@@ -92,59 +92,85 @@
 			</div>
 			<div class="large-6 column">
 				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'idSuffix'=>'Trabeculectomy',
-						'side'=>$element->eye->getShortName(),
-						'mode'=>'view',
-						'width'=>250,
-						'height'=>250,
-						'scale'=>0.72,
-						'model'=>$element,
-						'attribute'=>'eyedraw',
-						'idSuffix'=>'Trabeculectomy',
-					));
-				?>
+                $this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
+                        'idSuffix'=>'Trabeculectomy',
+                        'side'=>$element->eye->getShortName(),
+                        'mode'=>'view',
+                        'width'=>250,
+                        'height'=>250,
+                        'scale'=>0.72,
+                        'model'=>$element,
+                        'attribute'=>'eyedraw',
+                        'idSuffix'=>'Trabeculectomy',
+                    ));
+                ?>
 			</div>
 		</div>
 		<div class="row data-row">
 			<div class="large-4 column">
 				<h3 class="data-title">Trabeculectomy report</h3>
 				<div class="data-value highlight">
-					<?php foreach (explode(chr(10),CHtml::encode($element->report)) as $line) {?>
+					<?php foreach (explode(chr(10), CHtml::encode($element->report)) as $line) {
+    ?>
 						<?php echo $line?><br/>
-					<?php }?>
+					<?php 
+}?>
 				</div>
 			</div>
 			<div class="large-4 column">
 				<h3 class="data-title">Difficulties</h3>
 				<div class="data-value highlight">
-					<?php if (!$element->difficulties) {?>
+					<?php if (!$element->difficulties) {
+    ?>
 						None
-					<?php } else {?>
-						<?php foreach ($element->difficulties as $difficulty) {?>
-							<?php if ($difficulty->name == 'Other') {?>
-								<?php echo str_replace("\n",'<br/>',$element->difficulty_other)?>
-							<?php }else{?>
+					<?php 
+} else {
+    ?>
+						<?php foreach ($element->difficulties as $difficulty) {
+    ?>
+							<?php if ($difficulty->name == 'Other') {
+    ?>
+								<?php echo str_replace("\n", '<br/>', $element->difficulty_other)?>
+							<?php 
+} else {
+    ?>
 								<?php echo $difficulty->name?><br/>
-							<?php }?>
-						<?php }?>
-					<?php }?>
+							<?php 
+}
+    ?>
+						<?php 
+}
+    ?>
+					<?php 
+}?>
 				</div>
 			</div>
 			<div class="large-4 column">
 				<h3 class="data-title">Complications</h3>
 				<div class="data-value highlight">
-					<?php if (!$element->complications) {?>
+					<?php if (!$element->complications) {
+    ?>
 						None
-					<?php } else {?>
-						<?php foreach ($element->complications as $complication) {?>
-							<?php if ($complication->name == 'Other') {?>
-								<?php echo str_replace("\n",'<br/>',$element->complication_other)?>
-							<?php }else{?>
+					<?php 
+} else {
+    ?>
+						<?php foreach ($element->complications as $complication) {
+    ?>
+							<?php if ($complication->name == 'Other') {
+    ?>
+								<?php echo str_replace("\n", '<br/>', $element->complication_other)?>
+							<?php 
+} else {
+    ?>
 								<?php echo $complication->name?><br/>
-							<?php }?>
-						<?php }?>
-					<?php }?>
+							<?php 
+}
+    ?>
+						<?php 
+}
+    ?>
+					<?php 
+}?>
 				</div>
 			</div>
 		</div>

@@ -19,18 +19,18 @@
 
 class Element_OpNote extends BaseEventTypeElement
 {
-	public function getContainer_view_view()
-	{
-		return false;
-	}
+    public function getContainer_view_view()
+    {
+        return false;
+    }
 
-	public function getPrint_view()
-	{
-		return 'print_'.$this->getDefaultView();
-	}
+    public function getPrint_view()
+    {
+        return 'print_'.$this->getDefaultView();
+    }
 
-	public function getContainer_print_view()
-	{
-		return false;
-	}
+    public function getContainer_print_view()
+    {
+        return false;
+    }
 }

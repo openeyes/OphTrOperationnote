@@ -21,7 +21,8 @@
 <section class="sub-element element-data">
 	<h3 class="data-title"><?php echo $element->elementType->name ?></h3>
 	<div class="element-data">
-		<?php if ($element->membrane_blue) {?>
+		<?php if ($element->membrane_blue) {
+    ?>
 			<div class="row data-row">
 				<div class="large-2 column">
 					<div class="data-value">
@@ -29,9 +30,11 @@
 					</div>
 				</div>
 			</div>
-		<?php }?>
+		<?php 
+}?>
 
-		<?php if ($element->brilliant_blue) {?>
+		<?php if ($element->brilliant_blue) {
+    ?>
 			<div class="row data-row">
 				<div class="large-2 column">
 					<div class="data-value">
@@ -39,9 +42,11 @@
 					</div>
 				</div>
 			</div>
-		<?php }?>
+		<?php 
+}?>
 
-		<?php if ($element->other_dye) {?>
+		<?php if ($element->other_dye) {
+    ?>
 			<div class="row data-row">
 				<div class="large-2 column">
 					<div class="data-label">
@@ -54,9 +59,11 @@
 					</div>
 				</div>
 			</div>
-		<?php }?>
+		<?php 
+}?>
 
-		<?php if ($element->comments) {?>
+		<?php if ($element->comments) {
+    ?>
 			<div class="row data-row">
 				<div class="large-2 column">
 					<div class="data-label">
@@ -69,6 +76,7 @@
 					</div>
 				</div>
 			</div>
-		<?php }?>
+		<?php 
+}?>
 	</div>
 </section>

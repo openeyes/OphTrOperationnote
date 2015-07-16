@@ -18,12 +18,14 @@
  */
 ?>
 
-<?php if ($element->getSetting('fife')) {?>
+<?php if ($element->getSetting('fife')) {
+    ?>
 	<div class="element-fields">
-		<?php echo $form->slider($element, 'spo2', array('min'=>0,'max'=>100,'step'=>1,'append'=>'%'))?>
-		<?php echo $form->slider($element, 'oxygen', array('min'=>0,'max'=>100,'step'=>1,'append'=>'%'))?>
-		<?php echo $form->slider($element, 'pulse', array('min'=>1, 'max'=>300,'step'=>1))?>
+		<?php echo $form->slider($element, 'spo2', array('min'=>0, 'max'=>100, 'step'=>1, 'append'=>'%'))?>
+		<?php echo $form->slider($element, 'oxygen', array('min'=>0, 'max'=>100, 'step'=>1, 'append'=>'%'))?>
+		<?php echo $form->slider($element, 'pulse', array('min'=>1, 'max'=>300, 'step'=>1))?>
 		<?php echo $form->dropDownList($element, 'skin_preparation_id', 'OphTrOperationnote_PreparationSkinPreparation', array('empty' => '- Please select -'))?>
-		<?php echo $form->dropDownList($element, 'intraocular_solution_id', 'OphTrOperationnote_PreparationIntraocularSolution',array('empty' => '- Please select -'))?>
+		<?php echo $form->dropDownList($element, 'intraocular_solution_id', 'OphTrOperationnote_PreparationIntraocularSolution', array('empty' => '- Please select -'))?>
 	</div>
-<?php }?>
+<?php 
+}?>

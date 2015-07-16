@@ -32,121 +32,121 @@
  */
 class Element_OphTrOperationnote_Surgeon extends Element_OpNote
 {
-	public $service;
-	public $surgeonlist;
+    public $service;
+    public $surgeonlist;
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return ElementOperation the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @return ElementOperation the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'et_ophtroperationnote_surgeon';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'et_ophtroperationnote_surgeon';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('event_id, surgeon_id, assistant_id, supervising_surgeon_id', 'safe'),
-			array('surgeon_id', 'required'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, event_id, surgeon_id, assistant_id, supervising_surgeon_id', 'safe', 'on' => 'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('event_id, surgeon_id, assistant_id, supervising_surgeon_id', 'safe'),
+            array('surgeon_id', 'required'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, event_id, surgeon_id, assistant_id, supervising_surgeon_id', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'surgeon' => array(self::BELONGS_TO, 'User', 'surgeon_id'),
-			'assistant' => array(self::BELONGS_TO, 'User', 'assistant_id'),
-			'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
-			'eventType' => array(self::BELONGS_TO, 'EventType', 'event_type_id'),
-			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
-			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'supervising_surgeon' => array(self::BELONGS_TO, 'User', 'supervising_surgeon_id'),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'surgeon' => array(self::BELONGS_TO, 'User', 'surgeon_id'),
+            'assistant' => array(self::BELONGS_TO, 'User', 'assistant_id'),
+            'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
+            'eventType' => array(self::BELONGS_TO, 'EventType', 'event_type_id'),
+            'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
+            'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+            'supervising_surgeon' => array(self::BELONGS_TO, 'User', 'supervising_surgeon_id'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'event_id' => 'Event',
-			'surgeon_id' => 'Surgeon',
-			'assistant_id' => 'Assistant',
-			'supervising_surgeon_id' => 'Supervising surgeon',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'event_id' => 'Event',
+            'surgeon_id' => 'Surgeon',
+            'assistant_id' => 'Assistant',
+            'supervising_surgeon_id' => 'Supervising surgeon',
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		$criteria = new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('surgeon_id', $this->surgeon_id);
-		$criteria->compare('assistant_id', $this->assistant_id);
-		$criteria->compare('supervising_surgeon_id', $this->supervising_surgeon_id);
+        $criteria->compare('id', $this->id, true);
+        $criteria->compare('event_id', $this->event_id, true);
+        $criteria->compare('surgeon_id', $this->surgeon_id);
+        $criteria->compare('assistant_id', $this->assistant_id);
+        $criteria->compare('supervising_surgeon_id', $this->supervising_surgeon_id);
 
-		return new CActiveDataProvider(get_class($this), array(
-			'criteria' => $criteria,
-		));
-	}
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria' => $criteria,
+        ));
+    }
 
-	/**
-	* Set default values for forms on create
-	*/
-	public function setDefaultOptions()
-	{
-		$user = Yii::app()->session['user'];
+    /**
+    * Set default values for forms on create
+    */
+    public function setDefaultOptions()
+    {
+        $user = Yii::app()->session['user'];
 
-		if ($user->is_doctor) {
-			$this->surgeon_id = $user->id;
-		}
-	}
+        if ($user->is_doctor) {
+            $this->surgeon_id = $user->id;
+        }
+    }
 
-	/**
-	 * wrapper function for retrieving surgeon list
-	 *
-	 * @return User[]
-	 * @see User::getSurgeons()
-	 */
-	public function getSurgeons()
-	{
-		if (!$this->surgeonlist) {
-			$this->surgeonlist = User::model()->getSurgeons();
-		}
+    /**
+     * wrapper function for retrieving surgeon list
+     *
+     * @return User[]
+     * @see User::getSurgeons()
+     */
+    public function getSurgeons()
+    {
+        if (!$this->surgeonlist) {
+            $this->surgeonlist = User::model()->getSurgeons();
+        }
 
-		return $this->surgeonlist;
-	}
+        return $this->surgeonlist;
+    }
 }
