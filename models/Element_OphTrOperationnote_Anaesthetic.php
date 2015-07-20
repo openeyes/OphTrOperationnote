@@ -74,7 +74,7 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 		// will receive user inputs.
 		return array(
 			array('event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe'),
-			array('anaesthetic_type_id, anaesthetist_id, anaesthetic_delivery_id', 'required'),
+			array('anaesthetic_type_id, anaesthetist_id, anaesthetic_delivery_id, anaesthetic_complications', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe', 'on' => 'search'),

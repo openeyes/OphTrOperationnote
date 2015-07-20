@@ -25,6 +25,8 @@
 	<?php }?>
 	<?php echo $form->radioButtons($element, 'anaesthetic_delivery_id', 'AnaestheticDelivery', false,4, $element->hidden)?>
 	<?php echo $form->multiSelectList($element, 'AnaestheticAgent', 'anaesthetic_agents', 'id', $this->getAnaesthetic_agent_list($element), null, array('empty' => '- Anaesthetic agents -', 'label' => 'Agents'), $element->hidden,false,null,false,false,array('field'=>3))?>
-	<?php echo $form->multiSelectList($element, 'OphTrOperationnote_AnaestheticComplications', 'anaesthetic_complications', 'id', CHtml::listData(OphTrOperationnote_AnaestheticComplications::model()->activeOrPk($element->anaestheticComplicationValues)->findAll(), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'), $element->hidden,false,null,false,false,array('field'=>3))?>
+	<div id="Element_OphTrOperationnote_Anaesthetic_anaesthetic_complications">
+		<?php echo $form->multiSelectList($element, 'OphTrOperationnote_AnaestheticComplications', 'anaesthetic_complications', 'id', CHtml::listData(OphTrOperationnote_AnaestheticComplications::model()->activeOrPk($element->anaestheticComplicationValues)->findAll(), 'id', 'name'), array(), array('empty' => '- Complications -', 'label' => 'Complications'), $element->hidden,false,null,false,false,array('field'=>3))?>
+	</div>
 	<?php echo $form->textArea($element, 'anaesthetic_comment', array(), $element->hidden, array('rows'=>4))?>
 </div>
