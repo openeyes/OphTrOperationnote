@@ -699,6 +699,10 @@ function glaucomaController(_drawing) {
 }
 
 function highlightBiometryElement( ){
+    var $higlightedEye,
+        predictedRefraction = '',
+        iolPower = '';
+
     // right: 2
     // left: 1
     $('#ophTrOperationnotePCRRiskDiv').hide();
@@ -712,5 +716,17 @@ function highlightBiometryElement( ){
         $('.right-eye').removeClass('highlighted-eye').addClass('disabled-eye');
         $('#ophCiExaminationPCRRiskRightEye').hide();
         $('#ophCiExaminationPCRRiskLeftEye').show();
+    }
+
+    $higlightedEye = $('.highlighted-eye');
+    predictedRefraction = $higlightedEye.find('.predictedRefraction').text();
+    iolPower = $higlightedEye.find('.iolDisplay').text();
+
+    if(predictedRefraction){
+        $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val(predictedRefraction);
+    }
+
+    if(iolPower){
+        $('#Element_OphTrOperationnote_Cataract_iol_power').val(iolPower);
     }
 }
