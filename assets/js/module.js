@@ -637,17 +637,14 @@ function changeEye() {
         rotateVitrectomy();
     }
 
-    pcrCalculate('left');
-    pcrCalculate('right');
-    if($("#Element_OphTrOperationnote_ProcedureList_eye_id_2").attr('checked') == "checked")
-    {
-        pcrCalculate('right');
-    }
+    if(typeof pcrCalculate === 'function'){
+        if($("#Element_OphTrOperationnote_ProcedureList_eye_id_2").attr('checked') == "checked") {
+            pcrCalculate('right');
+        }
 
-    if($("#Element_OphTrOperationnote_ProcedureList_eye_id_1").attr('checked') == "checked")
-    {
-
-        pcrCalculate('left');
+        if($("#Element_OphTrOperationnote_ProcedureList_eye_id_1").attr('checked') == "checked") {
+            pcrCalculate('left');
+        }
     }
 
     highlightBiometryElement();
