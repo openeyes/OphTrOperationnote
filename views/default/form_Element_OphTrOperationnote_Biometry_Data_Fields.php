@@ -86,7 +86,7 @@
 	</div>
 	<div class="row data-row">
 		<div class="large-4 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction_'.$side))?></div></div>
-		<div class="large-8 column end"><div class="data-value" id="tr_<?php echo $side?>"><?php echo CHtml::encode($element->{'predicted_refraction_'.$side})?></div></div>
+		<div class="large-8 column end"><div class="data-value predictedRefraction" id="tr_<?php echo $side?>"><?php echo CHtml::encode($element->{'predicted_refraction_'.$side})?></div></div>
 	</div>
 	<div class="row field-row">
 		<div class="large-4 column">
