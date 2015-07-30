@@ -636,6 +636,17 @@ function changeEye() {
 
         rotateVitrectomy();
     }
+
+    if(typeof pcrCalculate === 'function'){
+        if($("#Element_OphTrOperationnote_ProcedureList_eye_id_2").attr('checked') == "checked") {
+            pcrCalculate('right');
+        }
+
+        if($("#Element_OphTrOperationnote_ProcedureList_eye_id_1").attr('checked') == "checked") {
+            pcrCalculate('left');
+        }
+    }
+
     highlightBiometryElement();
 }
 
@@ -687,14 +698,16 @@ function glaucomaController(_drawing) {
 function highlightBiometryElement( ){
     // right: 2
     // left: 1
-
+    $('#ophTrOperationnotePCRRiskDiv').hide();
     if( $('#Element_OphTrOperationnote_ProcedureList_eye_id_2').is(':checked') ){
         $('.right-eye').removeClass('disabled-eye').addClass('highlighted-eye');
         $('.left-eye').removeClass('highlighted-eye').addClass('disabled-eye');
+        $('#ophCiExaminationPCRRiskLeftEye').hide();
+        $('#ophCiExaminationPCRRiskRightEye').show();
     }else if($('#Element_OphTrOperationnote_ProcedureList_eye_id_1').is(':checked') ){
         $('.left-eye').removeClass('disabled-eye').addClass('highlighted-eye');
         $('.right-eye').removeClass('highlighted-eye').addClass('disabled-eye');
-
+        $('#ophCiExaminationPCRRiskRightEye').hide();
+        $('#ophCiExaminationPCRRiskLeftEye').show();
     }
-
 }

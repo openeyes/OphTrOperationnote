@@ -21,26 +21,27 @@
 	<div class="row">
 		<div class="large-6 column">
 	<?php
-        echo $form->dropDownList(
-            $element,
-            "site_id",
-            CHtml::listData(Site::model()->findAll(array('condition'=>'active=1', 'order'=>'short_name')), 'id', 'short_name'),
-            array('empty' => '- None -'),
-            false);
-    ?>
+		echo $form->dropDownList(
+			$element,
+			"site_id",
+			CHtml::listData(Site::model()->findAll(array('condition'=>"active=1 and short_name !=''", 'order'=>'short_name')), 'id', 'short_name'),
+			array('empty' => '- None -'),
+			false);
+	?>
 		</div>
 		<div class="large-6 column">
 	<?php
-        if (array_key_exists('OphTrOperationbooking', Yii::app()->modules) && in_array('ophtroperationbooking_operation_theatre', Yii::app()->db->getSchema()->getTableNames())) {
-            $siteId = ($element->site_id) ? $element->site_id : Yii::app()->session['selected_site_id'];
-            echo $form->dropDownList(
-                $element,
-                "theatre_id",
-                CHtml::listData(OphTrOperationbooking_Operation_Theatre::model()->findAll(array('condition'=>'active=1 and site_id='.$siteId, 'order'=>'name')), 'id', 'name'),
-                array('empty' => '- None -'),
-                false);
-        }
-    ?>
+		if(array_key_exists('OphTrOperationbooking', Yii::app()->modules) && in_array('ophtroperationbooking_operation_theatre',Yii::app()->db->getSchema()->getTableNames())) {
+			$siteId = ($element->site_id) ? $element->site_id : Yii::app()->session['selected_site_id'];
+			echo $form->dropDownList(
+				$element,
+				"theatre_id",
+				CHtml::listData(OphTrOperationbooking_Operation_Theatre::model()->findAll(array('condition'=>'active=1 and site_id='.$siteId, 'order'=>'name')), 'id', 'name'),
+				array('empty' => '- None -'),
+				false);
+
+		}
+	?>
 		</div>
 	</div>
 </div>
