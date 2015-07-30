@@ -26,15 +26,15 @@ $form->layoutColumns = array('label' => 3, 'field' => 9);
 	<div class="row eyedraw-row cataract">
 		<div class="fixed column">
 			<?php $this->renderPartial($element->form_view . '_OEEyeDraw', array(
-				'element' => $element,
-				'form' => $form
-			)); ?>
+                'element' => $element,
+                'form' => $form
+            )); ?>
 		</div>
 		<div class="fluid column">
 			<?php $this->renderPartial($element->form_view . '_OEEyeDraw_fields', array(
-				'form' => $form,
-				'element' => $element
-			)); ?>
+                'form' => $form,
+                'element' => $element
+            )); ?>
 		</div>
 	</div>
 	<span id="ophCiExaminationPCRRiskEyeLabel">
@@ -45,15 +45,15 @@ $form->layoutColumns = array('label' => 3, 'field' => 9);
 	<div id="ophTrOperationnotePCRRiskDiv">
 		<div id="ophCiExaminationPCRRiskLeftEye" class="pcr-exam-link-opnote">
 			<?php
-			$this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk',
-				array('form' => $form, 'element' => $element, 'side' => 'left'));
-			?>
+            $this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk',
+                array('form' => $form, 'element' => $element, 'side' => 'left'));
+            ?>
 		</div>
 		<div id="ophCiExaminationPCRRiskRightEye" class="pcr-exam-link-opnote">
 			<?php
-			$this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk',
-				array('form' => $form, 'element' => $element, 'side' => 'right'));
-			?>
+            $this->renderPartial('//../modules/OphCiExamination/views/default/form_Element_OphCiExamination_PCRRisk',
+                array('form' => $form, 'element' => $element, 'side' => 'right'));
+            ?>
 		</div>
 	</div>
 </div>
