@@ -272,8 +272,8 @@ class Element_OphTrOperationnote_Cataract extends Element_OnDemand
 			}
 			if (!$this->iol_power) {
 				$this->addError('iol_power','IOL power cannot be blank');
-			} elseif (!preg_match('/^\-?[0-9]{1,3}(\.[0-9])?$/',$this->iol_power)) {
-				$this->addError('iol_power','IOL power must be a number with an optional single decimal place between -999.9 and 999.9');
+			} elseif (!preg_match('/^\-?[0-9]{1,3}(\.[0-9][0-9])?$/',$this->iol_power)) {
+				$this->addError('iol_power','IOL power must be a number with an optional two decimal places between -999.99 and 999.99');
 			}
 		}
 
