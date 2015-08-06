@@ -341,11 +341,11 @@ class Element_OphTrOperationnote_Cataract extends Element_OnDemand
 
 		$complications = Yii::app()->request->getPost('OphTrOperationnote_CataractComplications');
 		if(!$complications || !count($complications)){
-			$this->addError('anaesthetic_complications', 'Cataract Complications cannot be blank.');
+			$this->addError('Complications', 'Cataract Complications cannot be blank.');
 		} else {
 			foreach($complications as $complication){
 				if($complication == $noneId && count($complications) > 1){
-					$this->addError('anaesthetic_complications', 'Cataract Complications cannot be none and any other complication.');
+					$this->addError('Complications', 'Cataract Complications cannot be none and any other complication.');
 				}
 			}
 		}

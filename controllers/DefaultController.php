@@ -620,7 +620,7 @@ class DefaultController extends BaseEventTypeController
 	protected function setComplexAttributes_Element_OphTrOperationnote_Cataract($element, $data, $index)
 	{
 		$complications = array();
-		if (isset($data['OphTrOperationnote_CataractComplications'])) {
+		if (isset($data['OphTrOperationnote_CataractComplications']) && is_array($data['OphTrOperationnote_CataractComplications'])) {
 			foreach ($data['OphTrOperationnote_CataractComplications'] as $c_id) {
 				$complications[] = OphTrOperationnote_CataractComplications::model()->findByPk($c_id);
 			}
