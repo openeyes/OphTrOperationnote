@@ -17,24 +17,25 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-<section class="element">
-	<h3 class="element-title"><?php echo CHtml::encode($element->elementType->name) ?></h3>
 
-	<div class="details">
-		<div class="element-data">
-			<div class="data-row">
-				<div class="data-value <?php if (!$element->drugs) {
+<section class="element">
+	<div class="element-data">
+		<div class="row data-row">
+			<div class="large-3 column">
+				<h4 class="data-title"><?php echo $element->elementType->name ?></h4>
+
+				<div class="data-value <?php if (!$element->difficulties) {
 					?> none<?php
 				} ?>">
-					<?php if (!$element->drugs) {
+					<?php if (!$element->difficulties) {
 						?>
 						None
 						<?php
 					} else {
 						?>
-						<?php foreach ($element->drugs as $drug) {
+						<?php foreach ($element->difficulties as $difficulty) {
 							?>
-							<?php echo $drug->name ?><br/>
+							<?php echo $difficulty->difficulty ?><br/>
 							<?php
 						}
 						?>

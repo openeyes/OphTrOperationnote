@@ -23,18 +23,18 @@
 	<div class="details">
 		<div class="element-data">
 			<div class="data-row">
-				<div class="data-value <?php if (!$element->drugs) {
+				<div class="data-value <?php if (!$element->difficulties) {
 					?> none<?php
 				} ?>">
-					<?php if (!$element->drugs) {
+					<?php if (!$element->difficulties) {
 						?>
 						None
 						<?php
 					} else {
 						?>
-						<?php foreach ($element->drugs as $drug) {
+						<?php foreach ($element->difficulties as $diffictulty) {
 							?>
-							<?php echo $drug->name ?><br/>
+							<?php echo $diffictulty->diffictulty ?><br/>
 							<?php
 						}
 						?>

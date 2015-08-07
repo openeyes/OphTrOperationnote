@@ -17,31 +17,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-<section class="element">
-	<h3 class="element-title"><?php echo CHtml::encode($element->elementType->name) ?></h3>
-
-	<div class="details">
-		<div class="element-data">
-			<div class="data-row">
-				<div class="data-value <?php if (!$element->drugs) {
-					?> none<?php
-				} ?>">
-					<?php if (!$element->drugs) {
-						?>
-						None
-						<?php
-					} else {
-						?>
-						<?php foreach ($element->drugs as $drug) {
-							?>
-							<?php echo $drug->name ?><br/>
-							<?php
-						}
-						?>
-						<?php
-					} ?>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<div class="element-fields">
+	<?php echo $form->multiSelectList($element, 'OphTrOperationnote_Difficulty', 'difficulties', 'id', CHtml::listData(OphTrOperationnote_Difficulty::model()->findAll(), 'id','difficulty'), null, array('empty' => '- Difficulties -', 'label' => 'Difficulties'), false, false, null, false, false, array('field'=>3))?>
+</div>
