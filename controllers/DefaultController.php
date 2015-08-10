@@ -24,6 +24,7 @@ class DefaultController extends BaseEventTypeController
 		'getElementsToDelete' => self::ACTION_TYPE_FORM,
 		'verifyProcedure' => self::ACTION_TYPE_FORM,
 		'getImage' => self::ACTION_TYPE_FORM,
+		'getTheatreOptions' => self::ACTION_TYPE_FORM,
 	);
 
 	/* @var Element_OphTrOperationbooking_Operation operation that this note is for when creating */
@@ -619,7 +620,7 @@ class DefaultController extends BaseEventTypeController
 	protected function setComplexAttributes_Element_OphTrOperationnote_Cataract($element, $data, $index)
 	{
 		$complications = array();
-		if (isset($data['OphTrOperationnote_CataractComplications'])) {
+		if (isset($data['OphTrOperationnote_CataractComplications']) && is_array($data['OphTrOperationnote_CataractComplications'])) {
 			foreach ($data['OphTrOperationnote_CataractComplications'] as $c_id) {
 				$complications[] = OphTrOperationnote_CataractComplications::model()->findByPk($c_id);
 			}
@@ -912,5 +913,33 @@ class DefaultController extends BaseEventTypeController
 		preg_match('/data\:image\/png;base64,(.*)$/',$_POST['image'],$m);
 
 		file_put_contents("/tmp/image.png",base64_decode($m[1]));
+	}
+
+	public function getBookingOperation()
+	{
+		if($this->booking_operation){
+			return $this->booking_operation;
+		}else{
+			return false;
+		}
+	}
+
+	public function actionGetTheatreOptions(){
+		$siteId = $this->request->getParam("siteId");
+		if( $siteId >0 ) {
+			$optionValues = OphTrOperationbooking_Operation_Theatre::model()->findAll(array(
+				'condition' => 'active=1 and site_id=' . $siteId,
+				'order' => 'name'
+			));
+			//var_dump($optionValues);
+			echo CHtml::dropDownList(
+				"theatre_id",
+				false,
+				CHtml::listData($optionValues, 'id', 'name'),
+				array(
+					'empty'=>'-- Please select --')
+				);
+		}
+
 	}
 }

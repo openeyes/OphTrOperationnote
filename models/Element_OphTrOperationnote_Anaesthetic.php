@@ -75,6 +75,7 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 		return array(
 			array('event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe'),
 			array('anaesthetic_type_id, anaesthetist_id, anaesthetic_delivery_id', 'required'),
+			array('anaesthetic_complications', 'validateComplications'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe', 'on' => 'search'),
@@ -292,5 +293,13 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 		}
 
 		return $complication_values = array();
+	}
+
+	public function validateComplications()
+	{
+		$complications = Yii::app()->request->getPost('OphTrOperationnote_AnaestheticComplications');
+		if(!$complications || !count($complications)){
+			$this->addError('anaesthetic_complications', 'Anaesthetic Complications cannot be blank.');
+		}
 	}
 }

@@ -59,7 +59,7 @@ class OphTrOperationnote_PostopDrug extends BaseActiveRecordVersioned
 				array('name', 'required'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
-				array('name, display_order', 'safe'),
+				array('name, display_order, active', 'safe'),
 				array('id, name, display_order', 'safe', 'on'=>'search'),
 		);
 	}
