@@ -315,7 +315,7 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 			}
 
 			if($attribute == 'anaesthetic_complications' && (!$complications || !count($complications))){
-				$this->addError('anaesthgetic_complications', 'Anaesthetic Complications cannot be blank.');
+				$this->addError('anaesthetic_complications', 'Anaesthetic Complications cannot be blank.');
 			}
 		}
 		else
