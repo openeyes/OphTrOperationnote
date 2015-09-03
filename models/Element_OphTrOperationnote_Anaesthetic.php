@@ -74,8 +74,9 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 		// will receive user inputs.
 		return array(
 			array('event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe'),
-			array('anaesthetic_type_id, anaesthetist_id, anaesthetic_delivery_id', 'required'),
-			array('anaesthetic_complications', 'validateComplications'),
+			array('anaesthetic_type_id', 'required'),
+			array('anaesthetist_id, anaesthetic_delivery_id, anaesthetic_complications', 'validateAnaesthetic'),
+
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, anaesthetist_id, anaesthetic_type_id, anaesthetic_delivery_id, anaesthetic_comment, anaesthetic_witness_id', 'safe', 'on' => 'search'),
@@ -295,11 +296,33 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 		return $complication_values = array();
 	}
 
-	public function validateComplications()
+	public function validateAnaesthetic($attribute, $params)
 	{
-		$complications = Yii::app()->request->getPost('OphTrOperationnote_AnaestheticComplications');
-		if(!$complications || !count($complications)){
-			$this->addError('anaesthetic_complications', 'Anaesthetic Complications cannot be blank.');
+
+		$anaesthetics = Yii::app()->request->getPost('Element_OphTrOperationnote_Anaesthetic');
+		if($anaesthetics['anaesthetic_type_id'] != 5)
+		{
+			$complications = Yii::app()->request->getPost('OphTrOperationnote_AnaestheticComplications');
+
+			if($attribute == 'anaesthetist_id' && empty($anaesthetics['anaesthetist_id']))
+			{
+				$this->addError('anaesthetist_id', 'Anaesthetic Given by cannot be blank');
+			}
+
+			if($attribute == 'anaesthetic_delivery_id' && empty($anaesthetics['anaesthetic_delivery_id']))
+			{
+				$this->addError('anaesthetic_delivery_id', 'Anaesthetic Delivery cannot be blank');
+			}
+
+			if($attribute == 'anaesthetic_complications' && (!$complications || !count($complications))){
+				$this->addError('anaesthgetic_complications', 'Anaesthetic Complications cannot be blank.');
+			}
+		}
+		else
+		{
+
+			$this->anaesthetist_id = 4;
+			$this->anaesthetic_delivery_id = 5;
 		}
 	}
 }
