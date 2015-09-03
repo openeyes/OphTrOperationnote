@@ -338,13 +338,13 @@ AnaestheticSlide.prototype = {
     handleEvent: function (e) {
         var slide = false;
 
-        if (!this.anaestheticTypeSliding) {
+       /* if (!this.anaestheticTypeSliding) {
             if (e.val() == 5 && !$('#Element_OphTrOperationnote_Anaesthetic_anaesthetist_id').is(':hidden')) {
                 this.slide(true);
             } else if (e.val() != 5 && $('#Element_OphTrOperationnote_Anaesthetic_anaesthetist_id').is(':hidden')) {
                 this.slide(false);
             }
-        }
+        }*/
 
         // If topical anaesthetic type is selected, select topical delivery
         if (e.val() == 1) {
@@ -353,7 +353,7 @@ AnaestheticSlide.prototype = {
     },
     slide: function (hide) {
         this.anaestheticTypeSliding = true;
-        $('#Element_OphTrOperationnote_Anaesthetic_anaesthetist_id').slideToggle('fast');
+        /*$('#Element_OphTrOperationnote_Anaesthetic_anaesthetist_id').slideToggle('fast');*/
         if (hide) {
             if (!$('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').is(':hidden')) {
                 $('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_witness_id').slideToggle('fast');
@@ -364,12 +364,15 @@ AnaestheticSlide.prototype = {
             }
         }
 
-        $('#Element_OphTrOperationnote_Anaesthetic_anaesthetic_delivery_id').slideToggle('fast');
-        $('#div_Element_OphTrOperationnote_Anaesthetic_Agents').slideToggle('fast');
-        $('#div_Element_OphTrOperationnote_Anaesthetic_Complications').slideToggle('fast');
-        $('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_comment').slideToggle('fast', function () {
-            anaestheticSlide.anaestheticTypeSliding = false;
-        });
+
+           /* $('#Element_OphTrOperationnote_Anaesthetic_anaesthetic_delivery_id').slideToggle('fast');
+            $('#div_Element_OphTrOperationnote_Anaesthetic_Agents').slideToggle('fast');
+            $('#div_Element_OphTrOperationnote_Anaesthetic_Complications').slideToggle('fast');
+            $('#div_Element_OphTrOperationnote_Anaesthetic_anaesthetic_comment').slideToggle('fast', function () {
+                anaestheticSlide.anaestheticTypeSliding = false;
+
+            });
+*/
     }
 }
 
