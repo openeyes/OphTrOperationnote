@@ -323,8 +323,8 @@ class Element_OphTrOperationnote_Anaesthetic extends Element_OpNote
 		else
 		{
 
-			$this->anaesthetist_id = 4;
-			$this->anaesthetic_delivery_id = 5;
+			$this->anaesthetist_id = 5;
+			$this->anaesthetic_delivery_id = 7;
 		}
 	}
 }
