@@ -659,7 +659,7 @@ class DefaultController extends BaseEventTypeController
 	protected function setComplexAttributes_Element_OphTrOperationnote_PostOpDrugs($element, $data, $index)
 	{
 		$drugs = array();
-		if (isset($data['Drug'])) {
+		if (isset($data['Drug']) && !empty($data['Drug'])) {
 			foreach ($data['Drug'] as $d_id) {
 				$drugs[] = OphTrOperationnote_PostopDrug::model()->findByPk($d_id);
 			}
