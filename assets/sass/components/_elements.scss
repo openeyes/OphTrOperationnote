@@ -104,9 +104,20 @@
 }
 
 .highlighted-eye{
-  border: 2px solid red !important;
+  border: 2px solid orange !important;
 }
 
 .disabled-eye{
   opacity: 0.4;
+}
+
+.iolDisplay {
+  font-size: 18px;
+  background-color: #ffff66;
+  border-color: gray;
+  border-width: 2px;
+  border-style: solid;
+  padding-left: 5px;
+  padding-right: 5px;
+  float: left;
 }
