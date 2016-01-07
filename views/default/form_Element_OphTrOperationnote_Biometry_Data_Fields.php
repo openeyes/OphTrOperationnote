@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="large-10 column end">
-            <div class="data-value iolDisplay"
+            <div class="data-value iolDisplayHighlited"
                  id="lens_<?php echo $side ?>"><?php echo $element->{'lens_' . $side} ? $element->{'lens_' . $side} : 'None' ?></div>
         </div>
     </div>
@@ -39,7 +39,7 @@
                 <b><?php echo CHtml::encode($element->getAttributeLabel('iol_power_' . $side)) ?></b></div>
         </div>
         <div class="large-4 column end">
-            <div class="data-value iolDisplay"><?php echo CHtml::encode($element->{'iol_power_' . $side}) ?></div>
+            <div class="data-value iolDisplayHighlited"><?php echo CHtml::encode($element->{'iol_power_' . $side}) ?></div>
         </div>
         <div class="large-2 column">
             <div class="data-label">
