@@ -39,7 +39,7 @@
                 <b><?php echo CHtml::encode($element->getAttributeLabel('iol_power_' . $side)) ?></b></div>
         </div>
         <div class="large-4 column end">
-            <div class="data-value iolDisplayHighlited"><?php echo CHtml::encode($element->{'iol_power_' . $side}) ?></div>
+            <div class="data-value iolDisplayHighlited iolDisplay"><?php echo CHtml::encode($element->{'iol_power_' . $side}) ?></div>
         </div>
         <div class="large-2 column">
             <div class="data-label">
