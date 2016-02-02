@@ -722,7 +722,7 @@ function highlightBiometryElement( ){
     predictedRefraction = $higlightedEye.find('.predictedRefraction').text();
     iolPower = $higlightedEye.find('.iolDisplay').text();
 
-    if(predictedRefraction){
+    if(predictedRefraction && predictedRefraction != "None"){
         $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val(predictedRefraction);
     }
 
