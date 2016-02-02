@@ -727,6 +727,9 @@ function highlightBiometryElement( ){
     }
 
     if(iolPower){
-        $('#Element_OphTrOperationnote_Cataract_iol_power').val(iolPower);
+        $.isNumeric(iolPower)
+        {
+            $('#Element_OphTrOperationnote_Cataract_iol_power').val(iolPower);
+        }
     }
 }
