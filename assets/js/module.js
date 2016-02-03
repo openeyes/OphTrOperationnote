@@ -723,7 +723,11 @@ function highlightBiometryElement( ){
     iolPower = $higlightedEye.find('.iolDisplay').text();
 
     if(predictedRefraction){
-        $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val(predictedRefraction);
+        if(predictedRefraction == "None"){
+            $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val('');
+        }else {
+            $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val(predictedRefraction);
+        }
     }
 
     if(iolPower){

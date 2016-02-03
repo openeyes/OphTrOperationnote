@@ -43,13 +43,24 @@
         </div>
         <div class="large-2 column">
             <div class="data-label">
-                <b><?php echo CHtml::encode($element->getAttributeLabel('lens_acon_' . $side)) ?></b></div>
+                <b><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction_' . $side)) ?></b></div>
         </div>
         <div class="large-4 column">
+            <div class="data-value predictedRefraction"
+                 id="predicted_refraction_<?php echo $side ?>"><?php echo $element->{'predicted_refraction_' . $side} ? $element->{'predicted_refraction_' . $side} : 'None' ?></div>
+        </div>
+    </div>
+    <div class="row data-row">
+        <div class="large-2 column">
+            <div class="data-label">
+                <b><?php echo CHtml::encode($element->getAttributeLabel('lens_acon_' . $side)) ?></b></div>
+        </div>
+        <div class="large-10 column">
             <div class="data-value"
                  id="acon_<?php echo $side ?>"><?php echo $element->{'lens_acon_' . $side} ? $element->{'lens_acon_' . $side} : 'None' ?></div>
         </div>
     </div>
+
     <div class="row field-row">
         <div class="large-12 column">&nbsp;</div>
     </div>
