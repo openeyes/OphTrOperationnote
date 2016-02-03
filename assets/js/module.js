@@ -18,6 +18,9 @@
 
 $( document ).ready(function() {
     highlightBiometryElement();
+    if(window.location.href.indexOf("update") == -1) {
+        loadBiometryElementData();
+    }
 });
 
 function callbackAddProcedure(procedure_id) {
@@ -57,6 +60,9 @@ function callbackAddProcedure(procedure_id) {
                     }
                 }
                 highlightBiometryElement();
+                if(window.location.href.indexOf("update") == -1) {
+                    loadBiometryElementData();
+                }
             }
         }
     });
@@ -650,7 +656,13 @@ function changeEye() {
         }
     }
 
+    // we remove the current values when the user change the eye
+    $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val('');
+    $('#Element_OphTrOperationnote_Cataract_iol_power').val('');
     highlightBiometryElement();
+    if(window.location.href.indexOf("update") == -1) {
+        loadBiometryElementData();
+    }
 }
 
 function rotateTrabeculectomy() {
@@ -698,10 +710,33 @@ function glaucomaController(_drawing) {
     }
 }
 
-function highlightBiometryElement( ){
+
+function loadBiometryElementData(){
     var $higlightedEye,
         predictedRefraction = '',
         iolPower = '';
+
+    $higlightedEye = $('.highlighted-eye');
+    predictedRefraction = $higlightedEye.find('.predictedRefraction').text();
+    iolPower = $higlightedEye.find('.iolDisplay').text();
+
+    if(predictedRefraction &&  ($('#Element_OphTrOperationnote_Cataract_predicted_refraction').val() == "" ||  $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val() == 0)){
+        if(predictedRefraction == "None"){
+            $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val('');
+        }else {
+            $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val(predictedRefraction);
+        }
+    }
+
+    if(iolPower && ($('#Element_OphTrOperationnote_Cataract_iol_power').val() == "" || $('#Element_OphTrOperationnote_Cataract_iol_power').val() == 0)){
+        $.isNumeric(iolPower)
+        {
+            $('#Element_OphTrOperationnote_Cataract_iol_power').val(iolPower);
+        }
+    }
+}
+
+function highlightBiometryElement( ){
 
     // right: 2
     // left: 1
@@ -718,22 +753,4 @@ function highlightBiometryElement( ){
         $('#ophCiExaminationPCRRiskLeftEye').show();
     }
 
-    $higlightedEye = $('.highlighted-eye');
-    predictedRefraction = $higlightedEye.find('.predictedRefraction').text();
-    iolPower = $higlightedEye.find('.iolDisplay').text();
-
-    if(predictedRefraction){
-        if(predictedRefraction == "None"){
-            $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val('');
-        }else {
-            $('#Element_OphTrOperationnote_Cataract_predicted_refraction').val(predictedRefraction);
-        }
-    }
-
-    if(iolPower){
-        $.isNumeric(iolPower)
-        {
-            $('#Element_OphTrOperationnote_Cataract_iol_power').val(iolPower);
-        }
-    }
 }
