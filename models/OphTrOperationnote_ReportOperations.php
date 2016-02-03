@@ -1022,6 +1022,11 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			$return[] = 'Pre-op axis';
 			$return[] = 'Pre-op type';
 			$return[] = 'Pre-op Spherical equivalent';
+			$return[] = 'Post-op 2-6 weeks sphere';
+			$return[] = 'Post-op 2-6 weeks cylinder';
+			$return[] = 'Post-op 2-6 weeks axis';
+			$return[] = 'Post-op 2-6 weeks type';
+			$return[] = 'Post-op 2-6 weeks Spherical equivalent';
 			$return[] = 'Most recent post-op refraction';
 			$return[] = 'Post-op sphere';
 			$return[] = 'Post-op cylinder';
