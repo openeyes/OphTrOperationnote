@@ -442,6 +442,8 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			if($this->cataract_surgical_management) {
                 $csm =  $this->getCataractSurgicalManagement($preOpCriteria);
 
+				$reason = $this->getCataractPrimaryReason($preOpCriteria);
+
 				if($csm['correction_discussed']) {
 					$record['post_op_refractive_target_discussed_with_patient'] = ($csm['correction_discussed'] == 1)? 'Yes' : 'No';
 				}
@@ -461,6 +463,13 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 				}
 				else {
 					$record['vitrectomised_eye'] = 'Unknown';
+				}
+
+				if($reason!='') {
+					$record['Primary reason for cataract surgery'] = $reason;
+				}
+				else {
+					$record['Primary reason for cataract surgery'] = 'Unknown';
 				}
 
 			}
@@ -529,12 +538,14 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 				}
 
 				$latest_refraction = $this->getPostOpRefractionSplit($postOpCriteria,$record);
+				$record['Post-op Refraction (2-6 weeks) date'] = 'Unknown';
 				$record['Post-op 2-6 weeks sphere'] = 'Unknown';
 				$record['Post-op 2-6 weeks cylinder'] = 'Unknown';
 				$record['Post-op 2-6 weeks axis'] = 'Unknown';
 				$record['Post-op 2-6 weeks type'] = 'Unknown';
 				$record['Post-op 2-6 weeks Spherical equivalent'] = 'Unknown';
 				if($latest_refraction) {
+					$record['Post-op Refraction (2-6 weeks) date'] = $latest_refraction['date'];
 					$record['Post-op 2-6 weeks sphere'] = $latest_refraction['sphere'];
 					$record['Post-op 2-6 weeks cylinder'] = $latest_refraction['cylinder'];
 					$record['Post-op 2-6 weeks axis'] = $latest_refraction['axis'];
@@ -629,11 +640,21 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 		}
 	}
 
-	protected function getCataractPrimaryReason() {
-		$cataractSurgicalManagementElement = \OEModule\OphCiExamination\models\Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event'))->find($criteria);
+	protected function getCataractPrimaryReason($criteria) {
+		$cataractSurgicalManagementElement = \OEModule\OphCiExamination\models\Element_OphCiExamination_CataractSurgicalManagement::model()->with(array('event', 'reasonForSurgery'))->find($criteria);
 
-		Element_OphTrOperationnote_Anaesthetic::model()->find('event_id = :event_id',array(':event_id'=>$event_id));
-		//$CatatactPrimaryReasonElement = OEModule\OphCiExamination\models\OphCiExamination_Primary_Reason_For_Surgery::model()->find('id = :id', array(':id' => $cataractSurgicalManagementElement['']));
+		$reasons = ($cataractSurgicalManagementElement['reasonForSurgery']);
+
+		$res = '';
+
+		if($reasons) {
+			foreach($reasons as $reason) {
+				$res .= $reason['originalAttributes']['name']. "\n";
+			}
+		}
+
+		return $res;
+
 
 	}
 
@@ -998,6 +1019,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			$return[] = 'Post Op Refractive Target Discussed With Patient';
 			$return[] = 'Previous Refractive Surgery';
 			$return[] = 'Vitrectomised Eye';
+			$return[] = 'Primary reason for cataract surgery';
 		}
 		if ($this->va_values) {
 			$return[] = 'Pre-op VA Date';
@@ -1022,6 +1044,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			$return[] = 'Pre-op axis';
 			$return[] = 'Pre-op type';
 			$return[] = 'Pre-op Spherical equivalent';
+			$return[] = 'Post-op Refraction (2-6 weeks) date';
 			$return[] = 'Post-op 2-6 weeks sphere';
 			$return[] = 'Post-op 2-6 weeks cylinder';
 			$return[] = 'Post-op 2-6 weeks axis';
