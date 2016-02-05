@@ -27,7 +27,6 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 	public $booking_diagnosis;
 	public $surgerydate;
 	public $theatre;
-	public $firm;
 	public $comorbidities;
 	public $first_eye;
 	public $refraction_values;
@@ -35,7 +34,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 	public $cataract_surgical_management;
 	public $va_values;
 	public $cataract_report;
-	public $cataract_operation_details;
+	public $incision_site;
 	public $cataract_complication_notes;
 	public $cataract_predicted_refraction;
 	public $cataract_iol_type;
@@ -68,7 +67,6 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			'booking_diagnosis',
 			'surgerydate',
 			'theatre',
-			'firm',
 			'comorbidities',
 			'first_eye',
 			'refraction_values',
@@ -76,7 +74,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			'cataract_surgical_management',
 			'va_values',
 			'cataract_report',
-			'cataract_operation_details',
+			'incision_site',
 			'cataract_complication_notes',
 			'tamponade_used',
 			'anaesthetic_type',
@@ -106,8 +104,6 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			'booking_diagnosis' => 'Operation booking diagnosis',
 			'surgerydate' => 'Surgery date',
 			'theatre' => 'Theatre',
-			'firm' => 'Firm',
-			'subspecialty' => 'Subspecialty',
 			'comorbidities' => 'Comorbidities',
 			'first_eye' => 'First or second eye',
 			'refraction_values' => 'Refraction values',
@@ -115,7 +111,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			'cataract_surgical_management' => 'Cataract Surgical Management',
 			'va_values' => 'VA values',
 			'cataract_report' => 'Cataract report',
-			'cataract_operation_details' => 'Cataract Operation Details',
+			'incision_site' => 'Incision Site',
 			'cataract_complication_notes' => 'Cataract Complication Notes',
 			'tamponade_used' => 'Tamponade used',
 			'anaesthetic_type' => 'Anaesthetic type',
@@ -181,8 +177,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			$this->patient_oph_diagnoses,
 			$this->booking_diagnosis,
 			$this->theatre,
-		    $this->firm,
-			$this->bookingcomments,
+		    $this->bookingcomments,
 			$this->surgerydate,
 			$this->comorbidities,
 			$this->target_refraction,
@@ -195,7 +190,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			$this->anaesthetic_comments,
 			$this->anaesthetic_complications,
 			$this->cataract_report,
-		    $this->cataract_operation_details,
+		    $this->incision_site,
 		    $this->cataract_complication_notes,
 			$this->cataract_predicted_refraction,
 			$this->cataract_iol_type,
@@ -224,7 +219,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 	 * @param array $appenders - list of methods to call with patient id and date to retrieve additional data for each row
 	 * @return array
 	 */
-	protected function getOperations($surgeon = null, $filter_procedures = array(), $filter_complications = array(), $from_date, $to_date, $patient_oph_diagnoses, $booking_diagnosis, $theatre, $firm, $bookingcomments, $surgerydate, $comorbidities, $target_refraction, $cataract_surgical_management, $first_eye, $va_values, $refraction_values, $anaesthetic_type, $anaesthetic_delivery, $anaesthetic_comments, $anaesthetic_complications, $cataract_report, $cataract_operation_details, $cataract_complication_notes, $cataract_predicted_refraction, $cataract_iol_type, $cataract_iol_power, $tamponade_used, $surgeon, $surgeon_role, $assistant, $assistant_role, $supervising_surgeon, $supervising_surgeon_role, $opnote_comments, $surgeon_id)
+	protected function getOperations($surgeon = null, $filter_procedures = array(), $filter_complications = array(), $from_date, $to_date, $patient_oph_diagnoses, $booking_diagnosis, $theatre, $bookingcomments, $surgerydate, $comorbidities, $target_refraction, $cataract_surgical_management, $first_eye, $va_values, $refraction_values, $anaesthetic_type, $anaesthetic_delivery, $anaesthetic_comments, $anaesthetic_complications, $cataract_report, $incision_site, $cataract_complication_notes, $cataract_predicted_refraction, $cataract_iol_type, $cataract_iol_power, $tamponade_used, $surgeon, $surgeon_role, $assistant, $assistant_role, $supervising_surgeon, $supervising_surgeon_role, $opnote_comments, $surgeon_id)
 	{
 		$filter_procedures_method = 'OR';
 		$filter_complications_method = 'OR';
@@ -333,8 +328,8 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 
 			//appenders
 			$this->appendPatientValues($record, $row['id'], $patient_oph_diagnoses);
-			$this->appendBookingValues($record, $row['id'], $booking_diagnosis, $theatre, $firm, $bookingcomments, $surgerydate);
-			$this->appendOpNoteValues($record, $row['id'], $anaesthetic_type, $anaesthetic_delivery, $anaesthetic_comments, $anaesthetic_complications, $cataract_report, $cataract_operation_details, $cataract_complication_notes, $cataract_predicted_refraction, $cataract_iol_type, $cataract_iol_power, $tamponade_used, $surgeon, $surgeon_role, $assistant, $assistant_role, $supervising_surgeon, $supervising_surgeon_role, $opnote_comments);
+			$this->appendBookingValues($record, $row['id'], $booking_diagnosis, $theatre, $bookingcomments, $surgerydate);
+			$this->appendOpNoteValues($record, $row['id'], $anaesthetic_type, $anaesthetic_delivery, $anaesthetic_comments, $anaesthetic_complications, $cataract_report, $incision_site, $cataract_complication_notes, $cataract_predicted_refraction, $cataract_iol_type, $cataract_iol_power, $tamponade_used, $surgeon, $surgeon_role, $assistant, $assistant_role, $supervising_surgeon, $supervising_surgeon_role, $opnote_comments);
 			$this->appendExaminationValues($record, $row['id'], $comorbidities, $target_refraction, $cataract_surgical_management, $first_eye, $va_values, $refraction_values);
 
 			$results[] = $record;
@@ -361,7 +356,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 		}
 	}
 
-	protected function appendBookingValues(&$record, $event_id, $booking_diagnosis, $theatre, $firm, $bookingcomments, $surgerydate)
+	protected function appendBookingValues(&$record, $event_id, $booking_diagnosis, $theatre, $bookingcomments, $surgerydate)
 	{
 		if ($api = Yii::app()->moduleAPI->get('OphTrOperationbooking')) {
 			$procedure = Element_OphTrOperationnote_ProcedureList::model()->find('event_id=:event_id',array(':event_id'=>$event_id));
@@ -371,6 +366,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 					$record[$k] = '';
 				}
 			}
+
 			if (isset($bookingEventID)) {
 				$operationElement = $api->getOperationForEvent($bookingEventID);
 				$latestBookingID = $operationElement['latest_booking_id'];
@@ -386,29 +382,9 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 					}
 				}
 
-				if ($theatre) {
+				if ($this->theatre && $operationElement && $operationBooking) {
 					$theatreName = $operationElement->site['name'].' '.$operationBooking->theatre['name'];
 					$record['theatre'] = $theatreName;
-				}
-
-				if($firm) {
-
-					$session = OphTrOperationbooking_Operation_Session::model()->find('id=:id',array('id'=>$operationBooking['session_id']));
-
-
-					if($firmElement = Firm::model()->find('id=:id',array('id'=>$session['firm_id']))) {
-						$serviceElement = ServiceSubspecialtyAssignment::model()->find('id=:id', array('id' => $firmElement['service_subspecialty_assignment_id']));
-                        $subspecialty = Subspecialty::model()->find('id=:id', array('id' => $serviceElement['subspecialty_id']));
-
-						$record['firm'] = $firmElement['name'];
-						$record['subspecialty'] = $subspecialty['name'];
-					}
-					else {
-						$record['firm'] = 'Unknown';
-						$record['subspecialty'] = 'Unknown';
-					}
-
-
 				}
 
 				if ($this->bookingcomments) {
@@ -435,91 +411,9 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 				$record['comorbidities'] = $this->getComorbidities($preOpCriteria);
 			}
 
-			if ($this->target_refraction) {
-				$record['target_refraction'] = $this->getTargetRefraction($preOpCriteria);
-			}
-
-			if($this->cataract_surgical_management) {
-                $csm =  $this->getCataractSurgicalManagement($preOpCriteria);
-
-				$reason = $this->getCataractPrimaryReason($preOpCriteria);
-
-				if($csm['correction_discussed']) {
-					$record['post_op_refractive_target_discussed_with_patient'] = ($csm['correction_discussed'] == 1)? 'Yes' : 'No';
-				}
-				else {
-					$record['post_op_refractive_target_discussed_with_patient'] = 'Unknown';
-				}
-
-				if($csm['previous_refractive_surgery']){
-					$record['previous_refractive_surgery'] = ($csm['previous_refractive_surgery'] == 1)? 'Yes' : 'No';
-				}
-				else {
-					$record['previous_refractive_surgery'] = 'Unknown';
-				}
-
-				if($csm['vitrectomised_eye']) {
-					$record['vitrectomised_eye'] = ($csm['vitrectomised_eye'] == 1)? 'Yes' : 'No';
-				}
-				else {
-					$record['vitrectomised_eye'] = 'Unknown';
-				}
-
-				if($reason!='') {
-					$record['Primary reason for cataract surgery'] = $reason;
-				}
-				else {
-					$record['Primary reason for cataract surgery'] = 'Unknown';
-				}
-
-			}
-
 			if ($this->first_eye) {
 				$record['first_or_second_eye'] = $this->getFirstEyeOrSecondEye($preOpCriteria);
 			}
-
-			if ($this->va_values) {
-				$record['Pre-op VA Date'] = $this->getVAReadingDate($preOpCriteria,$record);
-				$record['pre-op va'] = $this->getVaReading($preOpCriteria,$record);
-				$split_preop_values = $this->getVaReadingSplit($preOpCriteria,$record);
-				$record['Pre-op VA Glasses'] = 'Unknown';
-				$record['Pre-op VA Unaided'] = 'Unknown';
-				$record['Pre-op VA Pinhole'] = 'Unknown';
-				foreach($split_preop_values as $split_preop_value) {
-					if ($split_preop_value['va_reading'] != '') {
-						$index = 'Pre-op VA ' . $split_preop_value['method'];
-						$record[$index] = $split_preop_value['va_reading'];
-					}
-				}
-
-				$best_post_ops = $this->bestPostOpVaValues($postOpCriteria,$record);
-				$record['Post-op VA (2-6 weeks) date'] = 'Unknown';
-				$record['2-6 Week value Glasses'] = 'Unknown';
-				$record['2-6 Week value Unaided'] = 'Unknown';
-				$record['2-6 Week value Pinhole'] = 'Unknown';
-
-				foreach($best_post_ops as $best_post_op) {
-					if($best_post_op) {
-						$record['Post-op VA (2-6 weeks) date'] = $best_post_op['date'];
-						$record['2-6 Week value '.$best_post_op['method']] = $best_post_op['reading'];
-					}
-				}
-
-
-
-
-				$record['most recent post-op va'] = $this->getVaReading($postOpCriteria,$record);
-				$split_postop_values = $this->getVaReadingSplit($postOpCriteria,$record);
-				$record['Most recent post-op Glasses'] = 'Unknown';
-				$record['Most recent post-op Unaided'] = 'Unknown';
-				$record['Most recent post-op Pinhole'] = 'Unknown';
-				foreach($split_postop_values as $split_postop_value) {
-					if ($split_postop_value['va_reading'] != '') {
-						$index = 'Most recent post-op ' . $split_postop_value['method'];
-						$record[$index] = $split_postop_value['va_reading'];
-					}
-				}
-            }
 
 			if ($this->refraction_values) {
 				$record['pre-op refraction'] = $this->getRefractionReading($preOpCriteria,$record);
@@ -569,6 +463,87 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 				}
 
 			}
+
+			if ($this->target_refraction) {
+				$record['target_refraction'] = $this->getTargetRefraction($preOpCriteria);
+			}
+
+			if($this->cataract_surgical_management) {
+				$record['Post Op Refractive Target Discussed With Patient'] = 'Unknown';
+				$record['Previous Refractive Surgery'] = 'Unknown';
+				$record['Vitrectomised Eye'] = 'Unknown';
+				$record['Primary reason for cataract surgery'] = 'Unknown';
+                $csm =  $this->getCataractSurgicalManagement($preOpCriteria);
+
+                if($csm) {
+
+					if ($csm['correction_discussed']) {
+						$record['Post Op Refractive Target Discussed With Patient'] = ($csm['correction_discussed'] == 1) ? 'Yes' : 'No';
+					}
+
+
+					if ($csm['previous_refractive_surgery']) {
+						$record['Previous Refractive Surgery'] = ($csm['previous_refractive_surgery'] == 1) ? 'Yes' : 'No';
+					}
+
+
+					if ($csm['vitrectomised_eye']) {
+						$record['Vitrectomised Eye'] = ($csm['vitrectomised_eye'] == 1) ? 'Yes' : 'No';
+					}
+
+				}
+
+				$reason = $this->getCataractPrimaryReason($preOpCriteria);
+				if ($reason != '') {
+					$record['Primary reason for cataract surgery'] = $reason;
+				}
+
+
+			}
+
+
+
+			if ($this->va_values) {
+				$record['Pre-op VA Date'] = $this->getVAReadingDate($preOpCriteria,$record);
+				$record['pre-op va'] = $this->getVaReading($preOpCriteria,$record);
+				$split_preop_values = $this->getVaReadingSplit($preOpCriteria,$record);
+				$record['Pre-op VA Glasses'] = 'Unknown';
+				$record['Pre-op VA Unaided'] = 'Unknown';
+				$record['Pre-op VA Pinhole'] = 'Unknown';
+				foreach($split_preop_values as $split_preop_value) {
+					if ($split_preop_value['va_reading'] != '') {
+						$index = 'Pre-op VA ' . $split_preop_value['method'];
+						$record[$index] = $split_preop_value['va_reading'];
+					}
+				}
+
+				$best_post_ops = $this->bestPostOpVaValues($postOpCriteria,$record);
+				$record['Post-op VA (2-6 weeks) date'] = 'Unknown';
+				$record['2-6 Week value Glasses'] = 'Unknown';
+				$record['2-6 Week value Unaided'] = 'Unknown';
+				$record['2-6 Week value Pinhole'] = 'Unknown';
+
+				foreach($best_post_ops as $best_post_op) {
+					if($best_post_op) {
+						$record['Post-op VA (2-6 weeks) date'] = $best_post_op['date'];
+						$record['2-6 Week value '.$best_post_op['method']] = $best_post_op['reading'];
+					}
+				}
+
+                $record['most recent post-op va'] = $this->getVaReading($postOpCriteria,$record);
+				$split_postop_values = $this->getVaReadingSplit($postOpCriteria,$record);
+				$record['Most recent post-op Glasses'] = 'Unknown';
+				$record['Most recent post-op Unaided'] = 'Unknown';
+				$record['Most recent post-op Pinhole'] = 'Unknown';
+				foreach($split_postop_values as $split_postop_value) {
+					if ($split_postop_value['va_reading'] != '') {
+						$index = 'Most recent post-op ' . $split_postop_value['method'];
+						$record[$index] = $split_postop_value['va_reading'];
+					}
+				}
+            }
+
+
 		}
 	}
 
@@ -836,7 +811,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 		return $refraction_values;
 	}
 
-	protected function appendOpNoteValues(&$record, $event_id, $anaesthetic_type, $anaesthetic_delivery, $anaesthetic_comments, $anaesthetic_complications, $cataract_report, $cataract_operation_details, $cataract_complication_notes, $cataract_predicted_refraction, $cataract_iol_type, $cataract_iol_power, $tamponade_used, $surgeon, $surgeon_role, $assistant, $assistant_role, $supervising_surgeon, $supervising_surgeon_role, $opnote_comments)
+	protected function appendOpNoteValues(&$record, $event_id, $anaesthetic_type, $anaesthetic_delivery, $anaesthetic_comments, $anaesthetic_complications, $cataract_report, $incision_site, $cataract_complication_notes, $cataract_predicted_refraction, $cataract_iol_type, $cataract_iol_power, $tamponade_used, $surgeon, $surgeon_role, $assistant, $assistant_role, $supervising_surgeon, $supervising_surgeon_role, $opnote_comments)
 	{
 		$anaesthetic = Element_OphTrOperationnote_Anaesthetic::model()->find('event_id = :event_id',array(':event_id'=>$event_id));
 
@@ -879,44 +854,53 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			}
 		}
 
-		if($cataract_operation_details) {
-			if ($cataract_operation_details_element = Element_OphTrOperationnote_Cataract::model()->find('event_id = :event_id',array(':event_id'=>$event_id))) {
+		if($incision_site) {
+			$record['incision_site'] = 'Unknown';
+			$record['length_of_incision'] = 'Unknown';
+			$record['meridian'] = 'Unknown';
+			$record['incision_type'] = 'Unknown';
+			$record['iol_position'] = 'Unknown';
+
+			$cataract_operation_details_element = Element_OphTrOperationnote_Cataract::model()->find('event_id = :event_id',array(':event_id'=>$event_id));
+			if ($cataract_operation_details_element) {
 
 				$incisionSite = OphTrOperationnote_IncisionSite::model()->find('id = :id', array(':id' => $cataract_operation_details_element['incision_site_id']));
 				if($incisionSite) {
-					$record['Incision Site'] = $incisionSite->name;
+					$record['incision_site'] = $incisionSite->name;
 				}
 
-				$record['Length of Incision'] = $cataract_operation_details_element['length'];
-				$record['Meridian'] = $cataract_operation_details_element['meridian'];
+                if($cataract_operation_details_element['length']) {
+					$record['length_of_incision'] = $cataract_operation_details_element['length'];
+				}
 
-				$incision = OphTrOperationnote_IncisionType::model()->find('id = :id', array(':id' => $cataract_operation_details_element['incision_type_id']));
+				if($cataract_operation_details_element['meridian']) {
+					$record['meridian'] = $cataract_operation_details_element['meridian'];
+				}
+
+                $incision = OphTrOperationnote_IncisionType::model()->find('id = :id', array(':id' => $cataract_operation_details_element['incision_type_id']));
 				if($incision) {
-					$record['Incision Type'] = $incision->name;
+					$record['incision_type'] = $incision->name;
 				}
 
 				$iolPosition = OphTrOperationnote_IOLPosition::model()->find('id = :id', array(':id' => $cataract_operation_details_element['iol_position_id']));
 				if($iolPosition) {
-					$record['IOL Position'] = $iolPosition->name;
+					$record['iol_position'] = $iolPosition->name;
 				}
 			}
-			else {
-				$record['Incision Site'] = 'Unknown';
-				$record['Length of Incision'] = 'Unknown';
-				$record['Meridian'] = 'Unknown';
-				$record['Incision Type'] = 'Unknown';
-				$record['IOL Position'] = 'Unknown';
-			}
+
+
+
 		}
 
 		if($cataract_complication_notes) {
+
+			$record['Cataract Complication Notes'] = 'Unknown';
 			if($cataract_complication_notes_element = Element_OphTrOperationnote_Cataract::model()->find('event_id = :event_id',array(':event_id'=>$event_id))) {
-				$record['Cataract Complication Notes'] = $cataract_complication_notes_element['complication_notes'];
+				if($cataract_complication_notes_element['complication_notes']) {
+					$record['Cataract Complication Notes'] = $cataract_complication_notes_element['complication_notes'];
+				}
 			}
-			else {
-				$record['Cataract Complication Notes'] = 'Unknown';
-			}
-		}
+	    }
 
 		if ($tamponade_used) {
 			if ($tamponade_element = Element_OphTrOperationnote_Tamponade::model()->find('event_id = :event_id', array(':event_id'=>$event_id))) {
@@ -968,8 +952,7 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 					 'patient_oph_diagnoses',
 					 'booking_diagnosis',
 					 'theatre',
-					 'firm' => array('subspecialty'),
-			         'bookingcomments',
+					 'bookingcomments',
 					 'surgerydate',
 					 'anaesthetic_type',
 					 'anaesthetic_delivery',
@@ -980,6 +963,13 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 						 'cataract_iol_type',
 						 'cataract_iol_power',
 					 ),
+			         'incision_site' => array(
+						 'length_of_incision',
+						 'meridian',
+						 'incision_type',
+						 'iol_position',
+					 ),
+			         'cataract_complication_notes',
 					 'tamponade_used',
 					 'surgeon',
 					 'surgeon_role',
@@ -989,8 +979,8 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 					 'supervising_surgeon_role',
 					 'opnote_comments',
 					 'comorbidities',
-					 'target_refraction',
 					 'first_eye',
+					 'target_refraction',
 				 ) as $key => $value) {
 			if (is_int($key)) {
 				if ($this->$value) {
@@ -1004,38 +994,6 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 					}
 				}
 			}
-		}
-		if ($this->cataract_operation_details) {
-			$return[] = 'Incision Site';
-			$return[] = 'Length of Incision';
-			$return[] = 'Meridian';
-			$return[] = 'Incision Type';
-			$return[] = 'IOL Position';
-		}
-		if($this->cataract_complication_notes) {
-			$return[] = 'Cataract Complication Notes';
-		}
-		if($this->cataract_surgical_management) {
-			$return[] = 'Post Op Refractive Target Discussed With Patient';
-			$return[] = 'Previous Refractive Surgery';
-			$return[] = 'Vitrectomised Eye';
-			$return[] = 'Primary reason for cataract surgery';
-		}
-		if ($this->va_values) {
-			$return[] = 'Pre-op VA Date';
-			$return[] = 'Pre-op VA';
-			$return[] = 'Pre-op VA Glasses';
-			$return[] = 'Pre-op VA Unaided';
-			$return[] = 'Pre-op VA Pinhole';
-			$return[] = 'Post-op VA (2-6 weeks) date';
-			$return[] = '2-6 Week Post-op VA Glasses';
-			$return[] = '2-6 Week Post-op VA Unaided';
-			$return[] = '2-6 Week Post-op VA Pinhole';
-			$return[] = 'Most recent post-op VA';
-			$return[] = 'Most recent post-op Glasses';
-			$return[] = 'Most recent post-op Unaided';
-			$return[] = 'Most recent post-op Pinhole';
-
 		}
 		if ($this->refraction_values) {
 			$return[] = 'Pre-op refraction';
@@ -1058,6 +1016,34 @@ class OphTrOperationnote_ReportOperations extends BaseReport
 			$return[] = 'Post-op Spherical equivalent';
 
 		}
+		if($this->cataract_surgical_management) {
+			$return[] = 'Post Op Refractive Target Discussed With Patient';
+			$return[] = 'Previous Refractive Surgery';
+			$return[] = 'Vitrectomised Eye';
+			$return[] = 'Primary reason for cataract surgery';
+		}
+
+		if ($this->va_values) {
+			$return[] = 'Pre-op VA Date';
+			$return[] = 'Pre-op VA';
+			$return[] = 'Pre-op VA Glasses';
+			$return[] = 'Pre-op VA Unaided';
+			$return[] = 'Pre-op VA Pinhole';
+			$return[] = 'Post-op VA (2-6 weeks) date';
+			$return[] = '2-6 Week Post-op VA Glasses';
+			$return[] = '2-6 Week Post-op VA Unaided';
+			$return[] = '2-6 Week Post-op VA Pinhole';
+			$return[] = 'Most recent post-op VA';
+			$return[] = 'Most recent post-op Glasses';
+			$return[] = 'Most recent post-op Unaided';
+			$return[] = 'Most recent post-op Pinhole';
+
+		}
+
+
+
+
+
 
 		return $return;
 	}
