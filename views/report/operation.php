@@ -108,15 +108,7 @@
 					<?php echo CHtml::label('Theatre', 'theatre') ?>
 				</div>
 			</div>
-			<div class="row field-row">
-				<div class="large-2 column">
-					&nbsp;
-				</div>
-				<div class="large-4 column end">
-					<?php echo CHtml::checkBox('firm'); ?>
-					<?php echo CHtml::label('Firm', 'firm') ?>
-				</div>
-			</div>
+
 			<h3>Examination</h3>
 			<div class="row field-row">
 				<div class="large-2 column">
@@ -187,8 +179,8 @@
 					&nbsp;
 				</div>
 				<div class="large-4 column end">
-					<?php echo CHtml::checkBox('cataract_operation_details'); ?>
-					<?php echo CHtml::label('Cataract Operation Details', 'cataract_operation_details') ?>
+					<?php echo CHtml::checkBox('incision_site'); ?>
+					<?php echo CHtml::label('Cataract Operation Details', 'incision_site') ?>
 				</div>
 			</div>
 		<div class="row field-row">
