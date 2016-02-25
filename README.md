@@ -1,11 +1,5 @@
-OphTrOperationnote
-==================
+## THIS REPOSITORY IS NO LONGER IN USE
 
-Event for recording details about operations. 
+As of Openeyes release 1.12.1, the OphTrOperationnote module has been merged into the core [openeyes](https://github.com/openeyes/openeyes) repository.
 
-Dependencies
-------------
-
-1. Eyedraw
-
-Initial release was 1.0
+This repository is kept for historic purposes only
